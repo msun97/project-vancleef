@@ -2,351 +2,327 @@
 @import url('http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css');
 
 :root {
-    --background-color: #ffffff;
-    --perspective: 2000px;
+  --background-color: #ffffff;
+  --perspective: 2000px;
 
-    /* Primary Colors (green) */
-    --primary-10: #f3f6ec;
-    --primary-20: #eef2e2;
-    --primary-30: #e3e9cf;
-    --primary-40: #d7ddba;
-    --primary-50: #ccd3b5;
-    --primary-60: #bfc5a4;
-    --primary-70: #98a079;
-    --primary-80: #6f7653;
-    --primary-90: #494e32;
+  /* Primary Colors (green) */
+  --primary-10: #f3f6ec;
+  --primary-20: #eef2e2;
+  --primary-30: #e3e9cf;
+  --primary-40: #d7ddba;
+  --primary-50: #ccd3b5;
+  --primary-60: #bfc5a4;
+  --primary-70: #98a079;
+  --primary-80: #6f7653;
+  --primary-90: #494e32;
 
-    /* Gray Scale */
-    --gray-0: rgb(255, 255, 255); /* White */
-    --gray-10: rgb(241, 241, 241); /* rgb(241, 241, 241) */
-    --gray-20: rgb(221, 221, 221); /* rgb(221, 221, 221) */
-    --gray-30: rgb(206, 206, 206); /* rgb(206, 206, 206) */
-    --gray-40: rgb(185, 185, 185); /* rgb(185, 185, 185) */
-    --gray-50: rgb(146, 146, 146); /* rgb(146, 146, 146) */
-    --gray-60: rgb(95, 95, 95); /* rgb(95, 95, 95) */
-    --gray-70: rgb(80, 80, 80); /* rgb(80, 80, 80) */
-    --gray-80: rgb(51, 51, 51); /* rgb(51, 51, 51) */
-    --gray-90: rgb(28, 28, 30); /* rgb(28, 28, 30) */
-    --gray-100: rgb(0, 0, 0);
+  /* Gray Scale */
+  --gray-0: rgb(255, 255, 255); /* White */
+  --gray-10: rgb(241, 241, 241); /* rgb(241, 241, 241) */
+  --gray-20: rgb(221, 221, 221); /* rgb(221, 221, 221) */
+  --gray-30: rgb(206, 206, 206); /* rgb(206, 206, 206) */
+  --gray-40: rgb(185, 185, 185); /* rgb(185, 185, 185) */
+  --gray-50: rgb(146, 146, 146); /* rgb(146, 146, 146) */
+  --gray-60: rgb(95, 95, 95); /* rgb(95, 95, 95) */
+  --gray-70: rgb(80, 80, 80); /* rgb(80, 80, 80) */
+  --gray-80: rgb(51, 51, 51); /* rgb(51, 51, 51) */
+  --gray-90: rgb(28, 28, 30); /* rgb(28, 28, 30) */
+  --gray-100: rgb(0, 0, 0);
 
-    /* Semantic Colors */
-    --text-primary: var(--gray-90);
-    --text-secondary: var(--gray-80);
-    --background-primary: var(--gray-0);
-    --background-secondary: var(--gray-10);
-    --hover-color: var(--primary-50);
-    --border-color: var(--gray-70);
+  /* Semantic Colors */
+  --text-primary: var(--gray-90);
+  --text-secondary: var(--gray-80);
+  --background-primary: var(--gray-0);
+  --background-secondary: var(--gray-10);
+  --hover-color: var(--primary-50);
+  --border-color: var(--gray-70);
 
-    /* font styles */
-    --font-primary: 'Nanum Gothic', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue',
-        'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', sans-serif;
-    --font-secondary: 'Nanum Myeongjo', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
-        'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji',
-        'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-    --font-size-root: 10px;
-    --font-size-base: 1rem;
+  /* font styles */
+  --font-primary: 'Nanum Gothic', Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
+    'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', sans-serif;
+  --font-secondary: 'NanumMyeongjo', Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
+    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  --font-size-root: 16px;
+  --font-size-base: 1rem;
 
-    /* font-size */
-    --font-title-xs: 56px;
-    --font-title-s: 64px;
-    --font-title-m: 72px;
-    --font-title-l: 90px;
-    --font-title-xl: 120px;
-    --font-heading-m: 17px;
-    --font-content-xs: 13px;
-    --font-content-s: 16px;
-    --font-content-m: 17px;
-    --font-content-l: 20px;
-    --font-content-xl: 24px;
-    --font-content-xxl: 26px;
-    --font-content-xxxl: 36px;
-    --font-label-xs: 8px;
-    --font-label-s: 14px;
-    --font-label-m: 20px;
-    --font-label-l: 24px;
-    --font-footer-s: 13px;
-    --font-footer-m: 20px;
-    --font-footer-l: 30px;
+  /* font-size */
+  --font-title-xs: 56px;
+  --font-title-s: 64px;
+  --font-title-m: 72px;
+  --font-title-l: 90px;
+  --font-title-xl: 120px;
+  --font-heading-m: 17px;
+  --font-content-xs: 13px;
+  --font-content-s: 16px;
+  --font-content-m: 17px;
+  --font-content-l: 20px;
+  --font-content-xl: 24px;
+  --font-content-xxl: 26px;
+  --font-content-xxxl: 36px;
+  --font-label-xs: 8px;
+  --font-label-s: 14px;
+  --font-label-m: 20px;
+  --font-label-l: 24px;
+  --font-footer-s: 13px;
+  --font-footer-m: 20px;
+  --font-footer-l: 30px;
 
-    /* font-weight */
-    --font-weight-light: 300;
-    --font-weight-regular: 400;
-    --font-weight-medium: 500;
-    --font-weight-semibold: 600;
-    --font-weight-bold: 700;
+  /* font-weight */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
-    /* line-hieght */
-    --line-height-base: 1.2;
+  /* line-hieght */
+  --line-height-base: 1.2;
 
-    /* layout */
-    --padding-330: 0 330px;
-    --padding-114: 0 114px;
+  /* layout */
+  --padding-330: 0 330px;
+  --padding-114: 0 114px;
 }
 
 /* reset */
 @layer base {
-    html,
-    body,
-    div,
-    span,
-    applet,
-    object,
-    iframe,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    blockquote,
-    pre,
-    a,
-    abbr,
-    acronym,
-    address,
-    big,
-    cite,
-    code,
-    del,
-    dfn,
-    em,
-    img,
-    ins,
-    kbd,
-    q,
-    s,
-    samp,
-    small,
-    strike,
-    strong,
-    sub,
-    sup,
-    tt,
-    var,
-    b,
-    u,
-    i,
-    center,
-    dl,
-    dt,
-    dd,
-    ol,
-    ul,
-    li,
-    fieldset,
-    form,
-    label,
-    legend,
-    table,
-    caption,
-    tbody,
-    tfoot,
-    thead,
-    tr,
-    th,
-    td,
-    article,
-    aside,
-    canvas,
-    details,
-    embed,
-    figure,
-    figcaption,
-    footer,
-    header,
-    hgroup,
-    menu,
-    nav,
-    output,
-    ruby,
-    section,
-    summary,
-    time,
-    mark,
-    audio,
-    video {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        vertical-align: baseline;
+  html,
+  body,
+  div,
+  span,
+  applet,
+  object,
+  iframe,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote,
+  pre,
+  a,
+  abbr,
+  acronym,
+  address,
+  big,
+  cite,
+  code,
+  del,
+  dfn,
+  em,
+  img,
+  ins,
+  kbd,
+  q,
+  s,
+  samp,
+  small,
+  strike,
+  strong,
+  sub,
+  sup,
+  tt,
+  var,
+  b,
+  u,
+  i,
+  center,
+  dl,
+  dt,
+  dd,
+  ol,
+  ul,
+  li,
+  fieldset,
+  form,
+  label,
+  legend,
+  table,
+  caption,
+  tbody,
+  tfoot,
+  thead,
+  tr,
+  th,
+  td,
+  article,
+  aside,
+  canvas,
+  details,
+  embed,
+  figure,
+  figcaption,
+  footer,
+  header,
+  hgroup,
+  menu,
+  nav,
+  output,
+  ruby,
+  section,
+  summary,
+  time,
+  mark,
+  audio,
+  video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+  }
+  html {
+    font-size: var(--font-size-root);
+    box-sizing: border-box;
+  }
+  body {
+    font-size: 16px;
+    line-height: 1.2;
+    font-family: var(--font-primary);
+    color: var(--gray-100);
+    background-color: var(--background-color);
+    -webkit-overflow-scrolling: touch;
+  }
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+  a {
+    text-decoration: none;
+    color: var(--gray-100);
+  }
+  ol,
+  li {
+    list-style: none;
+  }
+  img {
+    vertical-align: top;
+    border: 0;
+  }
+  select {
+    border: 0;
+    background: none;
+    appearance: none;
+    &:focus {
+      outline: none;
     }
-    html {
-        font-size: var(--font-size-root);
-        box-sizing: border-box;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  input,
+  button,
+  textarea {
+    font-family: inherit;
+    border: 0;
+    &:focus {
+      outline: none;
+      box-shadow: none;
     }
-    body {
-        font-size: 16px;
-        line-height: 1.2;
-        font-family: var(--font-primary);
-        color: var(--gray-100);
-        background-color: var(--background-color);
-        -webkit-overflow-scrolling: touch;
-    }
-    *:before,
-    *:after {
-        box-sizing: border-box;
-    }
-    a {
-        text-decoration: none;
-        color: var(--gray-100);
-    }
-    ol,
-    li {
-        list-style: none;
-    }
-    img {
-        vertical-align: top;
-        border: 0;
-    }
-    select {
-        border: 0;
-        background: none;
-        appearance: none;
-        &:focus {
-            outline: none;
-        }
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-    input,
-    button,
-    textarea {
-        font-family: inherit;
-        border: 0;
-        &:focus {
-            outline: none;
-            box-shadow: none;
-        }
-    }
+  }
 
-    .swiper {
-        width: 100%;
-        height: 100%;
-    }
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
 
-    .swiper-slide {
-        text-align: center;
-        font-size: 18px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .swiper-slide img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-    .inner {
-        width: 1400px;
-        margin: auto;
-        box-sizing: border-box;
-        position: relative;
-        padding: 120px 0;
-    }
-    .main {
-        width: 100%;
-    }
+  .inner {
+    width: 1400px;
+    margin: auto;
+    box-sizing: border-box;
+    position: relative;
+    padding: 120px 0;
+  }
+  .main {
+    width: 100%;
+  }
 
-    button {
-        border: none;
-        cursor: pointer;
-    }
-    .hide {
-        overflow: hidden;
-        text-indent: -99999px;
-        width: 0;
-        height: 0;
-        font-size: 0;
-        line-height: 0;
-    }
-    /* 숨김 처리 */
-    .radio-custom {
-        display: none;
-    }
-
-    /* 라디오 버튼의 스타일을 나타내는 부분 */
-    .radio-custom-indicator {
-        width: 100%;
-        height: 20px;
-        display: inline-block;
-        position: relative;
-        margin-right: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s, border-color 0.3s;
-    }
-
-    /* 라디오 버튼이 선택되었을 때 (체크된 상태) */
-    .radio-custom:checked + .radio-custom-indicator {
-        font-weight: bold;
-    }
-
-    /* 클릭할 수 있도록 표시 */
-    .radio-label {
-        display: inline-flex;
-        align-items: center;
-    }
+  button {
+    border: none;
+    cursor: pointer;
+  }
+  .hide {
+    overflow: hidden;
+    text-indent: -99999px;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+  }
 }
 
 @import 'tailwindcss';
 @theme {
-    --color-primary-10: var(--primary-10);
-    --color-primary-20: var(--primary-20);
-    --color-primary-30: var(--primary-30);
-    --color-primary-40: var(--primary-40);
-    --color-primary-50: var(--primary-50);
-    --color-primary-60: var(--primary-60);
-    --color-primary-70: var(--primary-70);
-    --color-primary-80: var(--primary-80);
-    --color-primary-90: var(--primary-90);
+  --color-primary-10: var(--primary-10);
+  --color-primary-20: var(--primary-20);
+  --color-primary-30: var(--primary-30);
+  --color-primary-40: var(--primary-40);
+  --color-primary-50: var(--primary-50);
+  --color-primary-60: var(--primary-60);
+  --color-primary-70: var(--primary-70);
+  --color-primary-80: var(--primary-80);
+  --color-primary-90: var(--primary-90);
 
-    --color-gray-0: var(--gray-0);
-    --color-gray-10: var(--gray-10);
-    --color-gray-20: var(--gray-20);
-    --color-gray-30: var(--gray-30);
-    --color-gray-40: var(--gray-40);
-    --color-gray-50: var(--gray-50);
-    --color-gray-60: var(--gray-60);
-    --color-gray-70: var(--gray-70);
-    --color-gray-80: var(--gray-80);
-    --color-gray-90: var(--gray-90);
-    --color-gray-100: var(--gray-100);
+  --color-gray-0: var(--gray-0);
+  --color-gray-10: var(--gray-10);
+  --color-gray-20: var(--gray-20);
+  --color-gray-30: var(--gray-30);
+  --color-gray-40: var(--gray-40);
+  --color-gray-50: var(--gray-50);
+  --color-gray-60: var(--gray-60);
+  --color-gray-70: var(--gray-70);
+  --color-gray-80: var(--gray-80);
+  --color-gray-90: var(--gray-90);
+  --color-gray-100: var(--gray-100);
 
-    --font-primary: var(--font-primary);
-    --font-secondary: var(--font-secondary);
+  --font-primary: var(--font-primary);
+  --font-secondary: var(--font-secondary);
 
-    --text-title-xs: var(--font-title-xs);
-    --text-title-s: var(--font-title-s);
-    --text-title-m: var(--font-title-m);
-    --text-title-l: var(--font-title-l);
-    --text-title-xl: var(--font-title-xl);
-    --text-heading-m: var(--font-heading-m);
-    --text-content-xs: var(--font-content-xs);
-    --text-content-s: var(--font-content-s);
-    --text-content-m: var(--font-content-m);
-    --text-content-l: var(--font-content-l);
-    --text-content-xl: var(--font-content-xl);
-    --text-content-xxl: var(--font-content-xxl);
-    --text-content-xxxl: var(--font-content-xxxl);
-    --text-label-xs: var(--font-label-xs);
-    --text-label-s: var(--font-label-s);
-    --text-label-m: var(--font-label-m);
-    --text-label-l: var(--font-label-l);
-    --text-footer-s: var(--font-footer-s);
-    --text-footer-m: var(--font-footer-m);
-    --text-footer-l: var(--font-footer-l);
+  --text-title-xs: var(--font-title-xs);
+  --text-title-s: var(--font-title-s);
+  --text-title-m: var(--font-title-m);
+  --text-title-l: var(--font-title-l);
+  --text-title-xl: var(--font-title-xl);
+  --text-heading-m: var(--font-heading-m);
+  --text-content-xs: var(--font-content-xs);
+  --text-content-s: var(--font-content-s);
+  --text-content-m: var(--font-content-m);
+  --text-content-l: var(--font-content-l);
+  --text-content-xl: var(--font-content-xl);
+  --text-content-xxl: var(--font-content-xxl);
+  --text-content-xxxl: var(--font-content-xxxl);
+  --text-label-xs: var(--font-label-xs);
+  --text-label-s: var(--font-label-s);
+  --text-label-m: var(--font-label-m);
+  --text-label-l: var(--font-label-l);
+  --text-footer-s: var(--font-footer-s);
+  --text-footer-m: var(--font-footer-m);
+  --text-footer-l: var(--font-footer-l);
 
-    --font-weight-regular: 400;
-    --font-weight-bold: 700;
-    --font-weight-extrabold: 800;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
 
-    --spacing-330: 0 330px;
-    --spacing-114: 0 114px;
+  --spacing-330: 0 330px;
+  --spacing-114: 0 114px;
 }
