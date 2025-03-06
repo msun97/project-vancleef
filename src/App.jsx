@@ -10,30 +10,32 @@ import Cart from './pages/mypage/cart';
 import Myposts from './pages/mypage/myposts';
 import Profile from './pages/mypage/profile';
 import Logout from './pages/mypage/logout';
-import ProductInquiry from './pages/productinquiry';
+import ProductInquiry from './pages/productinquiry/ProductInquiry';
 import ProductListPage from './pages/ProductList';
+import ProductDetailPage from './pages/productdetail';
 
 const App = () => {
     return (
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<Layout />}>
+                    <Route path="/" element={<Layout />}>
                         <Route index element={<Home />} />
-                        <Route path='home' element={<Home />} />
-                        <Route path='/productlist' element={<ProductListPage />} />
-                        <Route path='/productinquiry' element={<ProductInquiry />} />
-                        <Route path='mypage' element={<MyPage />}>
-                            <Route path='order' element={<Order />} />
-                            <Route path='recent' element={<Recent />} />
-                            <Route path='wishlist' element={<Wishlist />} />
-                            <Route path='cart' element={<Cart />} />
-                            <Route path='myposts' element={<Myposts />} />
-                            <Route path='profile' element={<Profile />} />
-                            <Route path='logout' element={<Logout />} />
+                        <Route path="home" element={<Home />} />
+                        <Route path="/productlist" element={<ProductListPage />} />
+                        <Route path="/productinquiry" element={<ProductInquiry />} />
+                        <Route path="/productdetail" element={<ProductDetailPage />} />
+                        <Route path="mypage" element={<MyPage />}>
+                            <Route path="order" element={<Order />} />
+                            <Route path="recent" element={<Recent />} />
+                            <Route path="wishlist" element={<Wishlist />} />
+                            <Route path="cart" element={<Cart />} />
+                            <Route path="myposts" element={<Myposts />} />
+                            <Route path="profile" element={<Profile />} />
+                            <Route path="logout" element={<Logout />} />
                         </Route>
                     </Route>
-                    <Route path='*' element={<NotFiles />} />
+                    <Route path="*" element={<NotFiles />} />
                 </Routes>
             </BrowserRouter>
         </>
