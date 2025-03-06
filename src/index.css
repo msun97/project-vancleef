@@ -1,19 +1,72 @@
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
+@import url('http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css');
 @import 'tailwindcss';
+@theme {
+  --color-primary-10: var(--primary-10);
+  --color-primary-20: var(--primary-20);
+  --color-primary-30: var(--primary-30);
+  --color-primary-40: var(--primary-40);
+  --color-primary-50: var(--primary-50);
+  --color-primary-60: var(--primary-60);
+  --color-primary-70: var(--primary-70);
+  --color-primary-80: var(--primary-80);
+  --color-primary-90: var(--primary-90);
+
+  --color-gray-0: var(--gray-0);
+  --color-gray-10: var(--gray-10);
+  --color-gray-20: var(--gray-20);
+  --color-gray-30: var(--gray-30);
+  --color-gray-40: var(--gray-40);
+  --color-gray-50: var(--gray-50);
+  --color-gray-60: var(--gray-60);
+  --color-gray-70: var(--gray-70);
+  --color-gray-80: var(--gray-80);
+  --color-gray-90: var(--gray-90);
+  --color-gray-100: var(--gray-100);
+
+  --font-primary: var(--font-primary);
+  --font-secondary: var(--font-secondary);
+
+  --text-title-xs: var(--font-title-xs);
+  --text-title-s: var(--font-title-s);
+  --text-title-m: var(--font-title-m);
+  --text-title-l: var(--font-title-l);
+  --text-title-xl: var(--font-title-xl);
+  --text-heading-m: var(--font-heading-m);
+  --text-content-xs: var(--font-content-xs);
+  --text-content-s: var(--font-content-s);
+  --text-content-m: var(--font-content-m);
+  --text-content-l: var(--font-content-l);
+  --text-content-xl: var(--font-content-xl);
+  --text-content-xxl: var(--font-content-xxl);
+  --text-content-xxxl: var(--font-content-xxxl);
+  --text-label-xs: var(--font-label-xs);
+  --text-label-s: var(--font-label-s);
+  --text-label-m: var(--font-label-m);
+  --text-label-l: var(--font-label-l);
+  --text-footer-s: var(--font-footer-s);
+  --text-footer-m: var(--font-footer-m);
+  --text-footer-l: var(--font-footer-l);
+
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+}
 
 :root {
   --background-color: #ffffff;
   --perspective: 2000px;
 
-  /* Primary Colors (Pink) */
-  --primary-10: rgb(254, 239, 242); /* rgb(254, 239, 242) */
-  --primary-20: rgb(253, 230, 236); /* rgb(253, 230, 236) */
-  --primary-30: rgb(250, 204, 215); /* rgb(250, 204, 215) */
-  --primary-40: rgb(245, 126, 154); /* rgb(245, 126, 154) */
-  --primary-50: rgb(240, 90, 126); /* rgb(240, 90, 126) */
-  --primary-60: rgb(216, 81, 113); /* rgb(216, 81, 113) */
-  --primary-70: rgb(192, 72, 100); /* rgb(192, 72, 100) */
-  --primary-80: rgb(144, 54, 75); /* rgb(144, 54, 75) */
-  --primary-90: rgb(108, 40, 56); /* rgb(108, 40, 56) */
+  /* Primary Colors (green) */
+  --primary-10: #f3f6ec;
+  --primary-20: #eef2e2;
+  --primary-30: #e3e9cf;
+  --primary-40: #d7ddba;
+  --primary-50: #ccd3b5;
+  --primary-60: #bfc5a4;
+  --primary-70: #98a079;
+  --primary-80: #6f7653;
+  --primary-90: #494e32;
 
   /* Gray Scale */
   --gray-0: rgb(255, 255, 255); /* White */
@@ -26,6 +79,7 @@
   --gray-70: rgb(80, 80, 80); /* rgb(80, 80, 80) */
   --gray-80: rgb(51, 51, 51); /* rgb(51, 51, 51) */
   --gray-90: rgb(28, 28, 30); /* rgb(28, 28, 30) */
+  --gray-100: rgb(0, 0, 0);
 
   /* Semantic Colors */
   --text-primary: var(--gray-90);
@@ -36,11 +90,11 @@
   --border-color: var(--gray-70);
 
   /* font styles */
-  --font-primary: 'nanumgothic', Pretendard, -apple-system, BlinkMacSystemFont,
+  --font-primary: 'Nanum Gothic', Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
     'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', sans-serif;
-  --font-secondary: 'nanummyeongjo', Pretendard, -apple-system,
+  --font-secondary: 'Nanum Myeongjo', Pretendard, -apple-system,
     BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
     'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
@@ -54,34 +108,20 @@
   --font-title-l: 90px;
   --font-title-xl: 120px;
   --font-heading-m: 17px;
+  --font-content-xs: 13px;
   --font-content-s: 16px;
   --font-content-m: 17px;
   --font-content-l: 20px;
   --font-content-xl: 24px;
   --font-content-xxl: 26px;
   --font-content-xxxl: 36px;
-  --font-label-xs: 12px;
+  --font-label-xs: 8px;
   --font-label-s: 14px;
   --font-label-m: 20px;
   --font-label-l: 24px;
-  --font-footer-m: 2rem;
-
-  --font-title-m-tablet: 48px;
-  --font-heading-m-tablet: 17px;
-  --font-content-m-tablet: 16px;
-  --font-content-xxl-tablet: 24px;
-  --font-label-m-tablet: 12px;
-  --font-label-xl-tablet: 14px;
-  --font-footer-m-tablet: 12px;
-
-  --font-title-m-mobile: 30px;
-  --font-heading-m-mobile: 15px;
-  --font-content-m-mobile: 14px;
-  --font-content-l-mobile: 16px;
-  --font-content-xxl-mobile: 20px;
-  --font-label-m-mobile: 7px;
-  --font-label-xl-mobile: 14px;
-  --font-footer-m-mobile: 10px;
+  --font-footer-s: 13px;
+  --font-footer-m: 20px;
+  --font-footer-l: 30px;
 
   /* font-weight */
   --font-weight-light: 300;
@@ -92,9 +132,13 @@
 
   /* line-hieght */
   --line-height-base: 1.2;
+
+  /* layout */
+  --padding-330: 0 330px;
+  --padding-114: 0 114px;
 }
 
-//reset
+/* reset */
 html,
 body,
 div,
@@ -179,8 +223,6 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: var(--font-size-root);
-  font: inherit;
   vertical-align: baseline;
 }
 html {
@@ -191,7 +233,7 @@ body {
   font-size: 16px;
   line-height: 1.2;
   font-family: var(--font-primary);
-  color: var(--gray-0);
+  color: var(--gray-100);
   background-color: var(--background-color);
   -webkit-overflow-scrolling: touch;
 }
