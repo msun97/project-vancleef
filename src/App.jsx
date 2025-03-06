@@ -11,6 +11,8 @@ import Myposts from './pages/mypage/myposts';
 import Profile from './pages/mypage/profile';
 import Logout from './pages/mypage/logout';
 import ProductInquiry from './pages/productinquiry/ProductInquiry';
+import ProductListPage from './pages/ProductList';
+
 const App = () => {
   return (
     <>
