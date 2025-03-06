@@ -46,7 +46,7 @@
     BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
     'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-  --font-size-root: 10px;
+  --font-size-root: 16px;
   --font-size-base: 1rem;
 
   /* font-size */
