@@ -18,7 +18,14 @@ const ProductNotice = () => {
                     className='flex justify-between items-center border-b border-[#d2d2d2] py-[20px]'
                 >
                     <h3 className='text-[25px] font-extrabold'>상품 정보 제공 고시</h3>
-                    <svg width='30' height='30' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <svg
+                        width='30'
+                        height='30'
+                        viewBox='0 0 48 49'
+                        fill='none'
+                        xmlns='http://www.w3.org/2000/svg'
+                        className={`${activeSection === 'info' ? 'transform rotate-180' : ''}`}
+                    >
                         <path
                             d='M12 18.875L24 30.875L36 18.875'
                             stroke='black'
@@ -43,7 +50,14 @@ const ProductNotice = () => {
                     className='flex justify-between items-center border-b border-[#d2d2d2] py-[20px]'
                 >
                     <h3 className='text-[25px] font-extrabold'>배송정보</h3>
-                    <svg width='30' height='30' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <svg
+                        width='30'
+                        height='30'
+                        viewBox='0 0 48 49'
+                        fill='none'
+                        xmlns='http://www.w3.org/2000/svg'
+                        className={`${activeSection === 'delivery' ? 'transform rotate-180' : ''}`}
+                    >
                         <path
                             d='M12 18.875L24 30.875L36 18.875'
                             stroke='black'
@@ -79,7 +93,14 @@ const ProductNotice = () => {
                     className='w-full flex justify-between items-center border-b border-[#d2d2d2] py-[20px]'
                 >
                     <h3 className='text-[25px] font-extrabold'>교환/환불</h3>
-                    <svg width='30' height='30' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <svg
+                        width='30'
+                        height='30'
+                        viewBox='0 0 48 49'
+                        fill='none'
+                        xmlns='http://www.w3.org/2000/svg'
+                        className={`${activeSection === 'refund' ? 'transform rotate-180' : ''}`}
+                    >
                         <path
                             d='M12 18.875L24 30.875L36 18.875'
                             stroke='black'
