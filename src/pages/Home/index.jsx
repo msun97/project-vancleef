@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="bg-gray-10 text-title-l font-secondary font-extrabold p-330">
       안녕 test
-      <Button className="w-2xl" variant="secondary">
+      <Button className="w-16" variant="secondary">
         ㅎ2
       </Button>
       <CheckBox checked={false} className="w-80 h-80" />
