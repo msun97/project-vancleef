@@ -1,17 +1,14 @@
 import React from 'react';
-import Button from '../../components/button';
-import CheckBox from '../../components/checkbox';
-import Input from '../../components/input';
+import Loading from './components/Loading';
+import Section1 from './components/Section1';
+import Section2 from './components/Section2';
 
 const Home = () => {
   return (
-    <div className="bg-gray-10 text-title-l font-secondary font-extrabold p-330">
-      안녕 test
-      <Button className="w-16" variant="secondary">
-        ㅎ2
-      </Button>
-      <CheckBox checked={false} className="w-80 h-80" />
-      <Input placeholder="test" />
+    <div className="p-330 bg-[url(/images/homebg1.png)] h-auto  text-gray-0 ">
+      {/* <Loading /> */}
+      {/* <Section1 /> */}
+      <Section2 />
     </div>
   );
 };
