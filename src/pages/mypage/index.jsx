@@ -9,15 +9,15 @@ function MyPage() {
       <div className="w-1/2 bg-gray-20 flex items-center justify-center p-[var(--spacing-330)]">
         <div className="flex items-center justify-center space-y-10">
           <nav
-            className="w-1/2 flex flex-col items-end text-right font-secondary text-[12px]  whitespace-nowrap m-0 mr-[31px] "
+            className="w-1/2 flex flex-col items-end text-right font-secondary text-[12px]  whitespace-nowrap m-0 mr-[31px]  font-[var(--font-weight-regular)]"
           >
-            <Link to="/mypage/order" >주문내역</Link>
-            <Link to="/mypage/recent"  >최근본상품</Link>
-            <Link to="/mypage/wishlist" >위시리스트</Link>
-            <Link to="/mypage/cart" >장바구니</Link>
-            <Link to="/mypage/myposts" >나의게시물</Link>
-            <Link to="/mypage/profile" >회원정보변경</Link>
-            <Link to="/mypage/logout" >로그아웃</Link>
+            <Link to="/mypage/order" className="hover:font-bold">주문내역</Link>
+            <Link to="/mypage/recent"  className="hover:font-bold">최근본상품</Link>
+            <Link to="/mypage/wishlist" className="hover:font-bold">위시리스트</Link>
+            <Link to="/mypage/cart" className="hover:font-bold">장바구니</Link>
+            <Link to="/mypage/myposts" className="hover:font-bold">나의게시물</Link>
+            <Link to="/mypage/profile" className="hover:font-bold">회원정보변경</Link>
+            <Link to="/mypage/logout" className="hover:font-bold">로그아웃</Link>
           </nav>
         </div>
 
