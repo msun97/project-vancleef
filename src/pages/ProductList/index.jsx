@@ -121,263 +121,19 @@ const ProductListPage = () => {
                                             </label>
                                         </li>
                                     </ul>
+                                    {/* detail nav */}
                                 </div>
                             </div>
                             <div>
                                 <div className="productList pb-[30px]">
                                     <div className="relative w-full">
-                                        <div>
+                                        <div className="flex">
                                             <ul
-                                                className="rellax flex flex-wrap relative w-full pb-[218px]"
+                                                className="rellax relative w-full pt-[20px] pb-[28px]"
                                                 data-rellax-speed="-3"
                                             >
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px] w-[46.5%] min-h-[597px] mr-[2.5%]">
-                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
-                                                        <div>
-                                                            <a href="">
-                                                                <img
-                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
-                                                                    width="500"
-                                                                    alt="스위트 버터플라이 펜던트"
-                                                                    title="스위트 버터플라이 펜던트"
-                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
-                                                                />
-                                                            </a>
-                                                            <div>
-                                                                <button>
-                                                                    <IoIosHeartEmpty color="black" />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                        <div>
-                                                            <div>
-                                                                <a href="../goods/goods_view.php?goodsNo=1000000036">
-                                                                    <strong>스위트 버터플라이 펜던트</strong>
-                                                                </a>
-                                                            </div>
-
-                                                            <div>
-                                                                <strong>₩2,380,000 </strong>
-
-                                                                <strong>
-                                                                    <span className="line-through">
-                                                                        <strong class="price">₩2,000,000</strong>
-                                                                    </span>
-                                                                </strong>
-                                                                <strong>20%</strong>
-                                                            </div>
-
-                                                            <div class="item_icon_box"></div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px] w-[46.5%] min-h-[597px] mt-[70px] mr-[2.5%]">
-                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
-                                                        <div>
-                                                            <a href="">
-                                                                <img
-                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
-                                                                    width="500"
-                                                                    alt="스위트 버터플라이 펜던트"
-                                                                    title="스위트 버터플라이 펜던트"
-                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
-                                                                />
-                                                            </a>
-                                                            <div>
-                                                                <button>
-                                                                    <IoIosHeartEmpty color="black" />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                        <div>
-                                                            <div>
-                                                                <a href="../goods/goods_view.php?goodsNo=1000000036">
-                                                                    <strong>스위트 버터플라이 펜던트</strong>
-                                                                </a>
-                                                            </div>
-
-                                                            <div>
-                                                                <strong>₩2,380,000 </strong>
-
-                                                                <strong>
-                                                                    <span className="line-through">
-                                                                        <strong class="price">₩2,000,000</strong>
-                                                                    </span>
-                                                                </strong>
-                                                                <strong>20%</strong>
-                                                            </div>
-
-                                                            <div class="item_icon_box"></div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px] w-[46.5%] min-h-[597px] mt-[40px] mr-[2.5%]">
-                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
-                                                        <div>
-                                                            <a href="">
-                                                                <img
-                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
-                                                                    width="500"
-                                                                    alt="스위트 버터플라이 펜던트"
-                                                                    title="스위트 버터플라이 펜던트"
-                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
-                                                                />
-                                                            </a>
-                                                            <div>
-                                                                <button>
-                                                                    <IoIosHeartEmpty color="black" />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                        <div>
-                                                            <div>
-                                                                <a href="../goods/goods_view.php?goodsNo=1000000036">
-                                                                    <strong>스위트 버터플라이 펜던트</strong>
-                                                                </a>
-                                                            </div>
-
-                                                            <div>
-                                                                <strong>₩2,380,000 </strong>
-
-                                                                <strong>
-                                                                    <span className="line-through">
-                                                                        <strong class="price">₩2,000,000</strong>
-                                                                    </span>
-                                                                </strong>
-                                                                <strong>20%</strong>
-                                                            </div>
-
-                                                            <div class="item_icon_box"></div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px] w-[46.5%] min-h-[597px] mt-[70px] mr-[2.5%]">
-                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
-                                                        <div>
-                                                            <a href="">
-                                                                <img
-                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
-                                                                    width="500"
-                                                                    alt="스위트 버터플라이 펜던트"
-                                                                    title="스위트 버터플라이 펜던트"
-                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
-                                                                />
-                                                            </a>
-                                                            <div>
-                                                                <button>
-                                                                    <IoIosHeartEmpty color="black" />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                        <div>
-                                                            <div>
-                                                                <a href="../goods/goods_view.php?goodsNo=1000000036">
-                                                                    <strong>스위트 버터플라이 펜던트</strong>
-                                                                </a>
-                                                            </div>
-
-                                                            <div>
-                                                                <strong>₩2,380,000 </strong>
-
-                                                                <strong>
-                                                                    <span className="line-through">
-                                                                        <strong class="price">₩2,000,000</strong>
-                                                                    </span>
-                                                                </strong>
-                                                                <strong>20%</strong>
-                                                            </div>
-
-                                                            <div class="item_icon_box"></div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px] w-[46.5%] min-h-[597px] mt-[40px] mr-[2.5%]">
-                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
-                                                        <div>
-                                                            <a href="">
-                                                                <img
-                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
-                                                                    width="500"
-                                                                    alt="스위트 버터플라이 펜던트"
-                                                                    title="스위트 버터플라이 펜던트"
-                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
-                                                                />
-                                                            </a>
-                                                            <div>
-                                                                <button>
-                                                                    <IoIosHeartEmpty color="black" />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                        <div>
-                                                            <div>
-                                                                <a href="../goods/goods_view.php?goodsNo=1000000036">
-                                                                    <strong>스위트 버터플라이 펜던트</strong>
-                                                                </a>
-                                                            </div>
-
-                                                            <div>
-                                                                <strong>₩2,380,000 </strong>
-
-                                                                <strong>
-                                                                    <span className="line-through">
-                                                                        <strong class="price">₩2,000,000</strong>
-                                                                    </span>
-                                                                </strong>
-                                                                <strong>20%</strong>
-                                                            </div>
-
-                                                            <div class="item_icon_box"></div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px] w-[46.5%] min-h-[597px] mt-[70px] mr-[2.5%]">
-                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
-                                                        <div>
-                                                            <a href="">
-                                                                <img
-                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
-                                                                    width="500"
-                                                                    alt="스위트 버터플라이 펜던트"
-                                                                    title="스위트 버터플라이 펜던트"
-                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
-                                                                />
-                                                            </a>
-                                                            <div>
-                                                                <button>
-                                                                    <IoIosHeartEmpty color="black" />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                        <div>
-                                                            <div>
-                                                                <a href="../goods/goods_view.php?goodsNo=1000000036">
-                                                                    <strong>스위트 버터플라이 펜던트</strong>
-                                                                </a>
-                                                            </div>
-
-                                                            <div>
-                                                                <strong>₩2,380,000 </strong>
-
-                                                                <strong>
-                                                                    <span className="line-through">
-                                                                        <strong class="price">₩2,000,000</strong>
-                                                                    </span>
-                                                                </strong>
-                                                                <strong>20%</strong>
-                                                            </div>
-
-                                                            <div class="item_icon_box"></div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px] w-[46.5%] min-h-[597px] mt-[40px] mr-[2.5%]">
+                                                {/* 왼쪽 */}
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]   min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -392,16 +148,17 @@ const ProductListPage = () => {
                                                         </div>
 
                                                         <div>
+                                                            {/* text */}
                                                             <div>
-                                                                <a href="../goods/goods_view.php?goodsNo=1000000036">
-                                                                    <strong className="flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pr-[30px]">
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
                                                                 </a>
                                                             </div>
 
-                                                            <div className="flex gap-2">
+                                                            <div className="flex gap-2 pt-2.5">
                                                                 <strong>₩2,380,000 </strong>
 
                                                                 <strong>
@@ -418,7 +175,7 @@ const ProductListPage = () => {
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px] w-[46.5%] min-h-[597px] mt-[40px] mr-[2.5%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -433,16 +190,611 @@ const ProductListPage = () => {
                                                         </div>
 
                                                         <div>
+                                                            {/* text */}
                                                             <div>
-                                                                <a href="../goods/goods_view.php?goodsNo=1000000036">
-                                                                    <strong className="flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pr-[30px]">
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
                                                                 </a>
                                                             </div>
 
-                                                            <div className="flex gap-2">
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul
+                                                className="rellax relative w-full pt-[100px] pb-[28px]"
+                                                data-rellax-speed="-3"
+                                            >
+                                                {/* 오른쪽 */}
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]   min-h-[360px] mt-[70px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div class="item_icon_box"></div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
                                                                 <strong>₩2,380,000 </strong>
 
                                                                 <strong>
