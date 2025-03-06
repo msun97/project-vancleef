@@ -6,11 +6,15 @@ const flexIC = 'flex items-center';
 
 const ProductInquiry = () => {
     return (
-        <div className='wrap p-330 pt-20'>
-            <h2 className='font-secondary font-bold text-heading-m border-b-2 pl-4'>상품 문의 쓰기</h2>
+        <div className='wrap p-330 pt-[80px]'>
+            <h2 className='font-secondary font-bold text-heading-m border-b-2'>상품 문의 쓰기</h2>
             <div className={`${flexIC} p-4 border-b-2 gap-7`}>
                 <div>
-                    <img src={null} alt='제품이미지-샘플' className='w-16 h-16' />
+                    <img
+                        src='https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png'
+                        alt='제품이미지-샘플'
+                        className='w-[61px] h-[61px]'
+                    />
                 </div>
                 <div>
                     <h3 className='font-bold text-heading-m'>상품명</h3>
