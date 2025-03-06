@@ -9,3 +9,6 @@ const Line = ({ width = '708px', height = '1px', color = 'black', marginTop = '1
 };
 
 export default Line;
+
+
+//    <Line width="800px" height="2px" color="blue" marginTop="20px" />
