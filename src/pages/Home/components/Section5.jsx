@@ -62,7 +62,7 @@ const Section5 = () => {
       </Swiper>
 
       {/* Custom pagination */}
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-4 bg-gray-0">
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-4 bg-gray-0 w-[48px] h-[320px] rounded-[40px] items-center justify-center">
         {image.map((_, index) => (
           <button
             key={index}
@@ -70,8 +70,10 @@ const Section5 = () => {
               const swiperInstance = document.querySelector('.mySwiper').swiper;
               swiperInstance.slideTo(index);
             }}
-            className={`w-3 h-12 rounded-full transition-all duration-300 ${
-              activeIndex === index ? 'bg-white' : 'bg-gray-400 h-3'
+            className={`transition-all duration-300 ${
+              activeIndex === index
+                ? 'bg-gray-90 w-[18px] h-[60px] rounded-full'
+                : 'bg-gray-30 w-[15px] h-[15px] rounded-full'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
