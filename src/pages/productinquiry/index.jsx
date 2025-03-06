@@ -127,6 +127,12 @@ const ProductInquiry = () => {
                         <Link>전체보기 {'>'}</Link>
                     </div>
                 </div>
+                <div className='flex justify-center gap-4 py-8 px-4'>
+                    <Button variant='secondary' className='w-50 h-[55px]'>
+                        취소
+                    </Button>
+                    <Button className='w-50 h-[55px]'>확인</Button>
+                </div>
             </form>
         </div>
     );
