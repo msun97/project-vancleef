@@ -322,4 +322,7 @@
   --font-weight-regular: 400;
   --font-weight-bold: 700;
   --font-weight-extrabold: 800;
+
+  --spacing-330: 0 330px;
+  --spacing-114: 0 114px;
 }
