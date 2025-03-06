@@ -1,57 +1,5 @@
 @import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
 @import url('http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css');
-@import 'tailwindcss';
-@theme {
-  --color-primary-10: var(--primary-10);
-  --color-primary-20: var(--primary-20);
-  --color-primary-30: var(--primary-30);
-  --color-primary-40: var(--primary-40);
-  --color-primary-50: var(--primary-50);
-  --color-primary-60: var(--primary-60);
-  --color-primary-70: var(--primary-70);
-  --color-primary-80: var(--primary-80);
-  --color-primary-90: var(--primary-90);
-
-  --color-gray-0: var(--gray-0);
-  --color-gray-10: var(--gray-10);
-  --color-gray-20: var(--gray-20);
-  --color-gray-30: var(--gray-30);
-  --color-gray-40: var(--gray-40);
-  --color-gray-50: var(--gray-50);
-  --color-gray-60: var(--gray-60);
-  --color-gray-70: var(--gray-70);
-  --color-gray-80: var(--gray-80);
-  --color-gray-90: var(--gray-90);
-  --color-gray-100: var(--gray-100);
-
-  --font-primary: var(--font-primary);
-  --font-secondary: var(--font-secondary);
-
-  --text-title-xs: var(--font-title-xs);
-  --text-title-s: var(--font-title-s);
-  --text-title-m: var(--font-title-m);
-  --text-title-l: var(--font-title-l);
-  --text-title-xl: var(--font-title-xl);
-  --text-heading-m: var(--font-heading-m);
-  --text-content-xs: var(--font-content-xs);
-  --text-content-s: var(--font-content-s);
-  --text-content-m: var(--font-content-m);
-  --text-content-l: var(--font-content-l);
-  --text-content-xl: var(--font-content-xl);
-  --text-content-xxl: var(--font-content-xxl);
-  --text-content-xxxl: var(--font-content-xxxl);
-  --text-label-xs: var(--font-label-xs);
-  --text-label-s: var(--font-label-s);
-  --text-label-m: var(--font-label-m);
-  --text-label-l: var(--font-label-l);
-  --text-footer-s: var(--font-footer-s);
-  --text-footer-m: var(--font-footer-m);
-  --text-footer-l: var(--font-footer-l);
-
-  --font-weight-regular: 400;
-  --font-weight-bold: 700;
-  --font-weight-extrabold: 800;
-}
 
 :root {
   --background-color: #ffffff;
@@ -139,185 +87,242 @@
 }
 
 /* reset */
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
-}
-html {
-  font-size: var(--font-size-root);
-  box-sizing: border-box;
-}
-body {
-  font-size: 16px;
-  line-height: 1.2;
-  font-family: var(--font-primary);
-  color: var(--gray-100);
-  background-color: var(--background-color);
-  -webkit-overflow-scrolling: touch;
-}
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-a {
-  text-decoration: none;
-  color: var(--gray-0);
-}
-ol,
-li {
-  list-style: none;
-}
-img {
-  vertical-align: top;
-  border: 0;
-}
-select {
-  border: 0;
-  background: none;
-  appearance: none;
-  &:focus {
-    outline: none;
+@layer base {
+  html,
+  body,
+  div,
+  span,
+  applet,
+  object,
+  iframe,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote,
+  pre,
+  a,
+  abbr,
+  acronym,
+  address,
+  big,
+  cite,
+  code,
+  del,
+  dfn,
+  em,
+  img,
+  ins,
+  kbd,
+  q,
+  s,
+  samp,
+  small,
+  strike,
+  strong,
+  sub,
+  sup,
+  tt,
+  var,
+  b,
+  u,
+  i,
+  center,
+  dl,
+  dt,
+  dd,
+  ol,
+  ul,
+  li,
+  fieldset,
+  form,
+  label,
+  legend,
+  table,
+  caption,
+  tbody,
+  tfoot,
+  thead,
+  tr,
+  th,
+  td,
+  article,
+  aside,
+  canvas,
+  details,
+  embed,
+  figure,
+  figcaption,
+  footer,
+  header,
+  hgroup,
+  menu,
+  nav,
+  output,
+  ruby,
+  section,
+  summary,
+  time,
+  mark,
+  audio,
+  video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+  }
+  html {
+    font-size: var(--font-size-root);
+    box-sizing: border-box;
+  }
+  body {
+    font-size: 16px;
+    line-height: 1.2;
+    font-family: var(--font-primary);
+    color: var(--gray-100);
+    background-color: var(--background-color);
+    -webkit-overflow-scrolling: touch;
+  }
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+  a {
+    text-decoration: none;
+    color: var(--gray-100);
+  }
+  ol,
+  li {
+    list-style: none;
+  }
+  img {
+    vertical-align: top;
+    border: 0;
+  }
+  select {
+    border: 0;
+    background: none;
+    appearance: none;
+    &:focus {
+      outline: none;
+    }
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  input,
+  button,
+  textarea {
+    font-family: inherit;
+    border: 0;
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .inner {
+    width: 1400px;
+    margin: auto;
+    box-sizing: border-box;
+    position: relative;
+    padding: 120px 0;
+  }
+  .main {
+    width: 100%;
+  }
+
+  button {
+    border: none;
+    cursor: pointer;
+  }
+  .hide {
+    overflow: hidden;
+    text-indent: -99999px;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
   }
 }
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-input,
-button,
-textarea {
-  font-family: inherit;
-  border: 0;
-  background-color: transparent;
-  &:focus {
-    outline: none;
-    box-shadow: none;
-  }
-}
 
-.swiper {
-  width: 100%;
-  height: 100%;
-}
+@import 'tailwindcss';
+@theme {
+  --color-primary-10: var(--primary-10);
+  --color-primary-20: var(--primary-20);
+  --color-primary-30: var(--primary-30);
+  --color-primary-40: var(--primary-40);
+  --color-primary-50: var(--primary-50);
+  --color-primary-60: var(--primary-60);
+  --color-primary-70: var(--primary-70);
+  --color-primary-80: var(--primary-80);
+  --color-primary-90: var(--primary-90);
 
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  --color-gray-0: var(--gray-0);
+  --color-gray-10: var(--gray-10);
+  --color-gray-20: var(--gray-20);
+  --color-gray-30: var(--gray-30);
+  --color-gray-40: var(--gray-40);
+  --color-gray-50: var(--gray-50);
+  --color-gray-60: var(--gray-60);
+  --color-gray-70: var(--gray-70);
+  --color-gray-80: var(--gray-80);
+  --color-gray-90: var(--gray-90);
+  --color-gray-100: var(--gray-100);
 
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  --font-primary: var(--font-primary);
+  --font-secondary: var(--font-secondary);
 
-.inner {
-  width: 1400px;
-  margin: auto;
-  box-sizing: border-box;
-  position: relative;
-  padding: 120px 0;
-}
-.main {
-  width: 100%;
-}
+  --text-title-xs: var(--font-title-xs);
+  --text-title-s: var(--font-title-s);
+  --text-title-m: var(--font-title-m);
+  --text-title-l: var(--font-title-l);
+  --text-title-xl: var(--font-title-xl);
+  --text-heading-m: var(--font-heading-m);
+  --text-content-xs: var(--font-content-xs);
+  --text-content-s: var(--font-content-s);
+  --text-content-m: var(--font-content-m);
+  --text-content-l: var(--font-content-l);
+  --text-content-xl: var(--font-content-xl);
+  --text-content-xxl: var(--font-content-xxl);
+  --text-content-xxxl: var(--font-content-xxxl);
+  --text-label-xs: var(--font-label-xs);
+  --text-label-s: var(--font-label-s);
+  --text-label-m: var(--font-label-m);
+  --text-label-l: var(--font-label-l);
+  --text-footer-s: var(--font-footer-s);
+  --text-footer-m: var(--font-footer-m);
+  --text-footer-l: var(--font-footer-l);
 
-button {
-  border: none;
-  cursor: pointer;
-}
-.hide {
-  overflow: hidden;
-  text-indent: -99999px;
-  width: 0;
-  height: 0;
-  font-size: 0;
-  line-height: 0;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --spacing-330: 0 330px;
+  --spacing-114: 0 114px;
 }
