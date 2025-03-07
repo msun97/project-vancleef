@@ -9,9 +9,9 @@ const ReviewList = () => {
                 <div className=' flex flex-col gap-[30px]'>
                     {/* <h2 className='font-secondary text-[44px] font-extrabold text-center'>리뷰(총 개수)</h2> */}
                     <div className='w-full flex items-center justify-between'>
-                        <h2 className='font-secondary text-[44px] font-bold'>리뷰(총개수)</h2>
+                        <h2 className='font-secondary text-[32px] font-bold'>리뷰(총개수)</h2>
                         <div className='relative'>
-                            <Button className='w-[290px] h-[80px] font-bold text-xl flex items-center !justify-between p-[30px]'>
+                            <Button className='w-[290px] h-[55px] font-bold text-xl flex items-center !justify-between p-[30px]'>
                                 <span className='whitespace-nowrap'>리뷰 쓰기</span>
                                 <svg
                                     width='24'

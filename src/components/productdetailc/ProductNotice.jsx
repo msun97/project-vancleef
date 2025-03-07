@@ -11,13 +11,13 @@ const ProductNotice = () => {
 
     return (
         <div className='pt-[200px] px-[330px] flex flex-col gap-[22px]'>
-            <h2 className='font-secondary text-[44px] font-bold'>상품고시</h2>
+            <h2 className='font-secondary text-[32px] font-bold'>상품고시</h2>
             <div className='w-full'>
                 <div
                     onClick={() => handleClick('info')}
                     className='flex justify-between items-center border-b border-[#d2d2d2] py-[20px]'
                 >
-                    <h3 className='text-[25px] font-extrabold'>상품 정보 제공 고시</h3>
+                    <h3 className='text-[20px] font-extrabold'>상품 정보 제공 고시</h3>
                     <svg
                         width='30'
                         height='30'
@@ -49,7 +49,7 @@ const ProductNotice = () => {
                     onClick={() => handleClick('delivery')}
                     className='flex justify-between items-center border-b border-[#d2d2d2] py-[20px]'
                 >
-                    <h3 className='text-[25px] font-extrabold'>배송정보</h3>
+                    <h3 className='text-[20px] font-extrabold'>배송정보</h3>
                     <svg
                         width='30'
                         height='30'
@@ -92,7 +92,7 @@ const ProductNotice = () => {
                     onClick={() => handleClick('refund')}
                     className='w-full flex justify-between items-center border-b border-[#d2d2d2] py-[20px]'
                 >
-                    <h3 className='text-[25px] font-extrabold'>교환/환불</h3>
+                    <h3 className='text-[20px] font-extrabold'>교환/환불</h3>
                     <svg
                         width='30'
                         height='30'
