@@ -78,9 +78,9 @@ const Myposts = () => {
         상품 및 무관한 사진/동영상을 첨부할 경우에는 통보없이 삭제 및 적립 혜택이 회수됩니다.
       </p>
 
-      <div className="flex justify-center space-x-4">
-        <Button variant="secondary" className="text-[16px] text-bold w-[290px] h-[55px]">취소</Button>
-        <Button variant="secondary" className="text-[16px] text-bold w-[290px] h-[55px]">등록</Button>
+      <div className="min-w-[608px] flex justify-center space-x-[21px]">
+        <Button variant="secondary" className="text-[16px] font-bold w-[290px] h-[55px]">취소</Button>
+        <Button variant="secondary" className="text-[16px] font-bold w-[290px] h-[55px]">등록</Button>
       </div>
     </div>
   );
