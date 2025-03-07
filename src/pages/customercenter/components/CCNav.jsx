@@ -18,13 +18,15 @@ const CCNav = ({ isOn, handleClick }) => {
       menu: '1:1 문의',
     },
   ];
+  const nowisOn = isOn.replace('/customers/', '');
+  console.log(nowisOn);
   return (
     <ul className="flex w-full">
       {navList.map(nav => (
         <li
           key={nav.id}
           className={`w-1/3 border-b-4 h-[45px] flex justify-center items-start cursor-pointer text-content-m font-bold mb-[100px] ${
-            isOn === nav.name ? 'text-black' : 'text-gray-20 '
+            nowisOn === nav.name ? 'text-black' : 'text-gray-20 '
           }`}
           onClick={() => handleClick(nav.name)}
         >
