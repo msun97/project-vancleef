@@ -33,9 +33,9 @@ const ReviewItem = () => {
                         <path
                             d='M24 4.875L30.18 17.395L44 19.415L34 29.155L36.36 42.915L24 36.415L11.64 42.915L14 29.155L4 19.415L17.82 17.395L24 4.875Z'
                             stroke='#1C1C1E'
-                            stroke-width='2'
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
+                            strokeWidth='2'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
                         />
                     </svg>
                 </div>
@@ -61,9 +61,9 @@ const ReviewItem = () => {
                             <path
                                 d='M14 44.8784H8C6.93913 44.8784 5.92172 44.457 5.17157 43.7068C4.42143 42.9567 4 41.9393 4 40.8784V26.8784C4 25.8176 4.42143 24.8001 5.17157 24.05C5.92172 23.2998 6.93913 22.8784 8 22.8784H14M28 18.8784V10.8784C28 9.28712 27.3679 7.761 26.2426 6.63578C25.1174 5.51056 23.5913 4.87842 22 4.87842L14 22.8784V44.8784H36.56C37.5247 44.8893 38.4608 44.5512 39.1958 43.9264C39.9309 43.3016 40.4154 42.4322 40.56 41.4784L43.32 23.4784C43.407 22.9051 43.3683 22.3198 43.2067 21.7629C43.045 21.2061 42.7642 20.691 42.3837 20.2534C42.0032 19.8159 41.5322 19.4663 41.0031 19.2289C40.4741 18.9914 39.8998 18.8719 39.32 18.8784H28Z'
                                 stroke='gray'
-                                stroke-width='4'
-                                stroke-linecap='round'
-                                stroke-linejoin='round'
+                                strokeWidth='4'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
                             />
                         </svg>
                         <span className='text-label-s text-gray-50'>20</span>
