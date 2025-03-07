@@ -6,10 +6,10 @@ function MyPage() {
   return (
     <div className="flex flex-row w-full h-screen">
       {/* Left Side */}
-      <div className="w-1/2 bg-gray-20 flex items-center justify-center p-[var(--spacing-330)]">
-        <div className="flex items-center justify-center space-y-10">
+      <div className="w-1/2 bg-[#F7F7F7] flex items-center justify-center p-[var(--spacing-330)]">
+        <div className="flex items-baseline justify-center space-y-10">
           <nav
-            className="w-1/2 flex flex-col items-end text-right font-secondary text-[12px]  whitespace-nowrap m-0 mr-[31px]  font-[var(--font-weight-regular)]"
+            className="w-1/2 flex flex-col items-end text-right font-secondary text-[12px]  whitespace-nowrap m-0 mr-[31px]  font-[var(--font-weight-regular)]  space-y-[12px]"
           >
             <Link to="/mypage/order" className="hover:font-bold">주문내역</Link>
             <Link to="/mypage/recent"  className="hover:font-bold">최근본상품</Link>
@@ -23,7 +23,7 @@ function MyPage() {
 
         <div className="w-px h-[302px] bg-black" />
 
-        <div className="w-1/2 flex items-center justify-center whitespace-nowrap">
+        <div className="w-1/2 flex justify-center whitespace-nowrap">
           <p className="text-content-xs m-0 ml-[57px]">
             WELCOME BACK. <Link to="/profile">User</Link>님
           </p>
@@ -31,7 +31,7 @@ function MyPage() {
       </div>
 
       {/* Right Side */}
-      <div className="w-1/2 bg-white flex flex-col items-center justify-center p-[var(--padding-144)] overflow-y-scroll">
+      <div className="w-1/2 bg-white flex flex-col items-center justify-center p-[var(--padding-144)] overflow-auto">
         <Outlet />
       </div>
     </div>

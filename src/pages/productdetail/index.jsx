@@ -1,5 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../components/button';
+import { FreeMode, Navigation, Pagination } from 'swiper/modules';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { IoIosHeartEmpty } from 'react-icons/io';
+
+// import required modules
 
 function ProductDetailPage() {
     const [selectedOption, setSelectedOption] = useState('');
@@ -38,32 +47,44 @@ function ProductDetailPage() {
         <div id="contents" className="w-full h-full ">
             <div className="w-full h-full pb-[80px]"></div>
             <div id="goods" className="w-full h-full">
-                <div id="goods_view" className="w-full h-full flex">
-                    <div className="view_lft w-[50%] h-[800px]">
-                        {/* 제품 이미지 및 슬라이더 */}
-                        <div
-                            id="bigimg"
-                            className="img w-full h-full"
-                            style={{
-                                backgroundImage: "url('/images/product1.png')",
-                                /*   backgroundSize: 'contain', */
-                                backgroundRepeat: 'no-repeat',
-                                backgroundPositionY: ' -101px',
-                            }}
-                        >
-                            <div></div>
-                        </div>
-                        <div id="goodsnav">
-                            <ul className="slider_wrap slider_goods_nav">
-                                {/*    {images.map((image, index) => (
-                                    <li key={index} onClick={() => handleThumbnailClick(index)}>
-                                        <div className="thumb">
-                                            <img src={image} alt={`제품 썸네일 ${index + 1}`} />
-                                        </div>
-                                    </li>
-                                ))} */}
-                            </ul>
-                        </div>
+                <div id="goods_view" className="w-full h-full flex flex-col md:flex-row">
+                    <div className="view_lft w-[50%]  h-[800px]">
+                        <Swiper className="mySwiper">
+                            <SwiperSlide>
+                                {' '}
+                                <img
+                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/F1/9s/OE/xL/mk/2f/kM/Pw/-V/AN/SQ/F19sOExLmk2fkMPw-VANSQ.jpeg"
+                                    alt=""
+                                    style={{ objectFit: 'contain' }}
+                                    /*       style={{ objectFit: 'cover', objectPosition: ' 50% 102%' }} */
+                                />
+                            </SwiperSlide>
+
+                            <SwiperSlide>
+                                {' '}
+                                <img
+                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/18/16/50/3/1816503.png"
+                                    alt=""
+                                    style={{ objectFit: 'contain' }}
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                {' '}
+                                <img
+                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/17/08/14/5/1708145.png.transform.vca-w820-1x.png"
+                                    alt=""
+                                    style={{ objectFit: 'contain' }}
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                {' '}
+                                <img
+                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/17/08/14/6/1708146.png.transform.vca-w820-1x.png"
+                                    alt=""
+                                    style={{ objectFit: 'contain' }}
+                                />
+                            </SwiperSlide>
+                        </Swiper>
                     </div>
                     <div className="view_rgt w-[50%] h-[800px] font-primary text-[12px] leading-8">
                         <div className="px-[114px] h-full pt-[154px]">
@@ -96,6 +117,29 @@ function ProductDetailPage() {
                                     </div>
                                 </form>
                             </div>
+                            <div className="leading-4.5 text-center  mt-4.5 flex justify-center">
+                                <div className="w-4xs border border-solid black p-2.5">
+                                    <ul>
+                                        <li>전화 주문을 통해 서울 일부 지역 당일 배송 가능합니다</li>
+                                        <li>(강남,서초,송파 한정)</li>
+                                        <li>30일이내 무료 반품</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="title">
+                                <h3>CALL</h3>
+                            </div>
+                            <div className="title">
+                                <h3>RESERVATION</h3>
+                            </div>
+                            <div className="title">
+                                <h3>CARE SERVICE</h3>
+                            </div>
+                            <div className="title leading-3.5">
+                                <h3>
+                                    DELIEVERY &<br /> PAYMENT
+                                </h3>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -119,6 +163,116 @@ function ProductDetailPage() {
                         {activeTab === 'review' && <div>상품 후기 내용</div>} */}
                     </div>
                 </div>
+            </div>
+            <div className="w-full h-full mt-60">
+                <div className="w-full h-full flex flex-col">
+                    <ul className="w-full h-full font-bold flex justify-center text-center text-xl">
+                        <li className="w-2xs">상세정보</li>
+                        <li className="w-2xs">리뷰(n) </li>
+                        <li className="w-2xs">상품고시(n)</li>
+                        <li className="w-2xs">상품문의(n)</li>
+                    </ul>
+                    <div className=" p-330 flex flex-col items-center">
+                        <img
+                            src="https://www.vancleefarpels.com/content/dam/rcq/vca/F1/9s/OE/xL/mk/2f/kM/Pw/-V/AN/SQ/F19sOExLmk2fkMPw-VANSQ.jpeg.transform.vca-w820-1x.jpeg"
+                            className="w-[37%] object-contain mt-50"
+                        />
+                        <img
+                            src="https://www.vancleefarpels.com/content/dam/rcq/vca/18/16/50/3/1816503.png"
+                            className="w-[37%] object-contain mt-20"
+                        />
+                        <img
+                            src="https://www.vancleefarpels.com/content/dam/rcq/vca/17/08/14/5/1708145.png.transform.vca-w820-1x.png"
+                            className="w-[37%] object-contain "
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className="w-full h-full mt-60">
+                <ul className="w-full h-full font-bold flex-col justify-center  text-xl p-330 leading-20">
+                    <div className="text-[26px]">상품필수정보</div>
+                    <li className="border-y border-black flex gap-10  items-center">
+                        <div className="w-30">종류</div>
+                        <span className="font-light text-xs text-[#757575]">프리볼 펜던트, 스몰 모델</span>
+                    </li>
+                    <li className=" border-b border-black flex gap-10  items-center">
+                        <div className="w-30">제품번호</div>
+                        <span className="font-light text-xs text-[#757575]">VCARPFBM00</span>
+                    </li>
+                    <li className=" border-b border-black flex gap-10  items-center">
+                        <div className="w-30">스톤</div>
+                        <span className="font-light text-xs text-[#757575]">다이아몬드: 스톤 1개, 0.08캐럿</span>
+                    </li>
+                    <li className=" border-b border-black flex gap-10  items-center">
+                        <div className="w-30">클래스프</div>
+                        <span className="font-light text-xs text-[#757575]">18K 로즈 골드 클래스프</span>
+                    </li>
+                    <li className=" border-b border-black flex gap-10  items-center">
+                        <div className="w-30">사이즈</div>
+                        <span className="font-light text-xs text-[#757575]">체인 길이: 42 cm</span>
+                    </li>
+                    <li className=" border-b border-black flex gap-10  items-center">
+                        <div className="w-30">순중량</div>
+                        <span className="font-light text-xs text-[#757575]">6g</span>
+                    </li>
+                    <li className=" border-b border-black flex gap-10  items-center">
+                        <div className="w-30">제조자</div>
+                        <span className="font-light text-xs text-[#757575]">반클리프 아펠</span>
+                    </li>
+
+                    <li className=" border-b border-black flex gap-10  items-center">
+                        <div className="w-30">수입업체</div>
+                        <span className="font-light text-xs text-[#757575]"> ㈜ 리치몬트 코리아</span>{' '}
+                    </li>
+                    <li className=" border-b border-black flex gap-10  items-center">
+                        <div className="w-30">원산지</div>
+                        <span className="font-light text-xs text-[#757575]">프랑스</span>{' '}
+                    </li>
+                    <li className=" border-b border-black flex gap-10  items-center">
+                        <div className="w-30">품질보증기준</div>
+                        <span className="font-light text-xs text-[#757575]">관련법 및 소비자 분쟁해결 규정에 따름</span>
+                    </li>
+                </ul>
+            </div>
+            <div className="w-full h-full mt-60 p-330">
+                <Swiper
+                    slidesPerView={3}
+                    spaceBetween={30}
+                    freeMode={true}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    modules={[FreeMode, Pagination]}
+                    className="mySwiper"
+                >
+                    <SwiperSlide>
+                        <div>
+                            <img
+                                src="https://www.vancleefarpels.com/content/dam/vancleefarpels/collections/jewelry/frivole/frivole-2024/Frivole_corporate_2024_Carrousel_02_2_4_1x1.jpg.transform.vca-h460-1x.jpg"
+                                alt="이어링"
+                            />
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img
+                            src="https://www.vancleefarpels.com/content/dam/vancleefarpels/collections/jewelry/frivole/frivole-2024/Frivole_corporate_2024_Carrousel_01_3_5_1x1.jpg.transform.vca-h460-1x.jpg"
+                            alt="반지"
+                        />
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                        <img
+                            src="https://www.vancleefarpels.com/content/dam/vancleefarpels/collections/jewelry/frivole/frivole-2024/Advertising_Content_Frivole_Corporate_2023_Worn%20View%205_1X1_300dpi%20(1).jpg.transform.vca-h460-1x.jpg"
+                            alt="이어링"
+                        />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img
+                            src="https://www.vancleefarpels.com/content/dam/vancleefarpels/collections/jewelry/frivole/frivole-2024/Frivole_corporate_2024_Carrousel_05_4_5_1x1.jpg.transform.vca-h460-1x.jpg"
+                            alt="이어링"
+                        />
+                    </SwiperSlide>
+                </Swiper>
             </div>
         </div>
     );
