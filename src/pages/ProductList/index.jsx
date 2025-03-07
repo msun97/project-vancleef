@@ -151,7 +151,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -171,11 +171,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -193,7 +203,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -213,11 +223,125 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2l/BZ/wZ/IW/LU/KT/lh/_j/cx/ZQ/iA/2lBZwZIWLUKTlh_jcxZQiA.png.transform.vca-w820-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/97/cV/oJ/i8/yU/OP/p7/1z/AD/XV/5A/97cVoJi8yUOPp71zADXV5A.png.transform.vca-w820-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -235,7 +359,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -255,11 +379,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -277,7 +411,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -297,11 +431,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -319,7 +463,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -339,11 +483,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -361,7 +515,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -381,11 +535,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -403,7 +567,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -423,49 +587,17 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
-                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
-                                                        <div>
-                                                            <a href="">
-                                                                <img
-                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
-                                                                    width="500"
-                                                                    alt="스위트 버터플라이 펜던트"
-                                                                    title="스위트 버터플라이 펜던트"
-                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
-                                                                />
-                                                            </a>
-                                                        </div>
-
-                                                        <div>
-                                                            {/* text */}
-                                                            <div>
-                                                                <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
-                                                                        스위트 버터플라이 펜던트
-                                                                        <IoIosHeartEmpty color="black" />
-                                                                    </strong>
-                                                                </a>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
                                                             </div>
-
-                                                            <div className="flex gap-2 pt-2.5">
-                                                                <strong>₩2,380,000 </strong>
-
-                                                                <strong>
-                                                                    <span className="line-through text-[#6D6D6D]">
-                                                                        <strong className="text-[#6D6D6D]">
-                                                                            ₩2,000,000
-                                                                        </strong>
-                                                                    </span>
-                                                                </strong>
-                                                                <strong className="text-[#e4a690]">20%</strong>
-                                                            </div>
-
-                                                            <div class="item_icon_box"></div>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -493,7 +625,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -513,11 +645,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -535,7 +677,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -555,11 +697,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -577,7 +729,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -597,11 +749,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -619,7 +781,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -639,11 +801,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -661,7 +833,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -681,11 +853,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -703,7 +885,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -723,11 +905,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -745,7 +937,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -765,11 +957,21 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[100px] mr-[7%]">
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
                                                         <div>
                                                             <a href="">
@@ -787,7 +989,7 @@ const ProductListPage = () => {
                                                             {/* text */}
                                                             <div>
                                                                 <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] ">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
                                                                         스위트 버터플라이 펜던트
                                                                         <IoIosHeartEmpty color="black" />
                                                                     </strong>
@@ -807,7 +1009,69 @@ const ProductListPage = () => {
                                                                 <strong className="text-[#e4a690]">20%</strong>
                                                             </div>
 
-                                                            <div class="item_icon_box"></div>
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
+                                                    <div className="py-2.5 text-left text-[#1c1c1c]">
+                                                        <div>
+                                                            <a href="">
+                                                                <img
+                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                                    width="500"
+                                                                    alt="스위트 버터플라이 펜던트"
+                                                                    title="스위트 버터플라이 펜던트"
+                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
+                                                                />
+                                                            </a>
+                                                        </div>
+
+                                                        <div>
+                                                            {/* text */}
+                                                            <div>
+                                                                <a href="">
+                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                                                        스위트 버터플라이 펜던트
+                                                                        <IoIosHeartEmpty color="black" />
+                                                                    </strong>
+                                                                </a>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5">
+                                                                <strong>₩2,380,000 </strong>
+
+                                                                <strong>
+                                                                    <span className="line-through text-[#6D6D6D]">
+                                                                        <strong className="text-[#6D6D6D]">
+                                                                            ₩2,000,000
+                                                                        </strong>
+                                                                    </span>
+                                                                </strong>
+                                                                <strong className="text-[#e4a690]">20%</strong>
+                                                            </div>
+
+                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
+                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
+                                                                    NEW
+                                                                </div>
+                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
+                                                                    BEST
+                                                                </div>
+                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
+                                                                    기획
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>

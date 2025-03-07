@@ -13,6 +13,12 @@ import Logout from './pages/mypage/logout';
 import ProductInquiry from './pages/productinquiry';
 import ProductListPage from './pages/ProductList';
 import ProductDetailPage from './pages/productdetail';
+import CustomerCenter from './pages/customercenter';
+import TestYG from './pages/productdetail/TestYG';
+import CCInquiryForm from './pages/customercenter/components/CCInquiryForm';
+import CCFaq from './pages/customercenter/components/CCFaq';
+import CCNotice from './pages/customercenter/components/CCNotice';
+import CCInquiry from './pages/customercenter/components/CCInquiry';
 
 const App = () => {
   return (
@@ -23,6 +29,7 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="home" element={<Home />} />
             <Route path="/productlist" element={<ProductListPage />} />
+            <Route path="/testyg" element={<TestYG />} />
             <Route path="/productdetail" element={<ProductDetailPage />} />
             <Route path="/mypage" element={<MyPage />}>
               <Route path="order" element={<Order />} />
@@ -32,6 +39,12 @@ const App = () => {
               <Route path="myposts" element={<Myposts />} />
               <Route path="profile" element={<Profile />} />
               <Route path="logout" element={<Logout />} />
+            </Route>
+            <Route path="/customers" element={<CustomerCenter />}>
+              <Route path="notice" element={<CCNotice />} />
+              <Route path="faq" element={<CCFaq />} />
+              <Route path="inquiry" element={<CCInquiry />} />
+              <Route path="inquiryform" element={<CCInquiryForm />} />
             </Route>
           </Route>
           <Route path="/productinquiry" element={<ProductInquiry />} />
