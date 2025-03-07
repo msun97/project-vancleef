@@ -1,5 +1,44 @@
-@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
-@import url('http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css');
+@font-face {
+  font-family: 'KoPupDotum';
+  src: url('/fonts/KoPubWorld Dotum Bold.ttf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KoPupDotum';
+  src: url('/fonts/KoPubWorld Dotum Light.ttf') format('opentype');
+  font-weight: 400; /* light는 일반적으로 300의 폰트 가중치에 해당합니다. */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KoPupDotum';
+  src: url('/fonts/GmarketSansMedium.ttf') format('opentype');
+  font-weight: 600; /* medium은 일반적으로 500의 폰트 가중치에 해당합니다. */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KoPupBatang';
+  src: url('/fonts/KoPubWorld Batang Bold.ttf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KoPupBatang';
+  src: url('/fonts/KoPubWorld Batang Light.ttf') format('opentype');
+  font-weight: 400; /* light는 일반적으로 300의 폰트 가중치에 해당합니다. */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KoPupBatang';
+  src: url('/fonts/GmarketSansMedium.ttf') format('opentype');
+  font-weight: 600; /* medium은 일반적으로 500의 폰트 가중치에 해당합니다. */
+  font-style: normal;
+}
 
 :root {
   --background-color: #ffffff;
@@ -38,14 +77,14 @@
   --border-color: var(--gray-70);
 
   /* font styles */
-  --font-primary: 'Nanum Gothic', Pretendard, -apple-system, BlinkMacSystemFont,
+  --font-primary: 'KoPupDotum', Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
     'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', sans-serif;
-  --font-secondary: 'NanumMyeongjo', Pretendard, -apple-system,
-    BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
-    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  --font-secondary: 'KoPupBatang', Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
+    'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', sans-serif;
   --font-size-root: 16px;
   --font-size-base: 1rem;
 

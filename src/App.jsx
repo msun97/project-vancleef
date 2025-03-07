@@ -15,6 +15,10 @@ import ProductListPage from './pages/ProductList';
 import ProductDetailPage from './pages/productdetail';
 import CustomerCenter from './pages/customercenter';
 import TestYG from './pages/productdetail/TestYG';
+import CCInquiryForm from './pages/customercenter/components/CCInquiryForm';
+import CCFaq from './pages/customercenter/components/CCFaq';
+import CCNotice from './pages/customercenter/components/CCNotice';
+import CCInquiry from './pages/customercenter/components/CCInquiry';
 
 const App = () => {
   return (
@@ -36,7 +40,12 @@ const App = () => {
               <Route path="profile" element={<Profile />} />
               <Route path="logout" element={<Logout />} />
             </Route>
-            <Route path="/customers" element={<CustomerCenter />}></Route>
+            <Route path="/customers" element={<CustomerCenter />}>
+              <Route path="notice" element={<CCNotice />} />
+              <Route path="faq" element={<CCFaq />} />
+              <Route path="inquiry" element={<CCInquiry />} />
+              <Route path="inquiryform" element={<CCInquiryForm />} />
+            </Route>
           </Route>
           <Route path="/productinquiry" element={<ProductInquiry />} />
           <Route path="*" element={<NotFiles />} />

@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CCNav from './components/CCNav';
-import CCNotice from './components/CCNotice';
-import CCFaq from './components/CCFaq';
-import CCInquiry from './components/CCInquiry';
+
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const CustomerCenter = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isOn, setIsOn] = useState('notice');
   const handleClick = tab => {
     setIsOn(tab);
+    navigate(`/customers/${tab}`);
   };
+
+  useEffect(() => {
+    if (location.pathname === '/customers/inquiryform') {
+      setIsOn(null);
+    }
+  }, [location.pathname]);
   return (
     <div className="p-330">
       <div className="wrap pt-[86px] flex justify-center items-center flex-col gap-5">
@@ -26,10 +35,8 @@ const CustomerCenter = () => {
             있습니다.
           </p>
         </div>
-        <CCNav isOn={isOn} handleClick={handleClick} />
-        {isOn === 'notice' && <CCNotice />}
-        {isOn === 'faq' && <CCFaq />}
-        {isOn === 'inquiry' && <CCInquiry />}
+        {isOn ? <CCNav isOn={isOn} handleClick={handleClick} /> : ''}
+        <Outlet />
       </div>
     </div>
   );
