@@ -13,6 +13,7 @@ import Logout from './pages/mypage/logout';
 import ProductInquiry from './pages/productinquiry';
 import ProductListPage from './pages/ProductList';
 import ProductDetailPage from './pages/productdetail';
+import CustomerCenter from './pages/customercenter';
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
               <Route path="profile" element={<Profile />} />
               <Route path="logout" element={<Logout />} />
             </Route>
+            <Route path="/customers" element={<CustomerCenter />}></Route>
           </Route>
           <Route path="/productinquiry" element={<ProductInquiry />} />
           <Route path="*" element={<NotFiles />} />
