@@ -1,4 +1,5 @@
 import Button from '../button';
+import Pagination from '../pagination';
 import ReviewItem from './ReviewItem';
 
 const ReviewList = () => {
@@ -96,6 +97,7 @@ const ReviewList = () => {
                 <ReviewItem />
                 <ReviewItem />
                 <ReviewItem />
+                <Pagination />
             </div>
         </>
     );
