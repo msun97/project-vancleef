@@ -10,6 +10,7 @@ import { IoIosHeartEmpty } from 'react-icons/io';
 import ProductNotice from '../../components/productdetailc/ProductNotice';
 import ReviewList from '../../components/productdetailc/ReviewList';
 import ProductInquiryList from '../../components/productdetailc/ProductInquiryList';
+import MotiveGuide from '../../components/size/MotiveGuide';
 
 // import required modules
 
@@ -100,7 +101,7 @@ function ProductDetailPage() {
                                 </dl>
                             </div>
                             <div className="option">
-                                <select className="w-full border border-solid black">
+                                <select className="w-full border border-solid black pl-[10px] ">
                                     <option value="" disabled selected>
                                         size
                                     </option>
@@ -146,26 +147,6 @@ function ProductDetailPage() {
                         </div>
                     </div>
                 </div>
-
-                {/* 탭 메뉴 및 상세 정보 */}
-                <div id="tab">
-                    <ul className="tab-menu">
-                        {/*      <li className={activeTab === 'detail' ? 'active' : ''} onClick={() => handleTabClick('detail')}>
-                            상세정보
-                        </li>
-                        <li className={activeTab === 'info' ? 'active' : ''} onClick={() => handleTabClick('info')}>
-                            상품정보
-                        </li>
-                        <li className={activeTab === 'review' ? 'active' : ''} onClick={() => handleTabClick('review')}>
-                            상품후기
-                        </li> */}
-                    </ul>
-                    <div className="tab-content">
-                        {/*         {activeTab === 'detail' && <div>상세 정보 내용</div>}
-                        {activeTab === 'info' && <div>상품 정보 내용</div>}
-                        {activeTab === 'review' && <div>상품 후기 내용</div>} */}
-                    </div>
-                </div>
             </div>
             <div className="w-full h-full mt-60">
                 <div className="w-full h-full flex flex-col">
@@ -178,7 +159,7 @@ function ProductDetailPage() {
                     <div className=" p-330 flex flex-col items-center">
                         <img
                             src="https://www.vancleefarpels.com/content/dam/rcq/vca/F1/9s/OE/xL/mk/2f/kM/Pw/-V/AN/SQ/F19sOExLmk2fkMPw-VANSQ.jpeg.transform.vca-w820-1x.jpeg"
-                            className="w-[37%] object-contain mt-50"
+                            className="w-[37%] object-contain mt-22"
                         />
                         <img
                             src="https://www.vancleefarpels.com/content/dam/rcq/vca/18/16/50/3/1816503.png"
@@ -191,6 +172,8 @@ function ProductDetailPage() {
                     </div>
                 </div>
             </div>
+            <MotiveGuide />
+            {/* 사이즈가이드 */}
             <div className="w-full h-full mt-60">
                 <ul className="w-full h-full font-bold flex-col justify-center  text-xl p-330 leading-20">
                     <div className="text-[26px]">상품필수정보</div>
@@ -258,13 +241,13 @@ function ProductDetailPage() {
                                 {/* text */}
                                 <div>
                                     <a href="">
-                                        <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                        <strong className="pt-3.5 font-secondary text-[22px]  text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2 text-center inline-block w-full">
                                             스위트 버터플라이 펜던트
                                         </strong>
                                     </a>
                                 </div>
 
-                                <div className="flex gap-2 pt-2.5">
+                                <div className="flex gap-2 pt-2.5 justify-center">
                                     <strong>₩2,380,000 </strong>
 
                                     <strong>
@@ -286,13 +269,13 @@ function ProductDetailPage() {
                             {/* text */}
                             <div>
                                 <a href="">
-                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                    <strong className="pt-3.5 font-secondary text-[22px]  text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2 text-center inline-block w-full">
                                         스위트 버터플라이 펜던트
                                     </strong>
                                 </a>
                             </div>
 
-                            <div className="flex gap-2 pt-2.5">
+                            <div className="flex gap-2 pt-2.5 justify-center">
                                 <strong>₩2,380,000 </strong>
 
                                 <strong>
@@ -314,13 +297,13 @@ function ProductDetailPage() {
                             {/* text */}
                             <div>
                                 <a href="">
-                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                    <strong className="pt-3.5 font-secondary text-[22px]  text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2 text-center inline-block w-full">
                                         스위트 버터플라이 펜던트
                                     </strong>
                                 </a>
                             </div>
 
-                            <div className="flex gap-2 pt-2.5">
+                            <div className="flex gap-2 pt-2.5 justify-center">
                                 <strong>₩2,380,000 </strong>
 
                                 <strong>
@@ -341,13 +324,13 @@ function ProductDetailPage() {
                             {/* text */}
                             <div>
                                 <a href="">
-                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                    <strong className="pt-3.5 font-secondary text-[22px]  text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2 text-center inline-block w-full">
                                         스위트 버터플라이 펜던트
                                     </strong>
                                 </a>
                             </div>
 
-                            <div className="flex gap-2 pt-2.5">
+                            <div className="flex gap-2 pt-2.5 justify-center">
                                 <strong>₩2,380,000 </strong>
 
                                 <strong>
