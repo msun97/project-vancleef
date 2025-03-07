@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../components/button';
-import { FreeMode, Navigation, Pagination } from 'swiper/modules';
+import { FreeMode, Keyboard, Navigation, Pagination } from 'swiper/modules';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { IoIosHeartEmpty } from 'react-icons/io';
+import ProductNotice from '../../components/productdetailc/ProductNotice';
+import ReviewList from '../../components/productdetailc/ReviewList';
+import ProductInquiryList from '../../components/productdetailc/ProductInquiryList';
 
 // import required modules
 
@@ -238,11 +241,11 @@ function ProductDetailPage() {
                 <Swiper
                     slidesPerView={3}
                     spaceBetween={30}
-                    freeMode={true}
-                    pagination={{
-                        clickable: true,
+                    keyboard={{
+                        enabled: true,
                     }}
-                    modules={[FreeMode, Pagination]}
+                    navigation={true}
+                    modules={[Keyboard, Navigation]}
                     className="mySwiper"
                 >
                     <SwiperSlide>
@@ -251,6 +254,27 @@ function ProductDetailPage() {
                                 src="https://www.vancleefarpels.com/content/dam/vancleefarpels/collections/jewelry/frivole/frivole-2024/Frivole_corporate_2024_Carrousel_02_2_4_1x1.jpg.transform.vca-h460-1x.jpg"
                                 alt="이어링"
                             />
+                            <div>
+                                {/* text */}
+                                <div>
+                                    <a href="">
+                                        <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                            스위트 버터플라이 펜던트
+                                        </strong>
+                                    </a>
+                                </div>
+
+                                <div className="flex gap-2 pt-2.5">
+                                    <strong>₩2,380,000 </strong>
+
+                                    <strong>
+                                        <span className="line-through text-[#6D6D6D]">
+                                            <strong className="text-[#6D6D6D]">₩2,000,000</strong>
+                                        </span>
+                                    </strong>
+                                    <strong className="text-[#e4a690]">20%</strong>
+                                </div>
+                            </div>
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
@@ -258,6 +282,27 @@ function ProductDetailPage() {
                             src="https://www.vancleefarpels.com/content/dam/vancleefarpels/collections/jewelry/frivole/frivole-2024/Frivole_corporate_2024_Carrousel_01_3_5_1x1.jpg.transform.vca-h460-1x.jpg"
                             alt="반지"
                         />
+                        <div>
+                            {/* text */}
+                            <div>
+                                <a href="">
+                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                        스위트 버터플라이 펜던트
+                                    </strong>
+                                </a>
+                            </div>
+
+                            <div className="flex gap-2 pt-2.5">
+                                <strong>₩2,380,000 </strong>
+
+                                <strong>
+                                    <span className="line-through text-[#6D6D6D]">
+                                        <strong className="text-[#6D6D6D]">₩2,000,000</strong>
+                                    </span>
+                                </strong>
+                                <strong className="text-[#e4a690]">20%</strong>
+                            </div>
+                        </div>
                     </SwiperSlide>
 
                     <SwiperSlide>
@@ -265,15 +310,60 @@ function ProductDetailPage() {
                             src="https://www.vancleefarpels.com/content/dam/vancleefarpels/collections/jewelry/frivole/frivole-2024/Advertising_Content_Frivole_Corporate_2023_Worn%20View%205_1X1_300dpi%20(1).jpg.transform.vca-h460-1x.jpg"
                             alt="이어링"
                         />
+                        <div>
+                            {/* text */}
+                            <div>
+                                <a href="">
+                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                        스위트 버터플라이 펜던트
+                                    </strong>
+                                </a>
+                            </div>
+
+                            <div className="flex gap-2 pt-2.5">
+                                <strong>₩2,380,000 </strong>
+
+                                <strong>
+                                    <span className="line-through text-[#6D6D6D]">
+                                        <strong className="text-[#6D6D6D]">₩2,000,000</strong>
+                                    </span>
+                                </strong>
+                                <strong className="text-[#e4a690]">20%</strong>
+                            </div>
+                        </div>
                     </SwiperSlide>
                     <SwiperSlide>
                         <img
                             src="https://www.vancleefarpels.com/content/dam/vancleefarpels/collections/jewelry/frivole/frivole-2024/Frivole_corporate_2024_Carrousel_05_4_5_1x1.jpg.transform.vca-h460-1x.jpg"
                             alt="이어링"
                         />
+                        <div>
+                            {/* text */}
+                            <div>
+                                <a href="">
+                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
+                                        스위트 버터플라이 펜던트
+                                    </strong>
+                                </a>
+                            </div>
+
+                            <div className="flex gap-2 pt-2.5">
+                                <strong>₩2,380,000 </strong>
+
+                                <strong>
+                                    <span className="line-through text-[#6D6D6D]">
+                                        <strong className="text-[#6D6D6D]">₩2,000,000</strong>
+                                    </span>
+                                </strong>
+                                <strong className="text-[#e4a690]">20%</strong>
+                            </div>
+                        </div>
                     </SwiperSlide>
                 </Swiper>
             </div>
+            <ProductNotice />
+            <ReviewList />
+            <ProductInquiryList />
         </div>
     );
 }
