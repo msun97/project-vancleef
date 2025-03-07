@@ -14,6 +14,7 @@ import ProductInquiry from './pages/productinquiry';
 import ProductListPage from './pages/ProductList';
 import ProductDetailPage from './pages/productdetail';
 import CustomerCenter from './pages/customercenter';
+import TestYG from './pages/productdetail/TestYG';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="home" element={<Home />} />
             <Route path="/productlist" element={<ProductListPage />} />
+            <Route path="/testyg" element={<TestYG />} />
             <Route path="/productdetail" element={<ProductDetailPage />} />
             <Route path="/mypage" element={<MyPage />}>
               <Route path="order" element={<Order />} />
