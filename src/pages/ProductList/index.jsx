@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import Rellax from 'rellax'; // Rellax.js 임포트
 import { IoIosHeartEmpty } from 'react-icons/io';
+import ProductDescription from '../../components/product/ProductDescription';
+import ProductImg from '../../components/product/ProductImg';
 
 const ProductListPage = () => {
     useEffect(() => {
@@ -187,54 +189,15 @@ const ProductListPage = () => {
                                                 </li>
                                                 <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
                                                     <div className="py-2.5 text-left text-[#1c1c1c]">
-                                                        <div>
-                                                            <a href="">
-                                                                <img
-                                                                    src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
-                                                                    width="500"
-                                                                    alt="스위트 버터플라이 펜던트"
-                                                                    title="스위트 버터플라이 펜던트"
-                                                                    className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]"
-                                                                />
-                                                            </a>
-                                                        </div>
+                                                        <ProductImg
+                                                            src="https://www.vancleefarpels.com/content/dam/rcq/vca/2p/PD/VX/nA/6E/qi/FX/7H/TV/JO/zw/2pPDVXnA6EqiFX7HTVJOzw.png.transform.vca-w350-1x.png"
+                                                            imgWidth={500} // width 대신 imgWidth 사용
+                                                            alt="스위트 버터플라이 펜던트"
+                                                            title="스위트 버터플라이 펜던트"
+                                                            className="rounded-t-[900px] h-[391px] w-full bg-[#F1F1F1]" // 둥글기 값 조정
+                                                        />
 
-                                                        <div>
-                                                            {/* text */}
-                                                            <div>
-                                                                <a href="">
-                                                                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
-                                                                        스위트 버터플라이 펜던트
-                                                                        <IoIosHeartEmpty color="black" />
-                                                                    </strong>
-                                                                </a>
-                                                            </div>
-
-                                                            <div className="flex gap-2 pt-2.5">
-                                                                <strong>₩2,380,000 </strong>
-
-                                                                <strong>
-                                                                    <span className="line-through text-[#6D6D6D]">
-                                                                        <strong className="text-[#6D6D6D]">
-                                                                            ₩2,000,000
-                                                                        </strong>
-                                                                    </span>
-                                                                </strong>
-                                                                <strong className="text-[#e4a690]">20%</strong>
-                                                            </div>
-
-                                                            <div className="flex gap-2 pt-2.5 items-center h-8">
-                                                                <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
-                                                                    NEW
-                                                                </div>
-                                                                <div className="py-1 px-3.5  text-white rounded-lg font-bold bg-[#74C365]">
-                                                                    BEST
-                                                                </div>
-                                                                <div className="border border-black py-1 px-3.5 rounded-lg font-bold">
-                                                                    기획
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <ProductDescription />
                                                     </div>
                                                 </li>
                                                 <li className="transition-all duration-1000 ease-in-out top-0  bg-white p-[25px_30px_33px]  mt-[55px] min-h-[360px] mr-[7%]">
