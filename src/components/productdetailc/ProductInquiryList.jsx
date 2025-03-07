@@ -1,4 +1,5 @@
 import Button from '../button';
+import Pagination from '../pagination';
 import ProductInquiryItem from './ProductInquiryItem';
 
 const ProductInquiryList = () => {
@@ -8,7 +9,7 @@ const ProductInquiryList = () => {
                 <h2 className='font-secondary text-[44px] font-bold'>상품문의</h2>
                 <div className='relative'>
                     <Button className='w-[290px] h-[80px] font-bold text-xl flex items-center !justify-between p-[30px]'>
-                        <span className='whitespace-nowrap'>리뷰 쓰기</span>
+                        <span className='whitespace-nowrap'>문의하기</span>
                         <svg width='24' height='24' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
                             <path
                                 d='M10 24.8784H38'
@@ -30,7 +31,12 @@ const ProductInquiryList = () => {
             </div>
             <ul className='w-full border-t-2'>
                 <ProductInquiryItem />
+                <ProductInquiryItem />
+                <ProductInquiryItem />
+                <ProductInquiryItem />
+                <ProductInquiryItem />
             </ul>
+            <Pagination className='pt-[60px]' />
         </div>
     );
 };

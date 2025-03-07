@@ -97,7 +97,7 @@ const ReviewList = () => {
                 <ReviewItem />
                 <ReviewItem />
                 <ReviewItem />
-                <Pagination />
+                <Pagination className='pt-[60px]' />
             </div>
         </>
     );

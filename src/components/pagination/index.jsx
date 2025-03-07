@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Pagination = () => {
+const Pagination = ({ className }) => {
     const [circleOn, setCircleOn] = useState(false);
 
     const handleClick = () => {
@@ -8,7 +8,7 @@ const Pagination = () => {
     };
 
     return (
-        <div className='flex gap-[47px] text-[14px] justify-center pt-[60px] font-medium'>
+        <div className={`flex gap-[47px] text-[14px] justify-center font-medium ${className}`}>
             <button className='relative' onClick={handleClick}>
                 1
                 {circleOn ? (
