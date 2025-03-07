@@ -10,8 +10,8 @@ const ProductNotice = () => {
     };
 
     return (
-        <div className='pt-[80px] px-[330px] flex flex-col gap-[22px]'>
-            <h2 className='font-secondary text-[44px] font-extrabold'>상품고시</h2>
+        <div className='pt-[200px] px-[330px] flex flex-col gap-[22px]'>
+            <h2 className='font-secondary text-[44px] font-bold'>상품고시</h2>
             <div className='w-full'>
                 <div
                     onClick={() => handleClick('info')}
