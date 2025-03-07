@@ -10,7 +10,16 @@ const Order = () => {
 			</div>
 
 <Line/>
-			<div className="py-[30px]">
+			<div className="py-[30px] ">
+			<OrderList/>
+			<OrderList/>
+			<OrderList/>
+			<OrderList/>
+			<OrderList/>
+			<OrderList/>
+			<OrderList/>
+			<OrderList/>
+			<OrderList/>
 			<OrderList/>
 			</div>
 		</div>
