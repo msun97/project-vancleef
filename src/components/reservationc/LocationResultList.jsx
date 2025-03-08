@@ -5,10 +5,10 @@ const LocationResultList = () => {
     return (
         <div className='border-t-2'>
             <h3 className='font-secondary text-[32px] pt-[30px] pb-[40px]'>1. 부티크 선택</h3>
-            <div className='flex flex-col gap-[40px] px-[168px]'>
+            <div className='flex flex-col gap-[40px] px-[330px]'>
                 <div className='flex flex-col gap-[22px]'>
                     <div className='flex flex-col gap-[13px]'>
-                        <h4 className='font-bold text-[26px]'>지역 *</h4>
+                        <h4 className='font-bold text-[18px]'>지역 *</h4>
                         <div className='relative inline-block'>
                             <select name='' id='' className='border py-[20px] px-[30px] w-full'>
                                 <option value=''></option>
@@ -34,7 +34,7 @@ const LocationResultList = () => {
                         </div>
                     </div>
                     <div className='flex flex-col gap-[13px]'>
-                        <h4 className='font-bold text-[26px]'>도시 *</h4>
+                        <h4 className='font-bold text-[18px]'>도시 *</h4>
                         <div className='relative inline-block'>
                             <select name='' id='' className='border py-[20px] px-[30px] w-full'>
                                 <option value=''></option>

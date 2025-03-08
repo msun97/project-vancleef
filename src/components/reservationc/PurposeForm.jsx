@@ -5,7 +5,7 @@ const PurposeForm = () => {
     return (
         <div className='border-t-2 w-full'>
             <h3 className='font-secondary text-[32px] pt-[30px] pb-[40px]'>2. 방문 목적</h3>
-            <div className='flex flex-col gap-[20px] px-[168px] font-bold text-[18px] w-full'>
+            <div className='flex flex-col gap-[20px] px-[330px] font-bold text-[18px] w-full'>
                 <p>어떤 도움이 필요하신가요? *</p>
                 <div className='flex items-center gap-[50px] w-full mt-[5px] mb-[7px]'>
                     <div className='flex items-center gap-[12px]'>

@@ -11,7 +11,7 @@ const ReservationDetailForm = () => {
     return (
         <div className='border-t-2 w-full'>
             <h3 className='font-secondary text-[32px] pt-[30px] pb-[40px]'>3. 예약 상세정보</h3>
-            <div className='flex flex-col gap-[20px] px-[168px] font-bold text-[18px] w-full'>
+            <div className='flex flex-col gap-[20px] px-[330px] font-bold text-[18px] w-full'>
                 <p>날짜 *</p>
                 <div className='border flex items-center'>
                     <div className='relative border-r'>
@@ -46,7 +46,7 @@ const ReservationDetailForm = () => {
                 </div>
                 <p>이용 가능 시간 *</p>
                 <TimePicker />
-                <p>선호 언어</p>
+                <p>선호 언어 *</p>
                 <div className='relative inline-block'>
                     <select name='' id='' className='border py-[14px] px-[17px] w-full'>
                         <option value=''></option>
