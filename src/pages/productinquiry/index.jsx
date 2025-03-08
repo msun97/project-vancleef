@@ -1,10 +1,58 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/button';
 import CheckBox from '../../components/checkbox';
+import { useRef, useState } from 'react';
+import Input from '../../components/input';
 
 const flexIC = 'flex items-center';
 
 const ProductInquiry = () => {
+    const [fileName, setFileName] = useState(''); // 파일명 상태 추가
+    const [userInquiry, setUserInquiry] = useState({
+        title: '',
+        content: '',
+        name: '',
+        date: '',
+    });
+    const fileInputRef = useRef(null);
+    const navigate = useNavigate();
+
+    const handleButtonClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    // 파일 선택 시 호출되는 함수
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setFileName(file.name);
+        }
+    };
+
+    const { title, content, name, date } = userInquiry;
+
+    const changeInput = (e) => {
+        const { value, name } = e.target;
+        setUserInquiry({
+            ...userInquiry,
+            [name]: value,
+        });
+    };
+
+    const now = new Date();
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if (!title || !name || !content) return;
+        userInquiry.date = `${now.getFullYear()} - ${now.getMonth() + 1} -${now.getDate()} `;
+    };
+
+    const onExit = (e) => {
+        e.preventDefault();
+        navigate('/productdetail');
+    };
     return (
         <div className='wrap p-330 pt-[80px]'>
             <h2 className='font-secondary font-bold text-heading-m border-b-2'>상품 문의 쓰기</h2>
@@ -21,7 +69,7 @@ const ProductInquiry = () => {
                     <p className='font-bold text-gray-40 text-heading-m'>상품설명</p>
                 </div>
             </div>
-            <form className='w-full'>
+            <form className='w-full' onSubmit={onSubmit}>
                 <ul className='flex flex-col w-full border-b-2 py-8 px-4 gap-5'>
                     <li className='flex items-center'>
                         <div className='w-32 flex items-center gap-2'>
@@ -101,9 +149,22 @@ const ProductInquiry = () => {
                             <h4>파일</h4>
                         </div>
                         <div>
-                            <input className='border border-gray-40 p-3 w-56 h-10 text-xs' />
+                            <input
+                                className='border border-gray-40 p-3 w-56 h-10 text-xs'
+                                placeholder={`${fileName}`}
+                            />
                         </div>
-                        <Button className='w-20 h-10 py-3 px-4 ml-4 text-xs'>찾아보기</Button>
+                        <div className='relative'>
+                            <Button onClick={handleButtonClick} className='w-20 h-10 py-3 px-4 ml-4 text-xs'>
+                                찾아보기
+                            </Button>
+                            <Input
+                                ref={fileInputRef}
+                                type='file'
+                                onChange={handleFileChange} // 파일 선택 시 이벤트 연결
+                                className='absolute opacity-0 w-0 h-0'
+                            />
+                        </div>
                         <Button className='w-20 h-10 py-3 px-4 ml-2 text-xs' variant='secondary'>
                             + 추가
                         </Button>
@@ -132,10 +193,12 @@ const ProductInquiry = () => {
                     </div>
                 </div>
                 <div className='flex justify-center gap-4 py-8 px-4'>
-                    <Button variant='secondary' className='w-50 h-[55px]'>
+                    <Button variant='secondary' className='w-50 h-[55px]' onClick={onExit}>
                         취소
                     </Button>
-                    <Button className='w-50 h-[55px]'>확인</Button>
+                    <Button className='w-50 h-[55px]' type='submit'>
+                        확인
+                    </Button>
                 </div>
             </form>
         </div>
