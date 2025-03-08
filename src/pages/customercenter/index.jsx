@@ -9,17 +9,19 @@ const CustomerCenter = () => {
 
   const [isOn, setIsOn] = useState('notice');
   const handleClick = tab => {
+    setIsOn(tab);
     navigate(`/customers/${tab}`);
   };
+
   useEffect(() => {
     if (location.pathname === '/customers/inquiryform') {
       setIsOn(null);
     } else {
-      setIsOn(location.pathname);
+      setIsOn(location.pathname.split('/')[2]);
     }
   }, [location.pathname]);
   return (
-    <div className="p-330">
+    <div className="p-330 relative">
       <div className="wrap pt-[86px] flex justify-center items-center flex-col gap-5">
         <h2 className="text-content-xxxl font-secondary font-bold">고객센터</h2>
         <div className="cc bg-gray-10 w-full h-[220px] mt-5 rounded-[10px] flex flex-col justify-center items-center gap-4">
