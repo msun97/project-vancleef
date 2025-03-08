@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import DropDown from '../../../components/dropdown'
 import Input from '../../../components/input'
