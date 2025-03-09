@@ -16,7 +16,7 @@ const CCInquiryForm = () => {
     navigate(-1);
   };
   return (
-    <div className="w-full mt-[62px]">
+    <div className={`w-full mt-[62px]`}>
       <div className="title w-full border-b py-[14px]">
         <h3 className="font-secondary text-content-xl font-bold">1:1문의</h3>
       </div>
@@ -135,7 +135,7 @@ const CCInquiryForm = () => {
           제출
         </Button>
       </div>
-      {modalIsOpen && <CCInquiryFormModal />}
+      {modalIsOpen && <CCInquiryFormModal handleOpenModal={handleOpenModal}/>}
     </div>
   );
 };
