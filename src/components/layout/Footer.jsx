@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <fotter className="p-330 flex justify-between h-[520px] items-center font-secondary text-primary-70">
+    <footer className="p-330 flex justify-between h-[520px] items-center font-secondary text-primary-70">
       <div className="left flex flex-col gap-[45px]">
         <div className="offline text-footer-l font-regular">
           오프라인 매장 찾기
@@ -33,7 +33,7 @@ const Footer = () => {
           </ul>
         </div>
       </div>
-    </fotter>
+    </footer>
   );
 };
 

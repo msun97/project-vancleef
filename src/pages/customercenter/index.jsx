@@ -9,13 +9,13 @@ const CustomerCenter = () => {
 
   const [isOn, setIsOn] = useState('notice');
   const handleClick = tab => {
-    setIsOn(tab);
     navigate(`/customers/${tab}`);
   };
-
   useEffect(() => {
     if (location.pathname === '/customers/inquiryform') {
       setIsOn(null);
+    } else {
+      setIsOn(location.pathname);
     }
   }, [location.pathname]);
   return (

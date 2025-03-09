@@ -46,7 +46,7 @@ const ReviewItem = () => {
             <div className='w-full relative flex flex-col gap-[15px] text-xl'>
                 <span className='absolute top-0 right-0'>example@email.com</span>
                 <h3 className='font-bold'>제목: 우리 와이프 시계 사줬어요.</h3>
-                <p className='pt-[2px]'>아주 마음에 든답니다. 장인의 정신이 느껴진다고 하네요.</p>
+                <p className='pt-[2px] text-[17px]'>아주 마음에 든답니다. 장인의 정신이 느껴진다고 하네요.</p>
                 <ul className='flex gap-[6px]'>
                     <li>
                         <img src='' alt='당근예시1' className='h-[94px]' />
