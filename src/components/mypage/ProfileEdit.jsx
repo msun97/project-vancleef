@@ -277,26 +277,27 @@ function PasswordChange() {
     <div className="max-w-[708px] mt-[30px] mx-auto mb-[60px]">
       {/* 최상단 탭 버튼 영역 */}
       <div className="flex flex-row">
-        <Button
-          onClick={() => setActiveTab('info')}
-          className={`w-1/2 py-3 text-center font-bold ${
-            activeTab === 'info'
-              ? 'bg-black text-white border-b-2 border-black'
-              : 'bg-white text-black'
-          }`}
-        >
-          기본 정보 변경
-        </Button>
-        <Button
-          onClick={() => setActiveTab('password')}
-          className={`w-1/2 py-3 text-center font-bold ${
-            activeTab === 'password'
-              ? 'bg-black text-white border-b-2 border-black'
-              : 'bg-white text-black'
-          }`}
-        >
-          비밀번호 변경
-        </Button>
+			<button
+  onClick={() => setActiveTab('info')}
+  className={`w-1/2 h-[55px] py-3 text-center font-bold border border-black ${
+    activeTab === 'info'
+      ? 'bg-black text-white border-b-2'
+      : 'bg-white text-red font-regular'
+  }`}
+>
+  기본 정보 변경
+        </button>
+        <button
+			
+         onClick={() => setActiveTab('password')}
+				 className={`w-1/2 h-[55px] py-3 text-center font-bold border border-black ${
+					 activeTab === 'password'
+						 ? 'bg-black text-white border-b-2'
+						 : 'bg-white text-red font-regular'
+				 }`}
+			 >
+				 비밀번호 변경
+        </button>
       </div>
 
       {/* 페이지 전환 내용 */}
