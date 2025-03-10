@@ -12,7 +12,8 @@ import ReviewList from '../../components/productdetailc/ReviewList';
 import ProductInquiryList from '../../components/productdetailc/ProductInquiryList';
 import MotiveGuide from '../../components/size/MotiveGuide';
 import SizeGuide from '../../components/size/SizeGuide';
-import InquiryModal from '../../components/productdetailc/InquiryModal';
+import CareModal from '../../components/productdetailc/CareModal';
+// import InquiryModal from '../../components/productdetailc/InquiryModal';
 
 // import required modules
 
@@ -350,7 +351,8 @@ function ProductDetailPage() {
             <ProductNotice />
             <ReviewList />
             <ProductInquiryList />
-            <InquiryModal />
+            {/* <InquiryModal /> */}
+            <CareModal />
         </div>
     );
 }
