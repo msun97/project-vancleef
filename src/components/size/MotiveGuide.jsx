@@ -3,7 +3,7 @@ import React from "react";
 const MotiveGuide = () => {
   return (
     <div className="w-full h-[800px]  p-330 mt-[152px]">
-      <div className="border border-gray-300 py-5 px-8">
+      <div className="py-5 px-8">
         <h1 className="text-center text-[42px] font-secondary font-extrabold">
           Van Cleef & Arpels
         </h1>
@@ -14,7 +14,7 @@ const MotiveGuide = () => {
         <div className="w-full flex justify-center gap-2">
           <div className="border border-gray-300">
             <img
-              src="/images/size/sweet-1.png"
+              src="/images/size/sweet-1.PNG"
               alt="스위트알함브라"
               className="w-[250px] h-[205px]"
             />

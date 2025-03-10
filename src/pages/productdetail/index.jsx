@@ -94,7 +94,7 @@ function ProductDetailPage() {
               </SwiperSlide>
             </Swiper>
           </div>
-          <div className="view_rgt w-[50%] h-[800px] font-primary text-[12px] leading-8">
+          <div className="view_rgt w-[50%] h-[800px] font-primary text-[14px] leading-8">
             <div className="px-[114px] h-full pt-[154px]">
               <div className="title">
                 <h3>제품 이름</h3>
@@ -126,7 +126,7 @@ function ProductDetailPage() {
                 </form>
               </div>
               <div className="leading-4.5 text-center  mt-4.5 flex justify-center">
-                <div className="w-4xs border border-solid black p-2.5">
+                <div className="w-4xs border border-solid black py-[10px] px-[19px] leading-5">
                   <ul>
                     <li>
                       전화 주문을 통해 서울 일부 지역 당일 배송 가능합니다
@@ -136,16 +136,16 @@ function ProductDetailPage() {
                   </ul>
                 </div>
               </div>
-              <div className="title">
+              <div className="title tracking-wide">
                 <h3>CALL</h3>
               </div>
-              <div className="title">
+              <div className="title tracking-wide">
                 <h3>RESERVATION</h3>
               </div>
-              <div className="title">
+              <div className="title tracking-wide">
                 <h3>CARE SERVICE</h3>
               </div>
-              <div className="title leading-3.5">
+              <div className="title leading-4 tracking-wide">
                 <h3>
                   DELIEVERY &<br /> PAYMENT
                 </h3>
