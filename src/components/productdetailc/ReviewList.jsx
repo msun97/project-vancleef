@@ -1,10 +1,25 @@
+import { useState } from 'react';
 import Button from '../button';
 import Pagination from '../pagination';
 import ReviewItem from './ReviewItem';
+import Myposts from '../mypage/Myposts';
 
 const ReviewList = () => {
+    const [activeModal, setActiveModal] = useState(false);
+
+    const handleModal = () => {
+        setActiveModal(!activeModal);
+    };
+
     return (
         <>
+            {activeModal ? (
+                <div className='fixed bg-gray-20 bg-opacity-40 w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
+                    <div className='w-[710px] relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+                        <Myposts handleModal={handleModal} />
+                    </div>
+                </div>
+            ) : null}
             <div className='pt-[200px] px-[330px] w-full'>
                 <div className=' flex flex-col gap-[30px]'>
                     {/* <h2 className='font-secondary text-[44px] font-extrabold text-center'>리뷰(총 개수)</h2> */}
