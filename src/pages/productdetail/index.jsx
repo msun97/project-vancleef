@@ -12,7 +12,7 @@ import ReviewList from '../../components/productdetailc/ReviewList';
 import ProductInquiryList from '../../components/productdetailc/ProductInquiryList';
 import MotiveGuide from '../../components/size/MotiveGuide';
 import SizeGuide from '../../components/size/SizeGuide';
-import DelieveryModal from '../../components/productdetailc/DelieveryModal';
+// import DelieveryModal from '../../components/productdetailc/DelieveryModal';
 // import CareModal from '../../components/productdetailc/CareModal';
 // import InquiryModal from '../../components/productdetailc/InquiryModal';
 
@@ -354,7 +354,7 @@ function ProductDetailPage() {
             <ProductInquiryList />
             {/* <InquiryModal /> */}
             {/* <CareModal /> */}
-            <DelieveryModal />
+            {/* <DelieveryModal /> */}
         </div>
     );
 }
