@@ -310,10 +310,15 @@
 
     .swiper-button-prev {
         color: #ddd !important ;
+        width: 8px;
+        height: 8px;
     }
 
     .swiper-button-next {
         color: #ddd !important ;
+    }
+    .swiper-button-next::after {
+        font-size: 20px !important ;
     }
 }
 
