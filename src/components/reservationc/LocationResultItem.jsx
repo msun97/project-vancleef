@@ -68,29 +68,31 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
                 <button onClick={handlePlus} className='text-[40px] leading-none'>
                     {isActive ? '-' : '+'}
                 </button>
-                <svg width='40' height='40' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                    <path
-                        d='M2 12.8784V44.8784L16 36.8784L32 44.8784L46 36.8784V4.87842L32 12.8784L16 4.87842L2 12.8784Z'
-                        stroke='#1C1C1E'
-                        strokeWidth='2'
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                    />
-                    <path
-                        d='M16 4.87842V36.8784'
-                        stroke='#1C1C1E'
-                        strokeWidth='2'
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                    />
-                    <path
-                        d='M32 12.8784V44.8784'
-                        stroke='#1C1C1E'
-                        strokeWidth='2'
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                    />
-                </svg>
+                <button>
+                    <svg width='40' height='40' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                        <path
+                            d='M2 12.8784V44.8784L16 36.8784L32 44.8784L46 36.8784V4.87842L32 12.8784L16 4.87842L2 12.8784Z'
+                            stroke='#1C1C1E'
+                            strokeWidth='2'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                        />
+                        <path
+                            d='M16 4.87842V36.8784'
+                            stroke='#1C1C1E'
+                            strokeWidth='2'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                        />
+                        <path
+                            d='M32 12.8784V44.8784'
+                            stroke='#1C1C1E'
+                            strokeWidth='2'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                        />
+                    </svg>
+                </button>
             </div>
             <Button className='mx-auto h-[55px] w-[324px]' variant='secondary'>
                 부티끄 선택하기
