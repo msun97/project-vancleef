@@ -44,15 +44,15 @@ const ReviewItem = () => {
                 </div>
             </div>
             <div className='w-full relative flex flex-col gap-[15px] text-xl'>
-                <span className='absolute top-0 right-0'>example@email.com</span>
+                <span className='absolute top-0 right-0 text-[17px]'>example@email.com</span>
                 <h3 className='font-bold'>제목: 우리 와이프 시계 사줬어요.</h3>
                 <p className='pt-[2px] text-[17px]'>아주 마음에 든답니다. 장인의 정신이 느껴진다고 하네요.</p>
                 <ul className='flex gap-[6px]'>
                     <li>
-                        <img src='' alt='당근예시1' className='h-[94px]' />
+                        <img src='/images/carrot1.png' alt='당근예시1' className='h-[94px]' />
                     </li>
                     <li>
-                        <img src='' alt='당근예시2' className='h-[94px]' />
+                        <img src='/images/carrot2.png' alt='당근예시2' className='h-[94px]' />
                     </li>
                 </ul>
                 <div className='flex items-center gap-[17px]'>
@@ -69,8 +69,7 @@ const ReviewItem = () => {
                         <span className='text-label-s text-gray-50'>20</span>
                     </div>
                     <Button
-                        variant='secondary'
-                        className='text-label-s py-[4px] px-[15px] text-center w-[97px] h-[25px] whitespace-nowrap'
+                        className='font-secondary text-label-s py-[4px] px-[15px] text-center w-[97px] h-[25px] whitespace-nowrap'
                     >
                         도움됐어요
                     </Button>

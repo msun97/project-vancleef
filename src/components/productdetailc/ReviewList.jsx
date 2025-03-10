@@ -1,10 +1,25 @@
+import { useState } from 'react';
 import Button from '../button';
 import Pagination from '../pagination';
 import ReviewItem from './ReviewItem';
+import Myposts from '../mypage/Myposts';
 
 const ReviewList = () => {
+    const [activeModal, setActiveModal] = useState(false);
+
+    const handleModal = () => {
+        setActiveModal(!activeModal);
+    };
+
     return (
         <>
+            {activeModal ? (
+                <div className='fixed bg-gray-20 bg-opacity-40 w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
+                    <div className='w-[710px] relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+                        <Myposts handleModal={handleModal} />
+                    </div>
+                </div>
+            ) : null}
             <div className='pt-[200px] px-[330px] w-full'>
                 <div className=' flex flex-col gap-[30px]'>
                     {/* <h2 className='font-secondary text-[44px] font-extrabold text-center'>리뷰(총 개수)</h2> */}
@@ -66,22 +81,6 @@ const ReviewList = () => {
                                     />
                                     <path
                                         d='M24 34.875C28.4183 34.875 32 31.2933 32 26.875C32 22.4567 28.4183 18.875 24 18.875C19.5817 18.875 16 22.4567 16 26.875C16 31.2933 19.5817 34.875 24 34.875Z'
-                                        stroke='black'
-                                        strokeWidth='4'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                    />
-                                </svg>
-                                <svg
-                                    width='24'
-                                    height='24'
-                                    viewBox='0 0 48 49'
-                                    fill='none'
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    className='hover:opacity-100 transition duration-300 opacity-50 cursor-pointer'
-                                >
-                                    <path
-                                        d='M44 6.875H4L20 25.795V38.875L28 42.875V25.795L44 6.875Z'
                                         stroke='black'
                                         strokeWidth='4'
                                         strokeLinecap='round'

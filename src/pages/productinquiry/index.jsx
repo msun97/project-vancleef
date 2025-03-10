@@ -1,10 +1,70 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/button';
 import CheckBox from '../../components/checkbox';
+import { useRef, useState } from 'react';
+import Input from '../../components/input';
 
 const flexIC = 'flex items-center';
 
 const ProductInquiry = () => {
+    const fileInputRef = useRef(null);
+    const navigate = useNavigate();
+    const [fileName, setFileName] = useState(''); // 파일명 상태 추가
+    const [userInquiry, setUserInquiry] = useState({
+        title: '',
+        content: '',
+        name: '',
+        password: '',
+        date: '',
+        inquiryType: '상품',
+    });
+    const [isAgreed, setIsAgreed] = useState(false);
+
+    const handleCheckChange = (checkState) => {
+        setIsAgreed(checkState);
+    };
+
+    const buttonStyle = isAgreed
+        ? 'w-50 h-[55px] border border-primary text-primary hover:bg-primary hover:text-white cursor-pointer'
+        : 'w-50 h-[55px] border border-gray-400 text-gray-400 cursor-not-allowed';
+
+    const handleButtonClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    // 파일 선택 시 호출되는 함수
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setFileName(file.name);
+        }
+    };
+
+    const { title, content, name, password } = userInquiry;
+
+    const changeInput = (e) => {
+        const { value, name } = e.target;
+        setUserInquiry({
+            ...userInquiry,
+            [name]: value,
+        });
+    };
+
+    const now = new Date();
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if (!title || !name || !content) return;
+        userInquiry.date = `${now.getFullYear()} - ${now.getMonth() + 1} -${now.getDate()} `;
+        navigate('/productdetail');
+    };
+
+    const onExit = (e) => {
+        e.preventDefault();
+        navigate('/productdetail');
+    };
     return (
         <div className='wrap p-330 pt-[80px]'>
             <h2 className='font-secondary font-bold text-heading-m border-b-2'>상품 문의 쓰기</h2>
@@ -21,7 +81,7 @@ const ProductInquiry = () => {
                     <p className='font-bold text-gray-40 text-heading-m'>상품설명</p>
                 </div>
             </div>
-            <form className='w-full'>
+            <form className='w-full' onSubmit={onSubmit}>
                 <ul className='flex flex-col w-full border-b-2 py-8 px-4 gap-5'>
                     <li className='flex items-center'>
                         <div className='w-32 flex items-center gap-2'>
@@ -29,7 +89,12 @@ const ProductInquiry = () => {
                             <h4>말머리</h4>
                         </div>
                         <div className='relative inline-block'>
-                            <select className='border border-gray-40 p-3 w-56 h-10 text-xs appearance-none'>
+                            <select
+                                className='border border-gray-40 p-3 w-56 h-10 text-xs appearance-none'
+                                name='inquiryType'
+                                value={userInquiry.inquiryType}
+                                onChange={changeInput}
+                            >
                                 <option value='상품'>상품</option>
                                 <option value='배송'>배송</option>
                                 <option value='반품/환불'>반품/환불</option>
@@ -61,7 +126,14 @@ const ProductInquiry = () => {
                             <h4>작성자</h4>
                         </div>
                         <div>
-                            <input className='border border-gray-40 p-3 w-56 h-10 text-xs' />
+                            <input
+                                className='border border-gray-40 p-3 w-56 h-10 text-xs'
+                                type='text'
+                                placeholder='작성자'
+                                name='name'
+                                value={name}
+                                onChange={changeInput}
+                            />
                         </div>
                     </li>
                     <li className='flex items-center'>
@@ -70,7 +142,14 @@ const ProductInquiry = () => {
                             <h4>비밀번호</h4>
                         </div>
                         <div>
-                            <input className='border border-gray-40 p-3 w-56 h-10 text-xs' />
+                            <input
+                                className='border border-gray-40 p-3 w-56 h-10 text-xs'
+                                type='text'
+                                placeholder='비밀번호'
+                                name='password'
+                                value={password}
+                                onChange={changeInput}
+                            />
                         </div>
                     </li>
                     <li className='flex items-center'>
@@ -79,7 +158,14 @@ const ProductInquiry = () => {
                             <h4>제목</h4>
                         </div>
                         <div className='ml-3 w-full'>
-                            <input className='p-3 border border-gray-40  w-full h-10 text-xs' />
+                            <input
+                                className='p-3 border border-gray-40  w-full h-10 text-xs'
+                                type='text'
+                                placeholder='제목'
+                                name='title'
+                                value={title}
+                                onChange={changeInput}
+                            />
                         </div>
                     </li>
                     <li className='flex items-start'>
@@ -92,7 +178,15 @@ const ProductInquiry = () => {
                                 <CheckBox className='w-5 h-5' />
                                 <span>비밀글</span>
                             </div>
-                            <textarea className='border border-gray-40 p-3 w-full h-40 text-xs'></textarea>
+                            <textarea
+                                className='border border-gray-40 p-3 w-full h-40 text-xs'
+                                cols='100'
+                                rows='10'
+                                placeholder='내용'
+                                name='content'
+                                value={content}
+                                onChange={changeInput}
+                            ></textarea>
                         </div>
                     </li>
                     <li className='flex items-center'>
@@ -101,9 +195,22 @@ const ProductInquiry = () => {
                             <h4>파일</h4>
                         </div>
                         <div>
-                            <input className='border border-gray-40 p-3 w-56 h-10 text-xs' />
+                            <input
+                                className='border border-gray-40 p-3 w-56 h-10 text-xs'
+                                placeholder={`${fileName}`}
+                            />
                         </div>
-                        <Button className='w-20 h-10 py-3 px-4 ml-4 text-xs'>찾아보기</Button>
+                        <div className='relative'>
+                            <Button onClick={handleButtonClick} className='w-20 h-10 py-3 px-4 ml-4 text-xs'>
+                                찾아보기
+                            </Button>
+                            <Input
+                                ref={fileInputRef}
+                                type='file'
+                                onChange={handleFileChange} // 파일 선택 시 이벤트 연결
+                                className='absolute opacity-0 w-0 h-0'
+                            />
+                        </div>
                         <Button className='w-20 h-10 py-3 px-4 ml-2 text-xs' variant='secondary'>
                             + 추가
                         </Button>
@@ -126,16 +233,27 @@ const ProductInquiry = () => {
                         밖의 사항은 넷마블힐러비(주) 개인정보처리방침을 준수합니다.
                     </p>
                     <div className='flex items-center gap-2 mt-4'>
-                        <CheckBox className='w-5 h-5' />
+                        <CheckBox id='agreement' checked={handleCheckChange} className='w-5 h-5' />
                         <p>위 내용에 동의합니다.</p>
                         <Link>전체보기 {'>'}</Link>
                     </div>
                 </div>
                 <div className='flex justify-center gap-4 py-8 px-4'>
-                    <Button variant='secondary' className='w-50 h-[55px]'>
+                    <Button variant='secondary' className='w-50 h-[55px]' onClick={onExit}>
                         취소
                     </Button>
-                    <Button className='w-50 h-[55px]'>확인</Button>
+                    <Button
+                        className={buttonStyle}
+                        type='submit'
+                        disabled={!isAgreed}
+                        onClick={(e) => {
+                            if (!isAgreed) {
+                                e.preventDefault();
+                            }
+                        }}
+                    >
+                        확인
+                    </Button>
                 </div>
             </form>
         </div>

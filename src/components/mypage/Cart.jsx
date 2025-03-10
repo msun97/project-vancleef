@@ -21,13 +21,13 @@ const MypageCartlist = () => {
      <div className='flex-col items-center space-y-[6px]'>		 
 			<Button
   variant="secondary"
- className="w-[89px] h-[29px] border border-[#D9D9D9] flex items-center justify-center"
+ className="font-bold w-[89px] h-[29px] border border-[#D9D9D9] flex items-center justify-center"
 >
   바로주문
 </Button>
 <Button
   variant="secondary"
-className="w-[89px] h-[29px] border border-[#D9D9D9] flex items-center justify-center"
+className="font-bold w-[89px] h-[29px] border border-[#D9D9D9] flex items-center justify-center"
 >
   찜
 </Button>
