@@ -53,7 +53,7 @@ function PasswordChange() {
 	      <div className="flex flex-row mb-[60px]">
 	        <label className="mb-2 font-regular">생일/성별</label>
 	        <div className="ml-[60px] items-start space-x-5">
-					<select className="underline text-[gray]">
+					<select className="text-[gray]">
 	  <option>년</option>
 	  {Array.from({ length: 2011 - 1950 + 1 }, (_, i) => {
 	    const year = i + 1950;
@@ -63,24 +63,24 @@ function PasswordChange() {
 	      </option>
 	    );
 	  })}
-	</select>년
+	</select>
 	     
-	          <select className="underline text-[gray]">
+	          <select className="text-[gray]">
 	            <option>월</option>
 	         {Array.from({ length: 12 }, (_, i) => (
 	    <option key={i + 1} value={i + 1}>
 	      {i + 1}
 	    </option>
 	  ))}
-	</select>월
-	          <select className="underline text-[gray]">
+	</select>
+	          <select className="text-[gray]">
 	  <option>일</option>
 	  {Array.from({ length: 30 }, (_, i) => (
 	    <option key={i + 1} value={i + 1}>
 	      {i + 1}
 	    </option>
 	  ))}
-	</select>일
+	</select>
 	        </div>
 	      </div>
 	
