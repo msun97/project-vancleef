@@ -1,25 +1,24 @@
-import { useState } from 'react';
 import Button from '../button';
 
-const LocationResultItem = () => {
-    const [activePlus, setActivePlus] = useState();
+const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
+    const isActive = id === activeId;
 
     const handlePlus = () => {
-        setActivePlus(!activePlus);
+        setActiveId(isActive ? null : id);
     };
     return (
         <div className='relative mt-[40px]  border-t-2 text-content-xxl w-full'>
             <div className='pt-[30px] pb-[35px]'>
-                <p>경기 - 현대 판교</p>
+                <p>{data?.location || '경기 - 현대 판교'}</p>
                 <p>
-                    현대백화점 판교점 1층 판교역로 146번길 20
+                    {data?.address || '현대백화점 판교점 1층 판교역로 146번길 20'}
                     <br />
-                    성남, 13529
+                    {data?.city || '성남'}, {data?.zipcode || '13529'}
                 </p>
             </div>
             <div
                 className={`w-full mb-8 overflow-hidden transition-all duration-300 ${
-                    activePlus ? 'max-h-96' : 'max-h-0'
+                    isActive ? 'max-h-96' : 'max-h-0'
                 }`}
             >
                 <div className='flex items-center gap-5 text-[14px] mt-1 mb-[24px]'>
@@ -67,7 +66,7 @@ const LocationResultItem = () => {
             </div>
             <div className='absolute top-[35px] right-0 flex flex-col items-center gap-[35px]'>
                 <button onClick={handlePlus} className='text-[40px] leading-none'>
-                    +
+                    {isActive ? '-' : '+'}
                 </button>
                 <svg width='40' height='40' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
                     <path

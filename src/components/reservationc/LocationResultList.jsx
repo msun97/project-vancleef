@@ -1,7 +1,23 @@
+import { useState } from 'react';
 import Button from '../button';
 import LocationResultItem from './LocationResultItem';
 
 const LocationResultList = () => {
+    const [activeId, setActiveId] = useState(null);
+
+    const locationData = [
+        { id: 1, location: '경기 - 현대 판교' },
+        { id: 2, location: '서울 - 현대 본점' },
+        { id: 3, location: '서울 - 현대 코엑스' },
+        { id: 4, location: '서울 - 청담 메종' },
+        { id: 5, location: '서울 - 롯데 에비뉴엘 월드타워' },
+        { id: 6, location: '서울 - 신세계 본점' },
+        { id: 7, location: '서울 - 신세계 강남' },
+        { id: 8, location: '서울 - 갤러리아' },
+        { id: 9, location: '서울 - 신세계 센텀 시티' },
+        { id: 10, location: '서울 - 신세계 아트&사이언스' },
+        { id: 11, location: '대구 - 신세계' },
+    ];
     return (
         <div className='border-t-2'>
             <h3 className='font-secondary text-[32px] pt-[30px] pb-[40px]'>1. 부티크 선택</h3>
@@ -65,11 +81,16 @@ const LocationResultList = () => {
                     </div>
                 </div>
                 <div>
-                    <span className='text-[30px]'>대한민국 검색 결과 n</span>
-                    <LocationResultItem />
-                    <LocationResultItem />
-                    <LocationResultItem />
-                    <LocationResultItem />
+                    <span className='text-[30px]'>대한민국 검색 결과 11</span>
+                    {locationData.map((item) => (
+                        <LocationResultItem
+                            key={item.id}
+                            id={item.id}
+                            activeId={activeId}
+                            setActiveId={setActiveId}
+                            data={item}
+                        />
+                    ))}
                     <Button variant='secondary' className='w-[178px] h-[50px] mx-auto mt-[25px] mb-[70px]'>
                         LOAD MORE
                     </Button>
