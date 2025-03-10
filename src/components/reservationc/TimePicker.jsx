@@ -69,7 +69,7 @@ const TimePicker = () => {
                     </button>
                 </div>
 
-                <div className='flex-1 px-3'>{selectedTime || '시간을 선택하세요'}</div>
+                <div className='flex-1 px-3 font-normal'>{selectedTime || '시간을 선택하세요'}</div>
             </div>
 
             {/* 시간 선택 드롭다운 */}

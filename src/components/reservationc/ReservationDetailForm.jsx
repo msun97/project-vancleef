@@ -42,13 +42,13 @@ const ReservationDetailForm = () => {
                     </div>
 
                     {/* 날짜 표시 부분 */}
-                    <div className='flex-1 px-3'>{dateValue}</div>
+                    <div className='flex-1 px-3 font-normal'>{dateValue}</div>
                 </div>
                 <p>이용 가능 시간 *</p>
                 <TimePicker />
                 <p>선호 언어 *</p>
                 <div className='relative inline-block'>
-                    <select name='' id='' className='border py-[14px] px-[17px] w-full'>
+                    <select name='' id='' className='border py-[14px] px-[17px] w-full font-normal'>
                         <option value=''></option>
                         <option value='한국어'>한국어</option>
                         <option value='영어'>영어</option>
@@ -73,7 +73,7 @@ const ReservationDetailForm = () => {
                     className='border text-content-s py-[11px] px-[17px] w-full h-[400px] placeholder-gray-30 font-normal'
                 ></textarea>
 
-                <Button variant='secondary' className='w-[133px] h-[55px] mx-auto'>
+                <Button variant='secondary' className='w-[133px] h-[55px] mx-auto mb-[70px]'>
                     확인
                 </Button>
             </div>
