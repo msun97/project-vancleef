@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SearchModal from './SearchModal';
 
 const Header = () => {
   const [isSearch, setIsSearch] = useState(false);
@@ -6,7 +7,7 @@ const Header = () => {
     setIsSearch(!isSearch);
   };
   return (
-    <header className="w-full p-330 h-20 flex items-center justify-between fixed bg-gray-0 z-10">
+    <header className="w-full p-330 h-20 flex items-center justify-between fixed bg-gray-0 z-[1000]">
       <div className="left flex items-center gap-[55px]">
         <a href="/home">
           <h1>
@@ -33,13 +34,7 @@ const Header = () => {
           <span className="font-secondary text-heading-m font-bold">LOGIN</span>
         </a>
       </div>
-      {isSearch && (
-        <div className="search-bar">
-          <input type="text" placeholder="검색어를 입력하세요" />
-          <button className="bg-[rgba(255,255,255,0.7)] w-[100px] h-[40px] text-content-l font-extrabold transition-all duration-300 hover:bg-gray-0">
-            검색
-          </button>
-        </div>
+      {isSearch && (<SearchModal onSearch={onSearch}/>
       )}
     </header>
   );
