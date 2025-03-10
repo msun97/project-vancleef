@@ -69,8 +69,7 @@ const ReviewItem = () => {
                         <span className='text-label-s text-gray-50'>20</span>
                     </div>
                     <Button
-                        variant='secondary'
-                        className='text-label-s py-[4px] px-[15px] text-center w-[97px] h-[25px] whitespace-nowrap'
+                        className='font-secondary text-label-s py-[4px] px-[15px] text-center w-[97px] h-[25px] whitespace-nowrap'
                     >
                         도움됐어요
                     </Button>

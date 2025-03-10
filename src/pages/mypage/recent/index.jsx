@@ -6,7 +6,7 @@ const Recent = () => {
 	return (		
 		<div className='pt-[120px] absolute top-0 text-[14px]'>
 			<div className="text-left">
-				<h1 className="text-sm font-bold">위시리스트</h1>
+				<h1 className="text-sm font-bold">최근 본 상품</h1>
 			</div>
 	<Line/>
 	<MypageItemList/>
