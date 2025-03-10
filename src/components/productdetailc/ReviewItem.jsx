@@ -49,10 +49,10 @@ const ReviewItem = () => {
                 <p className='pt-[2px] text-[17px]'>아주 마음에 든답니다. 장인의 정신이 느껴진다고 하네요.</p>
                 <ul className='flex gap-[6px]'>
                     <li>
-                        <img src='' alt='당근예시1' className='h-[94px]' />
+                        <img src='/images/carrot1.png' alt='당근예시1' className='h-[94px]' />
                     </li>
                     <li>
-                        <img src='' alt='당근예시2' className='h-[94px]' />
+                        <img src='/images/carrot2.png' alt='당근예시2' className='h-[94px]' />
                     </li>
                 </ul>
                 <div className='flex items-center gap-[17px]'>

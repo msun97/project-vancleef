@@ -19,16 +19,16 @@ const ProductInquiryItem = () => {
                             <path
                                 d='M38 22.8784H10C7.79086 22.8784 6 24.6693 6 26.8784V40.8784C6 43.0876 7.79086 44.8784 10 44.8784H38C40.2091 44.8784 42 43.0876 42 40.8784V26.8784C42 24.6693 40.2091 22.8784 38 22.8784Z'
                                 stroke='black'
-                                stroke-width='2'
-                                stroke-linecap='round'
-                                stroke-linejoin='round'
+                                strokeWidth='2'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
                             />
                             <path
                                 d='M14 22.8784V14.8784C14 12.2263 15.0536 9.68271 16.9289 7.80735C18.8043 5.93199 21.3478 4.87842 24 4.87842C26.6522 4.87842 29.1957 5.93199 31.0711 7.80735C32.9464 9.68271 34 12.2263 34 14.8784V22.8784'
                                 stroke='black'
-                                stroke-width='2'
-                                stroke-linecap='round'
-                                stroke-linejoin='round'
+                                strokeWidth='2'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
                             />
                         </svg>
                         <h3 onClick={() => handleClick('inquiry1')} className='text-xl font-extrabold cursor-pointer'>

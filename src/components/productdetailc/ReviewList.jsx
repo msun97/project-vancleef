@@ -72,22 +72,6 @@ const ReviewList = () => {
                                         strokeLinejoin='round'
                                     />
                                 </svg>
-                                <svg
-                                    width='24'
-                                    height='24'
-                                    viewBox='0 0 48 49'
-                                    fill='none'
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    className='hover:opacity-100 transition duration-300 opacity-50 cursor-pointer'
-                                >
-                                    <path
-                                        d='M44 6.875H4L20 25.795V38.875L28 42.875V25.795L44 6.875Z'
-                                        stroke='black'
-                                        strokeWidth='4'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                    />
-                                </svg>
                             </div>
                         </div>
                     </div>
