@@ -3,7 +3,7 @@ import React from "react";
 const SizeGuide = () => {
   return (
     <div className="w-full h-[800px]  p-330 mt-[152px]">
-      <div className="border border-gray-300 py-5 px-8">
+      <div className="py-5 px-8">
         <h1 className="text-center text-[42px] font-secondary font-extrabold">
           Van Cleef & Arpels
         </h1>
@@ -33,7 +33,7 @@ const SizeGuide = () => {
               <li>4. 손목 사이즈 측정 도구를 잘라낸 후 손목에 맞춰 보세요.</li>
               <li>
                 5. 손목에 딱 맞는 브레이슬릿 사이즈를 확인하시려면 첨부된 차트를
-                참조해주세요.
+                &nbsp;&nbsp;&nbsp;참조해주세요.
               </li>
             </ol>
             <div className="mt-[30px] text-[12px] text-gray-500">
