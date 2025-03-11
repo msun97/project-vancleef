@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const DelieveryModal = () => {
+const DelieveryModal = ({ handleModal, modalType }) => {
     // 모달이 마운트될 때 body에 overflow: hidden 추가하고
     // 언마운트될 때 제거하는 효과
     useEffect(() => {
@@ -19,7 +19,7 @@ const DelieveryModal = () => {
             <div className='relative h-full'>
                 <div className='absolute top-0 right-0 w-[450px] bg-white h-full overflow-y-scroll'>
                     <div className='flex flex-col items-center px-[60px] py-[50px] text-start relative'>
-                        <button>
+                        <button onClick={() => handleModal(modalType)}>
                             <svg
                                 width='24'
                                 height='24'
