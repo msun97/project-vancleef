@@ -8,7 +8,6 @@ const MypostsPage = () => {
 		<div className='pt-[120px] absolute top-0 text-[14px]'>
 				<div className="text-left">
 					<h1 className="text-sm font-bold">나의 게시물</h1>
-<div className='flex justi'>작성된 게시물이 없습니다.</div>
 				</div>
 		<Line/>
 		<Myposts/>
