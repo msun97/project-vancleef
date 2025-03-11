@@ -14,28 +14,37 @@ export const paginationSlice = createSlice({
         addData: (state, action) => {
             state.postData = action.payload;
             state.currPage = 1;
-        },
-        totalData: (state, action) => {
+            // 데이터가 추가되면 전체 페이지 수 업데이트
             state.totalPage = Math.ceil(state.postData.length / state.postsPerPage);
         },
-        nextPage: (state, action) => {
+        totalData: (state) => {
+            state.totalPage = Math.ceil(state.postData.length / state.postsPerPage);
+        },
+        nextPage: (state) => {
             if (state.currPage < state.totalPage) {
                 state.currPage++;
             }
         },
-        prevPage: (state, action) => {
+        prevPage: (state) => {
             if (state.currPage > 1) {
-                state.currPage--; //if문
+                state.currPage--;
             }
         },
-        firstPage: (state, action) => {
+        firstPage: (state) => {
             state.currPage = 1;
         },
-        lastPage: (state, action) => {
+        lastPage: (state) => {
             state.currPage = state.totalPage;
         },
         currentPage: (state, action) => {
             state.currPage = action.payload;
+        },
+        updatePostsPerPage: (state, action) => {
+            state.postsPerPage = action.payload;
+            // 페이지당 포스트 수가 변경되면 현재 페이지를 1로 재설정
+            state.currPage = 1;
+            // 전체 페이지 수 업데이트
+            state.totalPage = Math.ceil(state.postData.length / state.postsPerPage);
         },
     },
 });
