@@ -21,6 +21,8 @@ import CCInquiry from './pages/customercenter/components/CCInquiry';
 import Search from './pages/search';
 import ReservationPage from './pages/reservation';
 import ShoppingcartModal from "./components/purchase/ShoppingcartModal";
+import SignupPage from './pages/signup';
+import Login from './pages/login';
 
 const App = () => {
   return (
@@ -33,6 +35,8 @@ const App = () => {
             <Route path="/productlist" element={<ProductListPage />} />
             <Route path="/productdetail" element={<ProductDetailPage />} />
             <Route path="/shoppingcartmodal" element={<ShoppingcartModal />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/mypage" element={<MyPage />}>
               <Route path="order" element={<Order />} />
               <Route path="recent" element={<Recent />} />
