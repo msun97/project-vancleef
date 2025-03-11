@@ -2,7 +2,7 @@ import React from 'react'
 
 const SignUp = () => {
 	return (
-		<div>SignUp</div>
+		<div className='fixed inset-0 w-full h-full bg-white z-[1001]'>SignUp</div>
 	)
 }
 
