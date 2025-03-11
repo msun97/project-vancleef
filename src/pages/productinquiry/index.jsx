@@ -3,13 +3,16 @@ import Button from '../../components/button';
 import CheckBox from '../../components/checkbox';
 import { useRef, useState } from 'react';
 import Input from '../../components/input';
+import { useDispatch } from 'react-redux';
+import { productInquiryActions } from '../../store/modules/productInquirySlice';
 
 const flexIC = 'flex items-center';
 
 const ProductInquiry = () => {
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
-    const [fileName, setFileName] = useState(''); // 파일명 상태 추가
+    const dispatch = useDispatch();
+    const [fileName, setFileName] = useState('');
     const [userInquiry, setUserInquiry] = useState({
         title: '',
         content: '',
@@ -18,9 +21,12 @@ const ProductInquiry = () => {
         date: '',
         inquiryType: '상품',
     });
-    const [isChecked, setIsChecked] = useState(false);
 
-    const buttonStyle = isChecked
+    // 두 개의 체크박스를 위한 별도의 상태 생성
+    const [isSecretPost, setIsSecretPost] = useState(false);
+    const [isAgreed, setIsAgreed] = useState(false);
+
+    const buttonStyle = isAgreed
         ? 'w-50 h-[55px] border border-primary text-primary hover:bg-primary hover:text-white cursor-pointer'
         : 'w-50 h-[55px] border border-gray-400 text-gray-400 cursor-not-allowed';
 
@@ -48,12 +54,30 @@ const ProductInquiry = () => {
         });
     };
 
-    const now = new Date();
-
     const onSubmit = (e) => {
         e.preventDefault();
         if (!title || !name || !content) return;
-        userInquiry.date = `${now.getFullYear()} - ${now.getMonth() + 1} -${now.getDate()} `;
+
+        // 비밀글 체크했는데 비밀번호 없으면 제출 차단
+        if (isSecretPost && !password) {
+            alert('비밀글 작성 시 비밀번호를 반드시 입력해주세요.');
+            return;
+        }
+
+        const now = new Date();
+        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
+            now.getDate()
+        ).padStart(2, '0')}`;
+
+        // 리덕스 액션 디스패치하여 문의 추가
+        dispatch(
+            productInquiryActions.addInquiry({
+                ...userInquiry,
+                isSecretPost, // 비밀글 여부 추가
+                date: formattedDate,
+            })
+        );
+
         navigate('/productdetail');
     };
 
@@ -61,6 +85,8 @@ const ProductInquiry = () => {
         e.preventDefault();
         navigate('/productdetail');
     };
+
+    // 기존 JSX 유지...
     return (
         <div className='wrap p-330 pt-[80px]'>
             <h2 className='font-secondary font-bold text-heading-m border-b'>상품 문의 쓰기</h2>
@@ -171,7 +197,12 @@ const ProductInquiry = () => {
                         </div>
                         <div className='flex flex-col gap-4 w-full ml-3'>
                             <div className='flex items-center gap-1.5'>
-                                <CheckBox className='w-5 h-5' />
+                                <CheckBox
+                                    id='secretPost'
+                                    checked={isSecretPost}
+                                    onChange={setIsSecretPost}
+                                    className='w-5 h-5'
+                                />
                                 <span>비밀글</span>
                             </div>
                             <textarea
@@ -229,7 +260,7 @@ const ProductInquiry = () => {
                         밖의 사항은 넷마블힐러비(주) 개인정보처리방침을 준수합니다.
                     </p>
                     <div className='flex items-center gap-2 mt-4'>
-                        <CheckBox id='agreement' checked={isChecked} onChange={setIsChecked} className='w-5 h-5' />
+                        <CheckBox id='agreement' checked={isAgreed} onChange={setIsAgreed} className='w-5 h-5' />
                         <p>위 내용에 동의합니다.</p>
                         <Link>전체보기 {'>'}</Link>
                     </div>
@@ -241,9 +272,9 @@ const ProductInquiry = () => {
                     <Button
                         className={buttonStyle}
                         type='submit'
-                        disabled={!isChecked}
+                        disabled={!isAgreed}
                         onClick={(e) => {
-                            if (!isChecked) {
+                            if (!isAgreed) {
                                 e.preventDefault();
                             }
                         }}

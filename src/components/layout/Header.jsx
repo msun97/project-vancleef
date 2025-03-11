@@ -7,7 +7,7 @@ const Header = () => {
     setIsSearch(!isSearch);
   };
   return (
-    <header className="w-full p-330 h-20 flex items-center justify-between fixed bg-gray-0 z-[1000]">
+    <header className="w-full p-330 h-20 flex items-center justify-between fixed bg-transparent z-[1000]">
       <div className="left flex items-center gap-[55px]">
         <Link href="/home">
           <h1>

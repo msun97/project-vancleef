@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { openModal } from '../../redux/modalSlice';
+import { openModal } from '../../store/modules/modalSlice';
 import MypostsModal from './MypostsModal';
 
 function MyPosts() {
