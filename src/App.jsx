@@ -20,42 +20,45 @@ import CCNotice from './pages/customercenter/components/CCNotice';
 import CCInquiry from './pages/customercenter/components/CCInquiry';
 import Search from './pages/search';
 import ReservationPage from './pages/reservation';
+import Purchase from './pages/purchase';
 
 const App = () => {
-    return (
-        <>
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<Layout />}>
-                        <Route index element={<Home />} />
-                        <Route path='home' element={<Home />} />
-                        <Route path='/productlist' element={<ProductListPage />} />
-                        <Route path='/productdetail' element={<ProductDetailPage />} />
-                        <Route path='/mypage' element={<MyPage />}>
-                            <Route path='order' element={<Order />} />
-                            <Route path='recent' element={<Recent />} />
-                            <Route path='wishlist' element={<Wishlist />} />
-                            <Route path='cart' element={<Cart />} />
-                            <Route path='myposts' element={<Myposts />} />
-                            <Route path='profile' element={<Profile />} />
-                            <Route path='logout' element={<Logout />} />
-                        </Route>
-                        <Route path='/customers' element={<CustomerCenter />}>
-                            <Route path='notice' element={<CCNotice />} />
-                            <Route path='faq' element={<CCFaq />} />
-                            <Route path='inquiry' element={<CCInquiry />} />
-                            <Route path='inquiryform' element={<CCInquiryForm />} />
-                        </Route>
-                        <Route path="/:search">
-                        <Route index element={<Search />} />
-                        <Route path='/reservation' element={<ReservationPage />} />
-                    </Route>
-                    <Route path='/productinquiry' element={<ProductInquiry />} />
-                    <Route path='*' element={<NotFiles />} />
-                </Routes>
-            </BrowserRouter>
-        </>
-    );
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="/productlist" element={<ProductListPage />} />
+            <Route path="/productdetail" element={<ProductDetailPage />} />
+            <Route path="/mypage" element={<MyPage />}>
+              <Route path="order" element={<Order />} />
+              <Route path="recent" element={<Recent />} />
+              <Route path="wishlist" element={<Wishlist />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="myposts" element={<Myposts />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="logout" element={<Logout />} />
+            </Route>
+            <Route path="/customers" element={<CustomerCenter />}>
+              <Route path="notice" element={<CCNotice />} />
+              <Route path="faq" element={<CCFaq />} />
+              <Route path="inquiry" element={<CCInquiry />} />
+              <Route path="inquiryform" element={<CCInquiryForm />} />
+            </Route>
+            <Route path="/:search">
+              <Route index element={<Search />} />
+            </Route>
+            <Route path="/purchase" element={<Purchase />} />
+            <Route path="/reservation" element={<ReservationPage />} />
+          </Route>
+          <Route path="/productinquiry" element={<ProductInquiry />} />
+          <Route path="*" element={<NotFiles />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 };
 
 export default App;
