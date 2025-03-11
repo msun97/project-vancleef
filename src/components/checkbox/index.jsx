@@ -1,15 +1,21 @@
-import { useState } from 'react';
-
-const CheckBox = ({ id, children, checked, className, ...props }) => {
-  const [isCheck, setIsCheck] = useState(checked);
+const CheckBox = ({
+  id,
+  children,
+  checked = false,
+  onChange,
+  className,
+  ...props
+}) => {
   const handleChange = () => {
-    setIsCheck(!isCheck);
-    checked && checked(isCheck);
+    if (onChange) {
+      onChange(!checked); // 부모에게 변경된 값 전달
+    }
   };
+
   return (
     <div
       className={`${
-        isCheck
+        checked
           ? 'overflow-hidden bg-primary-70 inline-flex items-center whitespace-nowrap cursor-pointer border-0 justify-center'
           : 'overflow-hidden inline-flex items-center whitespace-nowrap cursor-pointer border border-gray-50 justify-center'
       }
@@ -20,7 +26,7 @@ const CheckBox = ({ id, children, checked, className, ...props }) => {
         className="absolute w-0 h-0 -m-[20px] p-0 border-0"
         id={id}
         type="checkbox"
-        checked={isCheck}
+        checked={checked}
         {...props}
       />
       <label
@@ -30,12 +36,11 @@ const CheckBox = ({ id, children, checked, className, ...props }) => {
         <div className="inline-flex items-center gap-2 whitespace-nowrap cursor-pointer justify-center w-full h-full">
           <div className="relative flex items-center justify-center w-full h-full">
             <img
-              src={isCheck ? '/icons/check-w.svg' : '/icons/check.svg'}
+              src={checked ? '/icons/check-w.svg' : '/icons/check.svg'}
               className="w-2/3 h-2/3"
             />
           </div>
           {children}
-          {/* <Checked /> */}
         </div>
       </label>
     </div>
