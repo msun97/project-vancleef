@@ -13,13 +13,30 @@ import ProductInquiryList from '../../components/productdetailc/ProductInquiryLi
 import MotiveGuide from '../../components/size/MotiveGuide';
 import SizeGuide from '../../components/size/SizeGuide';
 import { Link } from 'react-router-dom';
+import InquiryModal from '../../components/productdetailc/InquiryModal';
+import DelieveryModal from '../../components/productdetailc/DelieveryModal';
+import CareModal from '../../components/productdetailc/CareModal';
 
 // import required modules
 
 function ProductDetailPage() {
     const [selectedOption, setSelectedOption] = useState('');
     const [isSelectOpen, setIsSelectOpen] = useState(false);
+    const [modalState, setModalState] = useState({
+        inquiry: false,
+        delivery: false,
+        care: false,
+    });
     const selectRef = useRef(null);
+
+    const toggleModal = (modalType) => {
+        setModalState({
+            inquiry: false,
+            delivery: false,
+            care: false,
+            [modalType]: !modalState[modalType],
+        });
+    };
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
@@ -132,17 +149,25 @@ function ProductDetailPage() {
                                 </div>
                             </div>
                             <div className='title tracking-wide'>
-                                <h3>CALL</h3>
+                                <h3>
+                                    <button onClick={() => toggleModal('inquiry')}>CALL</button>
+                                </h3>
                             </div>
                             <div className='title tracking-wide'>
-                                <h3>RESERVATION</h3>
+                                <h3>
+                                    <button>RESERVATION</button>
+                                </h3>
                             </div>
                             <div className='title tracking-wide'>
-                                <h3>CARE SERVICE</h3>
+                                <h3>
+                                    <button onClick={() => toggleModal('care')}>CARE SERVICE</button>
+                                </h3>
                             </div>
                             <div className='title leading-4 tracking-wide'>
                                 <h3>
-                                    DELIEVERY &<br /> PAYMENT
+                                    <button onClick={() => toggleModal('delivery')}>DELIVERY & </button>
+                                    <br />
+                                    <button onClick={() => toggleModal('delivery')}> PAYMENT</button>
                                 </h3>
                             </div>
                         </div>
@@ -156,13 +181,13 @@ function ProductDetailPage() {
                             <Link to='/details'>상세정보</Link>
                         </li>
                         <li className='w-2xs'>
-                            <Link to='/'>리뷰(n)</Link>
+                            <Link to='/ReviewList'>리뷰(n)</Link>
                         </li>
                         <li className='w-2xs'>
-                            <Link to='/'>상품고시(n)</Link>
+                            <Link to='/ProductNotice'>상품고시(n)</Link>
                         </li>
                         <li className='w-2xs'>
-                            <Link to='/'>상품문의(n)</Link>
+                            <Link to='/ProductInquiryList'>상품문의(n)</Link>
                         </li>
                     </ul>
                     <div className=' p-330 flex flex-col items-center'>
@@ -357,6 +382,9 @@ function ProductDetailPage() {
             <ProductNotice />
             <ReviewList />
             <ProductInquiryList />
+            {modalState.inquiry && <InquiryModal handleModal={() => toggleModal('inquiry')} modalType='inquiry' />}
+            {modalState.care && <CareModal handleModal={() => toggleModal('care')} modalType='care' />}
+            {modalState.delivery && <DelieveryModal handleModal={() => toggleModal('delivery')} modalType='delivery' />}
         </div>
     );
 }
