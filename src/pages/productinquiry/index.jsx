@@ -4,7 +4,7 @@ import CheckBox from '../../components/checkbox';
 import { useRef, useState } from 'react';
 import Input from '../../components/input';
 import { useDispatch } from 'react-redux';
-// import { productInquiryActions } from '../../store/modules/productInquirySlice';
+import { productInquiryActions } from '../../store/modules/productInquirySlice';
 
 const flexIC = 'flex items-center';
 
