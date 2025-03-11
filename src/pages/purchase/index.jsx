@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '../../components/input';
 import DropDown from '../../components/dropdown';
 import CheckBox from '../../components/checkbox';
 import Button from '../../components/button';
 
 const Purchase = () => {
+  const [isChecked, setIsChecked] = useState(false);
   return (
     <div className="pt-20">
       <div>
@@ -46,7 +47,7 @@ const Purchase = () => {
           <div>
             <p>배송지 선택</p>
             <div>
-              <CheckBox />
+              <CheckBox checked={isChecked} onChange={setIsChecked} />
               국내배송
               <CheckBox />
               해외배송
