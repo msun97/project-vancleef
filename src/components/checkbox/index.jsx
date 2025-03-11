@@ -27,6 +27,7 @@ const CheckBox = ({
         id={id}
         type="checkbox"
         checked={checked}
+        readOnly
         {...props}
       />
       <label
