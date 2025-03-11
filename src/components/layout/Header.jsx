@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SearchModal from './SearchModal';
 import { Link } from 'react-router-dom';
-
 const Header = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
@@ -50,7 +49,7 @@ const Header = () => {
         <button onClick={onSearch} className=" cursor-pointer">
           <img src="/icons/search.svg" alt="검색" className="w-8 h-8" />
         </button>
-        <Link to="#">
+        <Link to="/login">
           <span className="font-secondary text-heading-m font-bold">LOGIN</span>
         </Link>
       </div>

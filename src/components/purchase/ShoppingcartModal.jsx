@@ -1,19 +1,41 @@
 import CheckBox from "../checkbox";
 import Button from "../button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const ShoppingcartModal = () => {
+const ShoppingcartModal = ({ handleModal, modalType }) => {
   const [isChecked, setIsChecked] = useState(false);
+  useEffect(() => {
+    // 원래 body의 overflow 스타일 저장
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    // body에 overflow: hidden 적용
+    document.body.style.overflow = "hidden";
+
+    // 컴포넌트가 언마운트될 때 원래 스타일로 되돌림
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, []);
+  const [modalClose, SetModalClose] = useState(false);
+
+  const handlecloseclick = () => {
+    SetModalClose(!modalClose);
+    handleModal(false);
+  };
   return (
-    <div className="w-full h-screen bg-[rgba(0,0,0,0.5)]">
-      <div className="w-full h-[80px]"></div>
+    <div
+      className="fixed bg-[rgba(0,0,0,0.5)] w-full h-full top-0 left-0"
+      style={{ zIndex: 9999 }}
+    >
       {/* 헤더영역 제외 시키려고 */}
       <div className="flex justify-end w-full h-screen">
         <div className="w-[458px] h-screen px-[50px] py-[50px] bg-white">
           <div>
             <div className="flex justify-between">
               <div className="text-[16px] h-[20px] ">CART : 갯수</div>
-              <div className="h-[20px] cursor-pointer">
+              <button
+                className="h-[20px] cursor-pointer"
+                onClick={handlecloseclick}
+              >
                 <svg
                   width="24"
                   height="24"
@@ -26,7 +48,7 @@ const ShoppingcartModal = () => {
                     fill="#B9B9B9"
                   />
                 </svg>
-              </div>
+              </button>
             </div>
             <div className="border-b-1 border-gray-600 h-[58px] flex justify-between">
               <div className="text-[13px] leading-[58px] font-secondary tracking-wide">
@@ -43,7 +65,7 @@ const ShoppingcartModal = () => {
             </div>
           </div>
           {/* top */}
-          <div className="w-full h-[600px] flex flex-col justify-between">
+          <div className="w-full h-[700px] flex flex-col justify-between">
             <div className="relative flex">
               <div className="my-[20px] ">
                 <div className="w-[100px] border border-[#dddddd]">
