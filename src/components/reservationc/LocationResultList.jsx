@@ -31,7 +31,7 @@ const LocationResultList = () => {
     const isAllLoaded = visibleCount >= locationData.length;
     return (
         <div className='border-t-2 mb-[70px]'>
-            <h3 className='font-secondary text-[32px] pt-[30px] pb-[40px]'>1. 부티크 선택</h3>
+            <h3 className='font-secondary text-[20px] pt-[30px] pb-[40px]'>1. 부티크 선택</h3>
             <div className='flex flex-col gap-[40px] px-[330px]'>
                 <div className='flex flex-col gap-[22px]'>
                     <div className='flex flex-col gap-[13px]'>
@@ -92,7 +92,7 @@ const LocationResultList = () => {
                     </div>
                 </div>
                 <div>
-                    <span className='text-[30px]'>대한민국 검색 결과 {locationData.length}</span>
+                    <span className='text-[18px]'>대한민국 검색 결과 {locationData.length}</span>
                     {visibleData.map((item) => (
                         <LocationResultItem
                             key={item.id}

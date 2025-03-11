@@ -6,7 +6,7 @@ import ReservationDetailForm from '../../components/reservationc/ReservationDeta
 const ReservationPage = () => {
     return (
         <div className='pt-[80px] p-330 w-full'>
-            <h2 className='font-secondary font-bold text-[50px] text-center pb-[80px]'>예약 요청</h2>
+            <h2 className='font-secondary font-bold text-[36px] text-center pb-[80px]'>예약 요청</h2>
             <LocationResultList />
             <PurposeForm />
             <ReservationDetailForm />
