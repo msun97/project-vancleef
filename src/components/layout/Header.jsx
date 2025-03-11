@@ -1,16 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchModal from './SearchModal';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isSearch, setIsSearch] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
   const onSearch = () => {
     setIsSearch(!isSearch);
   };
+  const [lastY, setLastY] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (currentY > 80 && currentY > lastY) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+      setLastY(currentY);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastY]);
   return (
-    <header className="w-full p-330 h-20 flex items-center justify-between fixed bg-transparent z-[1000]">
-      <div className="left flex items-center gap-[55px]">
-        <Link href="/home">
+    <header
+      className={`w-full p-330 h-20 flex items-center justify-between fixed bg-gray-0 z-[999] ${
+        showHeader ? 'translate-y-0' : '-translate-y-full'
+      } transition-all`}
+    >
+      <div className="left flex items-center gap-[55px] z-[999]">
+        <Link to="/home">
           <h1>
             <img
               src="/icons/logo.svg"
@@ -21,7 +40,7 @@ const Header = () => {
         </Link>
         <nav>
           <ul>
-            <Link href="#">
+            <Link to="/productlist">
               <li className="font-secondary text-heading-m font-bold">SHOP</li>
             </Link>
           </ul>
@@ -31,7 +50,7 @@ const Header = () => {
         <button onClick={onSearch} className=" cursor-pointer">
           <img src="/icons/search.svg" alt="검색" className="w-8 h-8" />
         </button>
-        <Link href="#">
+        <Link to="#">
           <span className="font-secondary text-heading-m font-bold">LOGIN</span>
         </Link>
       </div>

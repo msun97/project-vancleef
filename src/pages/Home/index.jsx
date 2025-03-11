@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Loading from './components/Loading';
 import Section1 from './components/Section1';
 import Section2 from './components/Section2';
@@ -8,20 +8,35 @@ import Section5 from './components/Section5';
 import Section6 from './components/Section6';
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
-      {' '}
-      <div className="p-330 bg-[url(/images/homebg1.png)] h-auto  text-gray-0 bg-cover ">
-        {/* <Loading /> */}
-        {/* <Section1 /> */}
-        <Section2 />
-      </div>
-      <div className="p-330 h-auto text-gray-0 bg-[url(/images/homebg2.png)] bg-cover">
-        {/* <Section3 /> */}
-        <Section4 />
-      </div>
-      <Section5 />
-      <Section6 />
+      {isLoading ? (
+        <div className="z-[1000] bg-gray-0 w-dvw h-dvh">
+          <Loading />
+        </div>
+      ) : (
+        <>
+          <div className="p-330 bg-[url(/images/homebg1.png)] h-auto  text-gray-0 bg-cover ">
+            {/* <Loading /> */}
+            {/* <Section1 /> */}
+            <Section2 />
+          </div>
+          <div className="p-330 h-auto text-gray-0 bg-[url(/images/homebg2.png)] bg-cover">
+            {/* <Section3 /> */}
+            <Section4 />
+          </div>
+          <Section5 />
+          <Section6 />
+        </>
+      )}{' '}
     </>
   );
 };
