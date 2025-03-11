@@ -19,8 +19,10 @@ import CCFaq from "./pages/customercenter/components/CCFaq";
 import CCNotice from "./pages/customercenter/components/CCNotice";
 import CCInquiry from "./pages/customercenter/components/CCInquiry";
 import Search from "./pages/search";
+import Purchase from './pages/purchase';
 import ReservationPage from "./pages/reservation";
 import ShoppingcartModal from "./components/purchase/ShoppingcartModal";
+
 
 const App = () => {
   return (
@@ -51,6 +53,7 @@ const App = () => {
             <Route path="/:search">
               <Route index element={<Search />} />
             </Route>
+            <Route path="/purchase" element={<Purchase />} />
             <Route path="/reservation" element={<ReservationPage />} />
           </Route>
           <Route path="/productinquiry" element={<ProductInquiry />} />
