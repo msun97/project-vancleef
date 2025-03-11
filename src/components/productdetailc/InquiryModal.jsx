@@ -1,4 +1,19 @@
+import { useEffect } from 'react';
+
 const InquiryModal = () => {
+    // 모달이 마운트될 때 body에 overflow: hidden 추가하고
+    // 언마운트될 때 제거하는 효과
+    useEffect(() => {
+        // 원래 body의 overflow 스타일 저장
+        const originalStyle = window.getComputedStyle(document.body).overflow;
+        // body에 overflow: hidden 적용
+        document.body.style.overflow = 'hidden';
+
+        // 컴포넌트가 언마운트될 때 원래 스타일로 되돌림
+        return () => {
+            document.body.style.overflow = originalStyle;
+        };
+    }, []);
     return (
         <div className='fixed bg-[rgba(0,0,0,0.5)] w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
             <div className='relative h-full'>
