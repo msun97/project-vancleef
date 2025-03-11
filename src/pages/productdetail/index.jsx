@@ -12,6 +12,7 @@ import ReviewList from "../../components/productdetailc/ReviewList";
 import ProductInquiryList from "../../components/productdetailc/ProductInquiryList";
 import MotiveGuide from "../../components/size/MotiveGuide";
 import SizeGuide from "../../components/size/SizeGuide";
+import { Link } from "react-router-dom";
 
 // import required modules
 
@@ -50,7 +51,7 @@ function ProductDetailPage() {
   }, []);
   return (
     <div id="contents" className="w-full h-full ">
-      <div className="w-full h-full pb-[80px]"></div>
+      <div className="w-full pb-[80px]"></div>
       <div id="goods" className="w-full h-full">
         <div
           id="goods_view"
@@ -85,7 +86,6 @@ function ProductDetailPage() {
                 />
               </SwiperSlide>
               <SwiperSlide>
-                {" "}
                 <img
                   src="https://www.vancleefarpels.com/content/dam/rcq/vca/17/08/14/6/1708146.png.transform.vca-w820-1x.png"
                   alt=""
@@ -157,10 +157,18 @@ function ProductDetailPage() {
       <div className="w-full h-full mt-60">
         <div className="w-full h-full flex flex-col">
           <ul className="w-full h-full font-bold flex justify-center text-center text-xl">
-            <li className="w-2xs">상세정보</li>
-            <li className="w-2xs">리뷰(n) </li>
-            <li className="w-2xs">상품고시(n)</li>
-            <li className="w-2xs">상품문의(n)</li>
+            <li className="w-2xs">
+              <Link to="/details">상세정보</Link>
+            </li>
+            <li className="w-2xs">
+              <Link to="/">리뷰(n)</Link>
+            </li>
+            <li className="w-2xs">
+              <Link to="/">상품고시(n)</Link>
+            </li>
+            <li className="w-2xs">
+              <Link to="/">상품문의(n)</Link>
+            </li>
           </ul>
           <div className=" p-330 flex flex-col items-center">
             <img

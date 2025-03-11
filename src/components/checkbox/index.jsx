@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const CheckBox = ({ id, children, checked, className, ...props }) => {
   const [isCheck, setIsCheck] = useState(checked);
@@ -10,8 +10,8 @@ const CheckBox = ({ id, children, checked, className, ...props }) => {
     <div
       className={`${
         isCheck
-          ? 'overflow-hidden bg-primary-70 inline-flex items-center whitespace-nowrap cursor-pointer border-0 justify-center'
-          : 'overflow-hidden inline-flex items-center whitespace-nowrap cursor-pointer border border-gray-50 justify-center'
+          ? "overflow-hidden bg-primary-70 inline-flex items-center whitespace-nowrap cursor-pointer border-0 justify-center"
+          : "overflow-hidden inline-flex items-center whitespace-nowrap cursor-pointer border border-gray-50 justify-center"
       }
           ${className}`}
       onClick={handleChange}
@@ -30,7 +30,7 @@ const CheckBox = ({ id, children, checked, className, ...props }) => {
         <div className="inline-flex items-center gap-2 whitespace-nowrap cursor-pointer justify-center w-full h-full">
           <div className="relative flex items-center justify-center w-full h-full">
             <img
-              src={isCheck ? '/icons/check-w.svg' : '/icons/check.svg'}
+              src={isCheck ? "/icons/check-w.svg" : "/icons/check.svg"}
               className="w-2/3 h-2/3"
             />
           </div>
