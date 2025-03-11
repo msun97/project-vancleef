@@ -70,6 +70,7 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
               <div className="my-[20px] ">
                 <div className="w-[100px] border border-[#dddddd]">
                   <CheckBox
+                    id={1}
                     className={"h-[18px] w-[18px] mr-[3px] absolute"}
                     checked={isChecked}
                     onChange={setIsChecked}
