@@ -1,6 +1,6 @@
 const DelieveryModal = () => {
     return (
-        <div className='fixed bg-black/5 w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
+        <div className='fixed bg-[rgba(0,0,0,0.5)] w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
             <div className='relative h-full'>
                 <div className='absolute top-0 right-0 w-[450px] bg-white h-full overflow-y-scroll'>
                     <div className='flex flex-col items-center px-[60px] py-[50px] text-start relative'>
@@ -20,7 +20,7 @@ const DelieveryModal = () => {
                             </svg>
                         </button>
 
-                        <h2 className='text-[18px] '>여행, 배송, 결제</h2>
+                        <h2 className='text-[18px] font-bold'>여행, 배송, 결제</h2>
                         <div className='w-full mt-4 pt-4 flex flex-col gap-1.5 items-start'>
                             <h3 className='text-[18px] font-bold tracking-normal'>여행</h3>
                             <p className='text-[15px]'>
