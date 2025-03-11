@@ -1,6 +1,21 @@
+import { useEffect } from 'react';
+
 const CareModal = () => {
+    // 모달이 마운트될 때 body에 overflow: hidden 추가하고
+    // 언마운트될 때 제거하는 효과
+    useEffect(() => {
+        // 원래 body의 overflow 스타일 저장
+        const originalStyle = window.getComputedStyle(document.body).overflow;
+        // body에 overflow: hidden 적용
+        document.body.style.overflow = 'hidden';
+
+        // 컴포넌트가 언마운트될 때 원래 스타일로 되돌림
+        return () => {
+            document.body.style.overflow = originalStyle;
+        };
+    }, []);
     return (
-        <div className='fixed bg-black/5 w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
+        <div className='fixed bg-[rgba(0,0,0,0.5)] w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
             <div className='relative h-full'>
                 <div className='absolute top-0 right-0 w-[450px] bg-white h-full overflow-y-scroll'>
                     <div className='flex flex-col items-center px-[60px] py-[50px] text-start relative'>
@@ -20,7 +35,7 @@ const CareModal = () => {
                             </svg>
                         </button>
 
-                        <h2 className='text-[18px] '>케어 서비스</h2>
+                        <h2 className='text-[18px] font-bold'>케어 서비스</h2>
                         <img
                             src='https://www.vancleefarpels.com/content/dam/vancleefarpels/pdp/services-panel/van-cleef-arpels-services-panel-jewelry.jpg.transform.vca-w330-1x.jpg'
                             alt='케어 서비스'

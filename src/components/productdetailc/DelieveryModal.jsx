@@ -1,6 +1,21 @@
+import { useEffect } from 'react';
+
 const DelieveryModal = () => {
+    // 모달이 마운트될 때 body에 overflow: hidden 추가하고
+    // 언마운트될 때 제거하는 효과
+    useEffect(() => {
+        // 원래 body의 overflow 스타일 저장
+        const originalStyle = window.getComputedStyle(document.body).overflow;
+        // body에 overflow: hidden 적용
+        document.body.style.overflow = 'hidden';
+
+        // 컴포넌트가 언마운트될 때 원래 스타일로 되돌림
+        return () => {
+            document.body.style.overflow = originalStyle;
+        };
+    }, []);
     return (
-        <div className='fixed bg-black/5 w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
+        <div className='fixed bg-[rgba(0,0,0,0.5)] w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
             <div className='relative h-full'>
                 <div className='absolute top-0 right-0 w-[450px] bg-white h-full overflow-y-scroll'>
                     <div className='flex flex-col items-center px-[60px] py-[50px] text-start relative'>
@@ -20,7 +35,7 @@ const DelieveryModal = () => {
                             </svg>
                         </button>
 
-                        <h2 className='text-[18px] '>여행, 배송, 결제</h2>
+                        <h2 className='text-[18px] font-bold'>여행, 배송, 결제</h2>
                         <div className='w-full mt-4 pt-4 flex flex-col gap-1.5 items-start'>
                             <h3 className='text-[18px] font-bold tracking-normal'>여행</h3>
                             <p className='text-[15px]'>
@@ -54,14 +69,14 @@ const DelieveryModal = () => {
                                     <img
                                         src='https://i.namu.wiki/i/DRTBUHA314XYTx-pkzY4XSmQ0Job0j10vQhiETotjLCGUULQemriSC67Yh9UCsYq7Dw7WyvK0GkP9f3jP8r8gA.svg'
                                         alt='카카오페이'
-                                        className='w-[50px] h-[30px]object-cover'
+                                        className='w-[50px] h-[30px] object-cover'
                                     />
                                 </div>
                                 <div className='w-[50px] h-[30px] overflow-hidden'>
                                     <img
                                         src='https://mblogthumb-phinf.pstatic.net/MjAyNDA3MDVfMjUy/MDAxNzIwMTY0MDIxMzIx.hSgfp4jQc9chL4hTHWeGHhPBqRwCwV3xQ-Ex3Or-gHkg.pvAeG3mmXyeVe08nQsIXKOamCZzH3yu8o3XUnkMEOdEg.PNG/image.png?type=w800'
                                         alt='네이버페이'
-                                        className='w-[50px] h-[30px]object-cover'
+                                        className='w-[50px] h-[30px] object-cover'
                                     />
                                 </div>
                             </div>

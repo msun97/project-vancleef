@@ -1,4 +1,19 @@
+import { useEffect } from 'react';
+
 const InquiryModal = () => {
+    // 모달이 마운트될 때 body에 overflow: hidden 추가하고
+    // 언마운트될 때 제거하는 효과
+    useEffect(() => {
+        // 원래 body의 overflow 스타일 저장
+        const originalStyle = window.getComputedStyle(document.body).overflow;
+        // body에 overflow: hidden 적용
+        document.body.style.overflow = 'hidden';
+
+        // 컴포넌트가 언마운트될 때 원래 스타일로 되돌림
+        return () => {
+            document.body.style.overflow = originalStyle;
+        };
+    }, []);
     return (
         <div className='fixed bg-[rgba(0,0,0,0.5)] w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
             <div className='relative h-full'>
@@ -25,8 +40,22 @@ const InquiryModal = () => {
                             반클리프 아펠의 담당 직원이 월요일부터 목요일 오전 10시 30분부터 오후 7시 30분까지,
                             금요일부터 일요일 오전 10시 30분부터 오후 8시까지 문의에 대한 답변을 드리겠습니다.
                         </p>
-                        <div className='flex gap-2 mt-[18px]'>
-                            <div>전화기 이모티콘</div>
+                        <div className='flex gap-1 items-center mt-[18px]'>
+                            <svg
+                                width='24'
+                                height='24'
+                                viewBox='0 0 48 49'
+                                fill='none'
+                                xmlns='http://www.w3.org/2000/svg'
+                            >
+                                <path
+                                    d='M43.9999 34.7184V40.7184C44.0021 41.2754 43.888 41.8267 43.6649 42.3371C43.4417 42.8474 43.1145 43.3055 42.704 43.6821C42.2936 44.0587 41.809 44.3453 41.2814 44.5238C40.7537 44.7022 40.1946 44.7685 39.6399 44.7184C33.4855 44.0497 27.5739 41.9467 22.3799 38.5784C17.5475 35.5077 13.4505 31.4107 10.3799 26.5784C6.99982 21.3608 4.89635 15.4204 4.23987 9.23837C4.18989 8.6853 4.25562 8.12789 4.43287 7.60162C4.61012 7.07534 4.89501 6.59175 5.2694 6.18161C5.64379 5.77147 6.09948 5.44379 6.60745 5.21941C7.11542 4.99504 7.66455 4.87889 8.21987 4.87837H14.2199C15.1905 4.86881 16.1314 5.21252 16.8674 5.84543C17.6033 6.47834 18.084 7.35726 18.2199 8.31837C18.4731 10.2385 18.9428 12.1238 19.6199 13.9384C19.889 14.6542 19.9472 15.4322 19.7877 16.1801C19.6282 16.9281 19.2576 17.6146 18.7199 18.1584L16.1799 20.6984C19.027 25.7055 23.1728 29.8513 28.1799 32.6984L30.7199 30.1584C31.2636 29.6206 31.9502 29.2501 32.6981 29.0906C33.446 28.931 34.224 28.9893 34.9399 29.2584C36.7544 29.9355 38.6397 30.4051 40.5599 30.6584C41.5314 30.7954 42.4187 31.2848 43.0529 32.0334C43.6872 32.7819 44.0242 33.7375 43.9999 34.7184Z'
+                                    stroke='black'
+                                    stroke-width='2'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                            </svg>
                             <div>전화: (+82) 1877-4128</div>
                         </div>
                         <div className='bg-gray-20 w-[330px] h-[122px] mt-[50px] p-[21px]'>
@@ -88,16 +117,67 @@ const InquiryModal = () => {
                             </ul>
                         </div>
                         <div className='w-full border-t mt-8 pt-8 flex flex-col gap-1.5 items-center'>
-                            <div className='flex items-center gap-2'>
+                            <div className='flex items-center gap-2 '>
+                                <svg
+                                    width='20'
+                                    height='20'
+                                    viewBox='0 0 48 49'
+                                    fill='none'
+                                    xmlns='http://www.w3.org/2000/svg'
+                                >
+                                    <path
+                                        d='M8 8.87842H40C42.2 8.87842 44 10.6784 44 12.8784V36.8784C44 39.0784 42.2 40.8784 40 40.8784H8C5.8 40.8784 4 39.0784 4 36.8784V12.8784C4 10.6784 5.8 8.87842 8 8.87842Z'
+                                        stroke='black'
+                                        stroke-width='2'
+                                        stroke-linecap='round'
+                                        stroke-linejoin='round'
+                                    />
+                                    <path
+                                        d='M44 12.8784L24 26.8784L4 12.8784'
+                                        stroke='black'
+                                        stroke-width='2'
+                                        stroke-linecap='round'
+                                        stroke-linejoin='round'
+                                    />
+                                </svg>
                                 <span className='text-[15px]'>이메일</span>
                             </div>
-                            <div className='flex items-center gap-2'>
+                            <div className='flex items-center gap-2 '>
+                                <svg
+                                    width='20'
+                                    height='20'
+                                    viewBox='0 0 48 49'
+                                    fill='none'
+                                    xmlns='http://www.w3.org/2000/svg'
+                                >
+                                    <path
+                                        d='M24 44.8784C35.0457 44.8784 44 35.9241 44 24.8784C44 13.8327 35.0457 4.87842 24 4.87842C12.9543 4.87842 4 13.8327 4 24.8784C4 35.9241 12.9543 44.8784 24 44.8784Z'
+                                        stroke='black'
+                                        stroke-width='2'
+                                        stroke-linecap='round'
+                                        stroke-linejoin='round'
+                                    />
+                                    <path
+                                        d='M24 16.8784V24.8784'
+                                        stroke='black'
+                                        stroke-width='2'
+                                        stroke-linecap='round'
+                                        stroke-linejoin='round'
+                                    />
+                                    <path
+                                        d='M24 32.8784H24.02'
+                                        stroke='black'
+                                        stroke-width='2'
+                                        stroke-linecap='round'
+                                        stroke-linejoin='round'
+                                    />
+                                </svg>
                                 <span className='text-[15px]'>FAQ</span>
                             </div>
-                            <div className='flex items-center gap-2'>
+                            <div className='flex items-center gap-2 '>
                                 <svg
-                                    width='15'
-                                    height='15'
+                                    width='20'
+                                    height='20'
                                     viewBox='0 0 48 49'
                                     fill='none'
                                     xmlns='http://www.w3.org/2000/svg'
