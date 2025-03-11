@@ -7,7 +7,7 @@ import Order from "./pages/mypage/order";
 import Recent from "./pages/mypage/recent";
 import Wishlist from "./pages/mypage/wishtlist";
 import Cart from "./pages/mypage/cart";
-import Myposts from "./pages/mypage/myposts";
+
 import Profile from "./pages/mypage/profile";
 import Logout from "./pages/mypage/logout";
 import ProductInquiry from "./pages/productinquiry";
@@ -22,6 +22,9 @@ import Search from "./pages/search";
 import Purchase from './pages/purchase';
 import ReservationPage from "./pages/reservation";
 import ShoppingcartModal from "./components/purchase/ShoppingcartModal";
+import SignupPage from "./pages/signup";
+import Login from "./pages/login";
+import MypostsPage from "./pages/mypage/myposts";
 
 
 const App = () => {
@@ -35,12 +38,14 @@ const App = () => {
             <Route path="/productlist" element={<ProductListPage />} />
             <Route path="/productdetail" element={<ProductDetailPage />} />
             <Route path="/shoppingcartmodal" element={<ShoppingcartModal />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/mypage" element={<MyPage />}>
               <Route path="order" element={<Order />} />
               <Route path="recent" element={<Recent />} />
               <Route path="wishlist" element={<Wishlist />} />
               <Route path="cart" element={<Cart />} />
-              <Route path="myposts" element={<Myposts />} />
+              <Route path="myposts" element={<MypostsPage />} />
               <Route path="profile" element={<Profile />} />
               <Route path="logout" element={<Logout />} />
             </Route>

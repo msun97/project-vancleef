@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '../button';
 import Pagination from '../pagination';
 import ReviewItem from './ReviewItem';
-import Myposts from '../mypage/Myposts';
+import Myposts from '../mypage/MypostsModal';
 
 const ReviewList = () => {
     const [activeModal, setActiveModal] = useState(false);
