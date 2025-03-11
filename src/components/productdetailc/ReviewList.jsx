@@ -22,7 +22,7 @@ const ReviewList = () => {
             ) : null}
             <div className='pt-[200px] px-[330px] w-full'>
                 <div className=' flex flex-col gap-[30px]'>
-                    {/* <h2 className='font-secondary text-[44px] font-extrabold text-center'>리뷰(총 개수)</h2> */}
+                    {/* <h2 className='font-secondary text-[44px] font-extrabold text-center'>리뷰(총 개수)</h2> 비로그인시 이거 활성화.*/}
                     <div className='w-full flex items-center justify-between'>
                         <h2 className='font-secondary text-[32px] font-bold'>리뷰(총개수)</h2>
                         <div className='relative'>
