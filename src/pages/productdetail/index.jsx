@@ -12,6 +12,7 @@ import ReviewList from "../../components/productdetailc/ReviewList";
 import ProductInquiryList from "../../components/productdetailc/ProductInquiryList";
 import MotiveGuide from "../../components/size/MotiveGuide";
 import SizeGuide from "../../components/size/SizeGuide";
+import { Link } from "react-router-dom";
 
 // import required modules
 
@@ -50,7 +51,7 @@ function ProductDetailPage() {
   }, []);
   return (
     <div id="contents" className="w-full h-full ">
-      <div className="w-full h-full pb-[80px]"></div>
+      <div className="w-full pb-[80px]"></div>
       <div id="goods" className="w-full h-full">
         <div
           id="goods_view"
@@ -85,7 +86,6 @@ function ProductDetailPage() {
                 />
               </SwiperSlide>
               <SwiperSlide>
-                {" "}
                 <img
                   src="https://www.vancleefarpels.com/content/dam/rcq/vca/17/08/14/6/1708146.png.transform.vca-w820-1x.png"
                   alt=""
@@ -94,7 +94,7 @@ function ProductDetailPage() {
               </SwiperSlide>
             </Swiper>
           </div>
-          <div className="view_rgt w-[50%] h-[800px] font-primary text-[12px] leading-8">
+          <div className="view_rgt w-[50%] h-[800px] font-primary text-[14px] leading-8">
             <div className="px-[114px] h-full pt-[154px]">
               <div className="title">
                 <h3>제품 이름</h3>
@@ -126,7 +126,7 @@ function ProductDetailPage() {
                 </form>
               </div>
               <div className="leading-4.5 text-center  mt-4.5 flex justify-center">
-                <div className="w-4xs border border-solid black p-2.5">
+                <div className="w-4xs border border-solid black py-[10px] px-[19px] leading-5">
                   <ul>
                     <li>
                       전화 주문을 통해 서울 일부 지역 당일 배송 가능합니다
@@ -136,16 +136,16 @@ function ProductDetailPage() {
                   </ul>
                 </div>
               </div>
-              <div className="title">
+              <div className="title tracking-wide">
                 <h3>CALL</h3>
               </div>
-              <div className="title">
+              <div className="title tracking-wide">
                 <h3>RESERVATION</h3>
               </div>
-              <div className="title">
+              <div className="title tracking-wide">
                 <h3>CARE SERVICE</h3>
               </div>
-              <div className="title leading-3.5">
+              <div className="title leading-4 tracking-wide">
                 <h3>
                   DELIEVERY &<br /> PAYMENT
                 </h3>
@@ -157,10 +157,18 @@ function ProductDetailPage() {
       <div className="w-full h-full mt-60">
         <div className="w-full h-full flex flex-col">
           <ul className="w-full h-full font-bold flex justify-center text-center text-xl">
-            <li className="w-2xs">상세정보</li>
-            <li className="w-2xs">리뷰(n) </li>
-            <li className="w-2xs">상품고시(n)</li>
-            <li className="w-2xs">상품문의(n)</li>
+            <li className="w-2xs">
+              <Link to="/details">상세정보</Link>
+            </li>
+            <li className="w-2xs">
+              <Link to="/">리뷰(n)</Link>
+            </li>
+            <li className="w-2xs">
+              <Link to="/">상품고시(n)</Link>
+            </li>
+            <li className="w-2xs">
+              <Link to="/">상품문의(n)</Link>
+            </li>
           </ul>
           <div className=" p-330 flex flex-col items-center">
             <img

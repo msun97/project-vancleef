@@ -18,13 +18,9 @@ const ProductInquiry = () => {
         date: '',
         inquiryType: '상품',
     });
-    const [isAgreed, setIsAgreed] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
 
-    const handleCheckChange = (checkState) => {
-        setIsAgreed(checkState);
-    };
-
-    const buttonStyle = isAgreed
+    const buttonStyle = isChecked
         ? 'w-50 h-[55px] border border-primary text-primary hover:bg-primary hover:text-white cursor-pointer'
         : 'w-50 h-[55px] border border-gray-400 text-gray-400 cursor-not-allowed';
 
@@ -67,8 +63,8 @@ const ProductInquiry = () => {
     };
     return (
         <div className='wrap p-330 pt-[80px]'>
-            <h2 className='font-secondary font-bold text-heading-m border-b-2'>상품 문의 쓰기</h2>
-            <div className={`${flexIC} p-4 border-b-2 gap-7`}>
+            <h2 className='font-secondary font-bold text-heading-m border-b'>상품 문의 쓰기</h2>
+            <div className={`${flexIC} p-4 border-b gap-7`}>
                 <div>
                     <img
                         src='https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png'
@@ -82,7 +78,7 @@ const ProductInquiry = () => {
                 </div>
             </div>
             <form className='w-full' onSubmit={onSubmit}>
-                <ul className='flex flex-col w-full border-b-2 py-8 px-4 gap-5'>
+                <ul className='flex flex-col w-full border-b py-8 px-4 gap-5'>
                     <li className='flex items-center'>
                         <div className='w-32 flex items-center gap-2'>
                             <div className='bg-black w-1 h-1'></div>
@@ -216,7 +212,7 @@ const ProductInquiry = () => {
                         </Button>
                     </li>
                 </ul>
-                <div className='flex flex-col w-full border-b-2 py-8 px-4 text-s'>
+                <div className='flex flex-col w-full border-b py-8 px-4 text-s'>
                     <h4 className='text-xs font-extrabold'>비회원 개인정보 수집동의</h4>
                     <p>
                         회사는 비회원의 게시글 등록시 콘텐츠 등록 및 고객 문의 응대 등을 원활하게 진행하기 위해 아래와
@@ -233,7 +229,7 @@ const ProductInquiry = () => {
                         밖의 사항은 넷마블힐러비(주) 개인정보처리방침을 준수합니다.
                     </p>
                     <div className='flex items-center gap-2 mt-4'>
-                        <CheckBox id='agreement' checked={handleCheckChange} className='w-5 h-5' />
+                        <CheckBox id='agreement' checked={isChecked} onChange={setIsChecked} className='w-5 h-5' />
                         <p>위 내용에 동의합니다.</p>
                         <Link>전체보기 {'>'}</Link>
                     </div>
@@ -245,9 +241,9 @@ const ProductInquiry = () => {
                     <Button
                         className={buttonStyle}
                         type='submit'
-                        disabled={!isAgreed}
+                        disabled={!isChecked}
                         onClick={(e) => {
-                            if (!isAgreed) {
+                            if (!isChecked) {
                                 e.preventDefault();
                             }
                         }}

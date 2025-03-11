@@ -7,7 +7,7 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
         setActiveId(isActive ? null : id);
     };
     return (
-        <div className='relative mt-[40px]  border-t-2 text-content-xxl w-full'>
+        <div className='relative mt-[40px]  border-t-2 text-[18px] w-full'>
             <div className='pt-[30px] pb-[35px]'>
                 <p>{data?.location || '경기 - 현대 판교'}</p>
                 <p>
@@ -65,11 +65,11 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
                 </div>
             </div>
             <div className='absolute top-[35px] right-0 flex flex-col items-center gap-[35px]'>
-                <button onClick={handlePlus} className='text-[40px] leading-none'>
+                <button onClick={handlePlus} className='text-[18px] leading-none'>
                     {isActive ? '-' : '+'}
                 </button>
                 <button>
-                    <svg width='40' height='40' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <svg width='18' height='18' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
                         <path
                             d='M2 12.8784V44.8784L16 36.8784L32 44.8784L46 36.8784V4.87842L32 12.8784L16 4.87842L2 12.8784Z'
                             stroke='#1C1C1E'
