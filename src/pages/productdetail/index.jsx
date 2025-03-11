@@ -14,7 +14,7 @@ import MotiveGuide from '../../components/size/MotiveGuide';
 import SizeGuide from '../../components/size/SizeGuide';
 // import DelieveryModal from '../../components/productdetailc/DelieveryModal';
 // import CareModal from '../../components/productdetailc/CareModal';
-import InquiryModal from '../../components/productdetailc/InquiryModal';
+// import InquiryModal from '../../components/productdetailc/InquiryModal';
 
 // import required modules
 
@@ -352,7 +352,7 @@ function ProductDetailPage() {
             <ProductNotice />
             <ReviewList />
             <ProductInquiryList />
-            <InquiryModal />
+            {/* <InquiryModal /> */}
             {/* <CareModal /> */}
             {/* <DelieveryModal /> */}
         </div>

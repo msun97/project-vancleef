@@ -18,13 +18,9 @@ const ProductInquiry = () => {
         date: '',
         inquiryType: '상품',
     });
-    const [isAgreed, setIsAgreed] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
 
-    const handleCheckChange = (checkState) => {
-        setIsAgreed(checkState);
-    };
-
-    const buttonStyle = isAgreed
+    const buttonStyle = isChecked
         ? 'w-50 h-[55px] border border-primary text-primary hover:bg-primary hover:text-white cursor-pointer'
         : 'w-50 h-[55px] border border-gray-400 text-gray-400 cursor-not-allowed';
 
@@ -233,7 +229,7 @@ const ProductInquiry = () => {
                         밖의 사항은 넷마블힐러비(주) 개인정보처리방침을 준수합니다.
                     </p>
                     <div className='flex items-center gap-2 mt-4'>
-                        <CheckBox id='agreement' checked={handleCheckChange} className='w-5 h-5' />
+                        <CheckBox id='agreement' checked={isChecked} onChange={setIsChecked} className='w-5 h-5' />
                         <p>위 내용에 동의합니다.</p>
                         <Link>전체보기 {'>'}</Link>
                     </div>
@@ -245,9 +241,9 @@ const ProductInquiry = () => {
                     <Button
                         className={buttonStyle}
                         type='submit'
-                        disabled={!isAgreed}
+                        disabled={!isChecked}
                         onClick={(e) => {
-                            if (!isAgreed) {
+                            if (!isChecked) {
                                 e.preventDefault();
                             }
                         }}
