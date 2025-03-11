@@ -53,7 +53,7 @@ const MypostsModal = () => {
           rows={1} 
           className="w-full p-2 bg-[#F4F4F4] focus:outline-none focus:ring-1 focus:ring-gray-200 text-[#9C9C9C]" 
           placeholder="제목"
-					style={{ resize: 'none' }}
+								style={{ resize: 'none' }}
         />
         <div className="mb-4">
           <textarea
