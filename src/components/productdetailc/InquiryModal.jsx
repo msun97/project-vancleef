@@ -1,6 +1,6 @@
 const InquiryModal = () => {
     return (
-        <div className='fixed bg-black/5 w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
+        <div className='fixed bg-[rgba(0,0,0,0.5)] w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
             <div className='relative h-full'>
                 <div className='absolute top-0 right-0 w-[450px] bg-white h-full'>
                     <div className='flex flex-col items-center px-[60px] py-[50px] text-center relative'>
@@ -20,7 +20,7 @@ const InquiryModal = () => {
                             </svg>
                         </button>
 
-                        <h2 className='text-[18px] '>문의사항 있으신가요?</h2>
+                        <h2 className='text-[18px] font-bold'>문의사항 있으신가요?</h2>
                         <p className='mt-[50px] text-[16px]'>
                             반클리프 아펠의 담당 직원이 월요일부터 목요일 오전 10시 30분부터 오후 7시 30분까지,
                             금요일부터 일요일 오전 10시 30분부터 오후 8시까지 문의에 대한 답변을 드리겠습니다.
