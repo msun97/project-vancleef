@@ -1,26 +1,28 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import Home from './pages/home';
-import NotFiles from './pages/notfile';
-import MyPage from './pages/mypage';
-import Order from './pages/mypage/order';
-import Recent from './pages/mypage/recent';
-import Wishlist from './pages/mypage/wishtlist';
-import Cart from './pages/mypage/cart';
-import Myposts from './pages/mypage/myposts';
-import Profile from './pages/mypage/profile';
-import Logout from './pages/mypage/logout';
-import ProductInquiry from './pages/productinquiry';
-import ProductListPage from './pages/ProductList';
-import ProductDetailPage from './pages/productdetail';
-import CustomerCenter from './pages/customercenter';
-import CCInquiryForm from './pages/customercenter/components/CCInquiryForm';
-import CCFaq from './pages/customercenter/components/CCFaq';
-import CCNotice from './pages/customercenter/components/CCNotice';
-import CCInquiry from './pages/customercenter/components/CCInquiry';
-import Search from './pages/search';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/home";
+import NotFiles from "./pages/notfile";
+import MyPage from "./pages/mypage";
+import Order from "./pages/mypage/order";
+import Recent from "./pages/mypage/recent";
+import Wishlist from "./pages/mypage/wishtlist";
+import Cart from "./pages/mypage/cart";
+import Myposts from "./pages/mypage/myposts";
+import Profile from "./pages/mypage/profile";
+import Logout from "./pages/mypage/logout";
+import ProductInquiry from "./pages/productinquiry";
+import ProductListPage from "./pages/ProductList";
+import ProductDetailPage from "./pages/productdetail";
+import CustomerCenter from "./pages/customercenter";
+import CCInquiryForm from "./pages/customercenter/components/CCInquiryForm";
+import CCFaq from "./pages/customercenter/components/CCFaq";
+import CCNotice from "./pages/customercenter/components/CCNotice";
+import CCInquiry from "./pages/customercenter/components/CCInquiry";
+import Search from "./pages/search";
 import Purchase from './pages/purchase';
-import ReservationPage from './pages/reservation';
+import ReservationPage from "./pages/reservation";
+import ShoppingcartModal from "./components/purchase/ShoppingcartModal";
+
 
 const App = () => {
   return (
@@ -32,6 +34,7 @@ const App = () => {
             <Route path="home" element={<Home />} />
             <Route path="/productlist" element={<ProductListPage />} />
             <Route path="/productdetail" element={<ProductDetailPage />} />
+            <Route path="/shoppingcartmodal" element={<ShoppingcartModal />} />
             <Route path="/mypage" element={<MyPage />}>
               <Route path="order" element={<Order />} />
               <Route path="recent" element={<Recent />} />
