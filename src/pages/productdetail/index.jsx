@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "../../components/button";
-import { Keyboard, Navigation } from "swiper/modules";
+import { FreeMode, Keyboard, Navigation, Pagination } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/navigation";
-
+import { IoIosHeartEmpty } from "react-icons/io";
 import ProductNotice from "../../components/productdetailc/ProductNotice";
 import ReviewList from "../../components/productdetailc/ReviewList";
 import ProductInquiryList from "../../components/productdetailc/ProductInquiryList";

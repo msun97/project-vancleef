@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '../../store/modules/modalSlice';
 import Input from '../input';
 import Button from '../button';
+import { Navigate } from 'react-router-dom';
 
 function LoginFull() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function LoginFull() {
     >
       <div className="bg-white p-6 relative w-[580px] h-full ml-[600px]">
         <button
-          onClick={() => dispatch(closeModal())}
+          onClick={() => Navigate(-1)}
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
         >
           닫기
