@@ -81,10 +81,13 @@ const ReviewItem = ({ review }) => {
                 </div>
             </div>
             <div className='w-full relative flex flex-col gap-[15px] text-xl'>
-                <div className='flex justify-between items-center'>
+                <div className='absolute top-0 right-0 flex flex-col items-end justify-between h-full'>
                     <span className='text-[17px]'>{review.email}</span>
                     <span className='text-sm text-gray-500'>{formatDate(review.createdAt)}</span>
                 </div>
+
+                {/* 리뷰 제목 추가 */}
+                {review.title && <h3 className='text-[19px] font-semibold'>{review.title}</h3>}
 
                 <p className='pt-[2px] text-[17px]'>{review.content}</p>
 
