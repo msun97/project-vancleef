@@ -10,7 +10,7 @@ const ReservationDetailForm = () => {
     const [dateValue, setDateValue] = useState(formattedDate);
     return (
         <div className='border-t-2 w-full'>
-            <h3 className='font-secondary text-[32px] pt-[30px] pb-[40px]'>3. 예약 상세정보</h3>
+            <h3 className='font-secondary text-[20px] pt-[30px] pb-[40px]'>3. 예약 상세정보</h3>
             <div className='flex flex-col gap-[20px] px-[330px] font-bold text-[18px] w-full'>
                 <p>날짜 *</p>
                 <div className='border flex items-center'>

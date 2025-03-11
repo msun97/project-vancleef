@@ -53,10 +53,10 @@ const ReviewList = () => {
                             </Button>
                         </div>
                     </div>
-                    <div className='flex items-center justify-between font-bold text-xl'>
+                    <div className='flex items-center justify-between font-bold text-[17px]'>
                         <div>총 (총 개수)개</div>
                         <div className='flex items-center gap-[70px]'>
-                            <div className='flex items-center gap-[50px] relative'>
+                            <div className='flex items-center gap-[20px] relative'>
                                 <button className='hover:opacity-100 transition duration-300 opacity-50'>
                                     베스트순
                                 </button>
@@ -65,8 +65,8 @@ const ReviewList = () => {
                             </div>
                             <div className='flex items-center gap-4'>
                                 <svg
-                                    width='24'
-                                    height='24'
+                                    width='20'
+                                    height='20'
                                     viewBox='0 0 48 49'
                                     fill='none'
                                     xmlns='http://www.w3.org/2000/svg'

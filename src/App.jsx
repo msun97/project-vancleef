@@ -19,8 +19,8 @@ import CCFaq from './pages/customercenter/components/CCFaq';
 import CCNotice from './pages/customercenter/components/CCNotice';
 import CCInquiry from './pages/customercenter/components/CCInquiry';
 import Search from './pages/search';
-import ReservationPage from './pages/reservation';
 import Purchase from './pages/purchase';
+import ReservationPage from './pages/reservation';
 
 const App = () => {
   return (

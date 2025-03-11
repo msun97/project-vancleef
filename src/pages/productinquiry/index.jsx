@@ -67,8 +67,8 @@ const ProductInquiry = () => {
     };
     return (
         <div className='wrap p-330 pt-[80px]'>
-            <h2 className='font-secondary font-bold text-heading-m border-b-2'>상품 문의 쓰기</h2>
-            <div className={`${flexIC} p-4 border-b-2 gap-7`}>
+            <h2 className='font-secondary font-bold text-heading-m border-b'>상품 문의 쓰기</h2>
+            <div className={`${flexIC} p-4 border-b gap-7`}>
                 <div>
                     <img
                         src='https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png'
@@ -82,7 +82,7 @@ const ProductInquiry = () => {
                 </div>
             </div>
             <form className='w-full' onSubmit={onSubmit}>
-                <ul className='flex flex-col w-full border-b-2 py-8 px-4 gap-5'>
+                <ul className='flex flex-col w-full border-b py-8 px-4 gap-5'>
                     <li className='flex items-center'>
                         <div className='w-32 flex items-center gap-2'>
                             <div className='bg-black w-1 h-1'></div>
@@ -216,7 +216,7 @@ const ProductInquiry = () => {
                         </Button>
                     </li>
                 </ul>
-                <div className='flex flex-col w-full border-b-2 py-8 px-4 text-s'>
+                <div className='flex flex-col w-full border-b py-8 px-4 text-s'>
                     <h4 className='text-xs font-extrabold'>비회원 개인정보 수집동의</h4>
                     <p>
                         회사는 비회원의 게시글 등록시 콘텐츠 등록 및 고객 문의 응대 등을 원활하게 진행하기 위해 아래와
