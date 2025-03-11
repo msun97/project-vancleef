@@ -1,15 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/button';
 import CheckBox from '../../components/checkbox';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import Input from '../../components/input';
+import { useDispatch } from 'react-redux';
+import { productInquiryActions } from '../../store/modules/productInquirySlice';
 
 const flexIC = 'flex items-center';
 
 const ProductInquiry = () => {
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
-    const [fileName, setFileName] = useState(''); // 파일명 상태 추가
+    const dispatch = useDispatch();
+    const [fileName, setFileName] = useState('');
     const [userInquiry, setUserInquiry] = useState({
         title: '',
         content: '',
@@ -22,14 +25,6 @@ const ProductInquiry = () => {
     // 두 개의 체크박스를 위한 별도의 상태 생성
     const [isSecretPost, setIsSecretPost] = useState(false);
     const [isAgreed, setIsAgreed] = useState(false);
-
-    // 비밀글 체크시 비밀번호 필수 입력 확인
-    useEffect(() => {
-        if (isSecretPost && !userInquiry.password) {
-            // 비밀글이 체크되었지만 비밀번호가 없는 경우
-            console.log('비밀글에는 비밀번호가 필요합니다.');
-        }
-    }, [isSecretPost, userInquiry.password]);
 
     const buttonStyle = isAgreed
         ? 'w-50 h-[55px] border border-primary text-primary hover:bg-primary hover:text-white cursor-pointer'
@@ -59,8 +54,6 @@ const ProductInquiry = () => {
         });
     };
 
-    const now = new Date();
-
     const onSubmit = (e) => {
         e.preventDefault();
         if (!title || !name || !content) return;
@@ -71,7 +64,20 @@ const ProductInquiry = () => {
             return;
         }
 
-        userInquiry.date = `${now.getFullYear()} - ${now.getMonth() + 1} -${now.getDate()} `;
+        const now = new Date();
+        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
+            now.getDate()
+        ).padStart(2, '0')}`;
+
+        // 리덕스 액션 디스패치하여 문의 추가
+        dispatch(
+            productInquiryActions.addInquiry({
+                ...userInquiry,
+                isSecretPost, // 비밀글 여부 추가
+                date: formattedDate,
+            })
+        );
+
         navigate('/productdetail');
     };
 
@@ -80,6 +86,7 @@ const ProductInquiry = () => {
         navigate('/productdetail');
     };
 
+    // 기존 JSX 유지...
     return (
         <div className='wrap p-330 pt-[80px]'>
             <h2 className='font-secondary font-bold text-heading-m border-b'>상품 문의 쓰기</h2>
