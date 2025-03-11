@@ -18,6 +18,7 @@ import CCInquiryForm from './pages/customercenter/components/CCInquiryForm';
 import CCFaq from './pages/customercenter/components/CCFaq';
 import CCNotice from './pages/customercenter/components/CCNotice';
 import CCInquiry from './pages/customercenter/components/CCInquiry';
+import Search from './pages/search';
 import ReservationPage from './pages/reservation';
 
 const App = () => {
@@ -45,6 +46,8 @@ const App = () => {
                             <Route path='inquiry' element={<CCInquiry />} />
                             <Route path='inquiryform' element={<CCInquiryForm />} />
                         </Route>
+                        <Route path="/:search">
+                        <Route index element={<Search />} />
                         <Route path='/reservation' element={<ReservationPage />} />
                     </Route>
                     <Route path='/productinquiry' element={<ProductInquiry />} />
