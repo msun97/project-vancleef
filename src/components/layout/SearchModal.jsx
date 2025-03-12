@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Input from '../input';
 
 const SearchModal = ({ onSearch }) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+  
   return (
-    <div className="fixed w-full h-full bg-[rgba(0,0,0,0.5)] flex justify-center z-[1000] left-0 top-0">
-      <div className="wrap bg-gray-0 p-[50px] w-full h-fit z-[1000]">
+    <div className="fixed w-full h-[100vh] bg-[rgba(0,0,0,0.5)] flex justify-center left-0 top-0" style={{zIndex:9999}}>
+      <div className="wrap bg-gray-0 p-[50px] w-full h-fit z-[1000] fixed" >
         <div className="header relative mb-5">
           <h2 className="text-[25px] font-secondary font-bold">검색</h2>
           <button className="close absolute right-0 top-0" onClick={onSearch}>
