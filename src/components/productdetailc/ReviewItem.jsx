@@ -73,22 +73,21 @@ const ReviewItem = ({ review }) => {
             <div className='flex flex-col gap-[34px]'>
                 <div className='flex items-center'>{renderStars(review.rating)}</div>
                 <div className='bg-gray-10 w-[170px] h-[163px] rounded-tl-[180px] rounded-tr-[180px] flex justify-center items-baseline'>
-                    {review.images && review.images.length > 0 ? (
-                        <img src={review.images[0]} alt='리뷰 이미지' className='w-[162px] h-[162px] object-cover' />
-                    ) : (
-                        <img
-                            src='/images/product-sample2(close).png'
-                            alt='제품 기본 이미지'
-                            className='w-[162px] h-[162px]'
-                        />
-                    )}
+                    <img
+                        src='/images/product-sample2(close).png'
+                        alt='제품 기본 이미지'
+                        className='w-[162px] h-[162px]'
+                    />
                 </div>
             </div>
             <div className='w-full relative flex flex-col gap-[15px] text-xl'>
-                <div className='flex justify-between items-center'>
+                <div className='absolute top-0 right-0 flex flex-col items-end justify-between h-full'>
                     <span className='text-[17px]'>{review.email}</span>
                     <span className='text-sm text-gray-500'>{formatDate(review.createdAt)}</span>
                 </div>
+
+                {/* 리뷰 제목 추가 */}
+                {review.title && <h3 className='text-[19px] font-semibold'>{review.title}</h3>}
 
                 <p className='pt-[2px] text-[17px]'>{review.content}</p>
 
