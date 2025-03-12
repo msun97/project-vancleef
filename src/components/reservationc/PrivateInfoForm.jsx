@@ -5,7 +5,7 @@ const PrivateInfoForm = () => {
     return (
         <div className='border-t-2 w-full'>
             <h3 className='font-secondary text-[20px] pt-[30px] pb-[40px]'>4. 개인 정보</h3>
-            <div className='flex flex-col gap-[20px] px-[330px] font-bold text-[18px] w-full'>
+            <div className='flex flex-col gap-[20px] font-bold text-[18px] w-full'>
                 <p>호칭 *</p>
                 <div className='flex items-center gap-8'>
                     <div className='flex items-center gap-[7px]'>

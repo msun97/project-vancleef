@@ -30,11 +30,11 @@ const LocationResultList = () => {
     // 모든 데이터가 표시되는지 확인
     const isAllLoaded = visibleCount >= locationData.length;
     return (
-        <div className='border-t-2 mb-[70px]'>
+        <div className='border-t-2 mb-[70px] w-full'>
             <h3 className='font-secondary text-[20px] pt-[30px] pb-[40px]'>1. 부티크 선택</h3>
-            <div className='flex flex-col gap-[40px] px-[330px]'>
-                <div className='flex flex-col gap-[22px]'>
-                    <div className='flex flex-col gap-[13px]'>
+            <div className='flex flex-col w-full gap-[40px]'>
+                <div className='flex gap-[22px] w-full'>
+                    <div className='flex flex-col gap-[13px] w-full'>
                         <h4 className='font-bold text-[18px]'>지역 *</h4>
                         <div className='relative inline-block'>
                             <select name='' id='' className='border py-[20px] px-[30px] w-full'>
@@ -60,7 +60,7 @@ const LocationResultList = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='flex flex-col gap-[13px]'>
+                    <div className='flex flex-col gap-[13px] w-full'>
                         <h4 className='font-bold text-[18px]'>도시 *</h4>
                         <div className='relative inline-block'>
                             <select name='' id='' className='border py-[20px] px-[30px] w-full'>
