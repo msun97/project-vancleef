@@ -32,6 +32,17 @@ export const paginationSlice = createSlice({
         // 데이터 추가
         addData: (state, action) => {
             const { pageId, data } = action.payload;
+
+            // pageId가 존재하지 않으면 먼저 초기화
+            if (!state[pageId]) {
+                state[pageId] = {
+                    postData: [],
+                    postsPerPage: 10,
+                    currPage: 1,
+                    totalPage: 1,
+                };
+            }
+
             state[pageId].postData = data;
             state[pageId].currPage = 1;
             // 전체 페이지 수 업데이트
