@@ -17,6 +17,7 @@ import InquiryModal from '../../components/productdetailc/InquiryModal';
 import DelieveryModal from '../../components/productdetailc/DelieveryModal';
 import CareModal from '../../components/productdetailc/CareModal';
 import ShoppingcartModal from '../../components/purchase/ShoppingcartModal';
+import RingSizeGuide from '../../components/size/RingSizeGuide';
 
 // import required modules
 
@@ -196,6 +197,7 @@ function ProductDetailPage() {
             </div>
             <MotiveGuide />
             <SizeGuide />
+            <RingSizeGuide />
             {/* 사이즈가이드 */}
             <div className='w-full h-full mt-60'>
                 <ul className='w-full h-full font-bold flex-col justify-center  text-xl p-330 leading-20'>
