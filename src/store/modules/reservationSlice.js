@@ -33,7 +33,7 @@ const initialState = {
         purpose: {
             productConsultation: false,
             repairService: false,
-            repairType: '', // 수리 제품 수령 or 수리 제품 픽업
+            selectedOption: '', // 제품 상담 시: 목걸이, 반지, 귀걸이, 팔찌 / 수리 서비스 시: 수리 제품 수령, 수리 제품 픽업
         },
         // 3. 예약 상세정보
         details: {

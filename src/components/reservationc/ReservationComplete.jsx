@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 const ReservationComplete = () => {
     const { reservation } = useSelector((state) => state.reservationR);
-    const { location, purpose, details, personalInfo } = reservation;
+    const { location, purpose, details } = reservation;
     return (
         <div className='border-t-2 mb-[70px] w-full'>
             <h3 className='font-secondary text-[20px] pt-[30px] pb-[20px]'>예약 확인</h3>
