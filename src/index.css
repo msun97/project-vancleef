@@ -320,6 +320,21 @@
     .swiper-button-next::after {
         font-size: 20px !important ;
     }
+    .text-shadow-lg {
+        text-shadow: 3px 10px 7px rgba(0, 0, 0, 0.4); /* 텍스트 그림자 */
+    }
+    /* ProductListItem의 기본 상태 */
+    .product-item {
+        opacity: 0;
+        top: 30px; /* 화면에 나타나기 전에 아래쪽에서 올라오는 애니메이션을 구현 */
+        transition: opacity 1s ease, top 1s ease;
+    }
+
+    /* 화면에 나타날 때 애니메이션 */
+    .product-item.visible {
+        opacity: 1;
+        top: 0; /* 최종 위치 */
+    }
 }
 
 @import 'tailwindcss';
