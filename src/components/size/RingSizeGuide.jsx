@@ -32,6 +32,9 @@ const RingSizeGuide = () => {
                         <p>측정한 사이즈를 아래 차트와 비교하여 링 사이즈를 결정합니다.</p>
                     </li>
                 </ul>
+
+                <img src='/images/diamondring.png' alt='diamondring' className='w-[350px] h-auto mx-auto' />
+
                 <div className='text-center text-[13px] pt-[19px]'>
                     지수는 참고 지표로서 제공됩니다. 모든 반클리프 아펠(Van Cleef & Arpels) 작품은 수작업으로 제작되므로
                     크기는 제품마다 다소 차이가 날 수 있습니다.
