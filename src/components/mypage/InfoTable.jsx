@@ -13,7 +13,7 @@ function InfoTable() {
         <tbody>
           {/* 첫 번째 행 */}
 					<tr className="border-b">
-  <td className="w-1/2 align-top">
+  <td className="w-1/2 align-top h-[55px]">
   <div className='flex items-center'>
   	  <span className="bg-[#D9D9D9] w-[98px] h-[55px] flex items-center justify-center font-medium text-[#706F6F]">
 	      주문자명
@@ -31,14 +31,13 @@ function InfoTable() {
 
           {/* 두 번째 행 */}
           <tr>
-            <td className="w-1/2 align-top">
-          <div className='flex items-center mb-[52px] border-b'>
-          	    <span className="bg-[#D9D9D9] w-[98px] h-[55px] flex items-center justify-center font-medium text-[#706F6F] ">연락처</span>
+            <td className="">
+          <div className='flex items-center border-b'>
+          	    <span className="bg-[#D9D9D9] w-[98px] h-[54px] flex items-center justify-center font-medium text-[#706F6F] ">연락처</span>
 	              <span className='ml-[26px]'>000-0000-0000</span>
           </div>
             </td>
-            <td className="w-1/2 align-top">
-              {/* 필요 시 다른 정보를 추가하거나 비워둘 수 있음 */}
+            <td className="border-b">
             </td>
           </tr>
         </tbody>

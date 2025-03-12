@@ -12,6 +12,12 @@ const Recent = () => {
 	<MypageItemList/>
 	<MypageItemList/>
 	<MypageItemList/>
+	<MypageItemList/>
+	<MypageItemList/>
+	<MypageItemList/>
+	<MypageItemList/>
+	<MypageItemList/>
+	<MypageItemList/>
 	</div>
 	)
 }

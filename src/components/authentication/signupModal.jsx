@@ -4,10 +4,12 @@ import { closeModal } from '../../store/modules/modalSlice';
 import Input from '../input';
 import Button from '../button';
 import CheckBox from '../checkbox';
+import { useNavigate } from 'react-router-dom';
 
 
 function SignupFull() {
   const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const [gender, setGender] = useState({
 		male: false,
 		female: false,
@@ -32,7 +34,7 @@ function SignupFull() {
       <div className="bg-white p-6 relative w-[580px] h-full">
     
         {/* 추가 기능이 필요하면 여기에 작성 */}
-        <div className="container flex flex-col justify-center items-center mt-[60px] space-y-[20px]">
+        <div className="container flex flex-col justify-center items-center pt-[60px]  pb-[60px] space-y-[20px]">
           <h1 className="pb-[86px]">
             <img
               src="/icons/logo.svg"
@@ -43,35 +45,35 @@ function SignupFull() {
 					<div className="flex items-center mb-4">
 						<span className="w-[230px]">이름 *</span>
 	          <Input
-	            className="w-[600px] h-[55px] font-bold text-gray text-center"
+	            className="w-[600px] h-[55px] font-bold text-[#9C9C9C] text-center"
 	            placeholder="이름을 입력해 주세요."
 	          />
 					</div>
 					<div className="flex items-center mb-4">
 					<span className="w-[230px]">아이디 *</span>
           <Input
-            className="w-[600px] h-[55px] text-gray text-center font-bold"
+            className="w-[600px] h-[55px] text-[#9C9C9C] text-center font-bold"
             placeholder="아이디를 입력해 주세요."
           />
 					</div>
 					<div className="flex items-center mb-4">
 					<span className="w-[230px]">비밀번호 *</span>
           <Input
-            className="w-[600px] h-[55px] font-bold text-gray text-center"
+            className="w-[600px] h-[55px] font-bold text-[#9C9C9C] text-center"
             placeholder="비밀번호 입력해 주세요."
           />
 					</div>
 					<div className="flex items-center mb-4">
 					<span className="w-[230px]">비밀번호 확인 *</span>
           <Input
-            className="w-[600px] h-[55px] text-gray text-center font-bold"
+            className="w-[600px] h-[55px] text-[#9C9C9C] text-center font-bold"
             placeholder="비밀번호 확인"
           />
 					</div>
 					<div className="flex items-center mb-4">
 					<span className="w-[230px]">이메일 *</span>
           <Input
-            className="w-[600px] h-[55px] font-bold text-gray text-center"
+            className="w-[600px] h-[55px] font-bold text-[#9C9C9C] text-center"
             placeholder="이메일을 입력해 주세요."
           />
 					</div>
@@ -79,7 +81,7 @@ function SignupFull() {
 					<div className="flex items-center mb-4">
 					<span className="w-[230px]">생년월일 *</span>
           <Input
-            className="w-[600px] h-[55px] text-gray text-center font-bold"
+            className="w-[600px] h-[55px] text-[#9C9C9C] text-center font-bold"
             placeholder="생년월일"
           />
 					</div>
@@ -121,7 +123,7 @@ function SignupFull() {
 <div className="flex items-center h-[55px] mb-[16px]">
 <span className="w-[230px]">휴대폰 번호 *</span>
 <Input
-            className="w-[550px] h-[55px] text-gray text-center font-bold"
+            className="w-[550px] h-[55px] text-[#9C9C9C] text-center font-bold pl-13"
             placeholder="휴대폰 번호"
           />
 					<span className='w-[50px] text-[14px] underline'>인증하기</span>
@@ -129,7 +131,7 @@ function SignupFull() {
 			<div className="flex items-center h-[55px] mb-[16px]">
 			<span className="w-[230px]">SMS인증번호 *</span>
 				<Input
-            className="w-[550px] h-[55px] text-gray text-center font-bold"
+            className="w-[550px] h-[55px] text-[#9C9C9C] text-center font-bold pl-13"
             placeholder="SMS인증번호"
           /><span className='w-[50px]  text-[14px] underline'>확인</span>
 					</div>
@@ -139,8 +141,8 @@ function SignupFull() {
 
 					<p className='w-[830px] text-[14px] flex-nowrap text-[#A6A6A6] mb-[48px]'>*회원가입에 필요한 최소한의 정보만 입력 받음으로써 고객님의 개인정보 수집을 최소화하고 편리한 회원가입을 제공합니다.</p>
 
-				<Button variant='primary'  className='w-[1260px] h-[50px]'>가입완료</Button>
-				<Button variant='secondary'  className='w-[1260px] h-[50px]'>돌아가기</Button>
+				<Button variant='primary'  className='w-[830px] h-[50px] !font-bold'>가입완료</Button>
+				<Button variant='secondary'  className='w-[830px] h-[50px] !font-bold' onClick={() => navigate(-1)}>돌아가기</Button>
 
 
 

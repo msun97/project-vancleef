@@ -4,7 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 
 function MyPage() {
   return (
-    <div className="flex flex-row w-full h-screen">
+    <div className="relative flex flex-row w-full h-screen">
       {/* Left Side */}
       <div className="w-1/2 bg-[#F7F7F7] flex items-center justify-center p-[var(--spacing-330)]">
         <div className="flex items-baseline justify-center space-y-10">
@@ -31,7 +31,7 @@ function MyPage() {
       </div>
 
       {/* Right Side */}
-      <div className="w-1/2 bg-white flex flex-col items-center justify-center p-[var(--padding-144)] overflow-auto">
+      <div className="relative w-1/2 bg-white flex flex-col items-center justify-center p-[var(--padding-144)] overflow-y-scroll">
         <Outlet />
       </div>
     </div>

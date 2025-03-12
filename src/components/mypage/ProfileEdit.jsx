@@ -39,19 +39,19 @@ function PasswordChange() {
     <div className="p-6">
    {/* 이름 */}
 <div className="flex items-center mt-[50px] mb-[60px]">
-  <label className="w-20 text-left font-regular">이름</label>
+  <label className="w-[180px] text-left font-regular">이름</label>
   <Input type="text" className="w-[290px] ml-4" />
 </div>
 
 {/* 아이디 */}
 <div className="flex items-center mb-[60px]">
-  <label className="w-20 text-left font-regular">아이디</label>
+  <label className="w-[180px] text-left font-regular">아이디</label>
   <Input type="text" className="w-[290px] ml-4" />
 </div>
 <div className='flex flex-row justify-between items-center'>
 	      {/* 생년월일 */}
 	      <div className="flex flex-row mb-[60px]">
-	        <label className="mb-2 font-regular">생일/성별</label>
+	        <label className="w-[180px] mb-2 font-regular">생일/성별</label>
 	        <div className="ml-[60px] items-start space-x-5">
 					<select className="text-[gray]">
 	  <option>년</option>
@@ -120,7 +120,7 @@ function PasswordChange() {
 </div>
       {/* 이메일 */}
       <div className="flex flex-row items-center mb-[60px]">
-        <label className="w-20 text-left block mb-2 font-regular">이메일</label>
+        <label className="w-[230px] text-left block mb-2 font-regular">이메일</label>
         <div className="flex ml-[10px] pb-[10px] items-center space-x-2">
           <Input
             type="text"
@@ -145,7 +145,7 @@ function PasswordChange() {
 
 {/* SMS/카카오 수신 (체크박스) */}
 <div className="flex flex-row mb-[60px]">
-        <label className="w-20 text-left block mb-2 font-regular">메일 정보</label>
+        <label className="w-[200px] text-left block mb-2 font-regular">메일 정보</label>
         <div className="flex mb-[20px] items-center space-x-4">
           <label className="flex items-center">
             <CheckBox
@@ -170,7 +170,7 @@ function PasswordChange() {
 
       {/* SMS/카카오 수신 (체크박스) */}
       <div className="flex flex-row mb-[60px]">
-        <label className="block mb-2 font-regular">SMS/카카오 수신</label>
+        <label className="w-[200px] block mb-2 font-regular">SMS/카카오 수신</label>
         <div className="flex mb-[20px] items-center space-x-4">
           <label className="flex items-center">
             <CheckBox
@@ -195,7 +195,7 @@ function PasswordChange() {
 
       {/* 연락처 */}
       <div className="flex flex-row mb-[60px]">
-        <label className="w-20 text-left block mb-2 font-regular">연락처</label>
+        <label className="w-[200px] text-left block mb-2 font-regular">연락처</label>
         <Input
           type="tel"
           className="w-[10%] underline border-gray-300 rounded"
