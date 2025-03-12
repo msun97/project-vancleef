@@ -25,12 +25,14 @@ import ShoppingcartModal from "./components/purchase/ShoppingcartModal";
 import SignupPage from "./pages/signup";
 import Login from "./pages/login";
 import MypostsPage from "./pages/mypage/myposts";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
+      <ScrollToTop />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
