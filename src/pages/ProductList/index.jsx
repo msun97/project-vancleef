@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
-import Rellax from "rellax"; // Rellax.js 임포트
-import { IoIosHeartEmpty } from "react-icons/io";
-import ProductDescription from "../../components/product/ProductDescription";
-import ProductImg from "../../components/product/ProductImg";
+import Rellax from "rellax";
 import ProductListItem from "../../components/product/ProductListItem";
 
 const ProductListPage = () => {
@@ -37,22 +34,22 @@ const ProductListPage = () => {
                       <ul className="submenu font-bold text-content-l hidden">
                         <li>
                           <a href="../goods/goods_list.php?cateCd=001001001">
-                            Category-1
+                            네크리스
                           </a>
                         </li>
                         <li>
                           <a href="../goods/goods_list.php?cateCd=001001002">
-                            Category-2
+                            브레이슬릿
                           </a>
                         </li>
                         <li>
                           <a href="../goods/goods_list.php?cateCd=001001003">
-                            Category-3
+                            링
                           </a>
                         </li>
                         <li>
                           <a href="../goods/goods_list.php?cateCd=001001004">
-                            Category-4
+                            이어링
                           </a>
                         </li>
                       </ul>
@@ -61,11 +58,6 @@ const ProductListPage = () => {
                       </li>
                       <li>
                         <a href="../goods/goods_list.php?cateCd=001003">Best</a>
-                      </li>
-                      <li>
-                        <a href="../goods/goods_list.php?cateCd=001004">
-                          선물하기
-                        </a>
                       </li>
                     </ul>
                   </li>
