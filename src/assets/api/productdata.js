@@ -13,7 +13,7 @@ export const productdata = [
                     'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png',
                     'https://www.vancleefarpels.com/content/dam/rcq/vca/21/22/06/2/2122062.jpeg.transform.vca-w820-1x.jpeg',
                 ],
-                colorpn: [],
+                colorpn: [] /* 다른 색상 */,
                 detail: '럭키 스프링 롱 네크리스, 15개 모티브, 18K 로즈 골드, 화이트 마더 오브 펄, 커넬리언, 오닉스.',
                 stone: '마더오브펄: 스톤 7개, 오닉스: 스톤 3개, 커넬리언: 스톤 4개',
             },

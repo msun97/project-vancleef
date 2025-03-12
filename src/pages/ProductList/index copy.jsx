@@ -76,7 +76,6 @@ const ProductListPage = () => {
             }
         }
     }, [selectedFilter, filteredCategory]); // 필터나 카테고리 변경 시마다 업데이트
-    console.log();
     return (
         <div className='w-full h-auto relative bg-fixed bg-[url("/images/productListPageBg.png")] bg-no-repeat bg-top bg-cover'>
             <div className="w-full h-full pb-[100px]">
@@ -167,19 +166,17 @@ const ProductListPage = () => {
                                                 data-rellax-speed="-3"
                                             >
                                                 {/* 선택된 카테고리에 맞는 상품만 필터링하여 보여줌 */}
-                                                {product.slice(0, 2).map((category, index) => {
-                                                    return (
-                                                        <div key={category.id}>
-                                                            {category.data.map((product) => (
-                                                                <ProductListItem
-                                                                    className="transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px] mr-[7%]"
-                                                                    key={product.productid}
-                                                                    productdata={product}
-                                                                />
-                                                            ))}
-                                                        </div>
-                                                    );
-                                                })}
+                                                {filteredProducts.map((product) => (
+                                                    <div key={product.id}>
+                                                        {product.data.map((product) => (
+                                                            <ProductListItem
+                                                                className="transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px] mr-[7%]"
+                                                                key={product.productid}
+                                                                productdata={product}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                ))}
                                                 {/* 왼쪽 */}
                                             </ul>
                                             <ul
