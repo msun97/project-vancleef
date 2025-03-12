@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../button';
-import CheckBox from '../checkbox';
 import TimePicker from './TimePicker';
 import { reservationActions } from '../../store/modules/reservationSlice';
 
