@@ -3,7 +3,7 @@ import React from 'react';
 const ReservationComplete = () => {
     return (
         <div className='border-t-2 mb-[70px] w-full'>
-            <h3 className='font-secondary text-[20px] pt-[30px] pb-[40px]'>예약 확인</h3>
+            <h3 className='font-secondary text-[20px] pt-[30px] pb-[20px]'>예약 확인</h3>
             <div className='flex flex-col w-[560px] bg-gray-10 px-5 pb-5 mx-auto'>
                 <span className='pt-5 text-[14px] text-gray-60' style={{ letterSpacing: '1.5px' }}>
                     부티크 선택
