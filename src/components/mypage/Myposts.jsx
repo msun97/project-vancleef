@@ -32,7 +32,7 @@ function MyPosts() {
       </div>
       {/* Redux 상태에 따라 모달 렌더링 */}
       {isOpen && (
-        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-[rgba(0,0,0,0.5)]">
           <MypostsModal />
         </div>
       )}
