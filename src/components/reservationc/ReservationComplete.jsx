@@ -1,6 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const ReservationComplete = () => {
+    const { reservation } = useSelector((state) => state.reservationR);
+    const { location, purpose, details, personalInfo } = reservation;
     return (
         <div className='border-t-2 mb-[70px] w-full'>
             <h3 className='font-secondary text-[20px] pt-[30px] pb-[20px]'>예약 확인</h3>
@@ -9,7 +12,7 @@ const ReservationComplete = () => {
                     부티크 선택
                 </span>
                 <div className='flex items-center justify-between gap-4'>
-                    <p className='pt-[10px]'>장소</p>
+                    <p className='pt-[10px]'>{location.boutique}</p>
                     <button className='text-[13px]'>편집</button>
                 </div>
             </div>
@@ -21,7 +24,9 @@ const ReservationComplete = () => {
                     방문 목적
                 </span>
                 <div className='flex items-center justify-between gap-4'>
-                    <p className='pt-[10px]'>장소</p>
+                    <p className='pt-[10px]'>
+                        {purpose.repairService}-{purpose.repairType}
+                    </p>
                     <button className='text-[13px]'>편집</button>
                 </div>
             </div>
@@ -34,7 +39,9 @@ const ReservationComplete = () => {
                 </span>
                 <div className='flex items-center justify-between gap-4'>
                     <div className='flex flex-col'>
-                        <p className='pt-[10px]'>예약 날짜 시간</p>
+                        <p className='pt-[10px]'>
+                            {details.date} {details.time}
+                        </p>
                         <p className='pt-[10px] mt-[4px] text-[14px]'>매장 내</p>
                     </div>
                     <button className='text-[13px]'>편집</button>
