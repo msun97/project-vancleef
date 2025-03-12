@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getKakaoLogin } from "./kakaogetThunks";
 
 // 초기 상태 정의
 const initialState = {
@@ -149,6 +150,28 @@ export const authSlice = createSlice({
             }
         },
     },
+		extraReducers: (builder) => {
+			builder
+					.addCase(getKakaoLogin.pending, (state) => {
+							state.loading = true;
+							state.error = null;
+					})
+					.addCase(getKakaoLogin.fulfilled, (state, action) => {
+							state.loading = false;
+
+							if (action.payload.newUser) {
+									state.dataList.push({ id: no++, ...action.payload.newUser });
+							}
+							state.authed = true;
+							state.user = action.payload.user;
+							console.log('카카오 로그인 성공했음:', action.payload);
+					})
+					.addCase(getKakaoLogin.rejected, (state, action) => {
+							state.loading = false;
+							state.error = action.payload;
+							console.error('카카오 로그인 실패:', action.payload);
+					});
+	},
 });
 
 // 상태를 변경하는 액션을 export
