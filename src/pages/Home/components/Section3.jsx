@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from 'react';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import Section4 from './Section4';
 
   gsap.registerPlugin(ScrollTrigger);
 
   const Section3 = ({ isLoading, videoCompleted }) => {
-    const wrapperRef = useRef(null); // ✅ 상위 div를 pin
+    const wrapperRef = useRef(null);  
     const section3Ref = useRef(null);
     const logoRef = useRef(null);
     const titleRef = useRef(null);
