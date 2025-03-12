@@ -28,7 +28,7 @@ const MypostsModal = () => {
 
   return (
     <Draggable nodeRef={nodeRef} bounds="" handle=".handle">
-      <div className='fixed inset-0 over'>
+      <div className='fixed inset-0 bg-[rgba(0,0,0,0.09)]'>
       	<div ref={nodeRef} className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-[710px] min-h-[626px] z-[1000] mt-[80px] mx-auto p-[50px] bg-white rounded-md border border-black">
 	        {/* 드래그 가능한 영역을 표시하기 위해 상단에 handle 클래스 추가 */}
 	        <div className="handle cursor-move mb-4">
