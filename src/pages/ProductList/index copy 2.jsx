@@ -4,8 +4,16 @@ import ProductListPageNav from '../../components/product/ProductListPageNav';
 import { useSelector } from 'react-redux';
 
 const ProductListPage = () => {
+    const [filterOpen, setFilterOpen] = useState(false);
+    const [selectedFilter, setSelectedFilter] = useState(null); // 필터 선택 상태
+    const selectedCategory = useSelector((state) => state.productR.filteredCategory);
+    console.log(selectedCategory.name); //선택한 카테고리 이름
+
+    const product = useSelector((state) => state.productR.productdata); // 상품 데이터
+    console.log(product);
+    const filteredProducts = useSelector((state) => state.productR.filteredProducts);
+    // Intersection Observer 초기화
     useEffect(() => {
-        // Intersection Observer 초기화
         const items = document.querySelectorAll('.product-item'); // product-item 클래스 선택
 
         const observerOptions = {
@@ -24,22 +32,14 @@ const ProductListPage = () => {
             });
         }, observerOptions);
 
-        items.forEach((item) => {
-            observer.observe(item); // 각 아이템을 관찰
-        });
+        items.forEach((item) => observer.observe(item)); // 각 아이템을 관찰
 
         return () => {
             observer.disconnect(); // 컴포넌트 언마운트 시 옵저버 해제
         };
     }, []);
 
-    const [filterOpen, setFilterOpen] = useState(false);
-    const [selectedFilter, setSelectedFilter] = useState(null); // 필터 선택 상태 관리
-    const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리 상태
-    const handleOpenClick = () => {
-        setFilterOpen(!filterOpen);
-    };
-    // 카테고리 메뉴에서 클릭한 카테고리 설정
+    // 카테고리 선택 시 상태 업데이트
     const handleCategorySelect = (categoryName) => {
         setSelectedCategory(categoryName); // 선택된 카테고리 상태 변경
     };
@@ -48,51 +48,47 @@ const ProductListPage = () => {
         setSelectedFilter(filterValue); // 필터 값 업데이트
         setFilterOpen(false); // 선택 후 필터 닫기
     };
-    ////////////////////////////////////
-    const product = useSelector((state) => state.productR.productdata);
-    const filteredCategory = useSelector((state) => state.productR.filteredCategory);
-    //useSelector 훅으로 원본데이터의 초기값 가져온다
-    const filteredProducts = selectedCategory
-        ? product.filter((item) => item.category === selectedCategory) // 선택된 카테고리에 맞는 상품만 필터링
-        : product; // 카테고리가 선택되지 않으면 전체 상품을 보여줌
+
+    // 카테고리 필터링
+
+    // 선택된 필터에 따른 정렬
     useEffect(() => {
         if (selectedFilter) {
-            // 선택된 필터에 따라 제품을 정렬
             switch (selectedFilter) {
                 case 'sort1': // 추천순
-                    filteredProducts.sort((a, b) => a.recommended - b.recommended); // 예시
+                    filteredProducts.sort((a, b) => a.recommended - b.recommended);
                     break;
                 case 'sort2': // 판매인기순
-                    filteredProducts.sort((a, b) => b.sales - a.sales); // 예시
+                    filteredProducts.sort((a, b) => b.sales - a.sales);
                     break;
                 case 'sort3': // 낮은가격순
-                    filteredProducts.sort((a, b) => a.price - b.price); // 예시
+                    filteredProducts.sort((a, b) => a.price - b.price);
                     break;
                 case 'sort4': // 높은가격순
-                    filteredProducts.sort((a, b) => b.price - a.price); // 예시
+                    filteredProducts.sort((a, b) => b.price - a.price);
                     break;
                 default:
                     break;
             }
         }
-    }, [selectedFilter, filteredCategory]); // 필터나 카테고리 변경 시마다 업데이트
-    console.log();
+    }, [selectedFilter, selectedCategory]); // 필터나 카테고리 변경 시마다 업데이트
+
     return (
         <div className='w-full h-auto relative bg-fixed bg-[url("/images/productListPageBg.png")] bg-no-repeat bg-top bg-cover'>
             <div className="w-full h-full pb-[100px]">
-                <div className="w-full h-full p-330 pb-[180px] flex text-white  pt-[219px] ">
-                    {/* */}
+                <div className="w-full h-full p-330 pb-[180px] flex text-white pt-[219px]">
                     <ProductListPageNav />
                     <div className="pb-12 w-[74%] font-primary">
                         <p className="pb-5 text-[45px] min-h-[85px] font-secondary">All</p>
                         <div>
+                            {/* 필터 버튼 */}
                             <div className="mb-[25px] relative">
-                                <div onClick={handleOpenClick}>
+                                <div onClick={() => setFilterOpen(!filterOpen)}>
                                     <span className="w-[128px] font-bold inline-block relative font-primary tracking-wider">
                                         FILTER
                                         <img
                                             src="https://pbcommerce.cdn-nhncommerce.com/data/skin/front/m2021_VnA/img/icon/goods_icon/filter.png"
-                                            className="absolute top-0 right-[50px] "
+                                            className="absolute top-0 right-[50px]"
                                         />
                                     </span>
                                     {filterOpen && (
@@ -155,9 +151,10 @@ const ProductListPage = () => {
                                             </li>
                                         </ul>
                                     )}
-                                    {/* detail nav */}
                                 </div>
                             </div>
+
+                            {/* 상품 리스트 */}
                             <div>
                                 <div className="productList pb-[30px]">
                                     <div className="relative w-full">
@@ -166,78 +163,17 @@ const ProductListPage = () => {
                                                 className="rellax relative w-full pt-[20px] pb-[28px]"
                                                 data-rellax-speed="-3"
                                             >
-                                                {/* 선택된 카테고리에 맞는 상품만 필터링하여 보여줌 */}
-                                                {product.slice(0, 2).map((category, index) => {
+                                                {/* 필터링된 상품들 */}
+                                                {product.map((product) => {
                                                     return (
-                                                        <div key={category.id}>
-                                                            {category.data.map((product) => (
-                                                                <ProductListItem
-                                                                    className="transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px] mr-[7%]"
-                                                                    key={product.productid}
-                                                                    productdata={product}
-                                                                />
-                                                            ))}
-                                                        </div>
+                                                        <li key={product.id} className="product-item">
+                                                            <ProductListItem
+                                                                className="transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px] mr-[7%]"
+                                                                product={product}
+                                                            />
+                                                        </li>
                                                     );
                                                 })}
-                                                {/* 왼쪽 */}
-                                            </ul>
-                                            <ul
-                                                className="rellax relative w-full pt-[100px] pb-[28px]"
-                                                data-rellax-speed="-3"
-                                            >
-                                                {
-                                                    /* filteredCategory.name === product.category ? (
-                                                    // 카테고리가 필터링된 경우
-                                                    filteredProducts
-                                                        .slice(Math.floor(product.length / 2))
-                                                        .map((category) => (
-                                                            <div key={category.id}>
-                                                                {category.data.map((product) => (
-                                                                    <ProductListItem
-                                                                        className="transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px] mr-[7%]"
-                                                                        key={product.productid}
-                                                                        productdata={product}
-                                                                    />
-                                                                ))}
-                                                            </div>
-                                                        ))
-                                                ) */
-                                                    <>
-                                                        {product
-                                                            .slice(Math.floor(product.length / 2))
-                                                            .map((category, index) => {
-                                                                return (
-                                                                    <div key={category.id}>
-                                                                        {category.data.map((product) => (
-                                                                            <ProductListItem
-                                                                                className="transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px] mr-[7%]"
-                                                                                key={product.productid}
-                                                                                productdata={product}
-                                                                            />
-                                                                        ))}
-                                                                    </div>
-                                                                );
-                                                            })}
-                                                    </>
-                                                }
-
-                                                {/* 오른쪽 */}
-                                                {/*    {product
-                                                    .slice(Math.floor(product.length / 2))
-                                                    .map((category, index) => {
-                                                        return (
-                                                            <div key={category.id}>
-                                                                {category.data.map((product) => (
-                                                                    <ProductListItem
-                                                                        className="transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px] mr-[7%]"
-                                                                        key={product.productid}
-                                                                        productdata={product}
-                                                                    />
-                                                                ))}
-                                                            </div>
-                                                        );
-                                                    })} */}
                                             </ul>
                                         </div>
                                     </div>
