@@ -1,30 +1,99 @@
 import React, { useRef, useState } from 'react';
 import Button from '../button';
 import Input from '../input';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '../../store/modules/modalSlice';
+import { reviewActions } from '../../store/modules/reviewSlice';
 import Draggable from 'react-draggable';
 
 const MypostsModal = () => {
-  const dispatch = useDispatch();
-  const [rating, setRating] = useState(0);
-  const [fileName, setFileName] = useState('');
-  const fileInputRef = useRef(null);
-  // Draggable에서 사용할 ref
-  const nodeRef = useRef(null);
+    const [rating, setRating] = useState(0);
+    const [title, setTitle] = useState(''); // 리뷰 제목 상태 추가
+    const [content, setContent] = useState(''); // 리뷰 내용 상태 추가
+    const [fileName, setFileName] = useState('');
+    const [imageFile, setImageFile] = useState(null); // 이미지 파일 데이터 상태 추가
+    const fileInputRef = useRef(null);
+    // Draggable에서 사용할 ref
+    const nodeRef = useRef(null);
 
-  const handleButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
+    const dispatch = useDispatch();
+    const isOpen = useSelector((state) => state.modalR.isOpen);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFileName(file.name);
+    // 파일 버튼 클릭 핸들러
+    const handleButtonClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    // 파일 선택 시 호출되는 함수
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name);
+
+            // 이미지 파일을 Data URL로 변환하여 저장
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImageFile(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // 리뷰 제목 변경 핸들러
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
+    };
+
+    // 리뷰 내용 변경 핸들러
+    const handleContentChange = (e) => {
+        setContent(e.target.value);
+    };
+
+    // 리뷰 등록 핸들러
+    const handleSubmit = () => {
+        // 입력값 검증
+        if (rating === 0) {
+            alert('별점을 선택해주세요.');
+            return;
+        }
+
+        if (!title.trim()) {
+            alert('리뷰 제목을 입력해주세요.');
+            return;
+        }
+
+        if (!content.trim()) {
+            alert('리뷰 내용을 입력해주세요.');
+            return;
+        }
+
+        // 리뷰 데이터 생성
+        const reviewData = {
+            title: title,
+            content: content,
+            rating: rating,
+            images: imageFile ? [imageFile] : [], // 이미지가 있으면 배열에 추가
+        };
+
+        // Redux 액션 디스패치하여 리뷰 추가
+        dispatch(reviewActions.addReview(reviewData));
+
+        // 모달 닫기
+        dispatch(closeModal());
+
+        // 상태 초기화
+        setRating(0);
+        setTitle('');
+        setContent('');
+        setFileName('');
+        setImageFile(null);
+    };
+
+    if (!isOpen) {
+        return null; // 모달이 닫혀있으면 렌더링하지 않음
     }
-  };
 
   return (
     <Draggable nodeRef={nodeRef} bounds="" handle=".handle">

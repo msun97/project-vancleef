@@ -37,6 +37,7 @@ export const reviewSlice = createSlice({
             const newReview = {
                 id: Date.now().toString(), // 고유 ID 생성
                 email: state.currentUserEmail,
+                title: action.payload.title || '', // 추가: 제목 필드
                 content: action.payload.content,
                 rating: action.payload.rating,
                 images: action.payload.images || [],
@@ -63,12 +64,13 @@ export const reviewSlice = createSlice({
 
         // 리뷰 수정
         updateReview: (state, action) => {
-            const { id, content, rating, images } = action.payload;
+            const { id, title, content, rating, images } = action.payload;
             const reviewIndex = state.reviews.findIndex((review) => review.id === id);
 
             if (reviewIndex !== -1) {
                 state.reviews[reviewIndex] = {
                     ...state.reviews[reviewIndex],
+                    title, // 추가: 제목 업데이트
                     content,
                     rating,
                     images,
