@@ -17,7 +17,6 @@ const Section1 = () => {
         duration: 2,
         ease: 'power2.out',
         onComplete: () => {
-          console.log('Line animation complete!');
           gsap.fromTo(
             textRef.current.children,
             { opacity: 0, x: 50 },
@@ -55,28 +54,28 @@ const Section1 = () => {
       const scrollY = window.scrollY;
 
       gsap.to(titleRef.current, {
-        y: -scrollY * 0.3, // 위로 이동
-        opacity: Math.max(1 - scrollY / 300, 0), // 서서히 사라지게
+        y: -scrollY * 0.3, 
+        opacity: Math.max(1 - scrollY / 300, 0), 
         duration: 0.3,
         ease: 'power1.out',
       });
 
       gsap.to(lineRef.current, {
-        y: scrollY * 0.5, // 아래로 이동
-        opacity: Math.max(1 - scrollY / 300, 0), // 서서히 사라지게
+        y: scrollY * 0.5, 
+        opacity: Math.max(1 - scrollY / 300, 0), 
         duration: 0.3,
         ease: 'power1.out',
       });
 
       gsap.to(textRef.current, {
-        y: scrollY * 0.5, // 아래로 이동
-        opacity: Math.max(1 - scrollY / 300, 0), // 서서히 사라지게
+        y: scrollY * 0.5, 
+        opacity: Math.max(1 - scrollY / 300, 0), 
         duration: 0.3,
         ease: 'power1.out',
       });
 
       gsap.to(arrowRef.current, {
-        opacity: Math.max(1 - scrollY / 100, 0), // 빠르게 사라짐
+        opacity: Math.max(1 - scrollY / 100, 0), 
         duration: 0.3,
         ease: 'power1.out',
       });
