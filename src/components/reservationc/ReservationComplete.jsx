@@ -4,6 +4,17 @@ import { useSelector } from 'react-redux';
 const ReservationComplete = () => {
     const { reservation } = useSelector((state) => state.reservationR);
     const { location, purpose, details } = reservation;
+
+    // 방문 목적 텍스트 생성 함수
+    const getPurposeText = () => {
+        if (purpose.productConsultation) {
+            return `반클리프 아펠 제품 상담 - ${purpose.selectedOption}`;
+        } else if (purpose.repairService) {
+            return `수리 서비스 - ${purpose.selectedOption}`;
+        }
+        return '방문 목적이 선택되지 않았습니다.';
+    };
+
     return (
         <div className='border-t-2 mb-[70px] w-full'>
             <h3 className='font-secondary text-[20px] pt-[30px] pb-[20px]'>예약 확인</h3>
@@ -24,9 +35,7 @@ const ReservationComplete = () => {
                     방문 목적
                 </span>
                 <div className='flex items-center justify-between gap-4'>
-                    <p className='pt-[10px]'>
-                        {purpose.repairService}-{purpose.repairType}
-                    </p>
+                    <p className='pt-[10px]'>{getPurposeText()}</p>
                     <button className='text-[13px]'>편집</button>
                 </div>
             </div>
