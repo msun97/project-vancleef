@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { KAKAO_REDIRECT_URI } from '../../config';
 
 
+
 function LoginFull() {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.modalR.isOpen);
@@ -47,7 +48,7 @@ function LoginFull() {
 
 					<Input className='w-[360px] h-[55px] font-bold text-[#9C9C9C] text-center' placeholder='아이디/이메일을 입력해 주세요.'/>
 					<Input className='w-[360px] h-[55px] text-center text-[#9C9C9C] font-bold  mb-[78px]' placeholder='비밀번호를 입력해 주세요.'/>
-					<Button variant='primary' className='w-[355px] h-[55px] !font-bold mb-[30px]' >로그인</Button>
+					<Button variant='primary' className='w-[355px] h-[55px] !font-bold mb-[30px]'>로그인</Button>
 					<Button variant='secondary' className='w-[355px] h-[55px] !font-bold' onClick={handleKakaoLogin}>카카오 로그인</Button>
 				<div className='flex flex-row gap-[50px] p-[33px] !font-bold'>	<button>아이디 찾기</button>|<button>비밀번호 찾기</button></div>
 					<Button variant='secondary'  className='w-[355px] h-[55px] !font-bold' onClick={() => navigate('/signup')}>회원가입</Button>
