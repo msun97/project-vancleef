@@ -1,24 +1,112 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../button';
-import CheckBox from '../checkbox';
 import TimePicker from './TimePicker';
+import { reservationActions } from '../../store/modules/reservationSlice';
 
 const ReservationDetailForm = () => {
-    const nowDate = new Date();
-    const formattedDate = nowDate.toISOString().split('T')[0];
+    const dispatch = useDispatch();
+    const { details } = useSelector((state) => state.reservationR.reservation);
+    const currentStep = useSelector((state) => state.reservationR);
 
-    const [dateValue, setDateValue] = useState(formattedDate);
+    const [dateValue, setDateValue] = useState(details.date || new Date().toISOString().split('T')[0]);
+    const [timeValue, setTimeValue] = useState(details.time || '');
+    const [language, setLanguage] = useState(details.preferredLanguage || '');
+    const [message, setMessage] = useState(details.message || '');
+
+    // Load saved data from localStorage on component mount
+    useEffect(() => {
+        const savedDetails = localStorage.getItem('reservationDetails');
+        if (savedDetails) {
+            const parsedDetails = JSON.parse(savedDetails);
+            setDateValue(parsedDetails.date || new Date().toISOString().split('T')[0]);
+            setTimeValue(parsedDetails.time || '');
+            setLanguage(parsedDetails.preferredLanguage || '');
+            setMessage(parsedDetails.message || '');
+
+            // Also update Redux store
+            dispatch(reservationActions.setReservationDetails(parsedDetails));
+        }
+    }, [dispatch]);
+
+    // 날짜 변경 핸들러 - 일시적으로 상태와 Redux에만 저장
+    const handleDateChange = (e) => {
+        const newDate = e.target.value;
+        setDateValue(newDate);
+        dispatch(reservationActions.setReservationDetails({ date: newDate }));
+        // localStorage에는 확인 버튼 클릭시에만 저장
+    };
+
+    // 시간 변경 핸들러 (TimePicker 컴포넌트에서 호출) - 일시적으로 상태와 Redux에만 저장
+    const handleTimeChange = (time) => {
+        setTimeValue(time);
+        dispatch(reservationActions.setReservationDetails({ time }));
+        console.log('Time selected:', time); // Debug log
+        // localStorage에는 확인 버튼 클릭시에만 저장
+    };
+
+    // 언어 변경 핸들러 - 일시적으로 상태와 Redux에만 저장
+    const handleLanguageChange = (e) => {
+        const selectedLanguage = e.target.value;
+        setLanguage(selectedLanguage);
+        dispatch(reservationActions.setReservationDetails({ preferredLanguage: selectedLanguage }));
+        // localStorage에는 확인 버튼 클릭시에만 저장
+    };
+
+    // 메시지 변경 핸들러 - 일시적으로 상태와 Redux에만 저장
+    const handleMessageChange = (e) => {
+        const newMessage = e.target.value;
+        setMessage(newMessage);
+        dispatch(reservationActions.setReservationDetails({ message: newMessage }));
+        // localStorage에는 확인 버튼 클릭시에만 저장
+    };
+
+    // 확인 버튼 핸들러
+    const handleConfirm = () => {
+        // 유효성 검사
+        if (!timeValue || timeValue.trim() === '') {
+            alert('시간을 선택해 주세요.');
+            return;
+        }
+
+        if (!language) {
+            alert('선호 언어를 선택해 주세요.');
+            return;
+        }
+
+        // Save to localStorage
+        const detailsData = {
+            date: dateValue,
+            time: timeValue,
+            preferredLanguage: language,
+            message,
+        };
+        localStorage.setItem('reservationDetails', JSON.stringify(detailsData));
+
+        dispatch(reservationActions.setCurrentStep(4));
+    };
+
+    // 이전 단계에서 완료되지 않았다면 접근 제한
+    if (currentStep < 3) {
+        return (
+            <div className='border-t-2 w-full'>
+                <h3 className='font-secondary text-[20px] pt-[30px] pb-[40px]'>3. 예약 상세정보</h3>
+                <p className='text-center py-4'>방문 목적을 먼저 선택해주세요.</p>
+            </div>
+        );
+    }
+
     return (
         <div className='border-t-2 w-full'>
             <h3 className='font-secondary text-[20px] pt-[30px] pb-[40px]'>3. 예약 상세정보</h3>
-            <div className='flex flex-col gap-[20px] px-[330px] font-bold text-[18px] w-full'>
+            <div className='flex flex-col gap-[20px] font-bold text-[18px] w-full'>
                 <p>날짜 *</p>
                 <div className='border flex items-center'>
                     <div className='relative border-r'>
                         <input
                             type='date'
-                            value={formattedDate}
-                            onChange={(e) => setDateValue(e.target.value)}
+                            value={dateValue}
+                            onChange={handleDateChange}
                             className='opacity-0 absolute inset-0 w-full h-full cursor-pointer'
                         />
                         <div className='p-3 flex items-center justify-center'>
@@ -45,10 +133,14 @@ const ReservationDetailForm = () => {
                     <div className='flex-1 px-3 font-normal'>{dateValue}</div>
                 </div>
                 <p>이용 가능 시간 *</p>
-                <TimePicker />
+                <TimePicker selectedTime={timeValue} onTimeSelect={handleTimeChange} />
                 <p>선호 언어 *</p>
                 <div className='relative inline-block'>
-                    <select name='' id='' className='border py-[14px] px-[17px] w-full font-normal'>
+                    <select
+                        className='border py-[14px] px-[17px] w-full font-normal'
+                        value={language}
+                        onChange={handleLanguageChange}
+                    >
                         <option value=''></option>
                         <option value='한국어'>한국어</option>
                         <option value='영어'>영어</option>
@@ -67,13 +159,13 @@ const ReservationDetailForm = () => {
                 </div>
                 <p>부티끄에 남기는 메시지</p>
                 <textarea
-                    name=''
-                    id=''
                     placeholder='추가로 전달하고자 하는 요청 사항'
                     className='border text-content-s py-[11px] px-[17px] w-full h-[400px] placeholder-gray-30 font-normal'
+                    value={message}
+                    onChange={handleMessageChange}
                 ></textarea>
 
-                <Button variant='secondary' className='w-[133px] h-[55px] mx-auto mb-[70px]'>
+                <Button variant='secondary' className='w-[133px] h-[55px] mx-auto mb-[70px]' onClick={handleConfirm}>
                     확인
                 </Button>
             </div>

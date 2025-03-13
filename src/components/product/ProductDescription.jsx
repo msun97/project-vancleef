@@ -1,28 +1,32 @@
 import React from 'react';
 import { IoIosHeartEmpty } from 'react-icons/io';
+import { useSelector } from 'react-redux';
 
-const ProductDescription = () => {
+const ProductDescription = ({ productdata }) => {
     return (
         <div>
             {/* text */}
             <div>
                 <a href="">
-                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
-                        스위트 버터플라이 펜던트
+                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2 ">
+                        {productdata.title}
                         <IoIosHeartEmpty color="black" />
                     </strong>
                 </a>
             </div>
 
             <div className="flex gap-2 pt-2.5">
-                <strong>₩2,380,000 </strong>
+                {/*    {product.map((item, index) => {
+                    return <strong key={item.id}>{product.price}</strong>;
+                })} */}
+                <strong> {productdata.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</strong>
 
-                <strong>
+                {/*   <strong>
                     <span className="line-through text-[#6D6D6D]">
                         <strong className="text-[#6D6D6D]">₩2,000,000</strong>
                     </span>
                 </strong>
-                <strong className="text-[#e4a690]">20%</strong>
+                <strong className="text-[#e4a690]">20%</strong> */}
             </div>
 
             <div className="flex gap-2 pt-2.5 items-center h-8">

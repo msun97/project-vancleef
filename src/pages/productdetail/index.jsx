@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../../components/button';
 import ProductNotice from '../../components/productdetailc/ProductNotice';
 import ReviewList from '../../components/productdetailc/ReviewList';
@@ -45,13 +45,17 @@ function ProductDetailPage() {
                     <div className="view_rgt w-[50%] h-[800px] font-primary text-[14px] leading-8">
                         <div className="px-[114px] h-full pt-[154px]">
                             <div className="title">
-                                <h3>제품 이름</h3>
+                                <h3>제품명</h3>
+                            </div>
+                            <div className="subtitle text-[#706F6F] text-label-s">
+                                <h3>서브타이틀</h3>
                             </div>
                             <div className="price">
                                 <dl className="item_price detail-price">
                                     <dt>판매가</dt>
                                 </dl>
                             </div>
+
                             <div className="option">
                                 <select className="w-full border border-solid black pl-[10px] ">
                                     <option value="" disabled selected>

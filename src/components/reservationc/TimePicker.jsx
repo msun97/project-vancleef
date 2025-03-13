@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-const TimePicker = () => {
-    const [selectedTime, setSelectedTime] = useState('');
+const TimePicker = ({ selectedTime, onTimeSelect }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -38,7 +37,8 @@ const TimePicker = () => {
     }, []);
 
     const handleTimeSelect = (time) => {
-        setSelectedTime(time.label);
+        // Call the parent's onTimeSelect with the time label
+        onTimeSelect(time.label);
         setIsOpen(false);
     };
 

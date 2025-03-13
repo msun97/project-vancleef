@@ -1,13 +1,41 @@
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../button';
+import { reservationActions } from '../../store/modules/reservationSlice';
 
 const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
+    const dispatch = useDispatch();
+    const { location } = useSelector((state) => state.reservationR.reservation);
     const isActive = id === activeId;
 
+    // 플러스/마이너스 버튼 클릭 핸들러 - 부티크 상세 정보 토글
     const handlePlus = () => {
         setActiveId(isActive ? null : id);
     };
+
+    // 부티크 선택 버튼 클릭 핸들러 - 확인 버튼 역할
+    const handleSelectBoutique = () => {
+        // Create location data object
+        const locationData = {
+            boutiqueId: id,
+            boutique: data?.location || '경기 - 현대 판교',
+            address: data?.address || '현대백화점 판교점 1층 판교역로 146번길 20',
+            city: data?.city || '성남',
+            zipcode: data?.zipcode || '13529',
+            country: location.country || '대한민국', // Preserve existing country selection
+        };
+
+        // Redux 상태 업데이트 - 선택된 부티크 정보 저장
+        dispatch(reservationActions.setLocation(locationData));
+
+        // 이 단계에서만 확인 버튼을 누른 경우 localStorage에 저장
+        localStorage.setItem('locationInfo', JSON.stringify(locationData));
+
+        // 다음 단계로 이동
+        dispatch(reservationActions.setCurrentStep(2));
+    };
+
     return (
-        <div className='relative mt-[40px]  border-t-2 text-[18px] w-full'>
+        <div className='relative mt-[40px] border-t-2 text-[18px] w-full'>
             <div className='pt-[30px] pb-[35px]'>
                 <p>{data?.location || '경기 - 현대 판교'}</p>
                 <p>
@@ -94,8 +122,13 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
                     </svg>
                 </button>
             </div>
-            <Button className='mx-auto h-[55px] w-[324px]' variant='secondary'>
-                부티끄 선택하기
+            <Button
+                className='mx-auto h-[55px] w-[324px]'
+                variant='secondary'
+                onClick={handleSelectBoutique}
+                disabled={location.boutiqueId === id} // 이미 선택된 부티크인 경우 버튼 비활성화
+            >
+                {location.boutiqueId === id ? '선택된 부티끄' : '부티끄 선택하기'}
             </Button>
         </div>
     );

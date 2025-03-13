@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import NotFiles from "./pages/notfile";
 import MyPage from "./pages/mypage";
 import Order from "./pages/mypage/order";
@@ -25,12 +25,14 @@ import ShoppingcartModal from "./components/purchase/ShoppingcartModal";
 import SignupPage from "./pages/signup";
 import Login from "./pages/login";
 import MypostsPage from "./pages/mypage/myposts";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
+      <ScrollToTop />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
