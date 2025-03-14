@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Input from '../input';
 import Button from '../button';
 import CheckBox from '../checkbox';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { authActions } from '../../store/modules/authSlice';
 
 function SignupFull() {
@@ -80,11 +80,14 @@ function SignupFull() {
       <div className="bg-white p-6 relative w-[580px] h-full">
         <div className="container flex flex-col justify-center items-center pt-[60px] pb-[60px] space-y-[20px]">
           <h1 className="pb-[86px]">
-            <img
-              src="/icons/logo.svg"
-              alt="Van Cleef & Arpels"
-              className="w-[346px]"
-            />
+        <Link to='/'>
+        	    <img
+	              src="/icons/logo.svg"
+	              alt="Van Cleef & Arpels"
+	              className="w-[346px]"
+								
+	            />
+        </Link>
           </h1>
           <form onSubmit={handleSignup} className="w-full">
             <div className="flex items-center mb-4">
@@ -196,28 +199,28 @@ function SignupFull() {
               <span className="w-[50px] text-[14px] underline">확인</span>
             </div>
 
-            <p className="w-[830px] text-[14px] flex-nowrap mt-[80px]">
+            <p className="w-[550px] text-[14px] flex-nowrap mt-[80px] mb-[20px]">
               만 14세 미만의 아동은 회원가입시 법적대리인의 동의가 있어야 합니다.
               가입을 희망하실 경우 1544-2767로 문의주시길 바랍니다.
             </p>
-            <p className="w-[830px] text-[14px] flex-nowrap text-[#A6A6A6] mb-[48px]">
+            <p className="w-[550px] text-[14px] flex-nowrap text-[#A6A6A6] mb-[48px]">
               *회원가입에 필요한 최소한의 정보만 입력 받음으로써 고객님의 개인정보 수집을 최소화하고 편리한 회원가입을 제공합니다.
             </p>
             <Button
               variant="primary"
-              className="w-[830px] h-[50px] !font-bold"
+              className="w-[580px] h-[50px] !font-bold"
               type="submit"
             >
               가입완료
             </Button>
-          </form>
           <Button
             variant="secondary"
-            className="w-[830px] h-[50px] !font-bold"
+            className="w-[580px] h-[50px] !font-bold"
             onClick={() => navigate(-1)}
           >
             돌아가기
           </Button>
+          </form>
         </div>
       </div>
     </div>
