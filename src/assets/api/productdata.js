@@ -3453,6 +3453,9 @@ export const productdata = [
                 colorpn: ['VCARPFYF00', 'VCARPFYG00'],
                 detail: '뻬를리 다이아몬드 브레이슬릿, 5개 라인, 18K 옐로우 골드, 라운드 다이아몬드, 미디엄 모델. DEF 및 IF~VVS 등급의 다이아몬드',
                 stone: '다이아몬드: 스톤 50개, 2.01캐럿',
+                isNew: true,
+                isBest: false,
+                isPromo: true,
             },
             {
                 productid: 2,
@@ -3484,6 +3487,9 @@ export const productdata = [
                 colorpn: ['VCARPFYE00', 'VCARPFYG00'],
                 detail: '뻬를리 다이아몬드 브레이슬릿, 5개 라인, 18K 옐로우 골드, 라운드 다이아몬드, 미디엄 모델. DEF 및 IF~VVS 등급의 다이아몬드',
                 stone: '다이아몬드: 스톤 50개, 2.01캐럿',
+                isNew: true,
+                isBest: false,
+                isPromo: true,
             },
             {
                 productid: 4,
@@ -3499,6 +3505,9 @@ export const productdata = [
                 colorpn: ['VCARPHVV00', 'VCARPHVX00'],
                 detail: '뻬를리 클로버 브레이슬릿, 18K 로즈 골드, 라운드 다이아몬드, 엑스트라 라지 모델. DEF 및 IF~VVS 등급의 다이아몬드.',
                 stone: '다이아몬드: 스톤 88개, 1.96캐럿',
+                isNew: true,
+                isBest: true,
+                isPromo: true,
             },
             {
                 productid: 5,
@@ -3514,6 +3523,9 @@ export const productdata = [
                 ],
                 colorpn: ['VCARPHVT00', 'VCARPHVU00'],
                 detail: '뻬를리 시그니처 브레이슬릿, 18K 옐로우 골드, 엑스트라 라지 모델',
+                isNew: true,
+                isBest: true,
+                isPromo: false,
             },
             {
                 productid: 6,
@@ -3528,6 +3540,9 @@ export const productdata = [
                 ],
                 colorpn: ['VCARPHVS00', 'VCARPFYF00'],
                 detail: '뻬를리 시그니처 브레이슬릿, 18K 로듐 도금 18K 화이트 골드, 엑스트라 라지 모델',
+                isNew: true,
+                isBest: true,
+                isPromo: true,
             },
             {
                 productid: 7,
@@ -3559,135 +3574,7 @@ export const productdata = [
                 detail: '뻬를리 클로버 브레이슬릿, 18K 로듐 도금 18K 화이트 골드, 라운드 다이아몬드, 엑스트라 라지 모델. DEF 및 IF~VVS 등급의 다이아몬드',
                 stone: '다이아몬드: 스톤 88개, 1.96캐럿',
             },
-        ],
-    },
-    {
-        id: 2,
-        category: '팔찌',
-        data: [
-            {
-                productid: 1,
-                title: '뻬를리 다이아몬드 브레이슬릿, 5개 라인, 미디엄 모델',
-                subtitle: '18K 옐로우 골드, 다이아몬드',
-                productnumber: 'VCARPFYE00',
-                price: 49400000,
-                objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/Ya/F5/3J/iQ/Rh/WB/RQ/YD/CB/Mh/8g/YaF53JiQRhWBRQYDCBMh8g.png.transform.vca-w820-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/Bt/eM/rH/yn/SY/Sl/X9/_L/5R/nm/0g/BteMrHynSYSlX9_L5Rnm0g.jpeg.transform.vca-w820-2x.jpeg',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/k8/2c/hk/YK/Tb/qD/6t/VB/nt/HO/dQ/k82chkYKTbqD6tVBntHOdQ.png.transform.vca-w820-2x.png',
-                ],
-                colorpn: ['VCARPFYF00', 'VCARPFYG00'],
-                detail: '뻬를리 다이아몬드 브레이슬릿, 5개 라인, 18K 옐로우 골드, 라운드 다이아몬드, 미디엄 모델. DEF 및 IF~VVS 등급의 다이아몬드',
-                stone: '다이아몬드: 스톤 50개, 2.01캐럿',
-                isNew: true, // 신상품 여부
-                isBest: false, // 베스트 여부
-                isPromo: true, // 기획전 상품 여부
-            },
-            {
-                productid: 2,
-                title: '뻬를리 다이아몬드 브레이슬릿, 5개 라인, 미디엄 모델',
-                subtitle: '18K 화이트 골드, 다이아몬드',
-                productnumber: 'VCARPFYG00 ',
-                price: 52500000,
-                objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/mO/5K/_z/rs/QT/aK/ef/Gh/n3/0s/iw/mO5K_zrsQTaKefGhn30siw.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/j5/wB/G9/0F/QK/2L/Oi/7B/gm/kx/_w/j5wBG90FQK2LOi7Bgmkx_w.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/DX/1h/UD/3F/Re/y2/Pq/N0/RZ/Mc/7Q/DX1hUD3FRey2PqN0RZMc7Q.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/u3/Gl/Jw/cn/Sq/2n/UX/y1/Rs/Z-/_w/u3GlJwcnSq2nUXy1RsZ-_w.jpeg',
-                ],
-                colorpn: ['VCARPFYF00 ', 'VCARPFYE00 '],
-                detail: '뻬를리 다이아몬드 브레이슬릿, 5개 라인, 18K 화이트 골드, 라운드 다이아몬드, 미디엄 모델. DEF 및 IF~VVS 등급의 다이아몬드',
-                stone: '다이아몬드: 스톤 50개, 2.11캐럿',
-            },
-            {
-                productid: 3,
-                title: '뻬를리 다이아몬드 브레이슬릿, 5개 라인, 미디엄 모델',
-                subtitle: '18K 핑크 골드, 다이아몬드',
-                productnumber: 'VCARPFYF00',
-                price: 49400000,
-                objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/nM/4M/id/Et/RK/CM/eh/9i/Sy/Ov/qA/nM4MidEtRKCMeh9iSyOvqA.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/9q/u7/E0/yy/RR/ar/ku/ff/Ux/F0/bg/9qu7E0yyRRarkuffUxF0bg.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/ix/4U/jJ/lv/S0/y1/ZC/LE/7I/A-/eg/ix4UjJlvS0y1ZCLE7IA-eg.png',
-                ],
-                colorpn: ['VCARPFYE00', 'VCARPFYG00'],
-                detail: '뻬를리 다이아몬드 브레이슬릿, 5개 라인, 18K 옐로우 골드, 라운드 다이아몬드, 미디엄 모델. DEF 및 IF~VVS 등급의 다이아몬드',
-                stone: '다이아몬드: 스톤 50개, 2.01캐럿',
-            },
-            {
-                productid: 4,
-                title: '뻬를리 클로버 브레이슬릿, 엑스트라 라지 모델',
-                subtitle: '18K 핑크 골드, 다이아몬드',
-                productnumber: 'VCARPHVW00',
-                price: 43800000,
-                objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/mS/T3/c6/dp/RN/qk/hg/qZ/vX/5u/Qg/mST3c6dpRNqkhgqZvX5uQg.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/K4/j8/Fv/F-/QZ/Co/LR/x5/ke/Jp/xA/K4j8FvF-QZCoLRx5keJpxA.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/K4/j8/Fv/F-/QZ/Co/LR/x5/ke/Jp/xA/K4j8FvF-QZCoLRx5keJpxA.png',
-                ],
-                colorpn: ['VCARPHVV00', 'VCARPHVX00'],
-                detail: '뻬를리 클로버 브레이슬릿, 18K 로즈 골드, 라운드 다이아몬드, 엑스트라 라지 모델. DEF 및 IF~VVS 등급의 다이아몬드.',
-                stone: '다이아몬드: 스톤 88개, 1.96캐럿',
-            },
-            {
-                productid: 5,
-                title: '뻬를리 시그니처 브레이슬릿, 엑스트라 라지 모델',
-                subtitle: '18K 옐로우 골드',
-                productnumber: 'VCARPHVS00 ',
-                price: 10700000,
-                objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/jA/Ze/pu/2f/RH/uy/8O/rx/JE/UI/Qg/jAZepu2fRHuy8OrxJEUIQg.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/eS/PY/e4/h1/SZ/qr/sf/XO/jo/Nl/hw/eSPYe4h1SZqrsfXOjoNlhw.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/7y/Cr/OO/bv/RU/eU/qg/Tm/f-/Yz/ZQ/7yCrOObvRUeUqgTmf-YzZQ.jpeg',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/WR/v2/77/PA/Tz/6U/Yc/DZ/m9/mz/fA/WRv277PATz6UYcDZm9mzfA.png',
-                ],
-                colorpn: ['VCARPHVT00', 'VCARPHVU00'],
-                detail: '뻬를리 시그니처 브레이슬릿, 18K 옐로우 골드, 엑스트라 라지 모델',
-            },
-            {
-                productid: 6,
-                title: '뻬를리 클로버 브레이슬릿, 엑스트라 라지 모델',
-                subtitle: '18K 화이트 골드',
-                productnumber: 'VCARPHVU00  ',
-                price: 11400000,
-                objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/9y/mR/7D/V_/TU/CF/QK/7I/GK/mt/GA/9ymR7DV_TUCFQK7IGKmtGA.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/lG/rd/Pm/fn/T5/uE/bG/8d/Cm/ii/9g/lGrdPmfnT5uEbG8dCmii9g.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/lG/rd/Pm/fn/T5/uE/bG/8d/Cm/ii/9g/lGrdPmfnT5uEbG8dCmii9g.png',
-                ],
-                colorpn: ['VCARPHVS00', 'VCARPFYF00'],
-                detail: '뻬를리 시그니처 브레이슬릿, 18K 로듐 도금 18K 화이트 골드, 엑스트라 라지 모델',
-            },
-            {
-                productid: 7,
-                title: '뻬를리 클로버 브레이슬릿, 엑스트라 라지 모델',
-                subtitle: '18K 핑크 골드',
-                productnumber: 'VCARPHVT00 ',
-                price: 10700000,
-                objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/yO/B2/cn/20/QN/OP/Tp/KH/Zi/Wn/lQ/yOB2cn20QNOPTpKHZiWnlQ.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/jN/-g/6f/Vl/Qp/-b/fr/7_/D8/Ju/mQ/jN-g6fVlQp-bfr7_D8JumQ.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/_B/Pl/Jx/c_/RI/Se/Lo/EX/fh/Zu/AA/_BPlJxc_RISeLoEXfhZuAA.png',
-                ],
-                colorpn: ['VCARPHVS00', 'VCARPHVU00'],
-                detail: '뻬를리 클로버 브레이슬릿, 18K 옐로우 골드, 라운드 다이아몬드, 엑스트라 라지 모델. DEF 및 IF~VVS 등급의 다이아몬드.',
-            },
 
-            {
-                productid: 8,
-                title: '뻬를리 클로버 브레이슬릿, 엑스트라 라지 모델',
-                subtitle: '18K 화이트 골드, 다이아몬드',
-                productnumber: 'VCARPHVX00',
-                price: 43800000,
-                objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/kF/Io/UU/Do/Qu/6z/JP/ZL/VC/jJ/lA/kFIoUUDoQu6zJPZLVCjJlA.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/5n/G3/BO/IG/TI/eW/lY/-d/fX/SE/lQ/5nG3BOIGTIeWlY-dfXSElQ.png.transform.vca-w550-2x.png',
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/Ny/MK/bJ/ZB/QH/Kq/BX/c3/CP/PV/SQ/NyMKbJZBQHKqBXc3CPPVSQ.png.transform.vca-w550-2x.png',
-                ],
-                colorpn: ['VCARPHVW00', 'VCARPHVV00'],
-                detail: '뻬를리 클로버 브레이슬릿, 18K 로듐 도금 18K 화이트 골드, 라운드 다이아몬드, 엑스트라 라지 모델. DEF 및 IF~VVS 등급의 다이아몬드',
-                stone: '다이아몬드: 스톤 88개, 1.96캐럿',
-            },
             {
                 productid: 9,
                 title: '뻬를리 클로버 브레이슬릿, 엑스트라 라지 모델',
@@ -3701,7 +3588,9 @@ export const productdata = [
                 ],
                 colorpn: ['VCARPHVW00', 'VCARPHVX00'],
                 detail: '뻬를리 클로버 브레이슬릿, 18K 옐로우 골드, 라운드 다이아몬드, 엑스트라 라지 모델. DEF 및 IF~VVS 등급의 다이아몬드',
+                stone: '다이아몬드: 스톤 88개, 1.96캐럿',
             },
+
             {
                 productid: 10,
                 title: '프리볼 브레이슬릿, 미니 모델',
@@ -4326,6 +4215,9 @@ export const productdata = [
                 colorpn: ['VCARP9XE00 '],
                 detail: '빈티지 알함브라 브레이슬릿, 모티브 5개, 기요셰 18K 옐로우 골드',
                 stone: '',
+                isNew: true,
+                isBest: false,
+                isPromo: false,
             },
             {
                 productid: 50,
@@ -4343,6 +4235,9 @@ export const productdata = [
                 colorpn: ['VCARP27100 '],
                 detail: '뻬를리 컬러 브레이슬릿, 미디엄 모델, 18K 핑크 골드, 커넬리언, 라운드 다이아몬드. DEF 및 IF~VVS 등급의 다이아몬드',
                 stone: '다이아몬드: 스톤 43개, 0.73캐럿,스톤커넬리언: 스톤 1개',
+                isNew: false,
+                isBest: true,
+                isPromo: false,
             },
 
             {
@@ -4648,9 +4543,6 @@ export const productdata = [
                 colorpn: [],
                 detail: '스위트 알함브라 브레이슬릿, 1개 모티브, 로듐 도금 18K 화이트 골드, 라운드 다이아몬드. DEF 및 IF~VVS 등급의 다이아몬드',
                 stone: '다이아몬드: 스톤 12개, 0.08캐럿',
-                isNew: true, // 신상품 여부
-                isBest: false, // 베스트 여부
-                isPromo: true, // 기획전 상품 여부
             },
             {
                 productid: 70,
@@ -4667,9 +4559,6 @@ export const productdata = [
                 colorpn: [],
                 detail: '스위트 알함브라 브레이슬릿, 6개 모티브, 18K 핑크 골드',
                 stone: '',
-                isNew: true, // 신상품 여부
-                isBest: false, // 베스트 여부
-                isPromo: true, // 기획전 상품 여부
             },
 
             {
@@ -4685,9 +4574,6 @@ export const productdata = [
                 colorpn: ['VCARO3R300 '],
                 detail: '팔미르 브레이슬릿. 18K 옐로우 골드, 다이아몬드',
                 stone: '다이아몬드: 스톤 135개, 18.82캐럿',
-                isNew: true, // 신상품 여부
-                isBest: true, // 베스트 여부
-                isPromo: true, // 기획전 상품 여부
             },
 
             {
@@ -4703,9 +4589,6 @@ export const productdata = [
                 colorpn: ['VCARO3RB00'],
                 detail: '팔미르 브레이슬릿. 로듐 도금 18K 화이트 골드, 다이아몬드',
                 stone: '다이아몬드: 스톤 135개, 18.82캐럿',
-                isNew: false, // 신상품 여부
-                isBest: true, // 베스트 여부
-                isPromo: true, // 기획전 상품 여부
             },
             {
                 productid: 73,
@@ -4728,16 +4611,13 @@ export const productdata = [
                 productnumber: 'VCARO3RQ00  ',
                 price: 427000000,
                 objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/16/27/28/1/1627281.png.transform.vca-w550-2x.png',
                     'https://www.vancleefarpels.com/content/dam/rcq/vca/20/54/06/9/2054069.jpeg',
                     'https://www.vancleefarpels.com/content/dam/rcq/vca/16/27/27/6/1627276.png.transform.vca-w550-2x.png',
+                    'https://www.vancleefarpels.com/content/dam/rcq/vca/16/27/28/1/1627281.png.transform.vca-w550-2x.png',
                 ],
                 colorpn: ['VCARPJEE00  '],
                 detail: '스노우플레이크 브레이슬릿. 18K 옐로우 골드, 다이아몬드.',
                 stone: '다이아몬드: 스톤 195개, 21.5캐럿',
-                isNew: false, // 신상품 여부
-                isBest: true, // 베스트 여부
-                isPromo: true, // 기획전 상품 여부
             },
             {
                 productid: 75,
@@ -4770,9 +4650,6 @@ export const productdata = [
                 colorpn: [],
                 detail: '스위트 알함브라 브레이슬릿, 1개 모티브, 로듐 도금 18K 화이트 골드, 라운드 다이아몬드. DEF 및 IF~VVS 등급의 다이아몬드.',
                 stone: '다이아몬드: 스톤 12개, 0.08캐럿',
-                isNew: true, // 신상품 여부
-                isBest: true, // 베스트 여부
-                isPromo: false, // 기획전 상품 여부
             },
             {
                 productid: 77,
@@ -4887,9 +4764,9 @@ export const productdata = [
                 ],
                 colorpn: [],
                 detail: '스위트 하트 브레이슬릿, 18K 로즈 골드, 커넬리언',
-
                 stone: '커넬리언: 스톤 1개',
             },
+
             {
                 productid: 85,
                 title: '매직 알함브라 브레이슬릿, 5개 모티브',
@@ -5137,6 +5014,7 @@ export const productdata = [
             },
         ],
     },
+
     {
         id: 3,
         category: '반지',

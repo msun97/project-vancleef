@@ -20,6 +20,56 @@ const ProductListPageNav = () => {
         const filteredProducts = productdata.filter((product) => product.category === categoryName);
         dispatch(setFilteredProducts(filteredProducts));
     };
+    const handleCategoryChange2 = (categoryId, categoryName, event) => {
+        event.preventDefault();
+
+        console.log('Category ID:', categoryId);
+        console.log('Category Name:', categoryName);
+
+        const category = { id: categoryId, name: categoryName };
+        console.log('Dispatching payload:', category);
+        dispatch(setFilteredCategory(category));
+
+        const filteredProducts = productdata
+            .map((product) => {
+                const newItems = product.data.filter((item) => item.isNew === true);
+                if (newItems.length > 0) {
+                    return { ...product, data: newItems };
+                }
+                return null;
+            })
+            .filter(Boolean);
+
+        console.log(filteredProducts);
+        dispatch(setFilteredProducts(filteredProducts));
+    };
+    const handleCategoryChange3 = (categoryId, categoryName, event) => {
+        event.preventDefault();
+
+        console.log('Category ID:', categoryId);
+        console.log('Category Name:', categoryName);
+
+        const category = { id: categoryId, name: categoryName };
+        console.log('Dispatching payload:', category);
+        dispatch(setFilteredCategory(category));
+
+        const filteredProducts = productdata
+            .map((product) => {
+                const newItems = product.data.filter((item) => {
+                    console.log('item', item); // item 객체 출력
+                    return item.isBest === true;
+                });
+                console.log('newItems', newItems); // newItems 배열 출력
+                if (newItems.length > 0) {
+                    return { ...product, data: newItems };
+                }
+                return null;
+            })
+            .filter(Boolean);
+
+        console.log(filteredProducts);
+        dispatch(setFilteredProducts(filteredProducts));
+    };
 
     const handleAllClick = (event) => {
         event.preventDefault();
@@ -58,8 +108,8 @@ const ProductListPageNav = () => {
                                     </li>
                                 </ul>
                             )}
-                            <li>New</li>
-                            <li>Best</li>
+                            <li onClick={(event) => handleCategoryChange2(5, 'isNew', event)}>New</li>
+                            <li onClick={(event) => handleCategoryChange3(6, 'isBest', event)}>Best</li>
                         </ul>
                     </li>
                 </ul>
