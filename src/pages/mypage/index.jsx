@@ -1,8 +1,22 @@
 // MyPage.js
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from "../../store/modules/authSlice";
 
 function MyPage() {
+	const { user, authed } = useSelector((state) => state.authR);
+	const dispatch = useDispatch();
+	const handleLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      // Redux 상태 초기화 및 로컬스토리지 정리
+      dispatch(authActions.logout());
+      localStorage.removeItem("authed");
+      // 로그아웃 후 /mypage로 이동
+      Navigate("/mypage");
+    }}
+
+
   return (
     <div className="relative flex flex-row w-full h-screen">
       {/* Left Side */}
@@ -17,7 +31,9 @@ function MyPage() {
             <Link to="/mypage/cart" className="hover:font-bold">장바구니</Link>
             <Link to="/mypage/myposts" className="hover:font-bold">나의게시물</Link>
             <Link to="/mypage/profile" className="hover:font-bold">회원정보변경</Link>
-            <Link to="/mypage/logout" className="hover:font-bold">로그아웃</Link>
+						<button onClick={handleLogout} className="hover:font-bold text-left">
+              로그아웃
+            </button>
           </nav>
         </div>
 
@@ -25,13 +41,27 @@ function MyPage() {
 
         <div className="w-1/2 flex justify-center whitespace-nowrap">
           <p className="text-content-xs m-0 ml-[57px]">
-            WELCOME BACK. <Link to="/profile">User</Link>님
+					WELCOME BACK.{' '}
+					<Link
+      to=""
+      className={authed && user ? "font-bold" : "text-[#9d9d9d]"}
+    >
+      {authed && user ? user.username : 'Guest'}
+    </Link>
+		{' '}님
           </p>
         </div>
       </div>
 
       {/* Right Side */}
-      <div className="relative w-1/2 bg-white flex flex-col items-center justify-center p-[var(--padding-144)] overflow-y-scroll">
+      <div className="relative w-1/2 bg-white flex flex-col items-center justify-center p-[var(--padding-144)] overflow-y-scroll" style={{
+    scrollbarWidth: 'none', 
+    msOverflowStyle: 'none'
+  }}
+  ref={(el) => {
+    if (el) el.style.setProperty('-webkit-overflow-scrolling', 'touch');
+    if (el) el.style.setProperty('overflow', '-moz-scrollbars-none');
+  }}>
         <Outlet />
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SearchModal from './SearchModal';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const Header = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
@@ -8,6 +9,7 @@ const Header = () => {
     setIsSearch(!isSearch);
   };
   const [lastY, setLastY] = useState(0);
+	const { authed } = useSelector((state) => state.authR);
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
@@ -49,8 +51,10 @@ const Header = () => {
         <button onClick={onSearch} className=" cursor-pointer">
           <img src="/icons/search.svg" alt="검색" className="w-8 h-8" />
         </button>
-        <Link to="/login">
-          <span className="font-secondary text-heading-m font-bold">LOGIN</span>
+				<Link to={authed ? "/mypage" : "/login"}>
+          <span className="font-secondary text-heading-m font-bold">
+            {authed ? "MY" : "LOGIN"}
+          </span>
         </Link>
       </div>
       {isSearch && <SearchModal onSearch={onSearch} />}
