@@ -1,4 +1,4 @@
-export const neckless = [
+
     {
         productid: 11,
         title: '로즈 드 노엘 펜던트, 미니 모델',
@@ -3274,4 +3274,4 @@ export const neckless = [
         detail: '빈티지 알함브라 펜던트, 18K 옐로우 골드. 펜던트는 네크리스 체인에 부착되어 있습니다',
         stone: '',
     },
-];
+
