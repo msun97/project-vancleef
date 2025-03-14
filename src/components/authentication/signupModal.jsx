@@ -58,6 +58,7 @@ function SignupFull() {
     const payload = {
       username,
       id_email: userId,
+			email: email,
       password,
       // 전화번호가 숫자나 '-' 없이 입력되었다고 가정
       telFirst: phone.slice(0, 3),
@@ -151,32 +152,32 @@ function SignupFull() {
               <div className="flex flex-row items-center w-[600px]">
                 <div className="flex ml-[10px] pb-[8px] items-center space-x-4">
                   <label className="flex items-center">
-                    <CheckBox
-                      name="none"
-                      checked={gender.none}
-                      onChange={handleGenderChange}
-                      className="w-[18px] h-[18px] items-start"
-                    />
-                    <span className="ml-2">선택안함</span>
-                  </label>
-                  <label className="flex items-center">
-                    <CheckBox
-                      name="male"
-                      checked={gender.male}
-                      onChange={handleGenderChange}
-                      className="w-[18px] h-[18px] items-start"
-                    />
-                    <span className="ml-2">남</span>
-                  </label>
-                  <label className="flex items-center">
-                    <CheckBox
-                      name="female"
-                      checked={gender.female}
-                      onChange={handleGenderChange}
-                      className="w-[18px] h-[18px] items-start"
-                    />
-                    <span className="ml-2">여</span>
-                  </label>
+									<CheckBox
+    name="none"
+    checked={gender.none}
+    onChange={(checked) => handleGenderChange("none", checked)}
+    className="w-[18px] h-[18px] items-start"
+  />
+  <span className="ml-2">선택안함</span>
+</label>
+<label className="flex items-center">
+  <CheckBox
+    name="male"
+    checked={gender.male}
+    onChange={(checked) => handleGenderChange("male", checked)}
+    className="w-[18px] h-[18px] items-start"
+  />
+  <span className="ml-2">남</span>
+</label>
+<label className="flex items-center">
+  <CheckBox
+    name="female"
+    checked={gender.female}
+    onChange={(checked) => handleGenderChange("female", checked)}
+    className="w-[18px] h-[18px] items-start"
+  />
+  <span className="ml-2">여</span>
+</label>
                 </div>
               </div>
             </div>
@@ -208,7 +209,7 @@ function SignupFull() {
             </p>
             <Button
               variant="primary"
-              className="w-[580px] h-[50px] !font-bold"
+              className="w-[580px] h-[50px] !font-bold mb-[20px]"
               type="submit"
             >
               가입완료

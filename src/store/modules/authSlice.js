@@ -64,8 +64,9 @@ export const authSlice = createSlice({
 
       // 예약정보 필드를 기본값으로 추가
       const member = {
-        id: no,
-        id_email: user.id_email,
+        usernum: no,
+        userid: user.id_email,
+        email: user.email,
         password: user.password,
         username: user.username,
         tel: user.telFirst + user.telSecond + user.telThird,
