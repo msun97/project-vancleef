@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Button from '../button';
 import Input from '../input';
 import CheckBox from '../checkbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../../store/modules/authSlice';
 
 function PasswordChange() {
   // 'password' 또는 'info' 값을 가짐
@@ -16,7 +18,7 @@ function PasswordChange() {
     sms: false,
     kakao: false,
   });
-
+	const dispatch = useDispatch();
   // 체크박스 onChange 핸들러
   const handleGenderChange = (e) => {
     const { name, checked } = e.target;
@@ -33,7 +35,7 @@ function PasswordChange() {
       [name]: checked,
     }));
   };
-
+	const { user, authed } = useSelector((state) => state.authR);
   // 기본 정보 변경 페이지 (탭 버튼 영역 제거)
   const InfoChange = () => (
     <div className="p-6">
@@ -223,7 +225,21 @@ function PasswordChange() {
         <Button
           variant="secondary"
           className="w-full h-[55px] border border-black text-black font-bold"
-        >
+					onClick={() => {   if (
+						authed &&
+						user &&
+						window.confirm(`${user.username} 님, 탈퇴하시겠습니까?`)
+					) {
+						// 로컬스토리지에서 해당 사용자의 정보 삭제
+						localStorage.removeItem("user_" + user.id_email);
+						// 인증 상태 제거
+						localStorage.removeItem("authed");
+						// Redux 상태 초기화 (logout 액션 실행)
+						dispatch(authActions.logout());
+						alert("탈퇴가 완료되었습니다.");
+					}
+				}}
+			>
           탈퇴하기
         </Button>
       </div>

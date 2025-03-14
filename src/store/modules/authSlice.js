@@ -107,25 +107,6 @@ export const authSlice = createSlice({
                 state.user = savedUser;
             }
         },
-        // setSelectedMembership: (state, action) => {
-        //     state.selectedMembership = action.payload; // 선택된 멤버십을 상태로 설정
-        //     const membershipInfo = {
-        //         type: selectedMembership,
-        //         price:
-        //             selectedMembership === "AD_standard"
-        //                 ? "5,500"
-        //                 : selectedMembership === "standard"
-        //                 ? "9,500"
-        //                 : "13,900",
-        //         quality: selectedMembership === "premium" ? "4K + HDR" : "1080p",
-        //         devices: selectedMembership === "premium" ? "4" : "2",
-        //         profiles: selectedMembership === "AD_standard" ? "2" : selectedMembership === "standard" ? "4" : "6",
-        //         downloads: selectedMembership === "premium" ? "400" : "200",
-        //         hasAds: selectedMemberships === "AD_standard",
-        //         date: new Date().toISOString(),
-        //     };
-        //     localStorage.setItem("selectedMembership", JSON.stringify(membershipInfo));
-        // },
 
         removeUsername: (state) => {
             state.user.username = "";
