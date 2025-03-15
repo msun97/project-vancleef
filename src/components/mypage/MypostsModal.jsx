@@ -6,7 +6,7 @@ import { closeModal } from '../../store/modules/modalSlice';
 import { reviewActions } from '../../store/modules/reviewSlice';
 import Draggable from 'react-draggable';
 
-const MypostsModal = () => {
+const MypostsModal = ({ productId, productName }) => {
     const [rating, setRating] = useState(0);
     const [title, setTitle] = useState(''); // 리뷰 제목 상태
     const [content, setContent] = useState(''); // 리뷰 내용 상태
@@ -18,6 +18,26 @@ const MypostsModal = () => {
 
     const dispatch = useDispatch();
     const isOpen = useSelector((state) => state.modalR.isOpen);
+    const userNum = useSelector((state) => state.authR); // 로그인한 사용자 정보 가져오기
+
+    // 기존 리뷰 불러오기 (수정 모드인 경우)
+    const userReviews = useSelector((state) => state.reviewR.userReviews);
+    const existingReview = userReviews[userNum] && userReviews[userNum][productId];
+
+    // 컴포넌트 마운트 시 기존 리뷰 데이터 설정
+    React.useEffect(() => {
+        if (existingReview) {
+            setTitle(existingReview.title || '');
+            setContent(existingReview.content || '');
+            setRating(existingReview.rating || 0);
+
+            // 이미지가 있는 경우
+            if (existingReview.images && existingReview.images.length > 0) {
+                setImageFile(existingReview.images[0]);
+                setFileName('기존 이미지');
+            }
+        }
+    }, [existingReview]);
 
     // 파일 버튼 클릭 핸들러
     const handleButtonClick = () => {
@@ -78,7 +98,13 @@ const MypostsModal = () => {
         };
 
         // Redux 액션 디스패치하여 리뷰 추가
-        dispatch(reviewActions.addReview(reviewData));
+        dispatch(
+            reviewActions.addReview({
+                userNum: userNum,
+                productId: productId,
+                reviewData: reviewData,
+            })
+        );
 
         // 모달 닫기
         dispatch(closeModal());
@@ -105,6 +131,7 @@ const MypostsModal = () => {
                     {/* 드래그 가능한 영역을 표시하기 위해 상단에 handle 클래스 추가 */}
                     <div className='handle cursor-move mb-4'>
                         <h1 className='text-center text-xl font-bold'>리뷰쓰기</h1>
+                        {productName && <p className='text-center text-sm text-gray-600 mt-1'>{productName}</p>}
                     </div>
 
                     <div className='mb-[34px] mt-[73px] flex flex-row items-center'>
@@ -178,7 +205,7 @@ const MypostsModal = () => {
                             variant='secondary'
                             className='text-[16px] font-bold w-[290px] h-[55px]'
                         >
-                            등록
+                            {existingReview ? '수정' : '등록'}
                         </Button>
                     </div>
                 </div>
