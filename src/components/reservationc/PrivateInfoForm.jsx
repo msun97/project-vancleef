@@ -7,7 +7,7 @@ import { reservationActions } from '../../store/modules/reservationSlice';
 const PrivateInfoForm = () => {
     const dispatch = useDispatch();
     const { personalInfo } = useSelector((state) => state.reservationR.reservation);
-    const currentStep = useSelector((state) => state.reservationR);
+    const currentStep = useSelector((state) => state.reservationR.currentStep);
 
     // 상태 초기화
     const [gender, setGender] = useState(personalInfo.gender || '');
@@ -166,6 +166,7 @@ const PrivateInfoForm = () => {
 
         // 예약 완료 처리
         dispatch(reservationActions.setReservationStatus('pending'));
+        dispatch(reservationActions.setCurrentStep(5));
         alert('예약이 완료되었습니다.');
     };
 

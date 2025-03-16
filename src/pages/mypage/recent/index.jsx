@@ -10,14 +10,6 @@ const Recent = () => {
 			</div>
 	<Line/>
 	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
 	</div>
 	)
 }
