@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DropDown from '../../../components/dropdown';
 import Input from '../../../components/input';
+import { useDispatch, useSelector } from 'react-redux';
+import { paginationActions } from '../../../store/modules/paginationSlice';
+import Pagination from '../../../components/pagination';
 
 const CCFaq = () => {
   const faqList = [
@@ -93,23 +96,48 @@ const CCFaq = () => {
       tag: '기타',
     },
   ];
-
+  const dispatch = useDispatch();
   const [isCategory, setIsCategory] = useState('전체');
+  const [nowData, setNowData] = useState(faqList);
   const tagList = faqList.map(item => item.tag);
   const tag = new Set(tagList);
   const tagArray = ['전체', ...tag];
-
   const changeCategory = tag => {
     setIsCategory(tag);
+    if (tag === '전체') setNowData(faqList);
+    else setNowData(faqList.filter(item => item.tag === tag));
   };
 
-  let nowList = [];
 
-  if (isCategory === '전체') {
-    nowList = faqList;
-  } else {
-    nowList = faqList.filter(item => item.tag === isCategory);
+  const [search, setSearch] = useState('')
+  const [isSearch, setIsSearch] = useState(false);
+  const searchClose = () => {
+    setIsSearch(false)
+    setSearch('')
+    changeCategory(isCategory)
   }
+  const changeInput = e => {
+    setSearch(e.target.value)
+  }
+  const onSumbit = (e) => {
+    e.preventDefault()
+    if (!search) {
+      alert('검색어를 입력하세요.')
+    } else {
+      setNowData(nowData.filter(item => item.title.includes(search) || item.content.includes(search)));
+      setIsSearch(true);
+    }
+  }
+  useEffect(() => {
+    dispatch(
+      paginationActions.addData({pageId : 'faq', data : nowData})
+    )
+  }, [nowData])
+  const { faq = {}} = useSelector((state) => state.paginationR)
+  const { currPage, postsPerPage} = faq;
+  const lastPost = currPage * postsPerPage;
+  const firstPost = lastPost - postsPerPage;
+  const currentPost = nowData.slice(firstPost, lastPost);
 
   return (
     <div className="w-full ">
@@ -123,7 +151,7 @@ const CCFaq = () => {
               {tagArray.map((item, index) => (
                 <li
                   key={index}
-                  className={`text-content-m ${
+                  className={`text-content-m cursor-pointer ${
                     isCategory === item
                       ? 'text-gray-100 font-bold'
                       : 'text-gray-20'
@@ -135,12 +163,14 @@ const CCFaq = () => {
               ))}
             </ul>
           </div>
-          <form className="relative">
+          <form className="relative" onSubmit={onSumbit}>
             <Input
               className="w-[378px] h-[60px] p-4 border rounded-[2px]"
               placeholder="검색어를 입력해주세요."
+              onChange={changeInput}
+              value={search}
             />
-            <button>
+            <button type='submit'>
               <img
                 src="/icons/search.svg"
                 className="w-[26px] absolute right-0 top-1/2 -translate-y-2/4 -translate-x-4"
@@ -149,9 +179,11 @@ const CCFaq = () => {
           </form>
         </div>
       </div>
+      {isSearch &&       <div className="flex justify-end w-full items-center gap-2 py-4"><p className="text-content-s text-gray-90 text-[20px]">검색결과 {nowData.length}개</p> <button onClick={searchClose}><img src="/icons/close.svg" className='w-[32px]'/>   </button>   </div>}
+
       <table className="notices-table w-full">
         <tbody className="w-full">
-          {nowList.map(notice => (
+          {currentPost.map(notice => (
             <tr key={notice.id} className="border-y border-gray-50">
               <td className="text-content-m py-7 flex gap-[10px] items-center">
                 <div className="tag text-gray-60 text-content-xxl">Q.</div>
@@ -161,6 +193,7 @@ const CCFaq = () => {
           ))}
         </tbody>
       </table>
+      <Pagination postsPerPage={10} pageId='faq' className='mt-10'/>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
-const DropDown = ({ item, handleClick, className }) => {
+const DropDown = ({ item, handleClick, className}) => {
   const [option, setOption] = useState(item[0]);
   const [isOpen, setIsOpen] = useState(false);
   const listOn = () => {
@@ -33,6 +33,7 @@ const DropDown = ({ item, handleClick, className }) => {
               key={index}
               className="list-none hover:bg-gray-90 p-5 hover:text-gray-0"
               onClick={handleSelect}
+              
             >
               {item}
             </div>
