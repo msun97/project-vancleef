@@ -11,14 +11,7 @@ const MypostsPage = () => {
 					<h1 className="text-sm font-bold">나의 게시물</h1>
 				</div>
 		<Line />
-		<div className='min-h-[280px] flex justify-center p-[55px]'>작성된 게시글이 없습니다.</div>
 <MypostsTap/>
-		<Myposts/>
-		<Myposts/>
-		<Myposts/>
-		<Myposts/>
-		<Myposts/>
-		<Myposts/>
 		<Myposts/>
 </div>
 </>

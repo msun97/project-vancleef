@@ -19,7 +19,7 @@ const MypostsTap = () => {
         <li
           key={tab.id}
           onClick={() => handleClick(tab.name)}
-          className={`w-1/2 border-b-4 h-[45px] flex justify-center items-center cursor-pointer font-bold mb-[30px] ${
+          className={`w-1/2 border-b-2 h-[45px] flex justify-center items-center cursor-pointer font-bold mb-[30px] ${
             activeTab === tab.name ? 'text-black' : 'text-gray-20'
           }`}
         >

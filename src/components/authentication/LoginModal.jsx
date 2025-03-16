@@ -62,7 +62,7 @@ function LoginFull() {
           <form onSubmit={handleLogin} className='flex flex-col justify-center'>
             <Input
               className="w-[360px] h-[55px] font-bold text-[#9C9C9C] text-center"
-              placeholder="아이디/이메일을 입력해 주세요."
+              placeholder="아이디를 입력해 주세요."
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
