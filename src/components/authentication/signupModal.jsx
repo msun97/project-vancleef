@@ -21,6 +21,18 @@ function SignupFull() {
   const [phone, setPhone] = useState('010-');
   // SMS 인증번호 상태
   const [smsCode, setSmsCode] = useState('');
+//    const [isSecretPost, setIsSecretPost] = useState(false);
+/* const [isAgreed, setIsAgreed] = useState(false);
+
+이렇게 state2개 만든 다음에 
+<CheckBox
+                                    id='secretPost'
+                                    checked={isSecretPost}
+                                    onChange={setIsSecretPost}
+                                    className='w-5 h-5'
+                            
+
+<CheckBox id='agreement' checked={isAgreed} onChange={setIsAgreed} className='w-5 h-5' />이렇게 했습 */
 
   // 성별 상태 관리 (단일 선택)
   const [gender, setGender] = useState({
@@ -64,10 +76,16 @@ function SignupFull() {
   };
 
   // 인증하기 버튼 클릭 시 4자리 랜덤 SMS 인증번호 생성
-  const generateSmsCode = () => {
-    const randomCode = Math.floor(1000 + Math.random() * 9000).toString();
-    setSmsCode(randomCode);
-  };
+	const generateSmsCode = () => {
+		// 전화번호에서 하이픈 제거 후 숫자만 남김
+		const digits = phone.replace(/-/g, '');
+		if (digits.length !== 11) {
+			alert('전화번호를 정확하게 입력해주세요.');
+			return;
+		}
+		const randomCode = Math.floor(1000 + Math.random() * 9000).toString();
+		setSmsCode(randomCode);
+	};
 
   // SMS 인증번호 확인 버튼 클릭 시
   const handleSmsConfirm = () => {
