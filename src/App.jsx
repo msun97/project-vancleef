@@ -26,10 +26,11 @@ import SignupPage from "./pages/signup";
 import Login from "./pages/login";
 import MypostsPage from "./pages/mypage/myposts";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import Kbrand from "./pages/kbrand";
 
 
 const App = () => {
-  return (
+  return (  
     <>
       <BrowserRouter>
       <ScrollToTop />
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="home" element={<Home />} />
+            <Route path="kbrand" element={<Kbrand/>} />
             <Route path="/productlist" element={<ProductListPage />} />
             <Route path="/productdetail" element={<ProductDetailPage />} />
             <Route path="/shoppingcartmodal" element={<ShoppingcartModal />} />
@@ -57,9 +59,7 @@ const App = () => {
               <Route path="inquiry" element={<CCInquiry />} />
               <Route path="inquiryform" element={<CCInquiryForm />} />
             </Route>
-            <Route path="/:search">
-              <Route index element={<Search />} />
-            </Route>
+            <Route path="/search/:keyword" element={<Search />} />
             <Route path="/purchase" element={<Purchase />} />
             <Route path="/reservation" element={<ReservationPage />} />
           </Route>
