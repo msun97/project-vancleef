@@ -1,5 +1,6 @@
 import React from 'react';
 import ImgMotionSec from './components/ImgMotionSec';
+import ValueSec from './components/ValueSec';
 
 const AboutPage = () => {
     return (
@@ -10,9 +11,8 @@ const AboutPage = () => {
             <div className='mb-16 w-full h-[50vh] m-auto'>
                 <div className='mx-auto text-center text-[35px] font-secondary'>새로운 날의 여명</div>
             </div>
-
-            {/* 이미지 모션 섹션 추가 */}
             <ImgMotionSec />
+            <ValueSec />
         </div>
     );
 };
