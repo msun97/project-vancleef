@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../button';
 import Pagination from '../pagination';
@@ -12,9 +12,13 @@ const PAGINATION_ID = 'productInquiry';
 const ProductInquiryList = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { productId } = useParams(); // URL에서 productId 추출
 
     // 리덕스 스토어에서 개별 상태로 가져오기
-    const inquiries = useSelector((state) => state.productInquiryR.inquiries);
+    const allInquiries = useSelector((state) => state.productInquiryR.inquiries);
+
+    // 현재 상품의 ID 가져오기 (URL 또는 Redux 상태에서)
+    const currentProductId = productId || useSelector((state) => state.productR?.currentProduct?.id);
 
     // 페이지네이션 상태를 개별적으로 가져오기
     const currPage = useSelector((state) =>
@@ -25,42 +29,48 @@ const ProductInquiryList = () => {
         state.paginationR && state.paginationR[PAGINATION_ID] ? state.paginationR[PAGINATION_ID].postsPerPage : 3
     );
 
-    // 날짜 기준으로 정렬된 문의 데이터를 useMemo로 메모이제이션
-    const sortedInquiries = useMemo(() => {
-        if (!Array.isArray(inquiries)) return [];
+    // 현재 제품에 해당하는 문의만 필터링 및 날짜 기준으로 정렬
+    const productInquiries = useMemo(() => {
+        if (!Array.isArray(allInquiries)) return [];
 
-        return [...inquiries].sort((a, b) => {
+        // 현재 제품에 해당하는 문의만 필터링
+        const filteredInquiries = currentProductId
+            ? allInquiries.filter((inquiry) => inquiry.productId === currentProductId)
+            : allInquiries;
+
+        // 날짜 기준으로 정렬
+        return [...filteredInquiries].sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
             return dateB - dateA;
         });
-    }, [inquiries]);
+    }, [allInquiries, currentProductId]);
 
     // 문의 데이터가 변경될 때 Redux 페이지네이션 스토어에 데이터 추가
     useEffect(() => {
-        if (!Array.isArray(inquiries)) return;
+        if (!Array.isArray(productInquiries)) return;
 
         dispatch(
             paginationActions.addData({
                 pageId: PAGINATION_ID,
-                data: sortedInquiries,
+                data: productInquiries,
             })
         );
-    }, [sortedInquiries, dispatch]);
+    }, [productInquiries, dispatch]);
 
     // 현재 페이지에 표시할 문의 목록 계산 - useMemo로 메모이제이션
     const currentInquiries = useMemo(() => {
         const indexOfLastItem = currPage * postsPerPage;
         const indexOfFirstItem = indexOfLastItem - postsPerPage;
-        return sortedInquiries.slice(indexOfFirstItem, indexOfLastItem);
-    }, [sortedInquiries, currPage, postsPerPage]);
+        return productInquiries.slice(indexOfFirstItem, indexOfLastItem);
+    }, [productInquiries, currPage, postsPerPage]);
 
     const toInquiry = () => {
         navigate('/productinquiry');
     };
 
     // 총 문의 개수를 메모이제이션
-    const totalInquiries = useMemo(() => (Array.isArray(inquiries) ? inquiries.length : 0), [inquiries]);
+    const totalInquiries = useMemo(() => productInquiries.length, [productInquiries]);
 
     return (
         <div className='pt-[200px] px-[330px] flex flex-col gap-[22px]'>
