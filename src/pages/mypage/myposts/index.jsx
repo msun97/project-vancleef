@@ -3,6 +3,7 @@ import Line from '../../../components/mypage/Line';
 import MypostsTap from '../../../components/mypage/MypostsTap';
 
 const MypostsPage = () => {
+
     return (
         <>
             <div className='pt-[120px] absolute top-0 text-[14px]'>
