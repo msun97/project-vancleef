@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../input';
 import Button from '../button';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { KAKAO_REDIRECT_URI } from '../../config';
 import { authActions } from '../../store/modules/authSlice';
 
@@ -51,16 +51,18 @@ function LoginFull() {
       <div className="bg-white p-6 relative w-[580px] h-full ml-[600px]">
         <div className="container flex flex-col justify-center items-center mt-[127px] space-y-[20px]">
           <h1 className="pb-[86px]">
-            <img
-              src="/icons/logo.svg"
-              alt="Van Cleef & Arpels"
-              className="w-[346px]"
-            />
+           <Link to='/'>
+           	 <img
+	              src="/icons/logo.svg"
+	              alt="Van Cleef & Arpels"
+	              className="w-[346px]"
+	            />
+           </Link>
           </h1>
           <form onSubmit={handleLogin} className='flex flex-col justify-center'>
             <Input
               className="w-[360px] h-[55px] font-bold text-[#9C9C9C] text-center"
-              placeholder="아이디/이메일을 입력해 주세요."
+              placeholder="아이디를 입력해 주세요."
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
