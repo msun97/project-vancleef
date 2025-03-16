@@ -60,7 +60,7 @@ const initialState = {
         status: 'incomplete', // incomplete, pending, confirmed, cancelled
         createdAt: null,
     },
-    currentStep: 1, // 현재 예약 단계 (1: 부티크 선택, 2: 방문 목적, 3: 예약 상세, 4: 개인 정보)
+    currentStep: 1, // 현재 예약 단계 (1: 부티크 선택, 2: 방문 목적, 3: 예약 상세, 4: 개인 정보, 5: 완료)
     isSubmitting: false,
     error: null,
 };
