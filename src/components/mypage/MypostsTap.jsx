@@ -15,21 +15,21 @@ const MypostsTap = () => {
         setActiveTab(name);
     };
 
-  return (
-    <ul className="flex w-full">
-      {postsTap.map(tab => (
-        <li
-          key={tab.id}
-          onClick={() => handleClick(tab.name)}
-          className={`w-1/2 border-b-2 h-[45px] flex justify-center items-center cursor-pointer font-bold mb-[30px] ${
-            activeTab === tab.name ? 'text-black' : 'text-gray-20'
-          }`}
-        >
-          {tab.menu}
-        </li>
-      ))}
-    </ul>
-  );
+    //   return (
+    //     <ul className="flex w-full">
+    //       {postsTap.map(tab => (
+    //         <li
+    //           key={tab.id}
+    //           onClick={() => handleClick(tab.name)}
+    //           className={`w-1/2 border-b-2 h-[45px] flex justify-center items-center cursor-pointer font-bold mb-[30px] ${
+    //             activeTab === tab.name ? 'text-black' : 'text-gray-20'
+    //           }`}
+    //         >
+    //           {tab.menu}
+    //         </li>
+    //       ))}
+    //     </ul>
+    //   );
     // 선택된 탭에 따라 다른 컴포넌트 렌더링
     const renderTabContent = () => {
         switch (activeTab) {
