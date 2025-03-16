@@ -4,7 +4,7 @@ import { getKakaoLogin } from './kakaogetThunks';
 const initialState = {
     joinData: [],
     authed: false,
-    user: '',
+    user: null,
     isSignUpComplete: false,
     goTg: null,
 };
@@ -19,26 +19,37 @@ export const authSlice = createSlice({
             state.goTg = action.payload;
         },
 
+        signup: (state, action) => {
+            const user = action.payload;
+            const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+            const member = {
+                id: no++,
+                userid: user.id_email,
+                email: user.email,
+                password: user.password,
+                username: user.username,
+                tel: user.telFirst + user.telSecond + user.telThird,
+                reservations: [],
+            };
+
+            storedUsers.push(member);
+            localStorage.setItem('users', JSON.stringify(storedUsers));
+            state.joinData.push(member);
+        },
+
         login: (state, action) => {
             const { id_email, password } = action.payload;
             const cleanedEmail = id_email.toLowerCase().trim();
-            const storedUser = localStorage.getItem('user_' + cleanedEmail);
+            const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+            const user = storedUsers.find((u) => u.userid.toLowerCase() === cleanedEmail);
 
-            if (storedUser) {
-                const user = JSON.parse(storedUser);
+            if (user) {
                 if (user.password === password) {
                     console.log('로그인 성공', user);
-                    // 예약정보 필드 기본값 할당 (없다면)
-                    if (!user.reservations) {
-                        user.reservations = [];
-                    }
-                    // UI 컴포넌트에서는 Redux의 useSelector를 통해 state.auth.user.reservations를 조회하여 예약정보를 렌더링합니다.
-                    // 예약정보 추가 액션은 예를 들어 예약 완료 후 dispatch하여 처리할 수 있습니다.
-
                     state.authed = true;
                     state.user = user;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
                     localStorage.setItem('authed', 'true');
-                    localStorage.setItem('user__로그인정보', JSON.stringify(user));
                 } else {
                     console.log('비밀번호가 틀립니다');
                     state.authed = false;
@@ -55,24 +66,16 @@ export const authSlice = createSlice({
             state.authed = false;
             state.user = null;
             localStorage.removeItem('authed');
+            localStorage.removeItem('currentUser');
         },
 
-        signup: (state, action) => {
-            const user = action.payload;
-            state.joinData.push({ id: no++, ...user });
-            localStorage.setItem('userIdCounter', no);
-
-            // 예약정보 필드를 기본값으로 추가
-            const member = {
-                usernum: no,
-                userid: user.id_email,
-                email: user.email,
-                password: user.password,
-                username: user.username,
-                tel: user.telFirst + user.telSecond + user.telThird,
-                reservations: [], // 예약정보 초기화
-            };
-            localStorage.setItem('user_' + user.id_email, JSON.stringify(member));
+        restoreAuthState: (state) => {
+            const savedAuthed = localStorage.getItem('authed') === 'true';
+            const savedUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (savedAuthed && savedUser) {
+                state.authed = true;
+                state.user = savedUser;
+            }
         },
 
         setSignUpComplete: (state, action) => {
@@ -86,15 +89,6 @@ export const authSlice = createSlice({
             }
             state.authed = true;
             state.user = userData;
-        },
-
-        restoreAuthState: (state) => {
-            const savedAuthed = localStorage.getItem('authed') === 'true';
-            if (savedAuthed) {
-                const savedUser = JSON.parse(localStorage.getItem('user'));
-                state.authed = true;
-                state.user = savedUser;
-            }
         },
 
         removeUsername: (state) => {
@@ -118,7 +112,6 @@ export const authSlice = createSlice({
             }
         },
 
-        // 예약정보 추가 액션
         addReservation: (state, action) => {
             if (state.user) {
                 state.user.reservations = state.user.reservations || [];
@@ -127,6 +120,7 @@ export const authSlice = createSlice({
             }
         },
     },
+
     extraReducers: (builder) => {
         builder
             .addCase(getKakaoLogin.pending, (state) => {
@@ -138,7 +132,6 @@ export const authSlice = createSlice({
                 if (action.payload.newUser) {
                     state.joinData.push({ id: no++, ...action.payload.newUser });
                 }
-                // 카카오 로그인 성공 시에도 예약정보 기본값 할당
                 const user = action.payload.user;
                 if (!user.reservations) {
                     user.reservations = [];
