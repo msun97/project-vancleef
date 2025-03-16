@@ -28,7 +28,7 @@ const ProductInquiry = () => {
 
     const buttonStyle = isAgreed
         ? 'w-50 h-[55px] border border-primary text-primary hover:bg-primary hover:text-white cursor-pointer'
-        : 'w-50 h-[55px] border border-gray-400 text-gray-400 cursor-not-allowed';
+        : 'w-50 h-[55px] border border-gray-400 text-gray-400 cursor-not-allowed bg-gray-400 hover:bg-gray-400';
 
     const handleButtonClick = () => {
         if (fileInputRef.current) {
@@ -216,7 +216,7 @@ const ProductInquiry = () => {
                             ></textarea>
                         </div>
                     </li>
-                    <li className='flex items-center'>
+                    {/* <li className='flex items-center'>
                         <div className='w-32 flex items-center gap-2'>
                             <div className='bg-black w-1 h-1'></div>
                             <h4>파일</h4>
@@ -241,7 +241,7 @@ const ProductInquiry = () => {
                         <Button className='w-20 h-10 py-3 px-4 ml-2 text-xs' variant='secondary'>
                             + 추가
                         </Button>
-                    </li>
+                    </li> */}
                 </ul>
                 <div className='flex flex-col w-full border-b py-8 px-4 text-s'>
                     <h4 className='text-xs font-extrabold'>비회원 개인정보 수집동의</h4>
