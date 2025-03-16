@@ -1,26 +1,38 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/button';
 import CheckBox from '../../components/checkbox';
-import { useRef, useState } from 'react';
-import Input from '../../components/input';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { productInquiryActions } from '../../store/modules/productInquirySlice';
 
 const flexIC = 'flex items-center';
 
 const ProductInquiry = () => {
-    const fileInputRef = useRef(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [fileName, setFileName] = useState('');
+
+    // 로그인 정보 및 상품 정보 가져오기
+    const userInfo = useSelector((state) => state.authR?.user);
+    const productInfo = useSelector((state) => state.productR?.currentProduct);
+
+    // 유저 번호 및 상품 ID
+    const usernum = userInfo?.usernum || null;
+    const productId = productInfo?.id || window.location.pathname.split('/').pop();
+
     const [userInquiry, setUserInquiry] = useState({
         title: '',
         content: '',
-        name: '',
+        name: userInfo?.username || '',
         password: '',
         date: '',
         inquiryType: '상품',
+        productId: productId, // 상품 ID 추가
+        productName: productInfo?.name || '상품명', // 상품명 추가
+        productImage:
+            productInfo?.image ||
+            'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png', // 상품 이미지 추가
     });
+    const isLoggedIn = useSelector((state) => state.authR?.authed);
 
     // 두 개의 체크박스를 위한 별도의 상태 생성
     const [isSecretPost, setIsSecretPost] = useState(false);
@@ -28,21 +40,7 @@ const ProductInquiry = () => {
 
     const buttonStyle = isAgreed
         ? 'w-50 h-[55px] border border-primary text-primary hover:bg-primary hover:text-white cursor-pointer'
-        : 'w-50 h-[55px] border border-gray-400 text-gray-400 cursor-not-allowed';
-
-    const handleButtonClick = () => {
-        if (fileInputRef.current) {
-            fileInputRef.current.click();
-        }
-    };
-
-    // 파일 선택 시 호출되는 함수
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setFileName(file.name);
-        }
-    };
+        : 'w-50 h-[55px] border border-gray-400 text-gray-400 cursor-not-allowed bg-gray-400 hover:bg-gray-400';
 
     const { title, content, name, password } = userInquiry;
 
@@ -63,11 +61,24 @@ const ProductInquiry = () => {
             alert('비밀글 작성 시 비밀번호를 반드시 입력해주세요.');
             return;
         }
+        if (isLoggedIn && userInfo) {
+            console.log('로그인 상태:', isLoggedIn);
+            console.log('사용자 정보:', userInfo);
+            console.log('사용자 번호:', userInfo.usernum);
+        }
 
         const now = new Date();
         const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
             now.getDate()
         ).padStart(2, '0')}`;
+
+        // 디스패치하는 데이터 로깅
+        console.log('디스패치하는 데이터:', {
+            ...userInquiry,
+            isSecretPost,
+            date: formattedDate,
+            usernum: usernum,
+        });
 
         // 리덕스 액션 디스패치하여 문의 추가
         dispatch(
@@ -75,6 +86,7 @@ const ProductInquiry = () => {
                 ...userInquiry,
                 isSecretPost, // 비밀글 여부 추가
                 date: formattedDate,
+                usernum: usernum, // 유저 ID 추가 (로그인 상태인 경우)
             })
         );
 
@@ -92,14 +104,10 @@ const ProductInquiry = () => {
             <h2 className='font-secondary font-bold text-heading-m border-b'>상품 문의 쓰기</h2>
             <div className={`${flexIC} p-4 border-b gap-7`}>
                 <div>
-                    <img
-                        src='https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png'
-                        alt='제품이미지-샘플'
-                        className='w-[61px] h-[61px]'
-                    />
+                    <img src={userInquiry.productImage} alt='제품이미지' className='w-[61px] h-[61px]' />
                 </div>
                 <div>
-                    <h3 className='font-bold text-heading-m'>상품명</h3>
+                    <h3 className='font-bold text-heading-m'>{userInquiry.productName}</h3>
                     <p className='font-bold text-gray-40 text-heading-m'>상품설명</p>
                 </div>
             </div>
@@ -215,32 +223,6 @@ const ProductInquiry = () => {
                                 onChange={changeInput}
                             ></textarea>
                         </div>
-                    </li>
-                    <li className='flex items-center'>
-                        <div className='w-32 flex items-center gap-2'>
-                            <div className='bg-black w-1 h-1'></div>
-                            <h4>파일</h4>
-                        </div>
-                        <div>
-                            <input
-                                className='border border-gray-40 p-3 w-56 h-10 text-xs'
-                                placeholder={`${fileName}`}
-                            />
-                        </div>
-                        <div className='relative'>
-                            <Button onClick={handleButtonClick} className='w-20 h-10 py-3 px-4 ml-4 text-xs'>
-                                찾아보기
-                            </Button>
-                            <Input
-                                ref={fileInputRef}
-                                type='file'
-                                onChange={handleFileChange} // 파일 선택 시 이벤트 연결
-                                className='absolute opacity-0 w-0 h-0'
-                            />
-                        </div>
-                        <Button className='w-20 h-10 py-3 px-4 ml-2 text-xs' variant='secondary'>
-                            + 추가
-                        </Button>
                     </li>
                 </ul>
                 <div className='flex flex-col w-full border-b py-8 px-4 text-s'>

@@ -7,7 +7,7 @@ import { reservationActions } from '../../store/modules/reservationSlice';
 const PurposeForm = () => {
     const dispatch = useDispatch();
     const { purpose } = useSelector((state) => state.reservationR.reservation);
-    const currentStep = useSelector((state) => state.reservationR);
+    const currentStep = useSelector((state) => state.reservationR.currentStep);
 
     const [productConsultation, setProductConsultation] = useState(purpose.productConsultation);
     const [repairService, setRepairService] = useState(purpose.repairService);
