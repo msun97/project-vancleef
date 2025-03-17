@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilteredCategory, setFilteredProducts } from '../../store/modules/productSlice';
+import { Link } from 'react-router-dom';
 
 const ProductListPageNav = () => {
     const [isSubmenuVisible, setIsSubmenuVisible] = useState(false);
@@ -84,9 +85,9 @@ const ProductListPageNav = () => {
             <div className="fixed top-[240px]">
                 <ul className="font-secondary font-bold">
                     <li>
-                        <a href="#" className="text-content-xxxl">
+                        <Link to="#" className="text-content-xxxl">
                             SHOP
-                        </a>
+                        </Link>
                         <ul className="text-content-l leading-18 cursor-pointer">
                             <li className="font-bold" id="All" onClick={handleAllClick}>
                                 All
