@@ -1,39 +1,44 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
 const ProductSlide = () => {
+    const { productID } = useParams();
+    const productdata = useSelector((state) => state.productR.productdata);
+    
+    // 모든 카테고리의 제품을 하나의 배열로 합침
+    let allProducts = [];
+    if (productdata && Array.isArray(productdata)) {
+        productdata.forEach((category) => {
+            if (category.data && Array.isArray(category.data)) {
+                allProducts = [...allProducts, ...category.data];
+            }
+        });
+    }
+    
+    // 현재 제품 ID에 해당하는 제품 찾기
+    const product = allProducts.find((item) => item.productid === parseInt(productID));
+    
+    // product가 없거나 이미지 배열이 없는 경우 예외 처리
+    if (!product || !product.objectimage || !Array.isArray(product.objectimage) || product.objectimage.length === 0) {
+        return <div className="no-images">이미지를 찾을 수 없습니다.</div>;
+    }
+    
     return (
         <>
             <Swiper className="mySwiper">
-                <SwiperSlide>
-                    <img
-                        src="https://www.vancleefarpels.com/content/dam/rcq/vca/F1/9s/OE/xL/mk/2f/kM/Pw/-V/AN/SQ/F19sOExLmk2fkMPw-VANSQ.jpeg"
-                        alt=""
-                        style={{ objectFit: 'contain' }}
-                    />
-                </SwiperSlide>
-
-                <SwiperSlide>
-                    <img
-                        src="https://www.vancleefarpels.com/content/dam/rcq/vca/18/16/50/3/1816503.png"
-                        alt=""
-                        style={{ objectFit: 'contain' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="https://www.vancleefarpels.com/content/dam/rcq/vca/17/08/14/5/1708145.png.transform.vca-w820-1x.png"
-                        alt=""
-                        style={{ objectFit: 'contain' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="https://www.vancleefarpels.com/content/dam/rcq/vca/17/08/14/6/1708146.png.transform.vca-w820-1x.png"
-                        alt=""
-                        style={{ objectFit: 'contain' }}
-                    />
-                </SwiperSlide>
+                {product.objectimage.map((imageUrl, index) => (
+                    <SwiperSlide key={index}>
+                        <img
+                            src={imageUrl}
+                            alt={`${product.title} - 이미지 ${index + 1}`}
+                            style={{ objectFit: 'contain' }}
+                        />
+                    </SwiperSlide>
+                ))}
             </Swiper>
         </>
     );
