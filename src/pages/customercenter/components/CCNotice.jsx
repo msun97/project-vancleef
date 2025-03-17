@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DropDown from '../../../components/dropdown';
-import Input from '../../../components/input';
+import Input from '@/components/input';
 import Pagination from '../../../components/pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { paginationActions } from '../../../store/modules/paginationSlice';
