@@ -36,6 +36,7 @@ const Cart = () => {
           <Button variant="secondary" className="w-[135px] h-[55px]">
             전체상품 주문
           </Button>
+					
         </div>
       </div>
     </>
