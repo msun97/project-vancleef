@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Input from '@/components/input';
+import Input from '@/components/input/index.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { paginationActions } from '../../../store/modules/paginationSlice';
 import Pagination from '../../../components/pagination';
