@@ -1,10 +1,8 @@
-import React from 'react'
-import LogOut from '../../../components/mypage/LogOut'
+import React from 'react';
+import LogOut from '@/components/mypage/LogOut';
 
 const Logout = () => {
-	return (
-	<LogOut/>
-	)
-}
+  return <LogOut />;
+};
 
-export default Logout
+export default Logout;

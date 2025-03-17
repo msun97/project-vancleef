@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Input from '../input';
-import Button from '../button';
+import Input from '@/components/input';
+import Button from '@/components/button';
 import { Link, useNavigate } from 'react-router-dom';
-import { KAKAO_REDIRECT_URI } from '../../config';
-import { authActions } from '../../store/modules/authSlice';
+import { KAKAO_REDIRECT_URI } from '@/config';
+import { authActions } from '@/store/modules/authSlice';
 
 function LoginFull() {
   const dispatch = useDispatch();
@@ -16,10 +16,10 @@ function LoginFull() {
   const [password, setPassword] = useState('');
   const [loginMessage, setLoginMessage] = useState('');
 
-  const { authed } = useSelector((state) => state.authR);
+  const { authed } = useSelector(state => state.authR);
 
   // 로그인 핸들러
-  const handleLogin = (e) => {
+  const handleLogin = e => {
     e.preventDefault();
     dispatch(authActions.login({ id_email: email, password }));
   };
@@ -51,27 +51,27 @@ function LoginFull() {
       <div className="bg-white p-6 relative w-[580px] h-full ml-[600px]">
         <div className="container flex flex-col justify-center items-center mt-[127px] space-y-[20px]">
           <h1 className="pb-[86px]">
-           <Link to='/'>
-           	 <img
-	              src="/icons/logo.svg"
-	              alt="Van Cleef & Arpels"
-	              className="w-[346px]"
-	            />
-           </Link>
+            <Link to="/">
+              <img
+                src="/icons/logo.svg"
+                alt="Van Cleef & Arpels"
+                className="w-[346px]"
+              />
+            </Link>
           </h1>
-          <form onSubmit={handleLogin} className='flex flex-col justify-center'>
+          <form onSubmit={handleLogin} className="flex flex-col justify-center">
             <Input
               className="w-[360px] h-[55px] font-bold text-[#9C9C9C] text-center"
               placeholder="아이디를 입력해 주세요."
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
             />
             <Input
               className="w-[360px] h-[55px] text-center text-[#9C9C9C] font-bold mb-[78px]"
               placeholder="비밀번호를 입력해 주세요."
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
             />
             <Button
               variant="primary"
@@ -89,21 +89,23 @@ function LoginFull() {
             카카오 로그인
           </Button>
           <div className="flex flex-row gap-[50px] p-[33px] !font-bold">
-            <button onClick={() => navigate('/mypage/profile')}>아이디 찾기</button>
+            <button onClick={() => navigate('/mypage/profile')}>
+              아이디 찾기
+            </button>
             |
-            <button onClick={() => navigate('/mypage/profile')}>비밀번호 찾기</button>
+            <button onClick={() => navigate('/mypage/profile')}>
+              비밀번호 찾기
+            </button>
           </div>
           <Button
             variant="secondary"
             className="w-[355px] h-[55px] !font-bold"
-            onClick={() => navigate('/signup')}	
+            onClick={() => navigate('/signup')}
           >
             회원가입
           </Button>
           {loginMessage && (
-            <div className="mt-4 text-center">
-              {loginMessage}
-            </div>
+            <div className="mt-4 text-center">{loginMessage}</div>
           )}
         </div>
       </div>
