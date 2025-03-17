@@ -7,7 +7,7 @@ import { reservationActions } from '../../store/modules/reservationSlice';
 const ReservationDetailForm = () => {
     const dispatch = useDispatch();
     const { details } = useSelector((state) => state.reservationR.reservation);
-    const currentStep = useSelector((state) => state.reservationR);
+    const currentStep = useSelector((state) => state.reservationR.currentStep);
 
     const [dateValue, setDateValue] = useState(details.date || new Date().toISOString().split('T')[0]);
     const [timeValue, setTimeValue] = useState(details.time || '');

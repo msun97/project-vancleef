@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Button from '../button';
 import { reviewActions } from '../../store/modules/reviewSlice';
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, productId, userNum }) => {
     const dispatch = useDispatch();
 
     // 별점 렌더링 함수
@@ -56,7 +56,13 @@ const ReviewItem = ({ review }) => {
 
     // 도움됐어요 버튼 클릭 핸들러
     const handleHelpfulClick = () => {
-        dispatch(reviewActions.toggleHelpful(review.id));
+        dispatch(
+            reviewActions.toggleHelpful({
+                productId,
+                reviewId: review.id,
+                userNum,
+            })
+        );
     };
 
     // 날짜 포맷 함수
@@ -67,6 +73,9 @@ const ReviewItem = ({ review }) => {
             '0'
         )}`;
     };
+
+    // 리뷰 작성자인지 확인 (내 리뷰인지)
+    const isMyReview = review.userNum === userNum;
 
     return (
         <div className='w-full h-[300px] py-[40px] flex gap-[30px] border-b-2'>
@@ -82,16 +91,27 @@ const ReviewItem = ({ review }) => {
             </div>
             <div className='w-full relative flex flex-col gap-[15px] text-xl'>
                 <div className='absolute top-0 right-0 flex flex-col items-end justify-between h-full'>
-                    <span className='text-[17px]'>{review.email}</span>
+                    {/* 내 리뷰일 경우 표시 */}
+                    {isMyReview && (
+                        <span className='text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded mb-1'>내 리뷰</span>
+                    )}
+                    <span className='text-[17px]'>
+                        {/* 개인정보 보호를 위해 이메일 일부 마스킹 */}
+                        {isMyReview
+                            ? '내 리뷰'
+                            : review.userNum
+                            ? `사용자 ${review.userNum.substring(0, 3)}***`
+                            : '익명'}
+                    </span>
                     <span className='text-sm text-gray-500'>{formatDate(review.createdAt)}</span>
                 </div>
 
-                {/* 리뷰 제목 추가 */}
+                {/* 리뷰 제목 */}
                 {review.title && <h3 className='text-[19px] font-semibold'>{review.title}</h3>}
 
                 <p className='pt-[2px] text-[17px]'>{review.content}</p>
 
-                {/* 여러 이미지 표시 */}
+                {/* 이미지 표시 */}
                 {review.images && review.images.length > 0 && (
                     <ul className='flex gap-[6px] mt-2'>
                         {review.images.map((image, index) => (

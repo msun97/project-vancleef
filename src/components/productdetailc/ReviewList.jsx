@@ -8,15 +8,19 @@ import { openModal } from '../../store/modules/modalSlice';
 import { paginationActions } from '../../store/modules/paginationSlice';
 import MypostsModal from '../mypage/MypostsModal';
 
-const ReviewList = () => {
+const ReviewList = ({ productId, productName }) => {
     const dispatch = useDispatch();
+
     // 모달 상태 가져오기
     const isModalOpen = useSelector((state) => state.modalR?.isOpen);
 
-    // 리뷰 상태 가져오기 - 개별 속성으로 접근하여 참조 문제 해결
-    const { sortBy, reviews, totalReviews } = useSelector((state) => state.reviewR);
+    // 로그인한 사용자 정보
+    const userNum = useSelector((state) => state.authR);
 
-    // 페이지네이션 상태 가져오기 - 개별 프로퍼티로 접근
+    // 리뷰 상태 가져오기
+    const { sortBy, currentProductReviews, totalReviews } = useSelector((state) => state.reviewR);
+
+    // 페이지네이션 상태 가져오기
     const currPage = useSelector((state) =>
         state.pagination && state.pagination['reviewList'] ? state.pagination['reviewList'].currPage : 1
     );
@@ -29,35 +33,41 @@ const ReviewList = () => {
         state.pagination && state.pagination['reviewList'] ? state.pagination['reviewList'].totalPage : 1
     );
 
-    // 현재 페이지에 표시할 리뷰 목록 계산
-    const startIndex = (currPage - 1) * postsPerPage;
-    const endIndex = startIndex + postsPerPage;
-    // reviews가 배열인지 확인 후 slice 적용
-    const currentReviews = Array.isArray(reviews) ? reviews.slice(startIndex, endIndex) : [];
-
-    // 컴포넌트 마운트 시 페이지네이션 초기화 및 리뷰 데이터 설정
+    // 현재 상품 설정
     useEffect(() => {
-        // 페이지네이션 등록 - 컴포넌트 마운트 시 한 번만 실행
+        if (productId) {
+            dispatch(reviewActions.setCurrentProduct(productId));
+        }
+    }, [dispatch, productId]);
+
+    // 컴포넌트 마운트 시 페이지네이션 초기화
+    useEffect(() => {
         dispatch(
             paginationActions.registerPage({
                 pageId: 'reviewList',
                 postsPerPage: 5,
             })
         );
-    }, [dispatch]); // 의존성 배열에서 reviews 제거
+    }, [dispatch]);
 
-    // reviews가 변경될 때마다 데이터 업데이트
+    // 현재 상품 리뷰 목록이 변경될 때마다 페이지네이션 데이터 업데이트
     useEffect(() => {
-        // 페이지네이션에 리뷰 데이터 추가
-        if (reviews && reviews.length >= 0) {
+        if (currentProductReviews && currentProductReviews.length >= 0) {
             dispatch(
                 paginationActions.addData({
                     pageId: 'reviewList',
-                    data: reviews,
+                    data: currentProductReviews,
                 })
             );
         }
-    }, [dispatch, reviews]);
+    }, [dispatch, currentProductReviews]);
+
+    // 현재 페이지에 표시할 리뷰 목록 계산
+    const startIndex = (currPage - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    const displayedReviews = Array.isArray(currentProductReviews)
+        ? currentProductReviews.slice(startIndex, endIndex)
+        : [];
 
     // 모달 열기 핸들러
     const handleOpenModal = () => {
@@ -72,7 +82,7 @@ const ReviewList = () => {
     return (
         <>
             {/* 모달이 열렸을 때 모달 컴포넌트 렌더링 */}
-            {isModalOpen && <MypostsModal />}
+            {isModalOpen && <MypostsModal productId={productId} productName={productName} />}
             <div className='pt-[200px] px-[330px] w-full'>
                 <div className='flex flex-col gap-[30px]'>
                     <div className='w-full flex items-center justify-between'>
@@ -162,8 +172,10 @@ const ReviewList = () => {
                 </div>
 
                 {/* 리뷰 리스트 */}
-                {currentReviews.length > 0 ? (
-                    currentReviews.map((review) => <ReviewItem key={review.id} review={review} />)
+                {displayedReviews.length > 0 ? (
+                    displayedReviews.map((review) => (
+                        <ReviewItem key={review.id} review={review} productId={productId} userNum={userNum} />
+                    ))
                 ) : (
                     <div className='w-full py-10 text-center text-gray-500'>
                         아직 작성된 리뷰가 없습니다. 첫 리뷰를 작성해보세요!
@@ -172,13 +184,7 @@ const ReviewList = () => {
 
                 {/* 페이지네이션 */}
                 {totalReviews > 0 && (
-                    <Pagination
-                        className='pt-[60px]'
-                        pageId='reviewList'
-                        // 명시적으로 필요한 props 전달
-                        currPage={currPage}
-                        totalPage={totalPage}
-                    />
+                    <Pagination className='pt-[60px]' pageId='reviewList' currPage={currPage} totalPage={totalPage} />
                 )}
             </div>
         </>

@@ -3,68 +3,113 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setFilteredCategory, setFilteredProducts } from '../../store/modules/productSlice';
 
 const ProductListPageNav = () => {
-    // 서브메뉴의 visibility 상태를 관리
     const [isSubmenuVisible, setIsSubmenuVisible] = useState(false);
 
-    // "All" 클릭 시 서브메뉴 보이기/숨기기
-    const toggleSubmenu = () => {
-        setIsSubmenuVisible(!isSubmenuVisible);
-    };
-    /////////////////////
     const dispatch = useDispatch();
     const productdata = useSelector((state) => state.productR.productdata);
 
-    // 카테고리 변경 처리 함수
-    const handleCategoryChange = (categoryId, categoryName) => {
+    const handleCategoryChange = (categoryId, categoryName, event) => {
+        event.preventDefault(); // 기본 동작 막기
         console.log('Category ID:', categoryId);
         console.log('Category Name:', categoryName);
 
-        // 카테고리 ID를 상태에 저장
-        dispatch(setFilteredCategory({ id: categoryId, name: categoryName }));
-        //리듀서로 () 인수-- 괄호 안 내용 보냄
+        const category = { id: categoryId, name: categoryName };
+        console.log('Dispatching payload:', category);
+        dispatch(setFilteredCategory(category));
 
-        // 해당 카테고리에 맞는 상품 필터링
         const filteredProducts = productdata.filter((product) => product.category === categoryName);
-
-        // 필터링된 상품 목록을 상태에 저장
         dispatch(setFilteredProducts(filteredProducts));
     };
+    const handleCategoryChange2 = (categoryId, categoryName, event) => {
+        event.preventDefault();
+
+        console.log('Category ID:', categoryId);
+        console.log('Category Name:', categoryName);
+
+        const category = { id: categoryId, name: categoryName };
+        console.log('Dispatching payload:', category);
+        dispatch(setFilteredCategory(category));
+
+        const filteredProducts = productdata
+            .map((product) => {
+                const newItems = product.data.filter((item) => item.isNew === true);
+                if (newItems.length > 0) {
+                    return { ...product, data: newItems };
+                }
+                return null;
+            })
+            .filter(Boolean);
+
+        console.log(filteredProducts);
+        dispatch(setFilteredProducts(filteredProducts));
+    };
+    const handleCategoryChange3 = (categoryId, categoryName, event) => {
+        event.preventDefault();
+
+        console.log('Category ID:', categoryId);
+        console.log('Category Name:', categoryName);
+
+        const category = { id: categoryId, name: categoryName };
+        console.log('Dispatching payload:', category);
+        dispatch(setFilteredCategory(category));
+
+        const filteredProducts = productdata
+            .map((product) => {
+                const newItems = product.data.filter((item) => {
+                    console.log('item', item); // item 객체 출력
+                    return item.isBest === true;
+                });
+                console.log('newItems', newItems); // newItems 배열 출력
+                if (newItems.length > 0) {
+                    return { ...product, data: newItems };
+                }
+                return null;
+            })
+            .filter(Boolean);
+
+        console.log(filteredProducts);
+        dispatch(setFilteredProducts(filteredProducts));
+    };
+
+    const handleAllClick = (event) => {
+        event.preventDefault();
+        setIsSubmenuVisible(!isSubmenuVisible);
+
+        dispatch(setFilteredCategory({ id: null, name: 'All' })); // 'All' 카테고리 설정
+        dispatch(setFilteredProducts(productdata)); // 전체 상품 표시
+    };
+
     return (
-        <div className="min-w-[250px] pt-0 pb-12 mt-1 mb-0 ml-0 mr-0 relative w-[26%]">
+        <div className="min-w-[200px] pt-0 pb-12 mt-1 mb-0 ml-0 mr-0 relative w-[26%]">
             <div className="fixed top-[240px]">
                 <ul className="font-secondary font-bold">
                     <li>
                         <a href="#" className="text-content-xxxl">
                             SHOP
                         </a>
-                        <ul className="text-content-l leading-18">
-                            <li className="font-bold" id="All">
-                                <a href="#" onClick={toggleSubmenu}>
-                                    All
-                                </a>
+                        <ul className="text-content-l leading-18 cursor-pointer">
+                            <li className="font-bold" id="All" onClick={handleAllClick}>
+                                All
                             </li>
                             {isSubmenuVisible && (
                                 <ul className="submenu font-bold text-content-l leading-8 font-primary pl-3 text-shadow-lg">
-                                    <li id="Necklaces" onClick={() => handleCategoryChange(1, '목걸이')}>
-                                        Necklaces and pendants
+                                    {/* 수정: 각 카테고리 항목에 이벤트 객체 전달 */}
+                                    <li id="Necklaces" onClick={(event) => handleCategoryChange(1, '목걸이', event)}>
+                                        Necklaces
                                     </li>
-                                    <li id="Bracelets" onClick={() => handleCategoryChange(2, '팔찌')}>
+                                    <li id="Bracelets" onClick={(event) => handleCategoryChange(2, '팔찌', event)}>
                                         Bracelets
                                     </li>
-                                    <li id="Rings" onClick={() => handleCategoryChange(3, '반지')}>
+                                    <li id="Rings" onClick={(event) => handleCategoryChange(3, '반지', event)}>
                                         Rings
                                     </li>
-                                    <li id="Earrings" onClick={() => handleCategoryChange(4, '귀걸이')}>
+                                    <li id="Earrings" onClick={(event) => handleCategoryChange(4, '귀걸이', event)}>
                                         Earrings
                                     </li>
                                 </ul>
                             )}
-                            <li>
-                                <a href="../goods/goods_list.php?cateCd=001007">New</a>
-                            </li>
-                            <li>
-                                <a href="../goods/goods_list.php?cateCd=001003">Best</a>
-                            </li>
+                            <li onClick={(event) => handleCategoryChange2(5, 'isNew', event)}>New</li>
+                            <li onClick={(event) => handleCategoryChange3(6, 'isBest', event)}>Best</li>
                         </ul>
                     </li>
                 </ul>

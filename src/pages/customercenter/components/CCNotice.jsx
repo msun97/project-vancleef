@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DropDown from '../../../components/dropdown';
 import Input from '../../../components/input';
+import Pagination from '../../../components/pagination';
+import { useDispatch, useSelector } from 'react-redux';
+import { paginationActions } from '../../../store/modules/paginationSlice';
 
 const CCNotice = () => {
+  const dispatch = useDispatch();
   const noticeList = [
     {
       id: 1,
@@ -71,6 +75,43 @@ const CCNotice = () => {
       작성일: '2025-03-24',
     },
   ];
+  const [search, setSearch] = useState('')
+  const [filter, setFilter] = useState('제목')
+  const [nowData, setNowData] = useState(noticeList)
+  const [isSearch, setIsSearch] = useState(false);
+  const searchClose = () => {
+    setIsSearch(false)
+    setSearch('')
+    setNowData(noticeList)
+  }
+  const handleClick = (filter) => {
+    setFilter(filter)
+  }
+  const changeInput = e => {
+    setSearch(e.target.value)
+  }
+  const onSumbit = (e) => {
+    e.preventDefault()
+    if (!search) {
+      alert('검색어를 입력하세요.')
+    } else if (filter === '제목') {
+      setNowData(noticeList.filter(item => item.title.includes(search)));
+      setIsSearch(true);
+    } else if (filter === '내용') {
+      setNowData(noticeList.filter(item => item.content.includes(search)));
+      setIsSearch(true);
+    }
+  }
+  useEffect(() => {
+    dispatch(
+      paginationActions.addData({pageId : 'notice', data : nowData})
+    )
+  }, [nowData])
+  const { notice = {}} = useSelector((state) => state.paginationR)
+  const { currPage, postsPerPage} = notice;
+  const lastPost = currPage * postsPerPage;
+  const firstPost = lastPost - postsPerPage;
+  const currentPost = nowData.slice(firstPost, lastPost);
 
   return (
     <div className="w-full ">
@@ -80,10 +121,11 @@ const CCNotice = () => {
           <DropDown
             item={['제목', '내용']}
             className=" w-[294px] h-[60px] border rounded-[2px]"
+            handleClick={handleClick}
           />
-          <form className="relative">
-            <Input className="w-[378px] h-[60px] p-4 border rounded-[2px]" />
-            <button>
+          <form className="relative" onSubmit={onSumbit}>
+            <Input className="w-[378px] h-[60px] p-4 border rounded-[2px]" value={search} onChange={changeInput}/>
+            <button type='submit'>
               <img
                 src="/icons/search.svg"
                 className="w-[26px] absolute right-0 top-1/2 -translate-y-2/4 -translate-x-4"
@@ -92,6 +134,9 @@ const CCNotice = () => {
           </form>
         </div>
       </div>
+
+        {isSearch &&       <div className="flex justify-end w-full items-center gap-2 py-4"><p className="text-content-s text-gray-90 text-[20px]">검색결과 {nowData.length}개</p> <button onClick={searchClose}><img src="/icons/close.svg" className='w-[32px]'/>   </button>   </div>}
+
       <table className="notices-table w-full">
         <thead>
           <tr className="border-t">
@@ -104,7 +149,7 @@ const CCNotice = () => {
           </tr>
         </thead>
         <tbody className="w-full">
-          {noticeList.map(notice => (
+          {currentPost.map(notice => (
             <tr key={notice.id} className="border-y border-gray-20">
               <td className="text-content-m py-10 flex gap-[10px] items-center">
                 <div className="tag bg-gray-90 text-gray-0 py-1 px-3 rounded-[8px]">
@@ -119,6 +164,7 @@ const CCNotice = () => {
           ))}
         </tbody>
       </table>
+      <Pagination postsPerPage={10} pageId='notice' className='mt-10'/>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const Section3 = ({ isLoading, videoCompleted }) => {
+  const Section3 = ({ isLoading }) => {
     const wrapperRef = useRef(null);  
     const section3Ref = useRef(null);
     const logoRef = useRef(null);
@@ -19,18 +19,41 @@ import React, { useEffect, useRef } from 'react';
 
     useEffect(() => {
       if (!isLoading  && wrapperRef.current) {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: wrapperRef.current,
-            start: 'top top',
-            end: '+=300%', 
-            scrub: 4, 
-            markers: true,
-            pin: true,
-            pinSpacing: false,
-          },
+        gsap.set(section3Ref.current, { 
+          width: '30%',  
+          x: '-50%',  
+          left: '50%',
+          clearProps: "transform" 
         });
         gsap.set(".final-message", { opacity: 0 })
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: wrapperRef.current,
+        start: 'top top',
+        end: 'bottom bottom',
+
+        scrub: 4, 
+        markers: false,
+        pin: true,
+        pinSpacing: false,
+        onEnter: () => {
+          gsap.set(section3Ref.current, { 
+            width: '30%',  
+            x: '-50%',  
+            left: '50%',
+          });
+        },
+        onLeaveBack: () => {
+          gsap.set(section3Ref.current, { 
+            width: '30%',  
+            x: '-50%',  
+            left: '50%',
+          });
+        }
+      },
+    });
         tl.fromTo(
           section3Ref.current,
           { 
@@ -112,8 +135,7 @@ import React, { useEffect, useRef } from 'react';
           { opacity: 0, scale: 1.2, duration: 6000, ease: "power4.out" }
         );
       }        
-    }, [isLoading, videoCompleted]);
-
+    }, [isLoading]); 
     return (
       <div ref={wrapperRef} className="relative w-dvw h-[400vh]">
 

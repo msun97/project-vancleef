@@ -1,27 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Loading from './components/Loading';
 import Section1 from './components/Section1';
-import Section2 from './components/Section2';
 import Section3 from './components/Section3';
 import Section5 from './components/Section5';
 import Section6 from './components/Section6';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import HomeFooter from './HomeFooter';
+import Section4 from './components/Section4';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [videoCompleted, setVideoCompleted] = useState(false);
 
   const section1Ref = useRef(null);
   const mainContentRef = useRef(null);
+  const section4Ref = useRef(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 9000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -40,19 +40,22 @@ const Home = () => {
         }
       );
 
+      const productdata = window.productdata || []; 
+      const totalSlidesInSection4 = productdata.length || 3; 
+      const section4Height = `${totalSlidesInSection4 * 100}vh`;
+      
+      const scrollTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: mainContentRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        }
+      });
+
       ScrollTrigger.refresh();
     }
   }, [isLoading]);
-
-  useEffect(() => {
-    if (videoCompleted) {
-      const refreshTimer = setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 500);
-      
-      return () => clearTimeout(refreshTimer);
-    }
-  }, [videoCompleted]);
 
   return (
     <>
@@ -62,29 +65,30 @@ const Home = () => {
         </div>
       ) : (
         <div className="overflow-x-hidden relative w-full" ref={mainContentRef}>
-          
           <div
-  className="p-330 bg-[url(/images/homebg1.png)] h-[100vh] fixed top-0 text-gray-0 bg-cover w-full -z-0"
-  ref={section1Ref}
-></div>
+            className="p-330 bg-[url(/images/homebg1.png)] h-[100vh] fixed top-0 text-gray-0 bg-cover w-full -z-0"
+            ref={section1Ref}
+          ></div>
 
-<div className="relative z-10">
-  <Section1 />
-  <Section2 onVideoComplete={() => setVideoCompleted(true)} />
-</div>
+          <div className="relative z-10">
+            <Section1 />
+          </div>
 
-<div className="w-dvw relative">
-  <Section3 isLoading={isLoading} videoCompleted={videoCompleted} />
-</div>  
+          <div className="w-dvw relative">
+            <Section3 isLoading={isLoading} />
+          </div>
+          
+          <div ref={section4Ref}>
+            <Section4 />
+          </div>
+          
+          <Section5 isLoading={isLoading} />
+          <Section6 />
 
-<Section5 />
-<Section6 />
-
-<div className="relative bg-white">
-  <HomeFooter />
-</div>
-</div>
-
+          <div className="relative bg-white">
+            <HomeFooter />
+          </div>
+        </div>
       )}
     </>
   );

@@ -4,7 +4,7 @@ import { productdata } from '../../assets/api/productdata';
 const initialState = {
     productdata: productdata, //원본데이터
     filteredProducts: [],
-    filteredCategory: { id: '', name: '' }, // 필터링된 상품 목록을 저장할 상태 추가
+    filteredCategory: null, // 필터링된 상품 목록을 저장할 상태 추가
 };
 
 export const productSlice = createSlice({
@@ -14,14 +14,14 @@ export const productSlice = createSlice({
         setFilteredProducts: (state, action) => {
             state.filteredProducts = action.payload;
         },
-        resetFilteredProducts: (state) => {
-            state.filteredProducts = [];
-        },
         setFilteredCategory: (state, action) => {
-            state.filteredCategory = action.payload;
+            state.filteredCategory = {
+                id: action.payload.id,
+                name: action.payload.name,
+            };
         },
     },
 });
-export const { setFilteredProducts, resetFilteredProducts, setFilteredCategory } = productSlice.actions;
-
+export const { setFilteredProducts, setFilteredCategory } = productSlice.actions;
+//액션생성자
 export default productSlice.reducer;
