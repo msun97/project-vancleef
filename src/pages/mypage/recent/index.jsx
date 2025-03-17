@@ -10,6 +10,7 @@ const Recent = () => {
 			</div>
 	<Line/>
 	<MypageItemList/>
+	
 	</div>
 	)
 }

@@ -9,7 +9,7 @@ const Header = () => {
     setIsSearch(!isSearch);
   };
   const [lastY, setLastY] = useState(0);
-	const { authed } = useSelector((state) => state.authR);
+  const { authed } = useSelector(state => state.authR);
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
@@ -40,40 +40,45 @@ const Header = () => {
           </h1>
         </Link>
         <nav>
-          <ul className='flex gap-8'>
+          <ul className="flex gap-8">
             <Link to="/productlist">
               <li className="font-secondary text-heading-m font-bold">SHOP</li>
             </Link>
+            <Link to="/about">
+              <li className="font-secondary text-heading-m font-bold">ABOUT</li>
+            </Link>
             <Link to="/kbrand">
-              <li className="font-secondary text-heading-m font-bold">V-KOREA</li>
+              <li className="font-secondary text-heading-m font-bold">
+                EXIBITION
+              </li>
             </Link>
           </ul>
         </nav>
       </div>
-        {
-          authed?(
-            <div className="util flex gap-[30px] items-center">
-            <button onClick={onSearch} className=" cursor-pointer">
-              <img src="/icons/search.svg" alt="검색" className="w-8 h-8" />
-            </button>
-            <button>
-              <img src="/icons/alarm-off.svg" className='w-8 h-8'/>
-            </button>
-            <Link to="/mypage">
-              <img src="/icons/user.svg" alt="MYPAGE" className='w-8 h-8'/>
-            </Link>
-            </div>
-          ) : (
-            <div className="util flex gap-[30px] items-center">
-            <button onClick={onSearch} className="cursor-pointer">
-              <img src="/icons/search.svg" alt="검색" className="w-8 h-8" />
-            </button>
-            <Link to="/login">
-              <span className="font-secondary text-heading-m font-bold">LOGIN</span>
-            </Link>
-            </div>
-          )
-        }
+      {authed ? (
+        <div className="util flex gap-[30px] items-center">
+          <button onClick={onSearch} className=" cursor-pointer">
+            <img src="/icons/search.svg" alt="검색" className="w-8 h-8" />
+          </button>
+          <button>
+            <img src="/icons/alarm-off.svg" className="w-8 h-8" />
+          </button>
+          <Link to="/mypage">
+            <img src="/icons/user.svg" alt="MYPAGE" className="w-8 h-8" />
+          </Link>
+        </div>
+      ) : (
+        <div className="util flex gap-[30px] items-center">
+          <button onClick={onSearch} className="cursor-pointer">
+            <img src="/icons/search.svg" alt="검색" className="w-8 h-8" />
+          </button>
+          <Link to="/login">
+            <span className="font-secondary text-heading-m font-bold">
+              LOGIN
+            </span>
+          </Link>
+        </div>
+      )}
       {isSearch && <SearchModal onSearch={onSearch} />}
     </header>
   );

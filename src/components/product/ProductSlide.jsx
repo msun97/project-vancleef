@@ -1,39 +1,21 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
-const ProductSlide = () => {
+
+const ProductSlide = ({ productImages, title }) => {
+    // product가 없거나 이미지 배열이 없는 경우 예외 처리
+    if (!productImages || !Array.isArray(productImages) || productImages.length === 0) {
+        return <div className="no-images">이미지를 찾을 수 없습니다.</div>;
+    }
+
     return (
         <>
             <Swiper className="mySwiper">
-                <SwiperSlide>
-                    <img
-                        src="https://www.vancleefarpels.com/content/dam/rcq/vca/F1/9s/OE/xL/mk/2f/kM/Pw/-V/AN/SQ/F19sOExLmk2fkMPw-VANSQ.jpeg"
-                        alt=""
-                        style={{ objectFit: 'contain' }}
-                    />
-                </SwiperSlide>
-
-                <SwiperSlide>
-                    <img
-                        src="https://www.vancleefarpels.com/content/dam/rcq/vca/18/16/50/3/1816503.png"
-                        alt=""
-                        style={{ objectFit: 'contain' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="https://www.vancleefarpels.com/content/dam/rcq/vca/17/08/14/5/1708145.png.transform.vca-w820-1x.png"
-                        alt=""
-                        style={{ objectFit: 'contain' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="https://www.vancleefarpels.com/content/dam/rcq/vca/17/08/14/6/1708146.png.transform.vca-w820-1x.png"
-                        alt=""
-                        style={{ objectFit: 'contain' }}
-                    />
-                </SwiperSlide>
+                {productImages.map((imageUrl, index) => (
+                    <SwiperSlide key={index}>
+                        <img src={imageUrl} alt={`${title} - 이미지 ${index + 1}`} style={{ objectFit: 'contain' }} />
+                    </SwiperSlide>
+                ))}
             </Swiper>
         </>
     );

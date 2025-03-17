@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilteredCategory, setFilteredProducts } from '../../store/modules/productSlice';
+import { Link } from 'react-router-dom';
 
 const ProductListPageNav = () => {
     const [isSubmenuVisible, setIsSubmenuVisible] = useState(false);
@@ -84,9 +85,9 @@ const ProductListPageNav = () => {
             <div className="fixed top-[240px]">
                 <ul className="font-secondary font-bold">
                     <li>
-                        <a href="#" className="text-content-xxxl">
+                        <Link to="#" className="text-content-xxxl">
                             SHOP
-                        </a>
+                        </Link>
                         <ul className="text-content-l leading-18 cursor-pointer">
                             <li className="font-bold" id="All" onClick={handleAllClick}>
                                 All
@@ -94,16 +95,19 @@ const ProductListPageNav = () => {
                             {isSubmenuVisible && (
                                 <ul className="submenu font-bold text-content-l leading-8 font-primary pl-3 text-shadow-lg">
                                     {/* 수정: 각 카테고리 항목에 이벤트 객체 전달 */}
-                                    <li id="Necklaces" onClick={(event) => handleCategoryChange(1, '목걸이', event)}>
+                                    <li
+                                        id="Necklaces"
+                                        onClick={(event) => handleCategoryChange(1, 'Necklaces and pendants', event)}
+                                    >
                                         Necklaces
                                     </li>
-                                    <li id="Bracelets" onClick={(event) => handleCategoryChange(2, '팔찌', event)}>
+                                    <li id="Bracelets" onClick={(event) => handleCategoryChange(2, 'Bracelets', event)}>
                                         Bracelets
                                     </li>
-                                    <li id="Rings" onClick={(event) => handleCategoryChange(3, '반지', event)}>
+                                    <li id="Rings" onClick={(event) => handleCategoryChange(3, 'Rings', event)}>
                                         Rings
                                     </li>
-                                    <li id="Earrings" onClick={(event) => handleCategoryChange(4, '귀걸이', event)}>
+                                    <li id="Earrings" onClick={(event) => handleCategoryChange(4, 'Earrings', event)}>
                                         Earrings
                                     </li>
                                 </ul>

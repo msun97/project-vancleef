@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/button';
 import CheckBox from '../../components/checkbox';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productInquiryActions } from '../../store/modules/productInquirySlice';
 
@@ -14,15 +14,40 @@ const ProductInquiry = () => {
     // 로그인 정보 및 상품 정보 가져오기
     const userInfo = useSelector((state) => state.authR?.user);
     const productInfo = useSelector((state) => state.productR?.currentProduct);
+    const isLoggedIn = useSelector((state) => state.authR?.authed);
 
-    // 유저 번호 및 상품 ID
-    const usernum = userInfo?.usernum || null;
+    // 로컬스토리지에서 currentUser 확인
+    useEffect(() => {
+        // 로그인 체크
+        if (!isLoggedIn) {
+            alert('로그인이 필요한 서비스입니다.');
+            navigate('/login', { state: { from: window.location.pathname } });
+        } else {
+            // 로컬스토리지의 currentUser 확인
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            console.log('현재 로그인한 사용자:', currentUser);
+
+            // myInquiries 초기화 (아직 없다면)
+            if (currentUser && !currentUser.myInquiries) {
+                currentUser.myInquiries = [];
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                console.log('사용자에 myInquiries 초기화');
+            }
+        }
+    }, [isLoggedIn, navigate]);
+
+    // 유저 ID 및 상품 ID
+    const userId =
+        userInfo?.id ||
+        (localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')).id : null);
     const productId = productInfo?.id || window.location.pathname.split('/').pop();
 
     const [userInquiry, setUserInquiry] = useState({
         title: '',
         content: '',
-        name: userInfo?.username || '',
+        name:
+            userInfo?.username ||
+            (localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')).username : ''),
         password: '',
         date: '',
         inquiryType: '상품',
@@ -32,7 +57,16 @@ const ProductInquiry = () => {
             productInfo?.image ||
             'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png', // 상품 이미지 추가
     });
-    const isLoggedIn = useSelector((state) => state.authR?.authed);
+
+    // 유저 정보가 변경될 때 이름 업데이트
+    useEffect(() => {
+        if (userInfo?.username) {
+            setUserInquiry((prev) => ({
+                ...prev,
+                name: userInfo.username,
+            }));
+        }
+    }, [userInfo]);
 
     // 두 개의 체크박스를 위한 별도의 상태 생성
     const [isSecretPost, setIsSecretPost] = useState(false);
@@ -54,17 +88,23 @@ const ProductInquiry = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        if (!title || !name || !content) return;
+
+        // 로그인 상태 재확인
+        if (!isLoggedIn) {
+            alert('로그인이 필요한 서비스입니다.');
+            navigate('/login');
+            return;
+        }
+
+        if (!title || !content) {
+            alert('제목과 내용을 모두 입력해주세요.');
+            return;
+        }
 
         // 비밀글 체크했는데 비밀번호 없으면 제출 차단
         if (isSecretPost && !password) {
             alert('비밀글 작성 시 비밀번호를 반드시 입력해주세요.');
             return;
-        }
-        if (isLoggedIn && userInfo) {
-            console.log('로그인 상태:', isLoggedIn);
-            console.log('사용자 정보:', userInfo);
-            console.log('사용자 번호:', userInfo.usernum);
         }
 
         const now = new Date();
@@ -72,33 +112,41 @@ const ProductInquiry = () => {
             now.getDate()
         ).padStart(2, '0')}`;
 
-        // 디스패치하는 데이터 로깅
-        console.log('디스패치하는 데이터:', {
+        // 로컬스토리지의 currentUser ID 가져오기
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const currentUserId = currentUser ? currentUser.id : null;
+
+        console.log('제출 시 사용자 ID:', currentUserId || userId);
+        console.log('제출 시 상품 ID:', productId);
+
+        // 디스패치하는 데이터
+        const inquiryData = {
             ...userInquiry,
             isSecretPost,
             date: formattedDate,
-            usernum: usernum,
-        });
+            id: currentUserId || userId,
+            inquiryId: Date.now(),
+        };
+
+        console.log('디스패치하는 데이터:', inquiryData);
 
         // 리덕스 액션 디스패치하여 문의 추가
-        dispatch(
-            productInquiryActions.addInquiry({
-                ...userInquiry,
-                isSecretPost, // 비밀글 여부 추가
-                date: formattedDate,
-                usernum: usernum, // 유저 ID 추가 (로그인 상태인 경우)
-            })
-        );
+        dispatch(productInquiryActions.addInquiry(inquiryData));
 
-        navigate('/productdetail');
+        alert('문의가 등록되었습니다.');
+        navigate('/productdetail/1');
     };
 
     const onExit = (e) => {
         e.preventDefault();
-        navigate('/productdetail');
+        navigate('/productdetail/1');
     };
 
-    // 기존 JSX 유지...
+    // 로그인 상태가 아니면 로딩 중이거나 리다이렉트 중이므로 아무것도 렌더링하지 않음
+    if (!isLoggedIn) {
+        return null;
+    }
+
     return (
         <div className='wrap p-330 pt-[80px]'>
             <h2 className='font-secondary font-bold text-heading-m border-b'>상품 문의 쓰기</h2>
@@ -163,6 +211,7 @@ const ProductInquiry = () => {
                                 name='name'
                                 value={name}
                                 onChange={changeInput}
+                                readOnly={isLoggedIn} // 로그인 시 작성자명 수정 불가
                             />
                         </div>
                     </li>
@@ -174,7 +223,7 @@ const ProductInquiry = () => {
                         <div>
                             <input
                                 className='border border-gray-40 p-3 w-56 h-10 text-xs'
-                                type='text'
+                                type='password'
                                 placeholder='비밀번호'
                                 name='password'
                                 value={password}

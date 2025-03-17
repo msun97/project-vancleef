@@ -8,6 +8,7 @@ import reviewR from './modules/reviewSlice';
 import reservationR from './modules/reservationSlice';
 import productR from './modules/productSlice';
 import inquiryR from './modules/ccinquirySlice';
+import favoritesR from './modules/favoritesSlice';
 
 export const store = configureStore({
     reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
         reservationR,
         productR,
         inquiryR,
+        favoritesR,
     },
 });
