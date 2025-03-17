@@ -259,7 +259,6 @@
   button,
   textarea {
     font-family: inherit;
-    border: 0;
     &:focus {
       outline: none;
       box-shadow: none;
@@ -421,10 +420,6 @@
   width: 100%;
 }
 
-button {
-  border: none;
-  cursor: pointer;
-}
 .hide {
   overflow: hidden;
   text-indent: -99999px;

@@ -3,15 +3,17 @@ import { useDispatch } from 'react-redux';
 import Button from '../button';
 import { reviewActions } from '../../store/modules/reviewSlice';
 
-const ReviewItem = ({ review, productId, userNum }) => {
+const ReviewItem = ({ review, productId, id }) => {
     const dispatch = useDispatch();
 
     // 별점 렌더링 함수
     const renderStars = (rating) => {
+        // rating이 undefined인 경우 0으로 처리
+        const ratingValue = rating || 0;
         const stars = [];
 
         for (let i = 1; i <= 5; i++) {
-            if (i <= rating) {
+            if (i <= ratingValue) {
                 // 채워진 별
                 stars.push(
                     <svg
@@ -56,26 +58,47 @@ const ReviewItem = ({ review, productId, userNum }) => {
 
     // 도움됐어요 버튼 클릭 핸들러
     const handleHelpfulClick = () => {
+        if (!review || !review.id) return;
+
         dispatch(
             reviewActions.toggleHelpful({
-                productId,
+                productId: productId,
                 reviewId: review.id,
-                userNum,
             })
         );
     };
 
     // 날짜 포맷 함수
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(
-            2,
-            '0'
-        )}`;
+        if (!dateString) return '';
+
+        try {
+            const date = new Date(dateString);
+            return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(
+                date.getDate()
+            ).padStart(2, '0')}`;
+        } catch (error) {
+            console.error('날짜 형식 오류:', error);
+            return '';
+        }
     };
 
+    // 리뷰가 없으면 렌더링하지 않음
+    if (!review) {
+        console.warn('리뷰 데이터가 없습니다.');
+        return null;
+    }
+
+    // currentUser 정보 가져오기
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+    const currentUserId = currentUser.id;
+
     // 리뷰 작성자인지 확인 (내 리뷰인지)
-    const isMyReview = review.userNum === userNum;
+    // 다양한 형태의 ID 비교 (문자열과 숫자 모두 처리)
+    const isMyReview = currentUserId !== undefined && String(review.id) === String(currentUserId);
+
+    // 이미지 필드명 호환성 처리 (img 또는 images)
+    const images = review.img || review.images || [];
 
     return (
         <div className='w-full h-[300px] py-[40px] flex gap-[30px] border-b-2'>
@@ -91,19 +114,11 @@ const ReviewItem = ({ review, productId, userNum }) => {
             </div>
             <div className='w-full relative flex flex-col gap-[15px] text-xl'>
                 <div className='absolute top-0 right-0 flex flex-col items-end justify-between h-full'>
+                    <span className='text-sm text-gray-500'>{formatDate(review.date || review.createdAt)}</span>
                     {/* 내 리뷰일 경우 표시 */}
                     {isMyReview && (
                         <span className='text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded mb-1'>내 리뷰</span>
                     )}
-                    <span className='text-[17px]'>
-                        {/* 개인정보 보호를 위해 이메일 일부 마스킹 */}
-                        {isMyReview
-                            ? '내 리뷰'
-                            : review.userNum
-                            ? `사용자 ${review.userNum.substring(0, 3)}***`
-                            : '익명'}
-                    </span>
-                    <span className='text-sm text-gray-500'>{formatDate(review.createdAt)}</span>
                 </div>
 
                 {/* 리뷰 제목 */}
@@ -111,10 +126,10 @@ const ReviewItem = ({ review, productId, userNum }) => {
 
                 <p className='pt-[2px] text-[17px]'>{review.content}</p>
 
-                {/* 이미지 표시 */}
-                {review.images && review.images.length > 0 && (
+                {/* 이미지 표시 - img 또는 images 필드 모두 처리 */}
+                {images && images.length > 0 && (
                     <ul className='flex gap-[6px] mt-2'>
-                        {review.images.map((image, index) => (
+                        {images.map((image, index) => (
                             <li key={index}>
                                 <img
                                     src={image}
@@ -146,7 +161,7 @@ const ReviewItem = ({ review, productId, userNum }) => {
                                 />
                             </svg>
                         </button>
-                        <span className='text-label-s text-gray-50'>{review.helpfulCount}</span>
+                        <span className='text-label-s text-gray-50'>{review.helpfulCount || 0}</span>
                     </div>
                     <Button
                         onClick={handleHelpfulClick}

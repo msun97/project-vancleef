@@ -14,11 +14,16 @@ const ProductInquiryList = () => {
     const dispatch = useDispatch();
     const { productId } = useParams(); // URL에서 productId 추출
 
+    // 로그인 상태 확인
+    const isLoggedIn = useSelector((state) => state.authR?.authed);
+    const userInfo = useSelector((state) => state.authR?.user);
+    const userId = userInfo?.id;
+
     // 리덕스 스토어에서 개별 상태로 가져오기
     const allInquiries = useSelector((state) => state.productInquiryR.inquiries);
 
-    // 현재 상품의 ID 가져오기 (URL 또는 Redux 상태에서)
-    const currentProductId = productId || useSelector((state) => state.productR?.currentProduct?.id);
+    // 현재 상품의 ID 가져오기
+    const currentProductId = productId;
 
     // 페이지네이션 상태를 개별적으로 가져오기
     const currPage = useSelector((state) =>
@@ -65,12 +70,31 @@ const ProductInquiryList = () => {
         return productInquiries.slice(indexOfFirstItem, indexOfLastItem);
     }, [productInquiries, currPage, postsPerPage]);
 
-    const toInquiry = () => {
-        navigate('/productinquiry');
-    };
-
     // 총 문의 개수를 메모이제이션
     const totalInquiries = useMemo(() => productInquiries.length, [productInquiries]);
+
+    // 현재 사용자가 이미 현재 상품에 대해 문의를 작성했는지 확인
+    const hasUserWrittenInquiry = useMemo(() => {
+        if (!isLoggedIn || !userId || !currentProductId || !Array.isArray(allInquiries)) return false;
+
+        return allInquiries.some((inquiry) => inquiry.id === userId && inquiry.productId === currentProductId);
+    }, [isLoggedIn, userId, currentProductId, allInquiries]);
+
+    // 문의하기 버튼 클릭 이벤트
+    const toInquiry = () => {
+        if (!isLoggedIn) {
+            alert('로그인이 필요한 서비스입니다.');
+            navigate('/login', { state: { from: window.location.pathname } });
+            return;
+        }
+
+        if (hasUserWrittenInquiry) {
+            alert('이미 이 상품에 대한 문의를 작성하셨습니다. 한 상품에 하나의 문의만 작성 가능합니다.');
+            return;
+        }
+
+        navigate('/productinquiry');
+    };
 
     return (
         <div className='pt-[200px] px-[330px] flex flex-col gap-[22px]'>
@@ -103,7 +127,9 @@ const ProductInquiryList = () => {
             </div>
             <ul className='w-full border-t-2'>
                 {currentInquiries.length > 0 ? (
-                    currentInquiries.map((inquiry) => <ProductInquiryItem key={inquiry.id} inquiry={inquiry} />)
+                    currentInquiries.map((inquiry) => (
+                        <ProductInquiryItem key={inquiry.inquiryId || inquiry.id} inquiry={inquiry} />
+                    ))
                 ) : (
                     <li className='text-center py-10 border-b'>등록된 문의가 없습니다.</li>
                 )}
