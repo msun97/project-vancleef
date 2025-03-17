@@ -32,27 +32,27 @@ const ValueSecTwo = () => {
     ];
 
     const col2Images = [
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1900/van-cleef-arpels-1906-model-varuna-yacht-image2-560-458-3x.jpg.transform.vca-w2560-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1900/van-cleef-arpels-1916-carousel1-image2-1368-900@3x.jpg.transform.vca-w1024-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1920/van-cleef-arpels-japanese-inspired-vanity-case-1923-carousel1-image2-616-900-3x.jpg.transform.vca-h500-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1920/van-cleef-arpels-1925-carousel1-image1-838-900@3x.jpg.transform.vca-h500-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1920/van-cleef-arpels-portrait-rene-sim-lacaze-1926-carousel1-image3-601-900-3x.jpg.transform.vca-w1024-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/2010/van-cleef-arpels-high-jewelry-les-voyages-extraordinaires-sneffel-necklace-2010-carousel1-image4-950-900-3x.jpg.transform.vca-h500-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/2010/van-cleef-arpels-high-jewelry-les-voyages-extraordinaires-baleine-bleue-clip-2010-carousel1-image1-700-900-3x.jpg.transform.vca-h500-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/2010/van-cleef-arpels-high-jewelry-les-voyages-extraordinaires-maximus-necklace-2010-carousel1-image2-950-900-3x.jpg.transform.vca-h500-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/2010/van-cleef-arpels-high-jewelry-les-voyages-extraordinaires-constellation-monoceros-clip-2010-carousel1-image3-800-900-3x',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/2010/van-cleef-arpels-pont-des-amoureux-love-stories-watch-2010-image1-560-720-3x.jpg.transform.vca-w2560-1x.jpg',
     ];
 
     const col3Images = [
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1900/van-cleef-arpels-1906-model-varuna-yacht-image2-560-458-3x.jpg.transform.vca-w2560-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1900/van-cleef-arpels-1916-carousel1-image2-1368-900@3x.jpg.transform.vca-w1024-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1920/van-cleef-arpels-japanese-inspired-vanity-case-1923-carousel1-image2-616-900-3x.jpg.transform.vca-h500-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1920/van-cleef-arpels-1925-carousel1-image1-838-900@3x.jpg.transform.vca-h500-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1920/van-cleef-arpels-portrait-rene-sim-lacaze-1926-carousel1-image3-601-900-3x.jpg.transform.vca-w1024-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1980/van-cleef-arpels-1986-valenciennes-set-catalogue-inline1-image1-560-872-3x.jpg.transform.vca-w2560-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1980/van-cleef-arpels-1986-drawing-valenciennes-earring-inspiration-snowflake-collection-inline1-image2-560-820-3x.jpg.transform.vca-w2560-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1980/van-cleef-arpels-1981-drawing-cosmos-clip-image1-560-551-3x.jpg.transform.vca-w2560-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1970/van-cleef-arpels-1970-rose-de-noel-clip-inline1-image2-560-600-3x.jpg.transform.vca-w2560-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1970/van-cleef-arpels-1971-bird-clip-and-walska-pendant-inline1-image1-560-458-3x.jpg.transform.vca-w2560-1x.jpg',
     ];
 
     const col4Images = [
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1900/van-cleef-arpels-1906-model-varuna-yacht-image2-560-458-3x.jpg.transform.vca-w2560-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1900/van-cleef-arpels-1916-carousel1-image2-1368-900@3x.jpg.transform.vca-w1024-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1920/van-cleef-arpels-japanese-inspired-vanity-case-1923-carousel1-image2-616-900-3x.jpg.transform.vca-h500-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1920/van-cleef-arpels-1925-carousel1-image1-838-900@3x.jpg.transform.vca-h500-1x.jpg',
-        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1920/van-cleef-arpels-portrait-rene-sim-lacaze-1926-carousel1-image3-601-900-3x.jpg.transform.vca-w1024-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1960/van-cleef-arpels-1967-replica-of-h-i-h-farah-pahlavi-tiara-inline2-image1-560-470-3x.jpg.transform.vca-w2560-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1960/van-cleef-arpels-1967-drawing-h-i-h-farah-pahlavi-tiara-inline2-image2-560-606-3x.jpg.transform.vca-w2560-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1960/van-cleef-arpels-1967-five-leaves-clip-inline3-image1-560-692-3x.jpg.transform.vca-w2560-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1960/van-cleef-arpels-1968-alhambra-long-necklace-carousel1-image2-1205-900-3x.jpg.transform.vca-w2560-1x.jpg',
+        'https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/timeline/decade-details/1960/van-cleef-arpels-1968-catalogue-carousel1-image3-592-900-3x.jpg.transform.vca-w2560-1x.jpg',
     ];
 
     const col5Images = [
@@ -224,7 +224,7 @@ const ValueSecTwo = () => {
 
     return (
         <section ref={sectionRef} className='w-full min-h-screen sticky top-0 overflow-hidden'>
-            <div className='content-page step2 w-full h-full overflow-hidden'>
+            <div className='content-page step2 w-full h-full overflow-hidden relative'>
                 {/* Image columns */}
                 <div className='flex-group flex justify-between gap-2 md:gap-4 mx-auto px-4 lg:px-8 max-w-7xl relative z-10 w-full'>
                     {renderImageColumn(col1Images, col1Ref)}
@@ -234,11 +234,13 @@ const ValueSecTwo = () => {
                     {renderImageColumn(col5Images, col5Ref)}
                 </div>
 
+                <div className='absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10'></div>
+
                 {/* Text overlay */}
-                <div className='text-wrap absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full max-w-3xl px-4 z-10'>
+                <div className='text-wrap absolute top-1/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full max-w-3xl px-4 z-20 '>
                     <p
                         ref={addToTextRefs}
-                        className='desc opacity-0 invisible text-lg md:text-xl text-white mb-8 leading-relaxed font-medium'
+                        className='desc opacity-0 invisible text-lg md:text-xl lg:text-[32px] text-white mb-8 leading-relaxed font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap'
                     >
                         단순한 소파의 정의, 그 이상의 가치를 선사해 <br className='hidden md:block' />
                         일상 속 쉼을 넘어 매 순간의 소중함이 배가되는, <br className='hidden md:block' />
@@ -247,7 +249,7 @@ const ValueSecTwo = () => {
                     </p>
                     <p
                         ref={addToTextRefs}
-                        className='desc opacity-0 invisible text-lg md:text-xl text-white mb-8 leading-relaxed font-medium'
+                        className='desc opacity-0 invisible text-lg md:text-xl lg:text-[32px] text-white mb-8 leading-relaxed font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap'
                     >
                         니즈는 온 가족이 안심하고 편안한 일상을 보낼 수 있게 <br className='hidden md:block' />
                         환경친화적 자재만을 사용해 소파를 제작하며, <br className='hidden md:block' />
@@ -256,13 +258,13 @@ const ValueSecTwo = () => {
                     </p>
                     <p
                         ref={addToTextRefs}
-                        className='desc opacity-0 invisible text-lg md:text-xl text-white mb-8 leading-relaxed font-medium'
+                        className='desc opacity-0 invisible text-lg md:text-xl lg:text-[32px] text-white mb-8 leading-relaxed font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap'
                     >
                         오늘의 행복한 마무리는 보다 더 나은 내일의 시작이 됩니다.
                     </p>
                     <p
                         ref={addToTextRefs}
-                        className='desc opacity-0 invisible text-lg md:text-xl text-white mb-8 leading-relaxed font-medium'
+                        className='desc opacity-0 invisible text-lg md:text-xl lg:text-[32px] text-white mb-8 leading-relaxed font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap'
                     >
                         공간 속 새로운 기준, <br />
                         니즈는 일상 속 거실 공간의 소중함을 아는 분들을 위한 <br className='hidden md:block' />
