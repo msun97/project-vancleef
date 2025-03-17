@@ -1,45 +1,46 @@
 import React, { useState } from 'react';
-import Input from '../../../components/input';
+import Input from '@/components/input';
 import Button from '../../../components/button';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { useNavigate } from 'react-router-dom';
 import CCInquiryFormModal from './CCInquiryFormModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { ccinquirySlice, inquiryActions } from '../../../store/modules/ccinquirySlice';
+import { inquiryActions } from '../../../store/modules/ccinquirySlice';
 import DropDown from '../../../components/dropdown';
 
 const CCInquiryForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state)=>state.authR)
+  const { user } = useSelector(state => state.authR);
   const { username } = user;
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [tag , setTag] = useState('제품문의')
+  const [tag, setTag] = useState('제품문의');
   const [subfileData, setSubFileData] = useState('');
   const [subfileName, setSubFileName] = useState('');
   const date = new Date();
-  const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? '0'+ (date.getMonth() + 1) : date.getMonth() + 1}-${date.getDate()}`;
-  const [data, setData] = useState( {
-    userId:username,
+  const formattedDate = `${date.getFullYear()}-${
+    date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
+  }-${date.getDate()}`;
+  const [data, setData] = useState({
+    userId: username,
     tag: tag,
     title: '',
     content: '',
     orderData: '',
     fileData: [],
     fileName: [],
-    date:formattedDate
-  }
-);
+    date: formattedDate,
+  });
 
-const{ title, content, orderData, fileData, fileName } = data;
+  const { title, content, orderData, fileData, fileName } = data;
   const changeInput = e => {
-    setData({...data, [e.target.name]: e.target.value });
-  }
-  const onEditorChange = (e, editor) => {
-    setData({...data, content: editor.getData() });
+    setData({ ...data, [e.target.name]: e.target.value });
   };
-  const changeImg = (e) => {
+  const onEditorChange = (e, editor) => {
+    setData({ ...data, content: editor.getData() });
+  };
+  const changeImg = e => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -50,19 +51,18 @@ const{ title, content, orderData, fileData, fileName } = data;
       reader.readAsDataURL(file);
     }
   };
-  
-const addFile = (e) => {
-  e.preventDefault()
-  setData((prevData) => ({
-    ...prevData,
-    fileData: [...prevData.fileData, subfileData], 
-    fileName: [...prevData.fileName, subfileName],
-  }));
 
-  setSubFileName('')
-  setSubFileData('')
-};
+  const addFile = e => {
+    e.preventDefault();
+    setData(prevData => ({
+      ...prevData,
+      fileData: [...prevData.fileData, subfileData],
+      fileName: [...prevData.fileName, subfileName],
+    }));
 
+    setSubFileName('');
+    setSubFileData('');
+  };
 
   const handleOpenModal = () => {
     setModalIsOpen(!modalIsOpen);
@@ -70,20 +70,21 @@ const addFile = (e) => {
   const goBack = () => {
     navigate(-1);
   };
-  const changeTag = (tag) => {
+  const changeTag = tag => {
     setTag(tag);
-    setData({...data, tag: tag });
-  }
+    setData({ ...data, tag: tag });
+  };
   const addInquiry = () => {
     if (data.title && data.content) {
-    dispatch(inquiryActions.addInquiry(data));
-    alert('등록 완료');
-    goBack();} else {
+      dispatch(inquiryActions.addInquiry(data));
+      alert('등록 완료');
+      goBack();
+    } else {
       alert('제목과 내용을 입력하세요.');
     }
-  }
+  };
 
-console.log(tag);
+  console.log(tag);
   return (
     <div className={`w-full mt-[62px]`}>
       <div className="title w-full border-b py-[14px]">
@@ -98,10 +99,10 @@ console.log(tag);
               <p className="">말머리</p>
             </div>
             <DropDown
-            item={['제품문의', '배송문의', '사이트 문의', '기타']}
-            handleClick={changeTag}
-                          className="border p-5 w-80 h-[55px] z-[100]"
-             />
+              item={['제품문의', '배송문의', '사이트 문의', '기타']}
+              handleClick={changeTag}
+              className="border p-5 w-80 h-[55px] z-[100]"
+            />
           </li>
           <li className="list-disc flex gap-[50px] items-center">
             <div className="title flex gap-[10px] items-center w-[128px]">
@@ -133,7 +134,12 @@ console.log(tag);
               <div className="square w-1 h-1 bg-gray-90" />
               <p className="">제목</p>
             </div>
-            <Input className="border p-5 w-full h-[55px] flex-1" name='title' value={title} onChange={changeInput}/>
+            <Input
+              className="border p-5 w-full h-[55px] flex-1"
+              name="title"
+              value={title}
+              onChange={changeInput}
+            />
           </li>
           <li className="list-disc flex gap-[50px]">
             <div className="title flex gap-[10px] items-center w-[128px] h-fit">
@@ -160,22 +166,28 @@ console.log(tag);
             </div>
             <div className="flex gap-[10px] ">
               <div>
-              <input type="file" id="fileholder" accept="image/*" className="hidden" onChange={changeImg}/>
-              <Input
-                readOnly
-                placeholder="선택된 파일 없음"
-                className="border p-5 w-80 h-[55px]"
-                name="fileName"
-                value={subfileName}
-
-              />
-                            <div><ul>
-                  {
-                    fileName.map((file, index) => (
+                <input
+                  type="file"
+                  id="fileholder"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={changeImg}
+                />
+                <Input
+                  readOnly
+                  placeholder="선택된 파일 없음"
+                  className="border p-5 w-80 h-[55px]"
+                  name="fileName"
+                  value={subfileName}
+                />
+                <div>
+                  <ul>
+                    {fileName.map((file, index) => (
                       <li key={index}>{file}</li>
-                    ))
-                  }
-</ul></div></div>
+                    ))}
+                  </ul>
+                </div>
+              </div>
               <label
                 htmlFor="fileholder"
                 className="w-[140px] h-[55px] cursor-pointer flex items-center justify-center bg-gray-100 hover:bg-gray-80 text-content-s font-bold text-white border-primary "
@@ -189,7 +201,6 @@ console.log(tag);
               >
                 +추가
               </Button>
-
             </div>
           </li>
         </ul>
@@ -210,7 +221,7 @@ console.log(tag);
           제출
         </Button>
       </div>
-      {modalIsOpen && <CCInquiryFormModal handleOpenModal={handleOpenModal}/>}
+      {modalIsOpen && <CCInquiryFormModal handleOpenModal={handleOpenModal} />}
     </div>
   );
 };

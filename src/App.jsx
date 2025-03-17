@@ -19,12 +19,13 @@ import CCNotice from './pages/customercenter/components/CCNotice';
 import CCInquiry from './pages/customercenter/components/CCInquiry';
 import Search from './pages/search';
 import Purchase from './pages/purchase';
-import ReservationPage from './pages/reservation';
-import ShoppingcartModal from './components/purchase/ShoppingcartModal';
-import SignupPage from './pages/signup';
-import Login from './pages/login';
-import MypostsPage from './pages/mypage/myposts';
-import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import ReservationPage from "./pages/reservation";
+import ShoppingcartModal from "./components/purchase/ShoppingcartModal";
+import SignupPage from "./pages/signup";
+import Login from "./pages/login";
+import MypostsPage from "./pages/mypage/myposts";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import Kbrand from "./pages/kbrand";
 import AboutPage from './pages/about';
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
                         <Route index element={<Home />} />
                         <Route path='home' element={<Home />} />
                         <Route path='/about' element={<AboutPage />} />
+                        <Route path="/kbrand" element={<Kbrand/>} />
                         <Route path='/productlist' element={<ProductListPage />} />
                         <Route path='/productdetail' element={<ProductDetailPage />} />
                         <Route path='/shoppingcartmodal' element={<ShoppingcartModal />} />

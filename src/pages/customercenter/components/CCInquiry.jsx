@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../../components/button';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { paginationActions } from '../../../store/modules/paginationSlice';
+import Pagination from '../../../components/pagination';
 
 const CCInquiry = ({ handleClick }) => {
+  const dispatch = useDispatch();
   const nowDate = new Date();
   const formattedDate = nowDate.toISOString().split('T')[0];
   const inquiryList = useSelector(state => state.inquiryR.inquiryData);
@@ -92,6 +95,18 @@ const CCInquiry = ({ handleClick }) => {
     );
   };
 
+    useEffect(() => {
+      dispatch(
+        paginationActions.addData({pageId : 'inquiry', data : nowData})
+      )
+    }, [nowData])
+    const { faq = {}} = useSelector((state) => state.paginationR)
+    const { currPage, postsPerPage} = faq;
+    const lastPost = currPage * postsPerPage;
+    const firstPost = lastPost - postsPerPage;
+    const currentPost = nowData.slice(firstPost, lastPost);
+  
+
   return (
     <div className="w-full">
       <div className="ccHeader flex justify-between items-center mb-4">
@@ -146,8 +161,8 @@ const CCInquiry = ({ handleClick }) => {
           </tr>
         </thead>
         <tbody className="w-full">
-          {nowData && nowData.length > 0 ? (
-            nowData.map(item => (
+          {currentPost && currentPost.length > 0 ? (
+            currentPost.map(item => (
               <tr key={item.id} className="border-y border-gray-20 hover:bg-gray-10 cursor-pointer" onClick={() => onGo(item.tag)}>
                 <td className="text-content-m py-5 w-[80%] text-center">
                   <div className='flex gap-4'>
@@ -171,6 +186,7 @@ const CCInquiry = ({ handleClick }) => {
           )}
         </tbody>
       </table>
+      <Pagination postsPerPage={10} pageId='inquiry' className='mt-10'/>
     </div>
   );
 };
