@@ -2,12 +2,13 @@ import React from 'react';
 import Line from './Line';
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '../../store/modules/authSlice'
+import { productdata } from '@/assets/api/productdata';
 
 const { removeFavorite } = authActions;
 
 const MypageItemList = () => {
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.user.currentUser.favorites);
+	const favorites = useSelector((state) => state.authR.user?.favorites || []);
 
   const handleDelete = (item) => {
     dispatch(removeFavorite(item));
@@ -16,7 +17,7 @@ const MypageItemList = () => {
   return (
     <>
       {favorites.map((item) => (
-        <div key={item.productid} className="flex justify-between items-center w-full pt-[19px] pb-[19px]">
+        <div key={productdata.title} className="flex justify-between items-center w-full pt-[19px] pb-[19px]">
           <div className="flex items-start space-x-4">
             <img
               src={item.objectimage[0] || 'https://via.placeholder.com/80'}

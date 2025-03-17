@@ -1,9 +1,13 @@
 import React from 'react'
 import CheckBox from '../checkbox'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '../button'
 
+
+
 const MypageCartlist = () => {
+	const Navigate = useNavigate;
+
   return (
     <div className="flex flex-wrap items-start space-x-4 pt-[25px] pb-[25px] justify-between">
      <CheckBox className="w-[18px] h-[18px] items-start" />
@@ -20,12 +24,14 @@ const MypageCartlist = () => {
       <div className="font-regular items-center ">무료배송</div>
      <div className='flex-col items-center space-y-[6px]'>		 
 			<Button
+		      onClick={() => Navigate('/purchase')}
   variant="secondary"
  className="font-bold w-[89px] h-[29px] border border-[#D9D9D9] flex items-center justify-center"
 >
   바로주문
 </Button>
 <Button
+
   variant="secondary"
 className="font-bold w-[89px] h-[29px] border border-[#D9D9D9] flex items-center justify-center"
 >
