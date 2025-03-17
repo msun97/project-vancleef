@@ -4,7 +4,7 @@ import { productdata } from '../../assets/api/productdata';
 const initialState = {
     productdata: productdata, //원본데이터
     filteredProducts: [],
-    filteredCategory: null, // 필터링된 상품 목록을 저장할 상태 추가
+    filteredCategory: null, // 필터링된 상품 목록을 저장할 상태 추가3
 };
 
 export const productSlice = createSlice({
