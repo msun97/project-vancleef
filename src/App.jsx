@@ -32,6 +32,7 @@ import { useEffect } from 'react';
 import { authActions } from './store/modules/authSlice';
 
 const App = () => {
+<<<<<<< HEAD
 
 	const dispatch = useDispatch();
 
@@ -80,6 +81,51 @@ const App = () => {
             </BrowserRouter>
         </>
     );
+=======
+  return (
+    <>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/kbrand" element={<Kbrand />} />
+            <Route path="/productlist" element={<ProductListPage />} />
+            <Route
+              path="/productdetail/:productID"
+              element={<ProductDetailPage />}
+            />
+            <Route path="/shoppingcartmodal" element={<ShoppingcartModal />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/mypage" element={<MyPage />}>
+              <Route path="order" element={<Order />} />
+              <Route path="recent" element={<Recent />} />
+              <Route path="wishlist" element={<Wishlist />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="myposts" element={<MypostsPage />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="logout" element={<Logout />} />
+            </Route>
+            <Route path="/customers" element={<CustomerCenter />}>
+              <Route path="notice" element={<CCNotice />} />
+              <Route path="faq" element={<CCFaq />} />
+              <Route path="inquiry" element={<CCInquiry />} />
+              <Route path="inquiryform" element={<CCInquiryForm />} />
+            </Route>
+            <Route path="/search/:keyword" element={<Search />} />
+            <Route path="/purchase" element={<Purchase />} />
+            <Route path="/reservation" element={<ReservationPage />} />
+          </Route>
+          <Route path="/productinquiry" element={<ProductInquiry />} />
+          <Route path="*" element={<NotFiles />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+>>>>>>> origin/develop
 };
 
 export default App;
