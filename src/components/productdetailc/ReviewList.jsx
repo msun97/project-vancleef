@@ -57,20 +57,13 @@ const ReviewList = ({ productID }) => {
     useEffect(() => {
         const loadReviews = () => {
             try {
-                console.log('리뷰 데이터 로드 시작...');
-                console.log('현재 productID:', productID);
-
                 // 로컬스토리지에서 reviews 데이터 가져오기
                 const storedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
-                console.log('로컬 스토리지 reviews:', storedReviews);
 
                 // 현재 productID와 일치하는 리뷰만 필터링
                 const filteredReviews = storedReviews.filter((review) => {
-                    console.log(`비교: 리뷰 productId ${review.productId} vs 현재 productID ${productID}`);
                     return String(review.productId) === String(productID);
                 });
-
-                console.log('필터링된 리뷰:', filteredReviews);
 
                 // 정렬 적용
                 let sortedReviews = [...filteredReviews];
@@ -80,7 +73,6 @@ const ReviewList = ({ productID }) => {
                     sortedReviews.sort((a, b) => (b.helpfulCount || 0) - (a.helpfulCount || 0));
                 }
 
-                console.log('정렬된 리뷰:', sortedReviews);
                 setLocalReviews(sortedReviews);
 
                 // 페이지네이션 데이터 업데이트
@@ -133,12 +125,8 @@ const ReviewList = ({ productID }) => {
         // 중복 리뷰 체크
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser && currentUser.myreviews && Array.isArray(currentUser.myreviews)) {
-            console.log('현재 사용자 리뷰:', currentUser.myreviews);
-            console.log('현재 상품 ID:', productID);
-
             // 내 리뷰에서 현재 상품 ID와 일치하는 리뷰가 있는지 확인
             const hasReview = currentUser.myreviews.some((review) => {
-                console.log(`비교: 리뷰 productId ${review.productId} vs 현재 productID ${productID}`);
                 return String(review.productId) === String(productID);
             });
 

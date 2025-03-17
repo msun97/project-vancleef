@@ -6,9 +6,6 @@ import { reviewActions } from '../../store/modules/reviewSlice';
 const ReviewItem = ({ review, productId, id }) => {
     const dispatch = useDispatch();
 
-    // 개발 디버깅용 로그
-    console.log('ReviewItem 렌더링:', { review, productId, id });
-
     // 별점 렌더링 함수
     const renderStars = (rating) => {
         // rating이 undefined인 경우 0으로 처리
