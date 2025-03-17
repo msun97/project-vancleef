@@ -9,10 +9,8 @@ const ProductDescription = ({ productdata }) => {
   const user = useSelector((state) => state.authR.user);
 
   const toggleLike = () => {
-    // 좋아요 상태 토글
     setIsLiked(!isLiked);
 
-    // 좋아요 상태가 변경될 때, 로그인한 경우 favorites에 추가
     if (!isLiked) {
       if (user) {
         dispatch(authActions.addfavorites(productdata));
@@ -20,8 +18,7 @@ const ProductDescription = ({ productdata }) => {
         console.log('로그인이 필요합니다.');
       }
     } else {
-      // 원한다면 좋아요 취소 시 favorites에서 제거하도록 할 수 있습니다.
-      // 예: dispatch(authActions.removeFavorite(productdata));
+    dispatch(authActions.removeFavorite(productdata));
     }
   };
 

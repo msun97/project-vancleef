@@ -115,19 +115,19 @@ export const authSlice = createSlice({
       }
     },
     addfavorites: (state, action) => {
-      // user가 없으면 처리하지 않음
-      if (!state.user) return;
-      // favorites 초기화 확인
-      if (!state.user.favorites) {
-        state.user.favorites = [];
-      }
-      const exists = state.user.favorites.find(
-        (item) => item.productid === action.payload.productid
-      );
-      if (!exists) {
-        state.user.favorites.push(action.payload);
-      }
-    },
+			if (!state.user) return;
+			if (!state.user.favorites) {
+				state.user.favorites = [];
+			}
+			const exists = state.user.favorites.find(
+				(item) => item.productid === action.payload.productid
+			);
+			if (!exists) {
+				state.user.favorites.push(action.payload);
+				// 변경된 user 객체를 로컬스토리지에 저장
+				localStorage.setItem("currentUser", JSON.stringify(state.user));
+			}
+		},
     removeFavorite: (state, action) => {
       if (!state.user || !state.user.favorites) return;
       state.user.favorites = state.user.favorites.filter(

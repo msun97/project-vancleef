@@ -27,8 +27,17 @@ import MypostsPage from './pages/mypage/myposts';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import Kbrand from './pages/kbrand';
 import AboutPage from './pages/about';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { authActions } from './store/modules/authSlice';
 
 const App = () => {
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+    dispatch(authActions.restoreAuthState());
+  }, [dispatch]);
     return (
         <>
             <BrowserRouter>
