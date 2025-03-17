@@ -37,20 +37,20 @@ const Home = () => {
           scale: 1,
           duration: 3,
           ease: 'power4.out',
-        }
+        },
       );
 
-      const productdata = window.productdata || []; 
-      const totalSlidesInSection4 = productdata.length || 3; 
+      const productdata = window.productdata || [];
+      const totalSlidesInSection4 = productdata.length || 3;
       const section4Height = `${totalSlidesInSection4 * 100}vh`;
-      
+
       const scrollTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: mainContentRef.current,
-          start: "top top",
-          end: "bottom bottom",
+          start: 'top top',
+          end: 'bottom bottom',
           scrub: true,
-        }
+        },
       });
 
       ScrollTrigger.refresh();
@@ -77,11 +77,11 @@ const Home = () => {
           <div className="w-dvw relative">
             <Section3 isLoading={isLoading} />
           </div>
-          
+
           <div ref={section4Ref}>
             <Section4 />
           </div>
-          
+
           <Section5 isLoading={isLoading} />
           <Section6 />
 
