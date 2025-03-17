@@ -18,7 +18,6 @@ const MypostsModal = ({ productId, productName }) => {
 
     const dispatch = useDispatch();
     const isOpen = useSelector((state) => state.modalR.isOpen);
-    const userNum = useSelector((state) => state.authR); // 로그인한 사용자 정보 가져오기
 
     console.log('MypostsModal 렌더링:', { productId, productName });
 
@@ -105,10 +104,11 @@ const MypostsModal = ({ productId, productName }) => {
             images: imageFile ? [imageFile] : [], // 이미지가 있으면 배열에 추가
         };
 
+        console.log('리뷰 데이터 전송:', { productId, reviewData });
+
         // Redux 액션 디스패치하여 리뷰 추가
         dispatch(
             reviewActions.addReview({
-                userNum: userNum,
                 productId: productId,
                 reviewData: reviewData,
             })
@@ -189,6 +189,7 @@ const MypostsModal = ({ productId, productName }) => {
                     <Input
                         ref={fileInputRef}
                         type='file'
+                        accept='image/*'
                         onChange={handleFileChange}
                         className='absolute opacity-0 w-0 h-0'
                     />

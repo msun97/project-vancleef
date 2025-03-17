@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Button from '../button';
 import { reviewActions } from '../../store/modules/reviewSlice';
 
-const ReviewItem = ({ review, productId, id }) => {
+const ReviewItem = ({ review, productId, userId }) => {
     const dispatch = useDispatch();
 
     // 별점 렌더링 함수
