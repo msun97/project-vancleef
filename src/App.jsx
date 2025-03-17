@@ -40,7 +40,10 @@ const App = () => {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/kbrand" element={<Kbrand />} />
             <Route path="/productlist" element={<ProductListPage />} />
-            <Route path="/productdetail" element={<ProductDetailPage />} />
+            <Route
+              path="/productdetail/:productID"
+              element={<ProductDetailPage />}
+            />
             <Route path="/shoppingcartmodal" element={<ShoppingcartModal />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignupPage />} />
@@ -59,9 +62,7 @@ const App = () => {
               <Route path="inquiry" element={<CCInquiry />} />
               <Route path="inquiryform" element={<CCInquiryForm />} />
             </Route>
-            <Route path="/:search">
-              <Route index element={<Search />} />
-            </Route>
+            <Route path="/search/:keyword" element={<Search />} />
             <Route path="/purchase" element={<Purchase />} />
             <Route path="/reservation" element={<ReservationPage />} />
           </Route>

@@ -11,24 +11,22 @@ const ProductDescription = ({ productdata }) => {
         <div>
             {/* text */}
             <div>
-                <a href="">
-                    <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2 ">
-                        {productdata.title}
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                toggleLike();
-                            }}
-                            className="text-3xl"
-                        >
-                            {isLiked ? (
-                                <IoIosHeart className="text-red-500" /> // 좋아요 상태: 빨간 하트
-                            ) : (
-                                <IoIosHeartEmpty className="text-black" /> // 기본 상태: 빈 하트 (검정)
-                            )}
-                        </button>
-                    </strong>
-                </a>
+                <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2 ">
+                    {productdata.title}
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            toggleLike();
+                        }}
+                        className="text-3xl"
+                    >
+                        {isLiked ? (
+                            <IoIosHeart className="text-red-500" /> // 좋아요 상태: 빨간 하트
+                        ) : (
+                            <IoIosHeartEmpty className="text-black" /> // 기본 상태: 빈 하트 (검정)
+                        )}
+                    </button>
+                </strong>
             </div>
 
             <div className="flex gap-2 pt-2.5">
