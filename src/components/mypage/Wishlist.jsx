@@ -1,7 +1,9 @@
 import React from 'react';
 import Line from './Line';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFavorite } from '../../store/modules/authSlice'
+import { authActions } from '../../store/modules/authSlice'
+
+const { removeFavorite } = authActions;
 
 const MypageItemList = () => {
   const dispatch = useDispatch();
