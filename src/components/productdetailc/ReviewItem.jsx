@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import Button from '../button';
 import { reviewActions } from '../../store/modules/reviewSlice';
 
-const ReviewItem = ({ review, productId, userNum }) => {
+const ReviewItem = ({ review, productId, id }) => {
     const dispatch = useDispatch();
 
     // 개발 디버깅용 로그
-    console.log('ReviewItem 렌더링:', { review, productId, userNum });
+    console.log('ReviewItem 렌더링:', { review, productId, id });
 
     // 별점 렌더링 함수
     const renderStars = (rating) => {
@@ -65,7 +65,7 @@ const ReviewItem = ({ review, productId, userNum }) => {
 
         dispatch(
             reviewActions.toggleHelpful({
-                productId,
+                productId: productId,
                 reviewId: review.id,
             })
         );
@@ -117,15 +117,11 @@ const ReviewItem = ({ review, productId, userNum }) => {
             </div>
             <div className='w-full relative flex flex-col gap-[15px] text-xl'>
                 <div className='absolute top-0 right-0 flex flex-col items-end justify-between h-full'>
+                    <span className='text-sm text-gray-500'>{formatDate(review.date || review.createdAt)}</span>
                     {/* 내 리뷰일 경우 표시 */}
                     {isMyReview && (
                         <span className='text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded mb-1'>내 리뷰</span>
                     )}
-                    <span className='text-[17px]'>
-                        {/* 개인정보 보호를 위해 이메일 일부 마스킹 */}
-                        {isMyReview ? '내 리뷰' : review.id ? `사용자 ${String(review.id).substring(0, 3)}***` : '익명'}
-                    </span>
-                    <span className='text-sm text-gray-500'>{formatDate(review.date || review.createdAt)}</span>
                 </div>
 
                 {/* 리뷰 제목 */}

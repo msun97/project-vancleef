@@ -20,11 +20,14 @@ const MypostsModal = ({ productId, productName }) => {
     const isOpen = useSelector((state) => state.modalR.isOpen);
     const userNum = useSelector((state) => state.authR); // 로그인한 사용자 정보 가져오기
 
+    console.log('MypostsModal 렌더링:', { productId, productName });
+
     // 리뷰 목록 가져오기
-    const { myreviews } = useSelector((state) => state.reviewR);
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+    const myreviews = currentUser.myreviews || [];
 
     // 이 제품에 대한 내 리뷰 찾기
-    const existingReview = myreviews.find((review) => review.productId === productId);
+    const existingReview = myreviews.find((review) => String(review.productId) === String(productId));
 
     // 컴포넌트 마운트 시 기존 리뷰 데이터 설정
     useEffect(() => {
@@ -36,6 +39,9 @@ const MypostsModal = ({ productId, productName }) => {
             // 이미지가 있는 경우
             if (existingReview.img && existingReview.img.length > 0) {
                 setImageFile(existingReview.img[0]);
+                setFileName('기존 이미지');
+            } else if (existingReview.images && existingReview.images.length > 0) {
+                setImageFile(existingReview.images[0]);
                 setFileName('기존 이미지');
             }
         }
