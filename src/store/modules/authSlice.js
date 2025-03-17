@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getKakaoLogin } from './kakaogetThunks';
 
 const initialState = {
-  joinData: [],
+  joinData: JSON.parse(localStorage.getItem('users')) || [],
   authed: JSON.parse(localStorage.getItem('authed')) || false,
   user: JSON.parse(localStorage.getItem('currentUser')) || null,
   isSignUpComplete: false,
