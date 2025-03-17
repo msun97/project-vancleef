@@ -134,12 +134,12 @@ const ProductInquiry = () => {
         dispatch(productInquiryActions.addInquiry(inquiryData));
 
         alert('문의가 등록되었습니다.');
-        navigate('/productdetail/1');
+        navigate(-1);
     };
 
     const onExit = (e) => {
         e.preventDefault();
-        navigate('/productdetail/1');
+        navigate(-1);
     };
 
     // 로그인 상태가 아니면 로딩 중이거나 리다이렉트 중이므로 아무것도 렌더링하지 않음
