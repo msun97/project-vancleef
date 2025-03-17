@@ -3,7 +3,6 @@ import Line from '@/components/mypage/Line';
 import MypageCartlist from '@/components/mypage/Cart';
 import MypageCartSelect from '@/components/mypage/Cart2';
 import Button from '@/components/button';
-import ProductItemLike from '@/components/mypage/liketest';
 
 const Cart = () => {
   return (
@@ -37,7 +36,7 @@ const Cart = () => {
           <Button variant="secondary" className="w-[135px] h-[55px]">
             전체상품 주문
           </Button>
-					<ProductItemLike/>
+					
         </div>
       </div>
     </>

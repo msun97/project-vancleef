@@ -7,8 +7,12 @@ const AvailableReviews = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.modalR.isOpen);
   const user = useSelector((state) => state.authR.user);
+  
+  // 디버깅: user 상태 확인
+  console.log('user:', user);
+  
   const userId = user?.id; // 또는 user.userid
-
+  
   const userReviews = useSelector((state) =>
     userId ? (state.reviewR.userReviews[userId] || {}) : {}
   );
@@ -20,7 +24,7 @@ const AvailableReviews = () => {
   });
 
   useEffect(() => {
-    if (!userId) return; // 여기서 return은 useEffect 함수 내부에 있으므로 올바름
+    if (!userId) return; // userId 없으면 실행하지 않음
 
     try {
       const storedPurchases = localStorage.getItem('purchaseHistory');
@@ -71,40 +75,40 @@ const AvailableReviews = () => {
   return (
     <div>
       <h2 className='text-xl font-bold mb-4'>작성 가능한 리뷰</h2>
-
-      {!userId ? (
-        <div className='text-center text-gray-500 py-8'>로딩 중...</div>
-      ) : availableProducts.length > 0 ? (
-        <div className='border-t border-gray-200'>
-          {availableProducts.map((product) => (
-            <div
-              key={product.id}
-              className='flex flex-row justify-between items-center py-4 border-b border-gray-200'
-            >
-              <div className='flex flex-col'>
-                <span className='text-sm text-gray-500 mb-1'>
-                  상품 ID: {product.id}
-                </span>
-                <span className='font-medium'>{product.name}</span>
+      
+      {user === null ? ( // user가 null이면 로그인 상태가 아니라는 의미
+        <div className='text-center text-gray-500 py-8'>로그인 해주세요.</div>
+      ) : userId ? (
+        availableProducts.length > 0 ? (
+          <div className='border-t border-gray-200'>
+            {availableProducts.map((product) => (
+              <div
+                key={product.id}
+                className='flex flex-row justify-between items-center py-4 border-b border-gray-200'
+              >
+                <div className='flex flex-col'>
+                  <span className='text-sm text-gray-500 mb-1'>상품 ID: {product.id}</span>
+                  <span className='font-medium'>{product.name}</span>
+                </div>
+                <div className='flex items-center'>
+                  <span className='text-sm text-gray-500 mr-4'>{product.price}</span>
+                  <button
+                    onClick={() => handleOpenModal(product.id, product.name)}
+                    className='text-blue-600 hover:text-blue-800 text-sm underline'
+                  >
+                    리뷰쓰기
+                  </button>
+                </div>
               </div>
-              <div className='flex items-center'>
-                <span className='text-sm text-gray-500 mr-4'>
-                  {product.price}
-                </span>
-                <button
-                  onClick={() => handleOpenModal(product.id, product.name)}
-                  className='text-blue-600 hover:text-blue-800 text-sm underline'
-                >
-                  리뷰쓰기
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className='text-center text-gray-500 py-8 border-t border-b border-gray-200'>
+            현재 작성 가능한 리뷰가 없습니다.
+          </div>
+        )
       ) : (
-        <div className='text-center text-gray-500 py-8 border-t border-b border-gray-200'>
-          현재 작성 가능한 리뷰가 없습니다.
-        </div>
+        <div className='text-center text-gray-500 py-8'>로딩 중...</div>
       )}
 
       {isOpen && (

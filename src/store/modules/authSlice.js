@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getKakaoLogin } from './kakaogetThunks';
 
 const initialState = {
-    joinData: JSON.parse(localStorage.getItem('users')) || [],
-    authed: JSON.parse(localStorage.getItem('authed')) || false,
-    user: JSON.parse(localStorage.getItem('currentUser')) || null,
-    isSignUpComplete: false,
-    goTg: null,
+  joinData: JSON.parse(localStorage.getItem('users')) || [],
+  authed: JSON.parse(localStorage.getItem('authed')) || false,
+  user: JSON.parse(localStorage.getItem('currentUser')) || null,
+  isSignUpComplete: false,
+  goTg: null,
 };
 
 let no = initialState.joinData.length;
@@ -30,18 +30,9 @@ export const authSlice = createSlice({
         tel: user.telFirst + user.telSecond + user.telThird,
         reservations: [],
         favorites: [], // 찜 목록 초기화
+        reviews: [],   // 리뷰 목록 초기화
       };
 
-            storedUsers.push(member);
-            localStorage.setItem('users', JSON.stringify(storedUsers));
-            state.joinData.push(member);
-        },
-
-        login: (state, action) => {
-            const { id_email, password } = action.payload;
-            const cleanedEmail = id_email.toLowerCase().trim();
-            const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-            const user = storedUsers.find((u) => u.userid.toLowerCase() === cleanedEmail);
       storedUsers.push(member);
       localStorage.setItem('users', JSON.stringify(storedUsers));
       state.joinData.push(member);
@@ -51,7 +42,7 @@ export const authSlice = createSlice({
       const cleanedEmail = id_email.toLowerCase().trim();
       const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
       const user = storedUsers.find(
-        u => u.userid.toLowerCase() === cleanedEmail,
+        (u) => u.userid.toLowerCase() === cleanedEmail
       );
 
       if (user) {
@@ -94,7 +85,6 @@ export const authSlice = createSlice({
       if (!userData.reservations) {
         userData.reservations = [];
       }
-      // 찜 목록이 없으면 초기화
       if (!userData.favorites) {
         userData.favorites = [];
       }
@@ -127,29 +117,42 @@ export const authSlice = createSlice({
       }
     },
     addfavorites: (state, action) => {
-			if (!state.user) return;
-			if (!state.user.favorites) {
-				state.user.favorites = [];
-			}
-			const exists = state.user.favorites.find(
-				(item) => item.productid === action.payload.productid
-			);
-			if (!exists) {
-				state.user.favorites.push(action.payload);
-				// 변경된 user 객체를 로컬스토리지에 저장
-				localStorage.setItem("currentUser", JSON.stringify(state.user));
-			}
-		},
+      if (!state.user) return;
+      if (!state.user.favorites) {
+        state.user.favorites = [];
+      }
+      const exists = state.user.favorites.find(
+        (item) => item.productid === action.payload.productid
+      );
+      if (!exists) {
+        state.user.favorites.push(action.payload);
+        localStorage.setItem("currentUser", JSON.stringify(state.user));
+      }
+    },
     removeFavorite: (state, action) => {
       if (!state.user || !state.user.favorites) return;
       state.user.favorites = state.user.favorites.filter(
         (item) => item.productid !== action.payload.productid
       );
     },
+    // addreviews
+    addreviews: (state, action) => {
+      if (!state.user) return;
+      if (!state.user.reviews) {
+        state.user.reviews = [];
+      }
+      const exists = state.user.reviews.find(
+        (item) => item.reviewid === action.payload.reviewid
+      );
+      if (!exists) {
+        state.user.reviews.push(action.payload);
+        localStorage.setItem("currentUser", JSON.stringify(state.user));
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getKakaoLogin.pending, state => {
+      .addCase(getKakaoLogin.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -165,6 +168,10 @@ export const authSlice = createSlice({
         if (!user.favorites) {
           user.favorites = [];
         }
+        // 리뷰 배열도 없으면 초기화 (추가)
+        if (!user.reviews) {
+          user.reviews = [];
+        }
         state.authed = true;
         state.user = user;
         console.log('카카오 로그인 성공:', action.payload);
@@ -179,4 +186,3 @@ export const authSlice = createSlice({
 
 export const authActions = authSlice.actions;
 export default authSlice.reducer;
-

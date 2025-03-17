@@ -10,6 +10,7 @@ const Wishlist = () => {
 			</div>
 	<Line/>
 	<MypageItemList/>
+	<Line marginTop=''/>
 	</div>
 	)
 }

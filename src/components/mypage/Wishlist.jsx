@@ -8,7 +8,7 @@ const { removeFavorite } = authActions;
 
 const MypageItemList = () => {
   const dispatch = useDispatch();
-	const favorites = useSelector((state) => state.authR.user?.favorites || []);
+    const favorites = useSelector((state) => state.authR.user?.favorites || []);
 
   const handleDelete = (item) => {
     dispatch(removeFavorite(item));
@@ -36,7 +36,8 @@ const MypageItemList = () => {
                 currency: 'KRW',
               })}
             </div>
-            <button
+            
+						<button
               onClick={() => handleDelete(item)}
               className="text-right underline text-sm text-black ml-2"
             >
@@ -45,7 +46,6 @@ const MypageItemList = () => {
           </div>
         </div>
       ))}
-      <Line marginTop="" />
     </>
   );
 };
