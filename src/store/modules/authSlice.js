@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getKakaoLogin } from "./kakaogetThunks";
+import { createSlice } from '@reduxjs/toolkit';
+import { getKakaoLogin } from './kakaogetThunks';
 
 const initialState = {
-  joinData: [],
-  authed: false,
-  user: null,
+  joinData: JSON.parse(localStorage.getItem('users')) || [],
+  authed: JSON.parse(localStorage.getItem('authed')) || false,
+  user: JSON.parse(localStorage.getItem('currentUser')) || null,
   isSignUpComplete: false,
   goTg: null,
 };
@@ -12,7 +12,7 @@ const initialState = {
 let no = initialState.joinData.length;
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     gotoTarget: (state, action) => {
@@ -21,7 +21,7 @@ export const authSlice = createSlice({
 
     signup: (state, action) => {
       const user = action.payload;
-      const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+      const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
       const member = {
         id: no++,
         userid: user.id_email,
@@ -33,45 +33,47 @@ export const authSlice = createSlice({
       };
 
       storedUsers.push(member);
-      localStorage.setItem("users", JSON.stringify(storedUsers));
+      localStorage.setItem('users', JSON.stringify(storedUsers));
       state.joinData.push(member);
     },
 
     login: (state, action) => {
       const { id_email, password } = action.payload;
       const cleanedEmail = id_email.toLowerCase().trim();
-      const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-      const user = storedUsers.find(u => u.userid.toLowerCase() === cleanedEmail);
+      const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+      const user = storedUsers.find(
+        u => u.userid.toLowerCase() === cleanedEmail,
+      );
 
       if (user) {
         if (user.password === password) {
-          console.log("로그인 성공", user);
+          console.log('로그인 성공', user);
           state.authed = true;
           state.user = user;
-          localStorage.setItem("currentUser", JSON.stringify(user));
-          localStorage.setItem("authed", "true");
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem('authed', 'true');
         } else {
-          console.log("비밀번호가 틀립니다");
+          console.log('비밀번호가 틀립니다');
           state.authed = false;
-          localStorage.setItem("authed", "false");
+          localStorage.setItem('authed', 'false');
         }
       } else {
-        console.log("사용자를 찾을 수 없습니다");
+        console.log('사용자를 찾을 수 없습니다');
         state.authed = false;
-        localStorage.setItem("authed", "false");
+        localStorage.setItem('authed', 'false');
       }
     },
 
-    logout: (state) => {
+    logout: state => {
       state.authed = false;
       state.user = null;
-      localStorage.removeItem("authed");
-      localStorage.removeItem("currentUser");
+      localStorage.removeItem('authed');
+      localStorage.removeItem('currentUser');
     },
 
-    restoreAuthState: (state) => {
-      const savedAuthed = localStorage.getItem("authed") === "true";
-      const savedUser = JSON.parse(localStorage.getItem("currentUser"));
+    restoreAuthState: state => {
+      const savedAuthed = localStorage.getItem('authed') === 'true';
+      const savedUser = JSON.parse(localStorage.getItem('currentUser'));
       if (savedAuthed && savedUser) {
         state.authed = true;
         state.user = savedUser;
@@ -91,9 +93,9 @@ export const authSlice = createSlice({
       state.user = userData;
     },
 
-    removeUsername: (state) => {
+    removeUsername: state => {
       if (state.user) {
-        state.user.username = "";
+        state.user.username = '';
       }
     },
 
@@ -108,7 +110,7 @@ export const authSlice = createSlice({
       if (state.user && state.user.password === currentPassword) {
         state.user.password = newPassword;
       } else {
-        console.error("현재 비밀번호가 일치하지 않습니다.");
+        console.error('현재 비밀번호가 일치하지 않습니다.');
       }
     },
 
@@ -116,14 +118,14 @@ export const authSlice = createSlice({
       if (state.user) {
         state.user.reservations = state.user.reservations || [];
         state.user.reservations.push(action.payload);
-        localStorage.setItem("user__로그인정보", JSON.stringify(state.user));
+        localStorage.setItem('user__로그인정보', JSON.stringify(state.user));
       }
     },
   },
 
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(getKakaoLogin.pending, (state) => {
+      .addCase(getKakaoLogin.pending, state => {
         state.loading = true;
         state.error = null;
       })
@@ -138,12 +140,12 @@ export const authSlice = createSlice({
         }
         state.authed = true;
         state.user = user;
-        console.log("카카오 로그인 성공:", action.payload);
+        console.log('카카오 로그인 성공:', action.payload);
       })
       .addCase(getKakaoLogin.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        console.error("카카오 로그인 실패:", action.payload);
+        console.error('카카오 로그인 실패:', action.payload);
       });
   },
 });
