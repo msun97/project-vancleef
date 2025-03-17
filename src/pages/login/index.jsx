@@ -1,13 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import LoginFull from "../../components/authentication/loginmodal";
+import LoginFull from '@/components/authentication/LoginModal';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-	return (
-		<div>
-			<LoginFull/>
-		</div>
-	)
-}
+  return (
+    <div>
+      <LoginFull />
+    </div>
+  );
+};
 
-export default Login
+export default Login;
