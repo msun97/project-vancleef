@@ -60,7 +60,6 @@ const ReviewItem = ({ review, productId, userNum }) => {
             reviewActions.toggleHelpful({
                 productId,
                 reviewId: review.id,
-                userNum,
             })
         );
     };
@@ -75,7 +74,7 @@ const ReviewItem = ({ review, productId, userNum }) => {
     };
 
     // 리뷰 작성자인지 확인 (내 리뷰인지)
-    const isMyReview = review.userNum === userNum;
+    const isMyReview = review.id === userNum;
 
     return (
         <div className='w-full h-[300px] py-[40px] flex gap-[30px] border-b-2'>
@@ -99,11 +98,11 @@ const ReviewItem = ({ review, productId, userNum }) => {
                         {/* 개인정보 보호를 위해 이메일 일부 마스킹 */}
                         {isMyReview
                             ? '내 리뷰'
-                            : review.userNum
-                            ? `사용자 ${review.userNum.substring(0, 3)}***`
+                            : review.id
+                            ? `사용자 ${review.id.toString().substring(0, 3)}***`
                             : '익명'}
                     </span>
-                    <span className='text-sm text-gray-500'>{formatDate(review.createdAt)}</span>
+                    <span className='text-sm text-gray-500'>{formatDate(review.date)}</span>
                 </div>
 
                 {/* 리뷰 제목 */}
@@ -112,9 +111,9 @@ const ReviewItem = ({ review, productId, userNum }) => {
                 <p className='pt-[2px] text-[17px]'>{review.content}</p>
 
                 {/* 이미지 표시 */}
-                {review.images && review.images.length > 0 && (
+                {review.img && review.img.length > 0 && (
                     <ul className='flex gap-[6px] mt-2'>
-                        {review.images.map((image, index) => (
+                        {review.img.map((image, index) => (
                             <li key={index}>
                                 <img
                                     src={image}
