@@ -10,12 +10,7 @@ const Wishlist = () => {
 			</div>
 	<Line/>
 	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
-	<MypageItemList/>
+	<Line marginTop=''/>
 	</div>
 	)
 }

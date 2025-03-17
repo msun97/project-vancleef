@@ -28,6 +28,7 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import Kbrand from './pages/kbrand';
 import AboutPage from './pages/about';
 
+
 const App = () => {
     return (
         <>
