@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Section5 = ({ isLoading, videoCompleted }) => {
+const Section5 = ({ isLoading }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef(null);
   const swiperRef = useRef(null);
@@ -44,7 +44,7 @@ const Section5 = ({ isLoading, videoCompleted }) => {
         pinSpacing: true,
         scrub: 10, 
         id: "section5-trigger",
-        markers: true,
+        markers: false,
         onUpdate: (self) => {
           const progress = self.progress * (image.length - 1);
           

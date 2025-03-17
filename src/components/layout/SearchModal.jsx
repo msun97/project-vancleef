@@ -1,13 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '../input';
+import { useNavigate } from 'react-router-dom';
 
 const SearchModal = ({ onSearch }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = 'auto';
     };
   }, []);
+
+  const [search, setSearch] = useState('');
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (search.trim()) {
+      navigate(`/search/${search}`);
+    }
+    onSearch();
+  };
+
   
   return (
     <div className="fixed w-full h-[100vh] bg-[rgba(0,0,0,0.5)] flex justify-center left-0 top-0" style={{zIndex:9999}}>
@@ -18,10 +33,14 @@ const SearchModal = ({ onSearch }) => {
             <img src="/icons/close.svg" alt="close" />
           </button>
         </div>
+        <form onSubmit={handleSubmit}>
         <Input
           placeholder="검색어를 입력한 후 엔터를 누르세요."
           className="w-[calc(100%_-_180px)] h-[55px] mb-12"
+          value={search}
+          onChange={handleSearch}
         />
+        </form>
         <div className="popural flex flex-col gap-5">
           <h3 className="font-bold font-secondary text-[16px]">인기 키워드</h3>
           <ul className="flex gap-[9px] mb-22">

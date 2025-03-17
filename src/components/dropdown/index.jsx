@@ -27,7 +27,7 @@ const DropDown = ({ item, handleClick, className}) => {
         </div>
       </div>
       {isOpen ? (
-        <div className="w-full *:dropdown-list absolute text-content-s cursor-pointer flex flex-col gap-2 bg-[rgba(255,255,255,0.9)]">
+        <div className="w-full *:dropdown-list absolute text-content-s cursor-pointer flex flex-col gap-2 bg-[rgba(255,255,255,0.9)] z-[20]">
           {item.map((item, index) => (
             <div
               key={index}
