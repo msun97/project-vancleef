@@ -30,47 +30,52 @@ const Section5 = ({ isLoading }) => {
 
   useEffect(() => {
     if (isLoading || !sectionRef.current || !swiperRef.current?.swiper) return;
-  
+
     const ctx = gsap.context(() => {
       const swiperInstance = swiperRef.current.swiper;
-    
-      const totalScrollHeight = (image.length - 1) * 200; 
-  
+
+      const totalScrollHeight = (image.length - 1) * 200;
+
       triggerRef.current = ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: "top top",
+        start: 'top top',
         end: `+=${totalScrollHeight}vh`,
         pin: true,
         pinSpacing: true,
-        scrub: 10, 
-        id: "section5-trigger",
+        scrub: 1,
+        id: 'section5-trigger',
         markers: false,
-        onUpdate: (self) => {
+        onUpdate: self => {
           const progress = self.progress * (image.length - 1);
-          
-          const newIndex = Math.round(progress * 1.2); 
-  
-          if (newIndex !== activeIndex && newIndex >= 0 && newIndex < image.length) {
+
+          const newIndex = Math.floor(progress);
+
+          if (
+            newIndex !== activeIndex &&
+            newIndex >= 0 &&
+            newIndex < image.length
+          ) {
             swiperInstance.slideTo(newIndex);
             setActiveIndex(newIndex);
           }
         },
       });
     }, sectionRef);
-  
+
     return () => ctx.revert();
   }, [isLoading, image.length]);
   useEffect(() => {
-    const handlePaginationClick = (index) => {
+    const handlePaginationClick = index => {
       if (swiperRef.current?.swiper) {
         swiperRef.current.swiper.slideTo(index);
         if (triggerRef.current) {
           const progress = index / (image.length - 1);
-          const scrollPos = triggerRef.current.start + 
-                           (triggerRef.current.end - triggerRef.current.start) * progress;
+          const scrollPos =
+            triggerRef.current.start +
+            (triggerRef.current.end - triggerRef.current.start) * progress;
           window.scrollTo({
             top: scrollPos,
-            behavior: 'smooth'
+            behavior: 'smooth',
           });
         }
       }
@@ -83,7 +88,10 @@ const Section5 = ({ isLoading }) => {
   }, [image.length]);
 
   return (
-    <div className="h-screen relative flex justify-center items-center" ref={sectionRef}>
+    <div
+      className="h-screen relative flex justify-center items-center "
+      ref={sectionRef}
+    >
       <div className="logo absolute z-10">
         <img src="/icons/logo-w.svg" alt="logo" />
       </div>
@@ -94,14 +102,14 @@ const Section5 = ({ isLoading }) => {
         className="mySwiper h-full w-full"
         onSlideChange={handleSlideChange}
         ref={swiperRef}
-        allowTouchMove={false} 
+        allowTouchMove={false}
       >
         {image.map(item => (
           <SwiperSlide key={item.id} className="h-full w-full">
-            <img 
-              src={item.src} 
-              alt={`슬라이드 ${item.id}`} 
-              className="object-cover h-full w-full" 
+            <img
+              src={item.src}
+              alt={`슬라이드 ${item.id}`}
+              className="object-cover h-full w-full"
             />
           </SwiperSlide>
         ))}
