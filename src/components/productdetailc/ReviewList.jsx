@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../button';
 import Pagination from '../pagination';
@@ -8,17 +8,20 @@ import { openModal } from '../../store/modules/modalSlice';
 import { paginationActions } from '../../store/modules/paginationSlice';
 import MypostsModal from '../mypage/MypostsModal';
 
-const ReviewList = ({ productId, productName }) => {
+const ReviewList = ({ productID }) => {
     const dispatch = useDispatch();
+    const [localReviews, setLocalReviews] = useState([]);
+    const [productName, setProductName] = useState('');
 
     // 모달 상태 가져오기
     const isModalOpen = useSelector((state) => state.modalR?.isOpen);
 
     // 로그인한 사용자 정보
-    const userNum = useSelector((state) => state.authR);
+    const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
+    const { id } = currentUserData;
 
     // 리뷰 상태 가져오기
-    const { sortBy, currentProductReviews, totalReviews } = useSelector((state) => state.reviewR);
+    const { sortBy } = useSelector((state) => state.reviewR);
 
     // 페이지네이션 상태 가져오기
     const currPage = useSelector((state) =>
@@ -33,12 +36,65 @@ const ReviewList = ({ productId, productName }) => {
         state.pagination && state.pagination['reviewList'] ? state.pagination['reviewList'].totalPage : 1
     );
 
-    // 현재 상품 설정
+    // 상품 이름 가져오기
     useEffect(() => {
-        if (productId) {
-            dispatch(reviewActions.setCurrentProduct(productId));
+        const productdata = JSON.parse(localStorage.getItem('productdata')) || [];
+        let allProducts = [];
+
+        productdata.forEach((category) => {
+            if (category.data && Array.isArray(category.data)) {
+                allProducts = [...allProducts, ...category.data];
+            }
+        });
+
+        const foundProduct = allProducts.find((item) => item.productid === parseInt(productID));
+        if (foundProduct) {
+            setProductName(foundProduct.title || '상품명');
         }
-    }, [dispatch, productId]);
+    }, [productID]);
+
+    // 로컬 스토리지에서 직접 리뷰 데이터 가져오기
+    useEffect(() => {
+        const loadReviews = () => {
+            try {
+                // 로컬스토리지에서 reviews 데이터 가져오기
+                const storedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+
+                // 현재 productID와 일치하는 리뷰만 필터링
+                const filteredReviews = storedReviews.filter((review) => {
+                    return String(review.productId) === String(productID);
+                });
+
+                // 정렬 적용
+                let sortedReviews = [...filteredReviews];
+                if (sortBy === 'latest') {
+                    sortedReviews.sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
+                } else if (sortBy === 'best') {
+                    sortedReviews.sort((a, b) => (b.helpfulCount || 0) - (a.helpfulCount || 0));
+                }
+
+                setLocalReviews(sortedReviews);
+
+                // 페이지네이션 데이터 업데이트
+                dispatch(
+                    paginationActions.addData({
+                        pageId: 'reviewList',
+                        data: sortedReviews,
+                    })
+                );
+
+                // Redux 상태 업데이트
+                dispatch(reviewActions.setCurrentProduct(productID));
+            } catch (error) {
+                console.error('로컬 스토리지에서 리뷰 로드 중 오류 발생:', error);
+                setLocalReviews([]);
+            }
+        };
+
+        if (productID) {
+            loadReviews();
+        }
+    }, [dispatch, productID, sortBy]);
 
     // 컴포넌트 마운트 시 페이지네이션 초기화
     useEffect(() => {
@@ -50,27 +106,37 @@ const ReviewList = ({ productId, productName }) => {
         );
     }, [dispatch]);
 
-    // 현재 상품 리뷰 목록이 변경될 때마다 페이지네이션 데이터 업데이트
-    useEffect(() => {
-        if (currentProductReviews && currentProductReviews.length >= 0) {
-            dispatch(
-                paginationActions.addData({
-                    pageId: 'reviewList',
-                    data: currentProductReviews,
-                })
-            );
-        }
-    }, [dispatch, currentProductReviews]);
-
     // 현재 페이지에 표시할 리뷰 목록 계산
     const startIndex = (currPage - 1) * postsPerPage;
     const endIndex = startIndex + postsPerPage;
-    const displayedReviews = Array.isArray(currentProductReviews)
-        ? currentProductReviews.slice(startIndex, endIndex)
-        : [];
+    const displayedReviews = localReviews.slice(startIndex, endIndex);
+    const totalReviews = localReviews.length;
 
     // 모달 열기 핸들러
     const handleOpenModal = () => {
+        // 로그인 상태 확인
+        const isLoggedIn = localStorage.getItem('authed') === 'true';
+
+        if (!isLoggedIn) {
+            alert('로그인 후 리뷰를 작성할 수 있습니다.');
+            return;
+        }
+
+        // 중복 리뷰 체크
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser && currentUser.myreviews && Array.isArray(currentUser.myreviews)) {
+            // 내 리뷰에서 현재 상품 ID와 일치하는 리뷰가 있는지 확인
+            const hasReview = currentUser.myreviews.some((review) => {
+                return String(review.productId) === String(productID);
+            });
+
+            if (hasReview) {
+                alert('이미 이 상품에 대한 리뷰를 작성하셨습니다. 한 상품에 하나의 리뷰만 작성할 수 있습니다.');
+                return;
+            }
+        }
+
+        // 모달 열기
         dispatch(openModal());
     };
 
@@ -82,7 +148,7 @@ const ReviewList = ({ productId, productName }) => {
     return (
         <>
             {/* 모달이 열렸을 때 모달 컴포넌트 렌더링 */}
-            {isModalOpen && <MypostsModal productId={productId} productName={productName} />}
+            {isModalOpen && <MypostsModal productId={productID} productName={productName} />}
             <div className='pt-[200px] px-[330px] w-full'>
                 <div className='flex flex-col gap-[30px]'>
                     <div className='w-full flex items-center justify-between'>
@@ -171,10 +237,10 @@ const ReviewList = ({ productId, productName }) => {
                     </div>
                 </div>
 
-                {/* 리뷰 리스트 */}
+                {/* 리뷰 리스트 - localReviews가 비어있는지 확인 */}
                 {displayedReviews.length > 0 ? (
                     displayedReviews.map((review) => (
-                        <ReviewItem key={review.id} review={review} productId={productId} userNum={userNum} />
+                        <ReviewItem key={review.id || Math.random()} review={review} productId={productID} id={id} />
                     ))
                 ) : (
                     <div className='w-full py-10 text-center text-gray-500'>

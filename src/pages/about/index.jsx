@@ -1,6 +1,7 @@
 import React from 'react';
 import ImgMotionSec from './components/ImgMotionSec';
 import ValueSec from './components/ValueSec';
+import ValueSecTwo from './components/ValueSecTwo';
 
 const AboutPage = () => {
     return (
@@ -13,6 +14,7 @@ const AboutPage = () => {
             </div>
             <ImgMotionSec />
             <ValueSec />
+            <ValueSecTwo />
         </div>
     );
 };
