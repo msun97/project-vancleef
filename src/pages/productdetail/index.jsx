@@ -14,6 +14,8 @@ import ProductDetailNav from '../../components/product/ProductDetailNav';
 import ProductDetailImg from '../../components/product/ProductDetailImg';
 import ProductInformation from '../../components/product/ProductInformation';
 import RecommendProductSlide from '../../components/product/RecommendProductSlide';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
@@ -33,6 +35,44 @@ function ProductDetailPage() {
         });
     };
 
+    const { productID } = useParams();
+    const [product, setProduct] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const productdata = useSelector((state) => state.productR.productdata);
+
+    useEffect(() => {
+        setIsLoading(true);
+        if (productdata && Array.isArray(productdata)) {
+            // 모든 카테고리의 모든 제품을 하나의 배열로 펼침
+            let allProducts = [];
+            productdata.forEach((category) => {
+                if (category.data && Array.isArray(category.data)) {
+                    allProducts = [...allProducts, ...category.data];
+                }
+            });
+
+            // 제품 ID로 찾기
+            const foundProduct = allProducts.find((item) => item.productid === parseInt(productID));
+
+            setProduct(foundProduct);
+        } else {
+            console.error('데이터 구조가 예상과 다릅니다:', productdata);
+        }
+        setIsLoading(false);
+    }, [productID, productdata]);
+    useEffect(() => {
+        console.log('Redux 스토어 데이터:', productdata);
+        console.log('현재 상품 ID:', productID);
+        // 나머지 코드는 동일
+    }, [productID, productdata]);
+    if (isLoading) {
+        return <div>로딩 중...</div>;
+    }
+
+    if (!product) {
+        return <div>상품을 찾을 수 없습니다</div>;
+    }
+
     return (
         <div id="contents" className="w-full h-full ">
             <div className="w-full pb-[80px]"></div>
@@ -45,14 +85,14 @@ function ProductDetailPage() {
                     <div className="view_rgt w-[50%] h-[800px] font-primary text-[14px] leading-8">
                         <div className="px-[114px] h-full pt-[154px]">
                             <div className="title">
-                                <h3>제품명</h3>
+                                <h3>{product.title}</h3>
                             </div>
                             <div className="subtitle text-[#706F6F] text-label-s">
-                                <h3>서브타이틀</h3>
+                                <h3>{product.subtitle || '상품 부제목'}</h3>
                             </div>
                             <div className="price">
                                 <dl className="item_price detail-price">
-                                    <dt>판매가</dt>
+                                    <dt>{product.price ? `${product.price.toLocaleString()}원` : '가격 정보 없음'}</dt>
                                 </dl>
                             </div>
 
