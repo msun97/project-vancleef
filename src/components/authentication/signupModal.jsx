@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Input from '../input';
-import Button from '../button';
-import CheckBox from '../checkbox';
+import Input from '@/components/input';
+import Button from '@/components/button';
+import CheckBox from '@/components/checkbox';
 import { Link, useNavigate } from 'react-router-dom';
-import { authActions } from '../../store/modules/authSlice';
-import { openModal } from '../../store/modules/modalSlice';
-import AgreementModal from '@/components/mypage/agreementModal';
+import { authActions } from '@/store/modules/authSlice';
+import { openModal } from '@/store/modules/modalSlice';
+import AgreementModal from '@/components/mypage/AgreementModal';
 
 function SignupFull() {
   const dispatch = useDispatch();
