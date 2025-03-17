@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Input from '../../components/input';
+import Input from '@/components/input';
 import DropDown from '../../components/dropdown';
 import CheckBox from '../../components/checkbox';
 import Button from '../../components/button';
