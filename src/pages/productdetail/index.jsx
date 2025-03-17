@@ -163,7 +163,7 @@ function ProductDetailPage() {
             <RecommendProductSlide />
             <ProductNotice />
             <ReviewList category={category} id={id} />
-            <ProductInquiryList />
+            <ProductInquiryList category={category} id={id} />
             {modalState.inquiry && <InquiryModal handleModal={() => toggleModal('inquiry')} modalType='inquiry' />}
             {modalState.care && <CareModal handleModal={() => toggleModal('care')} modalType='care' />}
             {modalState.delivery && <DelieveryModal handleModal={() => toggleModal('delivery')} modalType='delivery' />}

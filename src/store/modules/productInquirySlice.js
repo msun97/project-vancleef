@@ -39,12 +39,12 @@ const productInquirySlice = createSlice({
             const userId = currentUser.id || action.payload.id;
             console.log('사용할 사용자 ID:', userId);
 
-            // productId 확인
-            const { productId } = action.payload;
+            // category와 productId 확인
+            const { category, productId } = action.payload;
 
             // 이미 해당 상품에 대한 문의가 있는지 확인
             const existingInquiryIndex = state.inquiries.findIndex(
-                (inquiry) => inquiry.id === userId && inquiry.productId === productId
+                (inquiry) => inquiry.id === userId && inquiry.category === category && inquiry.productId === productId
             );
 
             // 새 문의 객체 생성
@@ -74,7 +74,9 @@ const productInquirySlice = createSlice({
 
             // myInquiries 업데이트 (무조건 추가)
             // 내 문의 중에서 해당 상품에 대한 문의가 있는지 확인
-            const myInquiryIndex = state.myInquiries.findIndex((inquiry) => inquiry.productId === productId);
+            const myInquiryIndex = state.myInquiries.findIndex(
+                (inquiry) => inquiry.category === category && inquiry.productId === productId
+            );
 
             if (myInquiryIndex !== -1) {
                 // 이미 문의가 있으면 업데이트
@@ -97,7 +99,9 @@ const productInquirySlice = createSlice({
                 }
 
                 // currentUser.myInquiries 업데이트
-                const existingInquiry = currentUser.myInquiries.findIndex((inquiry) => inquiry.productId === productId);
+                const existingInquiry = currentUser.myInquiries.findIndex(
+                    (inquiry) => inquiry.category === category && inquiry.productId === productId
+                );
 
                 if (existingInquiry !== -1) {
                     currentUser.myInquiries[existingInquiry] = newInquiry;
@@ -129,7 +133,9 @@ const productInquirySlice = createSlice({
 
                 // 사용자의 myInquiries 업데이트
                 const userInquiryIndex = user.myInquiries.findIndex(
-                    (inquiry) => inquiry.productId === productId || inquiry.productid === productId
+                    (inquiry) =>
+                        (inquiry.category === category || inquiry.category === category) &&
+                        (inquiry.productId === productId || inquiry.productid === productId)
                 );
 
                 if (userInquiryIndex !== -1) {
