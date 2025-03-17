@@ -19,13 +19,13 @@ import CCNotice from './pages/customercenter/components/CCNotice';
 import CCInquiry from './pages/customercenter/components/CCInquiry';
 import Search from './pages/search';
 import Purchase from './pages/purchase';
-import ReservationPage from "./pages/reservation";
-import ShoppingcartModal from "./components/purchase/ShoppingcartModal";
-import SignupPage from "./pages/signup";
-import Login from "./pages/login";
-import MypostsPage from "./pages/mypage/myposts";
-import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import Kbrand from "./pages/kbrand";
+import ReservationPage from './pages/reservation';
+import ShoppingcartModal from './components/purchase/ShoppingcartModal';
+import SignupPage from './pages/signup';
+import Login from './pages/login';
+import MypostsPage from './pages/mypage/myposts';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import Kbrand from './pages/kbrand';
 import AboutPage from './pages/about';
 
 const App = () => {
@@ -34,39 +34,39 @@ const App = () => {
             <BrowserRouter>
                 <ScrollToTop />
                 <Routes>
-                    <Route path='/' element={<Layout />}>
+                    <Route path="/" element={<Layout />}>
                         <Route index element={<Home />} />
-                        <Route path='home' element={<Home />} />
-                        <Route path='/about' element={<AboutPage />} />
-                        <Route path="/kbrand" element={<Kbrand/>} />
-                        <Route path='/productlist' element={<ProductListPage />} />
-                        <Route path='/productdetail' element={<ProductDetailPage />} />
-                        <Route path='/shoppingcartmodal' element={<ShoppingcartModal />} />
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/signup' element={<SignupPage />} />
-                        <Route path='/mypage' element={<MyPage />}>
-                            <Route path='order' element={<Order />} />
-                            <Route path='recent' element={<Recent />} />
-                            <Route path='wishlist' element={<Wishlist />} />
-                            <Route path='cart' element={<Cart />} />
-                            <Route path='myposts' element={<MypostsPage />} />
-                            <Route path='profile' element={<Profile />} />
-                            <Route path='logout' element={<Logout />} />
+                        <Route path="home" element={<Home />} />
+                        <Route path="/about" element={<AboutPage />} />
+                        <Route path="/kbrand" element={<Kbrand />} />
+                        <Route path="/productlist" element={<ProductListPage />} />
+                        <Route path="/productdetail/:productID" element={<ProductDetailPage />} />
+                        <Route path="/shoppingcartmodal" element={<ShoppingcartModal />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<SignupPage />} />
+                        <Route path="/mypage" element={<MyPage />}>
+                            <Route path="order" element={<Order />} />
+                            <Route path="recent" element={<Recent />} />
+                            <Route path="wishlist" element={<Wishlist />} />
+                            <Route path="cart" element={<Cart />} />
+                            <Route path="myposts" element={<MypostsPage />} />
+                            <Route path="profile" element={<Profile />} />
+                            <Route path="logout" element={<Logout />} />
                         </Route>
-                        <Route path='/customers' element={<CustomerCenter />}>
-                            <Route path='notice' element={<CCNotice />} />
-                            <Route path='faq' element={<CCFaq />} />
-                            <Route path='inquiry' element={<CCInquiry />} />
-                            <Route path='inquiryform' element={<CCInquiryForm />} />
+                        <Route path="/customers" element={<CustomerCenter />}>
+                            <Route path="notice" element={<CCNotice />} />
+                            <Route path="faq" element={<CCFaq />} />
+                            <Route path="inquiry" element={<CCInquiry />} />
+                            <Route path="inquiryform" element={<CCInquiryForm />} />
                         </Route>
-                        <Route path='/:search'>
+                        <Route path="/:search">
                             <Route index element={<Search />} />
                         </Route>
-                        <Route path='/purchase' element={<Purchase />} />
-                        <Route path='/reservation' element={<ReservationPage />} />
+                        <Route path="/purchase" element={<Purchase />} />
+                        <Route path="/reservation" element={<ReservationPage />} />
                     </Route>
-                    <Route path='/productinquiry' element={<ProductInquiry />} />
-                    <Route path='*' element={<NotFiles />} />
+                    <Route path="/productinquiry" element={<ProductInquiry />} />
+                    <Route path="*" element={<NotFiles />} />
                 </Routes>
             </BrowserRouter>
         </>
