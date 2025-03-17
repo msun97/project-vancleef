@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ProductListItem from '../../components/product/ProductListItem';
 import ProductListPageNav from '../../components/product/ProductListPageNav';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 const ProductListPage = () => {
+    const dispatch = useDispatch();
+    const location = useLocation(); // 현재 라우트 위치 가져오기
+
     // Redux store에서 상품 데이터와 필터링된 카테고리 가져오기
     const product = useSelector((state) => state.productR.productdata);
     const { filteredCategory } = useSelector((state) => state.productR);
@@ -18,16 +22,30 @@ const ProductListPage = () => {
     const [selectedFilter, setSelectedFilter] = useState(null);
     const [filterClosing, setFilterClosing] = useState(false); // 필터가 닫히는 중인지 상태 추가
 
+    // 이전 카테고리를 저장하는 ref
+    const prevCategoryRef = useRef(null);
     const timeoutRef = useRef(null);
 
-    // 상품 배열 업데이트 함수 (초기 렌더링 및 필터링 시 사용)
-    const updateProductColumns = (products) => {
+    // 카테고리가 변경될 때 필터 초기화
+    useEffect(() => {
+        // 이전 카테고리 값이 있고, 현재 카테고리와 다른 경우에만 실행
+        if (prevCategoryRef.current !== null && prevCategoryRef.current?.name !== filteredCategory?.name) {
+            console.log('카테고리 변경 감지: 필터 초기화');
+            setSelectedFilter(null); // 필터 상태 초기화
+        }
+
+        // 현재 카테고리를 이전 카테고리로 업데이트
+        prevCategoryRef.current = filteredCategory;
+    }, [filteredCategory]);
+
+    // 필터링되지 않은 원본 제품 목록을 2개 컬럼으로 나누는 함수
+    const distributeProductsToColumns = (products) => {
         // 모든 제품 데이터를 펼쳐서 하나의 배열로 만들기
         const allProducts = [];
 
         products.forEach((categoryItem) => {
             if (categoryItem.data && Array.isArray(categoryItem.data)) {
-                // 제품 데이터를 카테고리 정보와 함께 저장--- Array.isArray() 괄혼 안 내용이 배열인 지 여부 true,false 확인
+                // 제품 데이터를 카테고리 정보와 함께 저장
                 const productsWithCategory = categoryItem.data.map((product) => ({
                     ...product,
                     categoryId: categoryItem.id,
@@ -37,6 +55,7 @@ const ProductListPage = () => {
                 allProducts.push(...productsWithCategory);
             }
         });
+
         const leftColumn = [];
         const rightColumn = [];
 
@@ -52,19 +71,67 @@ const ProductListPage = () => {
         setRightColumnProducts(rightColumn);
     };
 
-    // 초기 렌더링 시 전체 제품 표시
-    useEffect(() => {
-        updateProductColumns(product);
-    }, [product]);
+    // 상품 정렬 및 컬럼 분배 함수
+    const sortAndDistributeProducts = (products, sortType) => {
+        // 모든 제품 데이터를 펼쳐서 하나의 배열로 만들기
+        const allProducts = [];
 
-    // 카테고리나 필터링된 상품 데이터가 변경될 때마다 제품 배열 업데이트
-    useEffect(() => {
-        if (filteredProducts.length > 0) {
-            updateProductColumns(filteredProducts);
+        products.forEach((categoryItem) => {
+            if (categoryItem.data && Array.isArray(categoryItem.data)) {
+                // 제품 데이터를 카테고리 정보와 함께 저장
+                const productsWithCategory = categoryItem.data.map((product) => ({
+                    ...product,
+                    categoryId: categoryItem.id,
+                    category: categoryItem.category,
+                }));
+
+                allProducts.push(...productsWithCategory);
+            }
+        });
+
+        // 정렬된 제품 목록
+        let sortedProducts = [...allProducts];
+
+        // 선택된 필터가 있을 경우에만 정렬 적용
+        if (sortType === 'sort3') {
+            // 낮은 가격순
+            sortedProducts.sort((a, b) => parseInt(a.price) - parseInt(b.price));
+        } else if (sortType === 'sort4') {
+            // 높은 가격순
+            sortedProducts.sort((a, b) => parseInt(b.price) - parseInt(a.price));
         }
-    }, [filteredProducts]);
 
-    // Intersection Observer 설정 - DOM 요소가 변경될 때마다 실행
+        const leftColumn = [];
+        const rightColumn = [];
+
+        sortedProducts.forEach((product, index) => {
+            if (index % 2 === 0) {
+                leftColumn.push(product);
+            } else {
+                rightColumn.push(product);
+            }
+        });
+
+        setLeftColumnProducts(leftColumn);
+        setRightColumnProducts(rightColumn);
+    };
+
+    // 제품 목록이나 카테고리가 변경될 때 제품 목록 업데이트
+    useEffect(() => {
+        const productsToProcess = filteredProducts.length > 0 ? filteredProducts : product;
+
+        if (productsToProcess && productsToProcess.length > 0) {
+            if (selectedFilter) {
+                // 필터가 선택된 경우 정렬 적용
+                sortAndDistributeProducts(productsToProcess, selectedFilter);
+            } else {
+                // 필터가 선택되지 않은 경우 원본 순서 유지
+                distributeProductsToColumns(productsToProcess);
+            }
+        }
+    }, [product, filteredProducts, selectedFilter]);
+
+    // Intersection Observer 설정
     useEffect(() => {
         // 잠시 지연을 주어 DOM이 업데이트될 시간을 확보
         const timer = setTimeout(() => {
@@ -114,7 +181,12 @@ const ProductListPage = () => {
     };
 
     const handleFilterSelect = (filterValue) => {
-        setSelectedFilter(filterValue); // 필터 선택
+        // 같은 필터를 다시 선택하면 필터 해제
+        if (selectedFilter === filterValue) {
+            setSelectedFilter(null);
+        } else {
+            setSelectedFilter(filterValue);
+        }
 
         // 이미 타이머가 있다면 제거
         if (timeoutRef.current) {
@@ -139,21 +211,18 @@ const ProductListPage = () => {
 
         // 카테고리 ID에 따라 영어 이름 반환
         switch (filteredCategory.name) {
-            case '목걸이':
+            case 'Necklaces and pendants':
                 return 'Necklaces and pendants';
-            case '팔찌':
+            case 'Bracelets':
                 return 'Bracelets';
-            case '반지':
+            case 'Rings':
                 return 'Rings';
-            case '귀걸이':
+            case 'Earrings':
                 return 'Earrings';
             default:
                 return 'All';
         }
     };
-
-    // 디버깅 코드 - 콘솔에 현재 상태 출력
-    console.log('현재 카테고리:', filteredCategory?.name);
 
     return (
         <div className='w-full h-auto relative bg-fixed bg-[url("/images/productListPageBg.png")] bg-no-repeat bg-top bg-cover'>
@@ -178,44 +247,6 @@ const ProductListPage = () => {
                                                 filterClosing ? 'opacity-0' : 'opacity-100'
                                             }`}
                                         >
-                                            <li className="h-[33px] radio-label">
-                                                <input
-                                                    type="radio"
-                                                    id="sort1"
-                                                    name="sort"
-                                                    value="sort1"
-                                                    className="radio-custom"
-                                                    checked={selectedFilter === 'sort1'}
-                                                    onChange={() => handleFilterSelect('sort1')}
-                                                />
-                                                <label
-                                                    htmlFor="sort1"
-                                                    className={`px-2.5 radio-custom-indicator cursor-pointer ${
-                                                        selectedFilter === 'sort1' ? 'font-bold' : ''
-                                                    }`}
-                                                >
-                                                    추천순
-                                                </label>
-                                            </li>
-                                            <li className="h-[33px] radio-label">
-                                                <input
-                                                    type="radio"
-                                                    id="sort2"
-                                                    name="sort"
-                                                    value="sort2"
-                                                    className="radio-custom "
-                                                    checked={selectedFilter === 'sort2'}
-                                                    onChange={() => handleFilterSelect('sort2')}
-                                                />
-                                                <label
-                                                    htmlFor="sort2"
-                                                    className={`px-2.5 radio-custom-indicator cursor-pointer ${
-                                                        selectedFilter === 'sort2' ? 'font-bold' : ''
-                                                    }`}
-                                                >
-                                                    판매인기순
-                                                </label>
-                                            </li>
                                             <li className="h-[33px] radio-label">
                                                 <input
                                                     type="radio"

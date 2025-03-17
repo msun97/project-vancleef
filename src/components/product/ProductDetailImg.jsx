@@ -1,36 +1,20 @@
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-
-// 컴포넌트 내에서
-const ProductDetailImg = () => {
-    const { productID } = useParams();
-    const productdata = useSelector((state) => state.productR.productdata);
-
-    // 모든 카테고리의 제품을 하나의 배열로 합침
-    let allProducts = [];
-    if (productdata && Array.isArray(productdata)) {
-        productdata.forEach((category) => {
-            if (category.data && Array.isArray(category.data)) {
-                allProducts = [...allProducts, ...category.data];
-            }
-        });
+const ProductDetailImg = ({ productImages, title }) => {
+    if (!productImages || !Array.isArray(productImages) || productImages.length === 0) {
+        return <div className="no-images">이미지를 찾을 수 없습니다.</div>;
     }
 
-    // 현재 제품 ID에 해당하는 제품 찾기
-    const currentProduct = allProducts.find((item) => item.productid === parseInt(productID));
-
     return (
-        <div className=" p-330 flex flex-col items-center">
-            {currentProduct?.objectimage?.[0] && (
-                <img src={currentProduct.objectimage[0]} className="w-[37%] object-contain mt-22" />
-            )}
-            {currentProduct?.objectimage?.[1] && (
-                <img src={currentProduct.objectimage[1]} className="w-[37%] object-contain mt-20" />
-            )}
-            {currentProduct?.objectimage?.[2] && (
-                <img src={currentProduct.objectimage[2]} className="w-[37%] object-contain" />
-            )}
+        <div className="p-330 flex flex-col items-center mt-24">
+            {productImages.map((imageUrl, index) => (
+                <img
+                    src={imageUrl}
+                    alt={`${title} - 이미지 ${index + 1}`}
+                    style={{ objectFit: 'contain', width: '500px', maxWidth: '100%' }}
+                    className="mb-40"
+                />
+            ))}
         </div>
     );
 };
+
 export default ProductDetailImg;

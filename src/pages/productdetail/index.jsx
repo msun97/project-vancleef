@@ -15,7 +15,8 @@ import ProductDetailImg from '../../components/product/ProductDetailImg';
 import ProductInformation from '../../components/product/ProductInformation';
 import RecommendProductSlide from '../../components/product/RecommendProductSlide';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCart } from '../../store/modules/cartSlice';
 
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
@@ -34,43 +35,38 @@ function ProductDetailPage() {
             [modalType]: !modalState[modalType],
         });
     };
-
-    const { productID } = useParams();
+    const dispatch = useDispatch();
+    const { category, id } = useParams();
+    const productdata = useSelector((state) => state.productR.productdata);
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const productdata = useSelector((state) => state.productR.productdata);
 
     useEffect(() => {
         setIsLoading(true);
         if (productdata && Array.isArray(productdata)) {
-            // 모든 카테고리의 모든 제품을 하나의 배열로 펼침
-            let allProducts = [];
-            productdata.forEach((category) => {
-                if (category.data && Array.isArray(category.data)) {
-                    allProducts = [...allProducts, ...category.data];
-                }
-            });
+            const foundCategory = productdata.find(
+                (categoryData) =>
+                    categoryData.category === category && categoryData.data && Array.isArray(categoryData.data)
+            ); /* find() 메서드는 JavaScript 배열에서 특정 조건을 만족하는 첫 번째 요소를 찾는 데 사용 */
 
-            // 제품 ID로 찾기
-            const foundProduct = allProducts.find((item) => item.productid === parseInt(productID));
-
-            setProduct(foundProduct);
+            if (foundCategory) {
+                const foundProduct = foundCategory.data.find((item) => item.productid === parseInt(id));
+                setProduct(foundProduct);
+            } else {
+                console.error('해당 카테고리를 찾을 수 없습니다.');
+            }
         } else {
             console.error('데이터 구조가 예상과 다릅니다:', productdata);
         }
         setIsLoading(false);
-    }, [productID, productdata]);
-    useEffect(() => {
-        console.log('Redux 스토어 데이터:', productdata);
-        console.log('현재 상품 ID:', productID);
-        // 나머지 코드는 동일
-    }, [productID, productdata]);
+    }, [category, id, productdata]);
+
     if (isLoading) {
         return <div>로딩 중...</div>;
     }
 
     if (!product) {
-        return <div>상품을 찾을 수 없습니다</div>;
+        return <div>상품을 찾을 수 없습니다.</div>;
     }
 
     return (
@@ -79,8 +75,7 @@ function ProductDetailPage() {
             <div id="goods" className="w-full h-full">
                 <div id="goods_view" className="w-full h-full flex flex-col md:flex-row">
                     <div className="view_lft w-[50%]  h-[800px]">
-                        <ProductSlide />
-                        {/* 왼쪽--제품 슬라이드 */}
+                        <ProductSlide productImages={product.objectimage} />
                     </div>
                     <div className="view_rgt w-[50%] h-[800px] font-primary text-[14px] leading-8">
                         <div className="px-[114px] h-full pt-[154px]">
@@ -99,21 +94,18 @@ function ProductDetailPage() {
                             <div className="option">
                                 <select className="w-full border border-solid black pl-[10px] ">
                                     <option value="" disabled selected>
-                                        size
+                                        옵션
                                     </option>
-                                    <option value="option1">옵션 1</option>
-                                    <option value="option2">옵션 2</option>
-                                    <option value="option3">옵션 3</option>
+                                    {product.colorpn ? <option value="option1">{product.colorpn[0]}</option> : null}
                                 </select>
-                                {/* 구매 폼 */}
                                 <form name="frmView" id="frmView" method="post" onSubmit={(e) => e.preventDefault()}>
                                     <input type="hidden" name="goodsno" value="12345" />
                                     <input type="hidden" name="cate" value="67890" />
-                                    {/* 다른 필요한 hidden input 필드들 추가 */}
                                     <div className="buy-btn">
                                         <Button
                                             onClick={(e) => {
                                                 e.preventDefault(); // Prevent form submission
+                                                dispatch(addCart(product));
                                                 toggleModal('addcart');
                                             }}
                                             className="mt-[12px]"
@@ -162,16 +154,13 @@ function ProductDetailPage() {
             <div className="w-full h-full mt-60">
                 <div className="w-full h-full flex flex-col">
                     <ProductDetailNav />
-                    <ProductDetailImg />
+                    <ProductDetailImg productImages={product.objectimage} />
                 </div>
             </div>
             <MotiveGuide />
             <SizeGuide />
-            {/* 사이즈가이드 */}
             <ProductInformation />
-            {/* 상품필수정보 */}
             <RecommendProductSlide />
-            {/* 추천상품 Slide */}
             <ProductNotice />
             <ReviewList />
             <ProductInquiryList />
@@ -179,7 +168,6 @@ function ProductDetailPage() {
             {modalState.care && <CareModal handleModal={() => toggleModal('care')} modalType="care" />}
             {modalState.delivery && <DelieveryModal handleModal={() => toggleModal('delivery')} modalType="delivery" />}
             {modalState.addcart && <ShoppingcartModal handleModal={() => toggleModal('addcart')} modalType="addcart" />}
-            {/* 장바구니 모달 */}
         </div>
     );
 }

@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ProductListItem from '../../components/product/ProductListItem';
 import ProductListPageNav from '../../components/product/ProductListPageNav';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const ProductListPage = () => {
+    const dispatch = useDispatch();
     // Redux store에서 상품 데이터와 필터링된 카테고리 가져오기
     const product = useSelector((state) => state.productR.productdata);
     const { filteredCategory } = useSelector((state) => state.productR);
@@ -12,6 +13,7 @@ const ProductListPage = () => {
     // 각 열에 표시할 상품 상태
     const [leftColumnProducts, setLeftColumnProducts] = useState([]);
     const [rightColumnProducts, setRightColumnProducts] = useState([]);
+    const [sortedProducts, setSortedProducts] = useState([]);
 
     // 필터 상태
     const [filterOpen, setFilterOpen] = useState(false);
@@ -20,14 +22,14 @@ const ProductListPage = () => {
 
     const timeoutRef = useRef(null);
 
-    // 상품 배열 업데이트 함수 (초기 렌더링 및 필터링 시 사용)
-    const updateProductColumns = (products) => {
+    // 상품 정렬 함수
+    const sortProducts = (products, sortType) => {
         // 모든 제품 데이터를 펼쳐서 하나의 배열로 만들기
         const allProducts = [];
 
         products.forEach((categoryItem) => {
             if (categoryItem.data && Array.isArray(categoryItem.data)) {
-                // 제품 데이터를 카테고리 정보와 함께 저장--- Array.isArray() 괄혼 안 내용이 배열인 지 여부 true,false 확인
+                // 제품 데이터를 카테고리 정보와 함께 저장
                 const productsWithCategory = categoryItem.data.map((product) => ({
                     ...product,
                     categoryId: categoryItem.id,
@@ -37,10 +39,27 @@ const ProductListPage = () => {
                 allProducts.push(...productsWithCategory);
             }
         });
+
+        // 가격에 따라 정렬
+        let sortedProducts = [...allProducts];
+
+        if (sortType === 'sort3') {
+            // 낮은 가격순
+            sortedProducts.sort((a, b) => parseInt(a.price) - parseInt(b.price));
+        } else if (sortType === 'sort4') {
+            // 높은 가격순
+            sortedProducts.sort((a, b) => parseInt(b.price) - parseInt(a.price));
+        }
+
+        return sortedProducts;
+    };
+
+    // 상품 배열 업데이트 함수 (2개 컬럼으로 나누기)
+    const updateProductColumns = (products) => {
         const leftColumn = [];
         const rightColumn = [];
 
-        allProducts.forEach((product, index) => {
+        products.forEach((product, index) => {
             if (index % 2 === 0) {
                 leftColumn.push(product);
             } else {
@@ -54,15 +73,23 @@ const ProductListPage = () => {
 
     // 초기 렌더링 시 전체 제품 표시
     useEffect(() => {
-        updateProductColumns(product);
+        if (product.length > 0) {
+            const products = sortProducts(product, selectedFilter);
+            setSortedProducts(products);
+        }
     }, [product]);
 
-    // 카테고리나 필터링된 상품 데이터가 변경될 때마다 제품 배열 업데이트
+    // 정렬된 상품이 변경될 때마다 컬럼 업데이트
     useEffect(() => {
-        if (filteredProducts.length > 0) {
-            updateProductColumns(filteredProducts);
-        }
-    }, [filteredProducts]);
+        updateProductColumns(sortedProducts);
+    }, [sortedProducts]);
+
+    // 카테고리나 필터링된 상품 데이터가 변경될 때마다 정렬 적용
+    useEffect(() => {
+        let productsToSort = filteredProducts.length > 0 ? filteredProducts : product;
+        const sortedData = sortProducts(productsToSort, selectedFilter);
+        setSortedProducts(sortedData);
+    }, [filteredProducts, selectedFilter]);
 
     // Intersection Observer 설정 - DOM 요소가 변경될 때마다 실행
     useEffect(() => {
@@ -116,6 +143,11 @@ const ProductListPage = () => {
     const handleFilterSelect = (filterValue) => {
         setSelectedFilter(filterValue); // 필터 선택
 
+        // 선택된 필터에 따라 상품 정렬
+        let productsToSort = filteredProducts.length > 0 ? filteredProducts : product;
+        const sortedData = sortProducts(productsToSort, filterValue);
+        setSortedProducts(sortedData);
+
         // 이미 타이머가 있다면 제거
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
@@ -151,9 +183,6 @@ const ProductListPage = () => {
                 return 'All';
         }
     };
-
-    // 디버깅 코드 - 콘솔에 현재 상태 출력
-    console.log('현재 카테고리:', filteredCategory?.name);
 
     return (
         <div className='w-full h-auto relative bg-fixed bg-[url("/images/productListPageBg.png")] bg-no-repeat bg-top bg-cover'>
