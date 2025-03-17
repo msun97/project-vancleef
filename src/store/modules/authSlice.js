@@ -2,12 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getKakaoLogin } from './kakaogetThunks';
 
 const initialState = {
-  joinData: [],
-  authed: false,
-  user: null,
+  joinData: JSON.parse(localStorage.getItem('users')) || [],
+  authed: JSON.parse(localStorage.getItem('authed')) || false,
+  user: JSON.parse(localStorage.getItem('currentUser')) || null,
   isSignUpComplete: false,
   goTg: null,
 };
+
+let no = initialState.joinData.length;
 
 export const authSlice = createSlice({
   name: 'auth',
