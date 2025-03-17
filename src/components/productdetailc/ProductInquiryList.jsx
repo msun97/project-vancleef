@@ -22,8 +22,8 @@ const ProductInquiryList = () => {
     // 리덕스 스토어에서 개별 상태로 가져오기
     const allInquiries = useSelector((state) => state.productInquiryR.inquiries);
 
-    // 현재 상품의 ID 가져오기 (URL 또는 Redux 상태에서)
-    const currentProductId = productId || useSelector((state) => state.productR?.currentProduct?.id);
+    // 현재 상품의 ID 가져오기
+    const currentProductId = productId;
 
     // 페이지네이션 상태를 개별적으로 가져오기
     const currPage = useSelector((state) =>
