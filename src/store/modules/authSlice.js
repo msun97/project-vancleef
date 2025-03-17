@@ -18,7 +18,6 @@ export const authSlice = createSlice({
     gotoTarget: (state, action) => {
       state.goTg = action.payload;
     },
-
     signup: (state, action) => {
       const user = action.payload;
       const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
@@ -30,13 +29,13 @@ export const authSlice = createSlice({
         username: user.username,
         tel: user.telFirst + user.telSecond + user.telThird,
         reservations: [],
+        favorites: [], // 찜 목록 초기화
       };
 
       storedUsers.push(member);
       localStorage.setItem("users", JSON.stringify(storedUsers));
       state.joinData.push(member);
     },
-
     login: (state, action) => {
       const { id_email, password } = action.payload;
       const cleanedEmail = id_email.toLowerCase().trim();
@@ -61,14 +60,12 @@ export const authSlice = createSlice({
         localStorage.setItem("authed", "false");
       }
     },
-
     logout: (state) => {
       state.authed = false;
       state.user = null;
       localStorage.removeItem("authed");
       localStorage.removeItem("currentUser");
     },
-
     restoreAuthState: (state) => {
       const savedAuthed = localStorage.getItem("authed") === "true";
       const savedUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -77,32 +74,31 @@ export const authSlice = createSlice({
         state.user = savedUser;
       }
     },
-
     setSignUpComplete: (state, action) => {
       state.isSignUpComplete = action.payload;
     },
-
     loginSuccess: (state, action) => {
       const userData = action.payload;
       if (!userData.reservations) {
         userData.reservations = [];
       }
+      // 찜 목록이 없으면 초기화
+      if (!userData.favorites) {
+        userData.favorites = [];
+      }
       state.authed = true;
       state.user = userData;
     },
-
     removeUsername: (state) => {
       if (state.user) {
         state.user.username = "";
       }
     },
-
     updateUsername: (state, action) => {
       if (state.user) {
         state.user.username = action.payload;
       }
     },
-
     updatePassword: (state, action) => {
       const { currentPassword, newPassword } = action.payload;
       if (state.user && state.user.password === currentPassword) {
@@ -111,7 +107,6 @@ export const authSlice = createSlice({
         console.error("현재 비밀번호가 일치하지 않습니다.");
       }
     },
-
     addReservation: (state, action) => {
       if (state.user) {
         state.user.reservations = state.user.reservations || [];
@@ -119,8 +114,27 @@ export const authSlice = createSlice({
         localStorage.setItem("user__로그인정보", JSON.stringify(state.user));
       }
     },
+    addfavorites: (state, action) => {
+      // user가 없으면 처리하지 않음
+      if (!state.user) return;
+      // favorites 초기화 확인
+      if (!state.user.favorites) {
+        state.user.favorites = [];
+      }
+      const exists = state.user.favorites.find(
+        (item) => item.productid === action.payload.productid
+      );
+      if (!exists) {
+        state.user.favorites.push(action.payload);
+      }
+    },
+    removeFavorite: (state, action) => {
+      if (!state.user || !state.user.favorites) return;
+      state.user.favorites = state.user.favorites.filter(
+        (item) => item.productid !== action.payload.productid
+      );
+    },
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(getKakaoLogin.pending, (state) => {
@@ -135,6 +149,9 @@ export const authSlice = createSlice({
         const user = action.payload.user;
         if (!user.reservations) {
           user.reservations = [];
+        }
+        if (!user.favorites) {
+          user.favorites = [];
         }
         state.authed = true;
         state.user = user;

@@ -149,7 +149,7 @@ function SignupFull() {
               <span className="w-[230px]">비밀번호 *</span>
               <Input
                 className="w-[600px] h-[55px] font-bold text-[#9C9C9C] text-center"
-                placeholder="비밀번호 입력해 주세요."
+                placeholder="비밀번호를 입력해 주세요."
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
