@@ -2,6 +2,7 @@ import React from 'react';
 import ImgMotionSec from './components/ImgMotionSec';
 import ValueSec from './components/ValueSec';
 import ValueSecTwo from './components/ValueSecTwo';
+import TimelineSec from './components/TimelineSec';
 
 const AboutPage = () => {
     return (
@@ -15,6 +16,7 @@ const AboutPage = () => {
             <ImgMotionSec />
             <ValueSec />
             <ValueSecTwo />
+            <TimelineSec />
         </div>
     );
 };
