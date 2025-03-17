@@ -1,8 +1,8 @@
 import React from 'react';
 import Line from '@/components/mypage/Line';
 import MypageCartlist from '@/components/mypage/Cart';
-import MypageCartSelect from '../../../components/mypage/Cart2';
-import Button from '../../../components/button';
+import MypageCartSelect from '@/components/mypage/Cart2';
+import Button from '@/components/button';
 
 const Cart = () => {
   return (
