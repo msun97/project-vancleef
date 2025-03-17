@@ -17,8 +17,8 @@ const ReviewList = ({ productID }) => {
     const isModalOpen = useSelector((state) => state.modalR?.isOpen);
 
     // 로그인한 사용자 정보
-    const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-    const { id } = currentUserData;
+    const currentUserData = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const id = currentUserData?.id || null;
 
     // 리뷰 상태 가져오기
     const { sortBy } = useSelector((state) => state.reviewR);
