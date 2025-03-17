@@ -40,23 +40,40 @@ const Header = () => {
           </h1>
         </Link>
         <nav>
-          <ul>
+          <ul className='flex gap-8'>
             <Link to="/productlist">
               <li className="font-secondary text-heading-m font-bold">SHOP</li>
+            </Link>
+            <Link to="/kbrand">
+              <li className="font-secondary text-heading-m font-bold">V-KOREA</li>
             </Link>
           </ul>
         </nav>
       </div>
-      <div className="util flex gap-[30px] items-center">
-        <button onClick={onSearch} className=" cursor-pointer">
-          <img src="/icons/search.svg" alt="검색" className="w-8 h-8" />
-        </button>
-				<Link to={authed ? "/mypage" : "/login"}>
-          <span className="font-secondary text-heading-m font-bold">
-            {authed ? "MY" : "LOGIN"}
-          </span>
-        </Link>
-      </div>
+        {
+          authed?(
+            <div className="util flex gap-[30px] items-center">
+            <button onClick={onSearch} className=" cursor-pointer">
+              <img src="/icons/search.svg" alt="검색" className="w-8 h-8" />
+            </button>
+            <button>
+              <img src="/icons/alarm-off.svg" className='w-8 h-8'/>
+            </button>
+            <Link to="/mypage">
+              <img src="/icons/user.svg" alt="MYPAGE" className='w-8 h-8'/>
+            </Link>
+            </div>
+          ) : (
+            <div className="util flex gap-[30px] items-center">
+            <button onClick={onSearch} className="cursor-pointer">
+              <img src="/icons/search.svg" alt="검색" className="w-8 h-8" />
+            </button>
+            <Link to="/login">
+              <span className="font-secondary text-heading-m font-bold">LOGIN</span>
+            </Link>
+            </div>
+          )
+        }
       {isSearch && <SearchModal onSearch={onSearch} />}
     </header>
   );

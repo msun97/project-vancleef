@@ -1,6 +1,7 @@
 import React from 'react';
 import CheckBox from '../../../components/checkbox';
 import Button from '../../../components/button';
+import { useParams } from 'react-router-dom';
 
 const SearchResultModal = ({ onClick }) => {
   return (
