@@ -46,7 +46,6 @@ const MypageItemList = () => {
           </div>
         </div>
       ))}
-			<Line/>
     </>
   );
 };
