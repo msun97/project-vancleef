@@ -18,6 +18,9 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
 
+
+
+
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
         inquiry: false,
@@ -40,6 +43,7 @@ function ProductDetailPage() {
     const productdata = useSelector((state) => state.productR.productdata);
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+		const cart = useSelector((state) => state.cartR.cart);
 
     useEffect(() => {
         setIsLoading(true);
@@ -60,6 +64,10 @@ function ProductDetailPage() {
         }
         setIsLoading(false);
     }, [category, id, productdata]);
+
+		useEffect(() => {
+			localStorage.setItem('cart', JSON.stringify(cart));
+	}, [cart]);
 
     if (isLoading) {
         return <div>로딩 중...</div>;

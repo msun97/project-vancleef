@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import AvailableReviews from './AvailableReviews';
 import MyReviews from './MyReviews';
+import MyInquiry from './MyInquiry';
 
 const MypostsTap = () => {
     const [activeTab, setActiveTab] = useState('available');
@@ -8,7 +9,7 @@ const MypostsTap = () => {
     const postsTap = [
         { id: 1, name: 'available', menu: '작성 가능한 리뷰' },
         { id: 2, name: 'written', menu: '내가 작성한 리뷰' },
-        { id: 3, name: 'qna', menu: '내가 작성한 문의' },
+        { id: 3, name: 'inquiry', menu: '내가 작성한 문의' },
     ];
 
     const handleClick = (name) => {

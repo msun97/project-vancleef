@@ -73,14 +73,21 @@ const MyReviews = () => {
         <ul>
           {myReviews.map((review) => (
             <li key={review.id} className="border-b py-2">
-              <p>{review.title}</p>
+          <div className='flex'>
+          	
+						  <div className='flex w-[100px] h-[100px]'></div>
+						  <div className='flex justify-between '>
+	            	  <p>{review.title}</p>
+									<div>{renderStars(review.rating)}</div>
               <p>{review.content}</p>
-              <span className="text-sm text-gray-500">{review.date}</span>
+              <span className="text-sm text-gray-500">{formatDate(review.date)}</span>
+	            </div>
+          </div>
             </li>
           ))}
         </ul>
       ) : (
-        <p>작성한 리뷰가 없습니다.</p>
+        <p className='text-center text-gray-500 py-8 border-gray-200'>작성한 리뷰가 없습니다.</p>
       )}
     </div>
     );

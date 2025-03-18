@@ -36,8 +36,8 @@ const MyInquiry = () => {
     };
 
     return (
-        <div>
-            <h2 className='text-xl font-bold mb-4'>내가 작성한 문의</h2>
+        <div>{/* 내가 작성한 문의 탭 안 */}
+            <h2 className='text-xl font-bold mb-4'></h2>
 
             {myInquiries.length > 0 ? (
                 <div className='border-t border-gray-200'>
@@ -101,7 +101,7 @@ const MyInquiry = () => {
                     ))}
                 </div>
             ) : (
-                <div className='text-center text-gray-500 py-8 border-t border-b border-gray-200'>
+                <div className='text-center text-gray-500 py-8 border-gray-200'>
                     작성한 문의가 없습니다.
                 </div>
             )}

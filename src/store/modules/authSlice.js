@@ -29,8 +29,9 @@ export const authSlice = createSlice({
         username: user.username,
         tel: user.telFirst + user.telSecond + user.telThird,
         reservations: [],
-        favorites: [], // 찜 목록 초기화
-        reviews: [],   // 리뷰 목록 초기화
+        favorites: [],
+        reviews: [],
+        cart: [], 
       };
 
       storedUsers.push(member);
@@ -113,7 +114,7 @@ export const authSlice = createSlice({
       if (state.user) {
         state.user.reservations = state.user.reservations || [];
         state.user.reservations.push(action.payload);
-        localStorage.setItem('user__로그인정보', JSON.stringify(state.user));
+        localStorage.setItem('currentUser', JSON.stringify(state.user));
       }
     },
     addfavorites: (state, action) => {
@@ -134,8 +135,8 @@ export const authSlice = createSlice({
       state.user.favorites = state.user.favorites.filter(
         (item) => item.productid !== action.payload.productid
       );
+      localStorage.setItem("currentUser", JSON.stringify(state.user));
     },
-    // addreviews
     addreviews: (state, action) => {
       if (!state.user) return;
       if (!state.user.reviews) {
@@ -148,6 +149,32 @@ export const authSlice = createSlice({
         state.user.reviews.push(action.payload);
         localStorage.setItem("currentUser", JSON.stringify(state.user));
       }
+    },
+    // 새로운 리듀서: 장바구니에 아이템 추가
+    addToCart: (state, action) => {
+      if (!state.user) return;
+      if (!state.user.cart) {
+        state.user.cart = [];
+      }
+      // 중복 추가를 막고 싶다면 아래 조건문 사용 (옵션)
+      const exists = state.user.cart.find(
+        (item) => item.productid === action.payload.productid
+      );
+      if (!exists) {
+        state.user.cart.push(action.payload);
+      } else {
+        // 중복일 경우 수량을 늘리거나 업데이트 할 수 있음
+        // exists.quantity = (exists.quantity || 1) + 1;
+      }
+      localStorage.setItem("currentUser", JSON.stringify(state.user));
+    },
+    // 새로운 리듀서: 장바구니에서 아이템 제거
+    removeFromCart: (state, action) => {
+      if (!state.user || !state.user.cart) return;
+      state.user.cart = state.user.cart.filter(
+        (item) => item.productid !== action.payload.productid
+      );
+      localStorage.setItem("currentUser", JSON.stringify(state.user));
     },
   },
   extraReducers: (builder) => {
@@ -168,7 +195,6 @@ export const authSlice = createSlice({
         if (!user.favorites) {
           user.favorites = [];
         }
-        // 리뷰 배열도 없으면 초기화 (추가)
         if (!user.reviews) {
           user.reviews = [];
         }
