@@ -20,6 +20,9 @@ import { addCart } from '../../store/modules/cartSlice';
 import { reservationActions } from '@/store/modules/reservationSlice';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 
+
+
+
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
         inquiry: false,
@@ -57,6 +60,7 @@ function ProductDetailPage() {
     const productdata = useSelector((state) => state.productR.productdata);
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+		const cart = useSelector((state) => state.cartR.cart);
 
     const foundCategory = productdata.find(
         (categoryData) => categoryData.category === category && categoryData.data && Array.isArray(categoryData.data)
@@ -82,6 +86,10 @@ function ProductDetailPage() {
         }
         setIsLoading(false);
     }, [category, id, productdata]);
+
+		useEffect(() => {
+			localStorage.setItem('cart', JSON.stringify(cart));
+	}, [cart]);
 
     if (isLoading) {
         return <div>로딩 중...</div>;

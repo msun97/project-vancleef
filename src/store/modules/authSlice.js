@@ -76,8 +76,10 @@ export const authSlice = createSlice({
                 myreservations: [], // reservations에서 myreservations로 변경
                 favorites: [], // 찜 목록 초기화
                 reviews: [], // 리뷰 목록 초기화
-                product:[]
+                product:[],
+								cart: [], 
             };
+
 
             storedUsers.push(member);
             localStorage.setItem('users', JSON.stringify(storedUsers));
