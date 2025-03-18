@@ -46,8 +46,9 @@ const loadInitialReviewData = () => {
         if (isLoggedIn) {
             // 로그인 상태면 현재 사용자의 myreviews 로드
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser && currentUser.myreviews) {
-                myreviews = deepCopy(currentUser.myreviews);
+            if (currentUser && currentUser.id) {
+                // 현재 사용자 ID로 리뷰 필터링
+                myreviews = reviews.filter((review) => String(review.id) === String(currentUser.id));
                 // 현재 사용자의 myreviews를 localStorage에 저장
                 localStorage.setItem('myreviews', JSON.stringify(myreviews));
             }
@@ -114,7 +115,7 @@ export const reviewSlice = createSlice({
             const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
             const userId = currentUser.id; // 로그인한 사용자 ID
 
-            if (!userId) {
+            if (!userId && userId !== 0) {
                 console.error('로그인된 사용자 정보를 찾을 수 없습니다.');
                 return;
             }
@@ -136,7 +137,7 @@ export const reviewSlice = createSlice({
 
             // 기존 리뷰가 있는지 확인
             const existingMyReviewIndex = state.myreviews.findIndex(
-                (review) => String(review.productId) === String(productId)
+                (review) => String(review.productId) === String(productId) && String(review.id) === String(userId)
             );
 
             // 기존 리뷰가 있으면 업데이트, 없으면 새로 추가
@@ -168,6 +169,9 @@ export const reviewSlice = createSlice({
             // 로컬 스토리지에 저장
             try {
                 localStorage.setItem('reviews', JSON.stringify(state.reviews));
+
+                // myreviews는 현재 사용자의 리뷰만 포함하도록 필터링
+                state.myreviews = state.reviews.filter((review) => String(review.id) === String(userId));
                 localStorage.setItem('myreviews', JSON.stringify(state.myreviews));
 
                 // currentUser 객체의 myreviews도 업데이트
@@ -194,18 +198,22 @@ export const reviewSlice = createSlice({
         // 리뷰 삭제
         deleteReview: (state, action) => {
             const { productId } = action.payload;
+            const userId = JSON.parse(localStorage.getItem('currentUser'))?.id;
 
-            // myreviews에서 삭제
-            state.myreviews = state.myreviews.filter((review) => String(review.productId) !== String(productId));
+            if (!userId && userId !== 0) {
+                console.error('로그인된 사용자 정보를 찾을 수 없습니다.');
+                return;
+            }
+
+            // myreviews에서 삭제 (이미 사용자 리뷰만 필터링되어 있지만, userId 확인 추가)
+            state.myreviews = state.myreviews.filter(
+                (review) => !(String(review.productId) === String(productId) && String(review.id) === String(userId))
+            );
 
             // reviews에서 해당 사용자의 리뷰 찾아서 삭제
-            const userId = JSON.parse(localStorage.getItem('currentUser'))?.id;
-            if (userId) {
-                state.reviews = state.reviews.filter(
-                    (review) =>
-                        !(String(review.id) === String(userId) && String(review.productId) === String(productId))
-                );
-            }
+            state.reviews = state.reviews.filter(
+                (review) => !(String(review.id) === String(userId) && String(review.productId) === String(productId))
+            );
 
             // 현재 상품 보기 중이라면 현재 리뷰 목록 업데이트
             if (String(state.currentProductId) === String(productId)) {
@@ -216,13 +224,19 @@ export const reviewSlice = createSlice({
             }
 
             // 로컬 스토리지에 저장
-            saveReviewsToLocalStorage(state.reviews, state.myreviews);
-
-            // 사용자 정보에서 myreviews 업데이트
             try {
+                localStorage.setItem('reviews', JSON.stringify(state.reviews));
+
+                // myreviews를 사용자 ID로 다시 필터링 (삭제 후 상태 확인)
+                state.myreviews = state.reviews.filter((review) => String(review.id) === String(userId));
+                localStorage.setItem('myreviews', JSON.stringify(state.myreviews));
+
                 // 현재 사용자 정보 업데이트
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 if (currentUser) {
+                    currentUser.myreviews = deepCopy(state.myreviews);
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
                     // users 배열에서 현재 사용자 찾아서 업데이트
                     const users = JSON.parse(localStorage.getItem('users')) || [];
                     const userIndex = users.findIndex((user) => String(user.id) === String(userId));
@@ -256,6 +270,13 @@ export const reviewSlice = createSlice({
         // 도움됐어요 버튼 클릭
         toggleHelpful: (state, action) => {
             const { productId, reviewId } = action.payload;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const userId = currentUser?.id;
+
+            if (!userId && userId !== 0) {
+                console.error('로그인된 사용자 정보를 찾을 수 없습니다.');
+                return;
+            }
 
             // reviews에서 해당 리뷰 찾기
             const reviewIndex = state.reviews.findIndex(
@@ -275,10 +296,10 @@ export const reviewSlice = createSlice({
                 }
 
                 // 만약 이것이 사용자 자신의 리뷰라면 myreviews도 업데이트
-                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                if (currentUser && String(currentUser.id) === String(reviewId)) {
+                if (String(userId) === String(reviewId)) {
                     const myReviewIndex = state.myreviews.findIndex(
-                        (review) => String(review.productId) === String(productId)
+                        (review) =>
+                            String(review.productId) === String(productId) && String(review.id) === String(userId)
                     );
 
                     if (myReviewIndex !== -1) {
@@ -298,13 +319,20 @@ export const reviewSlice = createSlice({
                 }
 
                 // 로컬 스토리지에 저장
-                saveReviewsToLocalStorage(state.reviews, state.myreviews);
+                localStorage.setItem('reviews', JSON.stringify(state.reviews));
+
+                // myreviews 재필터링
+                state.myreviews = state.reviews.filter((review) => String(review.id) === String(userId));
+                localStorage.setItem('myreviews', JSON.stringify(state.myreviews));
 
                 // 사용자 정보 업데이트
-                if (currentUser && String(currentUser.id) === String(reviewId)) {
-                    // users 배열에서 현재 사용자 찾아서 업데이트
+                if (currentUser) {
+                    currentUser.myreviews = deepCopy(state.myreviews);
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                    // users 배열 업데이트
                     const users = JSON.parse(localStorage.getItem('users')) || [];
-                    const userIndex = users.findIndex((user) => String(user.id) === String(currentUser.id));
+                    const userIndex = users.findIndex((user) => String(user.id) === String(userId));
 
                     if (userIndex !== -1) {
                         users[userIndex].myreviews = deepCopy(state.myreviews);
@@ -319,33 +347,26 @@ export const reviewSlice = createSlice({
             try {
                 // localStorage에서 currentUser 가져오기
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                const allReviews = JSON.parse(localStorage.getItem('reviews')) || [];
 
                 if (currentUser && currentUser.id) {
-                    // users 배열에서 현재 사용자 정보 가져오기
+                    // 현재 사용자 ID로 리뷰 필터링
+                    state.myreviews = allReviews.filter((review) => String(review.id) === String(currentUser.id));
+
+                    // localStorage 업데이트
+                    localStorage.setItem('myreviews', JSON.stringify(state.myreviews));
+
+                    // currentUser 객체 업데이트
+                    currentUser.myreviews = deepCopy(state.myreviews);
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                    // users 배열에서 현재 사용자 정보 업데이트
                     const users = JSON.parse(localStorage.getItem('users')) || [];
                     const userIndex = users.findIndex((user) => String(user.id) === String(currentUser.id));
 
                     if (userIndex !== -1) {
-                        // 사용자를 찾았을 때
-                        if (!users[userIndex].myreviews) {
-                            users[userIndex].myreviews = [];
-                        }
-
-                        // 깊은 복사로 객체 참조 문제 해결
-                        state.myreviews = deepCopy(users[userIndex].myreviews);
-
-                        // currentUser와 localStorage 업데이트
-                        localStorage.setItem('myreviews', JSON.stringify(state.myreviews));
-
-                        // users 배열 업데이트 (필요한 경우에만)
-                        if (JSON.stringify(users[userIndex].myreviews) !== JSON.stringify(state.myreviews)) {
-                            users[userIndex].myreviews = deepCopy(state.myreviews);
-                            localStorage.setItem('users', JSON.stringify(users));
-                        }
-                    } else {
-                        // 사용자를 찾지 못했을 때
-                        state.myreviews = [];
-                        localStorage.setItem('myreviews', JSON.stringify([]));
+                        users[userIndex].myreviews = deepCopy(state.myreviews);
+                        localStorage.setItem('users', JSON.stringify(users));
                     }
                 } else {
                     // 로그인 상태가 아닐 때
