@@ -17,6 +17,7 @@ import RecommendProductSlide from '../../components/product/RecommendProductSlid
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
+import { reservationActions } from '@/store/modules/reservationSlice';
 
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
@@ -72,6 +73,7 @@ function ProductDetailPage() {
 
     const goRes = () => {
         navigate('/reservation');
+        dispatch(reservationActions.handleReservation({ category, id }));
     };
 
     // colorpn에 있는 값과 productnumber가 일치하는 제품 찾기
@@ -109,8 +111,8 @@ function ProductDetailPage() {
                                     <dt>{product.price ? `${product.price.toLocaleString()}원` : '가격 정보 없음'}</dt>
                                 </dl>
                             </div>
-                            <div className="option ">
-                                <div className="flex gap-5">
+                            <div className='option '>
+                                <div className='flex gap-5'>
                                     {matchingProducts.length > 0 ? (
                                         matchingProducts.map((product, index) => (
                                             <div key={index}>
@@ -130,10 +132,10 @@ function ProductDetailPage() {
                                     )}
                                 </div>
 
-                                <form name="frmView" id="frmView" method="post" onSubmit={(e) => e.preventDefault()}>
-                                    <input type="hidden" name="goodsno" value="12345" />
-                                    <input type="hidden" name="cate" value="67890" />
-                                    <div className="buy-btn">
+                                <form name='frmView' id='frmView' method='post' onSubmit={(e) => e.preventDefault()}>
+                                    <input type='hidden' name='goodsno' value='12345' />
+                                    <input type='hidden' name='cate' value='67890' />
+                                    <div className='buy-btn'>
                                         <Button
                                             onClick={(e) => {
                                                 e.preventDefault(); // Prevent form submission
