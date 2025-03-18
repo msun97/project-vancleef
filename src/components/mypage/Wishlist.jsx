@@ -22,7 +22,7 @@ const MypageItemList = () => {
             <img
               src={item.objectimage[0] || 'https://via.placeholder.com/80'}
               alt="상품 이미지"
-              className="w-[100px] h-[100px] object-cover bg-gray-10"
+              className="w-[100px] h-[100px] object-cover border border-gray-200"
             />
             <div>
               <div className="font-bold">{item.title}</div>
@@ -46,6 +46,7 @@ const MypageItemList = () => {
           </div>
         </div>
       ))}
+			<Line/>
     </>
   );
 };

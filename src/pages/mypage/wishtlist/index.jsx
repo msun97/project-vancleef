@@ -8,9 +8,9 @@ const Wishlist = () => {
 			<div className="text-left">
 				<h1 className="text-sm font-bold">위시리스트</h1>
 			</div>
-	<Line/>
+
 	<MypageItemList/>
-	<Line marginTop=''/>
+
 	</div>
 	)
 }

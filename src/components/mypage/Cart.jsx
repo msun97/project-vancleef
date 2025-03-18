@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CheckBox from '../checkbox';
 import { useNavigate } from 'react-router-dom';
 import Button from '../button';
@@ -8,6 +8,7 @@ const MypageCartlist = () => {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cartR.cart);
   const dispatch = useDispatch();
+	const [isAgreed, setIsAgreed] = useState(false);
 
   // cart 상태 변경 시 localStorage 업데이트
   useEffect(() => {
@@ -18,29 +19,26 @@ const MypageCartlist = () => {
     }
   }, [cart]);
 
-  // 체크박스 상태 변경 시 해당 아이템의 isagree 업데이트
-  const handleCheckboxChange = (item, event) => {
-    const isChecked = event.target.checked;
-    dispatch({
-      type: 'UPDATE_CART_ITEM_AGREE',
-      payload: { productid: item.productid, isagree: isChecked },
-    });
-  };
 
   return (
     <div className="flex flex-col space-y-4">
       {cart.length > 0 ? (
         cart.map((item) => (
           <div
-            key={item.productid}
+            key={item.productnumber}
             className="flex flex-wrap items-start space-x-4 pt-[25px] pb-[25px] justify-between"
           >
-            <CheckBox
-              id={`agreement-${item.productid}`}
-              checked={!!item.isagree}
-              onChange={(e) => handleCheckboxChange(item, e)}
-              className="w-5 h-5"
-            />
+           <CheckBox
+  id={`agreement-${item.productnumber}`}
+  checked={!!item.isagree} // 일관성을 위해 프로퍼티 이름을 isagree로 사용합니다.
+  onChange={(checked) =>
+    dispatch({
+      type: 'TOGGLE_CART_ITEM',
+      payload: { productnumber: item.productnumber, isagree: checked },
+    })
+  }
+  className="w-5 h-5"
+/>
             <div>
               <img
                 src={
@@ -49,7 +47,7 @@ const MypageCartlist = () => {
                     : item.objectimage
                 }
                 alt="상품 이미지"
-                className="w-[100px] h-[100px] object-cover bg-[#F1F1F1]"
+                className="w-[100px] h-[100px] object-cover border border-gray-200"
               />
             </div>
             <div className="font-regular">{item.title}</div>
@@ -67,12 +65,6 @@ const MypageCartlist = () => {
                 className="font-bold w-[89px] h-[29px] border border-[#D9D9D9] flex items-center justify-center"
               >
                 바로주문
-              </Button>
-              <Button
-                variant="secondary"
-                className="font-bold w-[89px] h-[29px] border border-[#D9D9D9] flex items-center justify-center"
-              >
-                찜
               </Button>
             </div>
           </div>

@@ -27,4 +27,4 @@ export const store = configureStore({
     searchR,
    viewedProductsR,
   },
-
+})

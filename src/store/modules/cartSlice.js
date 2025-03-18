@@ -21,10 +21,21 @@ export const cartSlice = createSlice({
       // 장바구니 비우기
       state.cart = [];
     },
+    updateCart: (state, action) => {
+      state.cart = action.payload;
+    },
+    toggleCartItem: (state, action) => {
+      // action.payload에 { id, isagree } 또는 { productid, isagree }로 전달할 수 있음
+      // 여기서는 id로 비교하는 예시로 작성 (필요에 따라 수정 가능)
+			//체크박스용(test)
+      state.cart = state.cart.map((item) =>
+        item.id === action.payload.id ? { ...item, isagree: action.payload.isagree } : item
+      );
+    },
   },
 });
 
 // 상태를 변경하는 액션을 export
-export const { addCart, removeCart, clearCart } = cartSlice.actions;
+export const { addCart, removeCart, clearCart, toggleCartItem } = cartSlice.actions;
 
 export default cartSlice.reducer;

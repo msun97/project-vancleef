@@ -94,6 +94,7 @@ export const authSlice = createSlice({
             if (user) {
                 if (user.password === password) {
                     console.log('로그인 성공', user);
+										
 
                     // 사용자 myreservations 동기화
                     const myReservations = loadMyReservations().filter(
@@ -115,11 +116,13 @@ export const authSlice = createSlice({
                     console.log('비밀번호가 틀립니다');
                     state.authed = false;
                     localStorage.setItem('authed', 'false');
+										alert('비밀번호가 틀립니다');
                 }
             } else {
                 console.log('사용자를 찾을 수 없습니다');
                 state.authed = false;
                 localStorage.setItem('authed', 'false');
+								alert('사용자를 찾을 수 없습니다');
             }
         },
         logout: (state) => {
