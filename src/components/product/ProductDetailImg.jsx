@@ -7,6 +7,7 @@ const ProductDetailImg = ({ productImages, title }) => {
         <div className="p-330 flex flex-col items-center mt-24">
             {productImages.map((imageUrl, index) => (
                 <img
+                    key={index}
                     src={imageUrl}
                     alt={`${title} - 이미지 ${index + 1}`}
                     style={{ objectFit: 'contain', width: '500px', maxWidth: '100%' }}
