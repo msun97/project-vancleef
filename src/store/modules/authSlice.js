@@ -30,7 +30,7 @@ export const authSlice = createSlice({
         tel: user.telFirst + user.telSecond + user.telThird,
         reservations: [],
         favorites: [], // 찜 목록 초기화
-        reviews: [],   // 리뷰 목록 초기화
+        reviews: [], // 리뷰 목록 초기화
       };
 
       storedUsers.push(member);
@@ -42,7 +42,7 @@ export const authSlice = createSlice({
       const cleanedEmail = id_email.toLowerCase().trim();
       const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
       const user = storedUsers.find(
-        (u) => u.userid.toLowerCase() === cleanedEmail
+        u => u.userid.toLowerCase() === cleanedEmail,
       );
 
       if (user) {
@@ -63,15 +63,15 @@ export const authSlice = createSlice({
         localStorage.setItem('authed', 'false');
       }
     },
-    logout: (state) => {
+    logout: state => {
       state.authed = false;
       state.user = null;
       localStorage.removeItem('authed');
       localStorage.removeItem('currentUser');
     },
-    restoreAuthState: (state) => {
-      const savedAuthed = localStorage.getItem("authed") === "true";
-      const savedUser = JSON.parse(localStorage.getItem("currentUser"));
+    restoreAuthState: state => {
+      const savedAuthed = localStorage.getItem('authed') === 'true';
+      const savedUser = JSON.parse(localStorage.getItem('currentUser'));
       if (savedAuthed && savedUser) {
         state.authed = true;
         state.user = savedUser;
@@ -91,7 +91,7 @@ export const authSlice = createSlice({
       state.authed = true;
       state.user = userData;
     },
-    removeUsername: (state) => {
+    removeUsername: state => {
       if (state.user) {
         state.user.username = '';
       }
@@ -122,17 +122,17 @@ export const authSlice = createSlice({
         state.user.favorites = [];
       }
       const exists = state.user.favorites.find(
-        (item) => item.productid === action.payload.productid
+        item => item.productid === action.payload.productid,
       );
       if (!exists) {
         state.user.favorites.push(action.payload);
-        localStorage.setItem("currentUser", JSON.stringify(state.user));
+        localStorage.setItem('currentUser', JSON.stringify(state.user));
       }
     },
     removeFavorite: (state, action) => {
       if (!state.user || !state.user.favorites) return;
       state.user.favorites = state.user.favorites.filter(
-        (item) => item.productid !== action.payload.productid
+        item => item.productid !== action.payload.productid,
       );
     },
     // addreviews
@@ -142,17 +142,17 @@ export const authSlice = createSlice({
         state.user.reviews = [];
       }
       const exists = state.user.reviews.find(
-        (item) => item.reviewid === action.payload.reviewid
+        item => item.reviewid === action.payload.reviewid,
       );
       if (!exists) {
         state.user.reviews.push(action.payload);
-        localStorage.setItem("currentUser", JSON.stringify(state.user));
+        localStorage.setItem('currentUser', JSON.stringify(state.user));
       }
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(getKakaoLogin.pending, (state) => {
+      .addCase(getKakaoLogin.pending, state => {
         state.loading = true;
         state.error = null;
       })

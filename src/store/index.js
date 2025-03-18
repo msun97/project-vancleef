@@ -9,18 +9,20 @@ import reservationR from './modules/reservationSlice';
 import productR from './modules/productSlice';
 import inquiryR from './modules/ccinquirySlice';
 import favoritesR from './modules/favoritesSlice';
+import searchR from './modules/searchSlice';
 
 export const store = configureStore({
-    reducer: {
-        authR,
-        paginationR,
-        productInquiryR,
-        reviewR,
-        cartR,
-        modalR,
-        reservationR,
-        productR,
-        inquiryR,
-        favoritesR,
-    },
+  reducer: {
+    authR,
+    paginationR,
+    productInquiryR,
+    reviewR,
+    cartR,
+    modalR,
+    reservationR,
+    productR,
+    inquiryR,
+    favoritesR,
+    searchR,
+  },
 });
