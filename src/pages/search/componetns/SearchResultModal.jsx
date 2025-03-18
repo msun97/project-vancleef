@@ -3,16 +3,29 @@ import CheckBox from '../../../components/checkbox';
 import Button from '../../../components/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchActions } from '@/store/modules/searchSlice';
+import { useParams } from 'react-router-dom';
 
-const SearchResultModal = ({ onClick, originalData, onFiltering }) => {
-  const dispatch = useDispatch();
-
+const SearchResultModal = ({
+  onClick,
+  originalData,
+  handleFilterChange,
+  isOpen,
+}) => {
+  // 모달이 닫혔을 땐 아예 렌더링 안 함.
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, []);
+  }, [isOpen]);
+  const { keyword } = useParams();
+  const dispatch = useDispatch();
+
   const groupPricesByMillionWon = priceArray => {
     const minPrice = Math.min(...priceArray);
     const maxPrice = Math.max(...priceArray);
@@ -75,35 +88,44 @@ const SearchResultModal = ({ onClick, originalData, onFiltering }) => {
   };
 
   const filteringPrice = item => {
-    onFiltering();
     setFilterPrice(prev => (prev.max === item.max ? {} : item));
+    handleFilterChange();
   };
   const filteringMaterial = item => {
-    onFiltering();
     setFilterMaterial(prev => (prev === item ? '' : item));
+    handleFilterChange();
   };
 
   const filteringStone = item => {
-    onFiltering();
     setFilterStone(prev => (prev === item ? '' : item));
+    handleFilterChange();
   };
   const filteringItems = item => {
-    onFiltering();
-    setFilterItems(prev => (prev === item ? undefined : item));
+    setFilterItems(prev => (prev === item ? '' : item));
+    handleFilterChange();
   };
 
   const onReset = () => {
     setFilterPrice({});
     setFilterMaterial('');
     setFilterStone('');
-    setFilterItems(undefined);
+    setFilterItems('');
     dispatch(searchActions.setFiltered({}));
     onClick();
   };
 
+  useEffect(() => {
+    setFilterPrice({});
+    setFilterMaterial('');
+    setFilterStone('');
+    setFilterItems('');
+  }, [keyword]);
+
   return (
     <div
-      className="fixed w-full h-[100vh] bg-[rgba(0,0,0,0.5)] flex justify-center left-0 top-0"
+      className={`fixed w-full h-[100vh] bg-[rgba(0,0,0,0.5)] flex justify-center left-0 top-0 transition-opacity duration-300 ${
+        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+      }`}
       style={{ zIndex: 9999 }}
       onClick={onClick}
     >

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import DropDown from '../../components/dropdown';
 import SearchResultModal from './componetns/SearchResultModal';
 import { Link, useParams } from 'react-router-dom';
 import { productdata } from '../../assets/api/productdata';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchActions } from '@/store/modules/searchSlice';
-import { addFavorite, removeFavorite } from '@/store/modules/favoritesSlice';
 import { authActions } from '@/store/modules/authSlice';
 
 const Search = () => {
@@ -13,12 +12,11 @@ const Search = () => {
   const { keyword } = useParams();
   const alldata = productdata;
   const { user } = useSelector(state => state.authR);
+  const categories = alldata.map(item => item.category);
+
   const [searchData, setSearchData] = useState([]);
-
   useEffect(() => {
-    const categories = alldata.map(item => item.category);
-
-    const updatedSearchData = alldata.flatMap(item => {
+    const newData = alldata.flatMap(item => {
       const categoryIndex = categories.indexOf(item.category);
 
       if (item.searchCategory.includes(keyword)) {
@@ -36,44 +34,50 @@ const Search = () => {
           )
           .map(data => ({ ...data, category: categoryIndex }));
       }
-
-      return []; // 빈 배열 반환 (flatMap이므로 영향 없음)
     });
 
-    setSearchData(updatedSearchData);
-    dispatch(searchActions.setOriginal(updatedSearchData)); // 리덕스 업데이트
-  }, [keyword]); // 🔥 keyword 바뀔 때마다 실행
-
-  const filterData = useSelector(state => state.searchR.filterData);
-  useEffect(() => {
-    dispatch(searchActions.setOriginal(searchData));
-  }, []);
-  const [isFillter, setIsFillter] = useState(false);
+    setSearchData(newData);
+    setNowSetSearchData(newData);
+  }, [keyword, alldata]);
+  const [data, setData] = useState(searchData);
   const [isFiltering, setIsFiltering] = useState(false);
-  useEffect(() => {
-    setIsFiltering(false);
-  }, [keyword]);
-  const onFiltering = () => {
+  const { filterData } = useSelector(state => state.searchR);
+  const handleFilterChange = () => {
     setIsFiltering(true);
   };
-  const onFilter = () => {
-    setIsFillter(!isFillter);
-  };
-  const [sortData, setSortData] = useState(searchData);
   useEffect(() => {
     if (isFiltering) {
-      setSortData(filterData);
+      setData(filterData);
     } else {
-      setSortData(searchData);
+      setData(searchData);
     }
-  }, [keyword, isFiltering, searchData, filterData]);
+  }, [isFiltering, filterData, searchData]);
+
+  const [isSort, setIsSort] = useState('인기순');
+  const [nowSearchData, setNowSetSearchData] = useState(searchData);
+  useEffect(() => {
+    setNowSetSearchData(searchData);
+  }, [searchData]);
+  useEffect(() => {
+    if (searchData && searchData.length > 0) {
+      dispatch(searchActions.setOriginal(searchData));
+    }
+  }, [searchData, dispatch]);
+  useEffect(() => {
+    if (isSort === '인기순') {
+      setNowSetSearchData(data);
+    } else if (isSort === '가격순') {
+      setNowSetSearchData([...data].sort((a, b) => b.price - a.price));
+    }
+  }, [isSort, data]);
 
   const handleClick = sort => {
-    if (sort === '인기순') {
-      setSortData(prev => prev);
-    } else if (sort === '가격순') {
-      setSortData(prev => prev.sort((a, b) => b.price - a.price));
-    }
+    setIsSort(sort);
+  };
+
+  const [isFillter, setIsFillter] = useState(false);
+  const onFilter = () => {
+    setIsFillter(!isFillter);
   };
 
   const onFavorite = data => {
@@ -86,9 +90,6 @@ const Search = () => {
   const offFavorite = data => {
     dispatch(authActions.removeFavorite(data));
   };
-
-  console.log(sortData);
-
   return (
     <div className="py-40">
       <div className="wrap p-330">
@@ -133,12 +134,12 @@ const Search = () => {
           </div>
           <div className="results">
             <ul className="flex flex-wrap gap-10">
-              {sortData.length === 0 ? (
+              {nowSearchData.length === 0 ? (
                 <div className="text-center text-[14px] font-bold">
                   검색결과가 없습니다.
                 </div>
               ) : (
-                sortData.map((product, idx) => {
+                nowSearchData.map((product, idx) => {
                   const isFavorite = user.favorites.some(
                     item => item.productnumber === product.productnumber,
                   );
@@ -191,17 +192,12 @@ const Search = () => {
           </div>
         </div>
       </div>
-      {isFillter ? (
-        <SearchResultModal
-          onClick={onFilter}
-          data={sortData}
-          originalData={searchData}
-          onFiltering={onFiltering}
-          isFiltering={isFiltering}
-        />
-      ) : (
-        ''
-      )}
+      <SearchResultModal
+        isOpen={isFillter} // 추가
+        onClick={onFilter}
+        originalData={searchData}
+        handleFilterChange={handleFilterChange}
+      />
     </div>
   );
 };
