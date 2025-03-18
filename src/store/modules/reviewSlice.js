@@ -109,7 +109,7 @@ export const reviewSlice = createSlice({
 
         // 새로운 리뷰 추가
         addReview: (state, action) => {
-            const { productId, reviewData } = action.payload;
+            const { productId, reviewData, category } = action.payload;
 
             // 현재 로그인한 사용자 정보 가져오기
             const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
@@ -120,12 +120,11 @@ export const reviewSlice = createSlice({
                 return;
             }
 
-            console.log('리뷰 추가 시작:', { userId, productId, reviewData });
-
             // 새 리뷰 객체 생성
             const newReview = {
                 id: userId, // 현재 로그인한 사용자 ID
                 productId: productId, // 상품 ID
+                category: category,
                 title: reviewData.title || '',
                 content: reviewData.content,
                 rating: reviewData.rating,

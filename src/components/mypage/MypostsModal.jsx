@@ -6,7 +6,7 @@ import { closeModal } from '../../store/modules/modalSlice';
 import { reviewActions } from '../../store/modules/reviewSlice';
 import Draggable from 'react-draggable';
 
-const MypostsModal = ({ productId, productName }) => {
+const MypostsModal = ({ productId, productName, category }) => {
     const [rating, setRating] = useState(0);
     const [title, setTitle] = useState(''); // 리뷰 제목 상태
     const [content, setContent] = useState(''); // 리뷰 내용 상태
@@ -79,7 +79,8 @@ const MypostsModal = ({ productId, productName }) => {
     };
 
     // 리뷰 등록 핸들러
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         // 입력값 검증
         if (rating === 0) {
             alert('별점을 선택해주세요.');
@@ -111,11 +112,13 @@ const MypostsModal = ({ productId, productName }) => {
             reviewActions.addReview({
                 productId: productId,
                 reviewData: reviewData,
+                category,
             })
         );
 
         // 모달 닫기
         dispatch(closeModal());
+        alert('리뷰가 성공적으로 등록되었습니다.');
 
         // 상태 초기화
         setRating(0);
