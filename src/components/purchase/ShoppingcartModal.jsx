@@ -3,9 +3,15 @@ import Button from '../button';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeCart } from '../../store/modules/cartSlice';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ShoppingcartModal = ({ handleModal, modalType }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/purchase');
+    };
     const { cart } = useSelector((state) => state.cartR); // 장바구니에서 데이터를 가져옴
     const [selectedItems, setSelectedItems] = useState([]);
     const [isChecked, setIsChecked] = useState(false); // 전체 선택 체크박스 상태 관리
@@ -148,7 +154,9 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
                                     {/* 장바구니 합계 계산 */}
                                 </div>
                             </div>
-                            <Button className={'w-full h-[55px] text-[17px] tracking-wide'}>주문하기</Button>
+                            <Button className="w-full h-[55px] text-[17px] tracking-wide" onClick={handleClick}>
+                                주문하기
+                            </Button>
                         </div>
                     </div>
                 </div>
