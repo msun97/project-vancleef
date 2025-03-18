@@ -12,8 +12,10 @@ import PrivateInfoForm from '../../components/reservationc/PrivateInfoForm';
 const ReservationPage = () => {
     const dispatch = useDispatch();
     const { currentStep } = useSelector((state) => state.reservationR);
-    const reservationItem = JSON.parse(localStorage.getItem('reservationItem'));
+    const reservationItem = JSON.parse(localStorage.getItem('reservationItem')) || {};
     const { category, id } = reservationItem;
+
+		
 
     // 컴포넌트 마운트 시 URL 파라미터 저장 및 예약 상태 확인
     useEffect(() => {

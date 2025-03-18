@@ -75,7 +75,6 @@ export const authSlice = createSlice({
                 tel: user.telFirst + user.telSecond + user.telThird,
                 myreservations: [], // reservations에서 myreservations로 변경
                 favorites: [], // 찜 목록 초기화
-                reviews: [], // 리뷰 목록 초기화
                 product:[],
 								cart: [], 
             };
@@ -199,7 +198,7 @@ export const authSlice = createSlice({
             if (!state.user.favorites) {
                 state.user.favorites = [];
             }
-            const exists = state.user.favorites.find((item) => item.productid === action.payload.productid);
+            const exists = state.user.favorites.find((item) => item.productnumber === action.payload.productnumber);
             if (!exists) {
                 state.user.favorites.push(action.payload);
                 localStorage.setItem('currentUser', JSON.stringify(state.user));
@@ -207,7 +206,7 @@ export const authSlice = createSlice({
         },
         removeFavorite: (state, action) => {
             if (!state.user || !state.user.favorites) return;
-            state.user.favorites = state.user.favorites.filter((item) => item.productid !== action.payload.productid);
+            state.user.favorites = state.user.favorites.filter((item) => item.productnumber !== action.payload.productnumber);
         },
         // addreviews
         addreviews: (state, action) => {
