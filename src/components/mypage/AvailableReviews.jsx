@@ -12,9 +12,8 @@ const AvailableReviews = () => {
 		
 // 사용자가 작성한 리뷰 가져오기
 const userReviews = useSelector((state) =>
-  userNum ? (state.reviewR.userReviews[userNum] || {}) : {}
+  userNum ? ((state.reviewR.userReviews || {})[userNum] || {}) : {}
 );
-
 // 로컬 스토리지에서 구매 내역 가져오기 (실제로는 API 호출로 대체)
 const [purchaseHistory, setPurchaseHistory] = useState([]);
 
