@@ -14,7 +14,7 @@ import ProductDetailNav from '../../components/product/ProductDetailNav';
 import ProductDetailImg from '../../components/product/ProductDetailImg';
 import ProductInformation from '../../components/product/ProductInformation';
 import RecommendProductSlide from '../../components/product/RecommendProductSlide';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
 
@@ -36,6 +36,7 @@ function ProductDetailPage() {
         });
     };
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { category, id } = useParams();
     const productdata = useSelector((state) => state.productR.productdata);
     const [product, setProduct] = useState(null);
