@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../button';
 import { useDispatch, useSelector } from 'react-redux';
 
-const MypageCartlist = ({ selectedItems, onSelect }) => {
+const MypageCartlist = () => {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cartR.cart);
   const dispatch = useDispatch();
 
-  // cart 상태가 변경될 때마다 localStorage의 currentUser의 cart 배열 업데이트
+  // cart 상태 변경 시 localStorage 업데이트
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser) {
@@ -18,10 +18,13 @@ const MypageCartlist = ({ selectedItems, onSelect }) => {
     }
   }, [cart]);
 
-  // 체크박스 상태 변경 처리 (이벤트 객체에서 checked 값을 추출)
+  // 체크박스 상태 변경 시 해당 아이템의 isagree 업데이트
   const handleCheckboxChange = (item, event) => {
     const isChecked = event.target.checked;
-    onSelect(item.productid, isChecked);
+    dispatch({
+      type: 'UPDATE_CART_ITEM_AGREE',
+      payload: { productid: item.productid, isagree: isChecked },
+    });
   };
 
   return (
@@ -34,13 +37,17 @@ const MypageCartlist = ({ selectedItems, onSelect }) => {
           >
             <CheckBox
               id={`agreement-${item.productid}`}
-              checked={selectedItems.includes(item.productid)}
+              checked={!!item.isagree}
               onChange={(e) => handleCheckboxChange(item, e)}
               className="w-5 h-5"
             />
             <div>
               <img
-                src={Array.isArray(item.objectimage) ? item.objectimage[0] : item.objectimage}
+                src={
+                  Array.isArray(item.objectimage)
+                    ? item.objectimage[0]
+                    : item.objectimage
+                }
                 alt="상품 이미지"
                 className="w-[100px] h-[100px] object-cover bg-[#F1F1F1]"
               />

@@ -9,6 +9,7 @@ const AvailableReviews = () => {
     const user = useSelector((state) => state.authR.user);
 		const userNum = user?.id;
 		
+		
 // 사용자가 작성한 리뷰 가져오기
 const userReviews = useSelector((state) =>
   userNum ? (state.reviewR.userReviews[userNum] || {}) : {}
