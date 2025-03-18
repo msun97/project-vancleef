@@ -143,7 +143,7 @@ const ProductInquiry = () => {
         dispatch(productInquiryActions.addInquiry(inquiryData));
 
         alert('문의가 등록되었습니다.');
-        navigate(`/product/${category}/${productId}`);
+        navigate(`/productdetail/${category}/${productId}`);
     };
 
     const onExit = (e) => {
