@@ -1,25 +1,68 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 const DelieveryModal = ({ handleModal, modalType }) => {
-    // 모달이 마운트될 때 body에 overflow: hidden 추가하고
-    // 언마운트될 때 제거하는 효과
+    // 모달 컨테이너에 대한 ref 생성
+    const modalRef = useRef(null);
+
     useEffect(() => {
         // 원래 body의 overflow 스타일 저장
         const originalStyle = window.getComputedStyle(document.body).overflow;
         // body에 overflow: hidden 적용
         document.body.style.overflow = 'hidden';
 
+        // GSAP 애니메이션 설정
+        // 모달 시작 위치를 viewport 오른쪽 바깥으로 설정하고, 애니메이션으로 원래 위치로 이동
+        if (modalRef.current) {
+            // 초기 상태 설정 (viewport 바깥에서 시작)
+            gsap.set(modalRef.current, {
+                x: '100%', // 오른쪽 바깥에서 시작
+                opacity: 0,
+            });
+
+            // 애니메이션 실행
+            gsap.to(modalRef.current, {
+                x: '0%', // 원래 위치로 이동
+                opacity: 1,
+                duration: 0.5, // 애니메이션 시간 (초)
+                ease: 'power3.out', // 이징 함수 (부드러운 마무리)
+            });
+        }
+
         // 컴포넌트가 언마운트될 때 원래 스타일로 되돌림
         return () => {
             document.body.style.overflow = originalStyle;
+
+            // 컴포넌트 언마운트 시 애니메이션 역방향 실행 (선택 사항)
+            if (modalRef.current) {
+                gsap.to(modalRef.current, {
+                    x: '100%',
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                });
+            }
         };
     }, []);
+
+    // 모달 닫기 함수
+    const closeModal = () => {
+        // 닫기 애니메이션
+        gsap.to(modalRef.current, {
+            x: '100%',
+            opacity: 0,
+            duration: 0.3,
+            ease: 'power2.in',
+            onComplete: () => handleModal(modalType), // 애니메이션 완료 후 모달 처리 함수 호출
+        });
+    };
+
     return (
         <div className='fixed bg-[rgba(0,0,0,0.5)] w-full h-full top-0 left-0' style={{ zIndex: 9999 }}>
             <div className='relative h-full'>
-                <div className='absolute top-0 right-0 w-[450px] bg-white h-full overflow-y-scroll'>
+                <div ref={modalRef} className='absolute top-0 right-0 w-[450px] bg-white h-full overflow-y-scroll'>
                     <div className='flex flex-col items-center px-[60px] py-[50px] text-start relative'>
-                        <button onClick={() => handleModal(modalType)}>
+                        <button onClick={closeModal}>
                             <svg
                                 width='24'
                                 height='24'
