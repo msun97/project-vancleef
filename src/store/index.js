@@ -25,6 +25,6 @@ export const store = configureStore({
     inquiryR,
     favoritesR,
     searchR,
-   viewedProductsR,
+    viewedProductsR,
   },
-
+});
