@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../button';
 import CheckBox from '../checkbox';
 import { reservationActions } from '../../store/modules/reservationSlice';
+import { useNavigate } from 'react-router-dom';
 
 const PrivateInfoForm = () => {
     const dispatch = useDispatch();
     const { personalInfo } = useSelector((state) => state.reservationR.reservation);
     const currentStep = useSelector((state) => state.reservationR.currentStep);
-    const { user, authed } = useSelector((state) => state.auth); // 인증 상태와 사용자 정보 가져오기
+    const { user, authed } = useSelector((state) => state.authR); // 인증 상태와 사용자 정보 가져오기
+    const navigate = useNavigate();
 
     // 상태 초기화 - 로그인한 경우 사용자 정보 활용
     const [gender, setGender] = useState(personalInfo.gender || '');
@@ -25,6 +27,9 @@ const PrivateInfoForm = () => {
     const [privacyDisagree, setPrivacyDisagree] = useState(personalInfo.privacyAgreement === false);
     const [marketingAgreement, setMarketingAgreement] = useState(personalInfo.marketingAgreement || false);
     const [ageVerification, setAgeVerification] = useState(personalInfo.ageVerification || false);
+
+    // 완료 페이지 상태 추가
+    const [showCompletionPage, setShowCompletionPage] = useState(false);
 
     // Load saved data from localStorage on component mount
     useEffect(() => {
@@ -174,7 +179,14 @@ const PrivateInfoForm = () => {
 
         // 예약 완료 단계로 이동
         dispatch(reservationActions.setCurrentStep(5));
-        alert('예약이 완료되었습니다.');
+
+        // 완료 페이지 표시 상태 활성화
+        setShowCompletionPage(true);
+
+        // 3초 후 마이페이지로 이동
+        setTimeout(() => {
+            navigate('/mypage');
+        }, 3000);
     };
 
     // 이전 단계에서 완료되지 않았다면 접근 제한
@@ -183,6 +195,19 @@ const PrivateInfoForm = () => {
             <div className='border-t-2 w-full'>
                 <h3 className='font-secondary text-[20px] pt-[30px] pb-[40px]'>4. 개인 정보</h3>
                 <p className='text-center py-4'>예약 상세 정보를 먼저 입력해주세요.</p>
+            </div>
+        );
+    }
+
+    // 완료 페이지 보여주기
+    if (showCompletionPage) {
+        return (
+            <div className='border-t-2 w-full'>
+                <div className='flex flex-col items-center justify-center py-16'>
+                    <h3 className='font-secondary text-[24px] mb-6'>예약이 완료되었습니다</h3>
+                    <p className='text-center mb-4'>예약 정보는 마이페이지에서 확인하실 수 있습니다.</p>
+                    <p className='text-center text-gray-500'>잠시 후 마이페이지로 이동합니다...</p>
+                </div>
             </div>
         );
     }

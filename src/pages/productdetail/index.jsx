@@ -17,8 +17,12 @@ import RecommendProductSlide from '../../components/product/RecommendProductSlid
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
+import { reservationActions } from '@/store/modules/reservationSlice';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import { viewedProductsActions } from '@/store/modules/viewedProductsSlice';
+
+
+
 
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
@@ -57,6 +61,7 @@ function ProductDetailPage() {
     const productdata = useSelector((state) => state.productR.productdata);
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+		const cart = useSelector((state) => state.cartR.cart);
 
     const foundCategory = productdata.find(
         (categoryData) => categoryData.category === category && categoryData.data && Array.isArray(categoryData.data)
@@ -88,6 +93,10 @@ function ProductDetailPage() {
         setIsLoading(false);
     }, [category, id, productdata]);
 
+		useEffect(() => {
+			localStorage.setItem('cart', JSON.stringify(cart));
+	}, [cart]);
+
     if (isLoading) {
         return <div>로딩 중...</div>;
     }
@@ -95,6 +104,11 @@ function ProductDetailPage() {
     if (!product) {
         return <div>상품을 찾을 수 없습니다.</div>;
     }
+
+    const goRes = () => {
+        navigate('/reservation');
+        dispatch(reservationActions.handleReservation({ category, id }));
+    };
 
     //1.detail product --- colorpn 있으면 찾기
     const targetColorpns = product.colorpn?.map((product) => product);
@@ -160,10 +174,10 @@ function ProductDetailPage() {
                                     })}
                                 </div>
 
-                                <form name="frmView" id="frmView" method="post" onSubmit={(e) => e.preventDefault()}>
-                                    <input type="hidden" name="goodsno" value="12345" />
-                                    <input type="hidden" name="cate" value="67890" />
-                                    <div className="buy-btn">
+                                <form name='frmView' id='frmView' method='post' onSubmit={(e) => e.preventDefault()}>
+                                    <input type='hidden' name='goodsno' value='12345' />
+                                    <input type='hidden' name='cate' value='67890' />
+                                    <div className='buy-btn'>
                                         <Button
                                             onClick={(e) => {
                                                 e.preventDefault(); // Prevent form submission

@@ -11,6 +11,52 @@ const initialState = {
 
 let no = initialState.joinData.length;
 
+
+// 현재 사용자의 myreservations 가져오기
+const loadMyReservations = () => {
+    try {
+        return JSON.parse(localStorage.getItem('myreservations')) || [];
+    } catch (error) {
+        console.error('myreservations를 불러오는 중 오류 발생:', error);
+        return [];
+    }
+};
+
+// 사용자와 사용자의
+const syncUserReservations = (user) => {
+    if (!user) return null;
+
+    // myreservations 가져오기
+    const myReservations = loadMyReservations();
+
+    // 사용자 객체에 myreservations 동기화
+    const updatedUser = {
+        ...user,
+        myreservations: myReservations,
+    };
+
+    // users 스토리지에서 해당 사용자 업데이트
+    try {
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+        const userIndex = storedUsers.findIndex((u) => u.userid === user.userid);
+
+        if (userIndex !== -1) {
+            storedUsers[userIndex] = {
+                ...storedUsers[userIndex],
+                myreservations: myReservations,
+            };
+            localStorage.setItem('users', JSON.stringify(storedUsers));
+        }
+    } catch (error) {
+        console.error('users 업데이트 중 오류 발생:', error);
+    }
+
+    // 현재 사용자 업데이트
+    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+    return updatedUser;
+};
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -28,11 +74,13 @@ export const authSlice = createSlice({
                 password: user.password,
                 username: user.username,
                 tel: user.telFirst + user.telSecond + user.telThird,
-                reservations: [],
+                myreservations: [], // reservations에서 myreservations로 변경
                 favorites: [], // 찜 목록 초기화
                 reviews: [], // 리뷰 목록 초기화
-                product:[]
+                product:[],
+								cart: [], 
             };
+
 
             storedUsers.push(member);
             localStorage.setItem('users', JSON.stringify(storedUsers));
@@ -47,9 +95,22 @@ export const authSlice = createSlice({
             if (user) {
                 if (user.password === password) {
                     console.log('로그인 성공', user);
+
+                    // 사용자 myreservations 동기화
+                    const myReservations = loadMyReservations().filter(
+                        (reservation) => reservation.userId === user.userid
+                    );
+                    localStorage.setItem('myreservations', JSON.stringify(myReservations));
+
+                    // 사용자 객체 업데이트 (myreservations 추가)
+                    const updatedUser = {
+                        ...user,
+                        myreservations: myReservations,
+                    };
+
                     state.authed = true;
-                    state.user = user;
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    state.user = updatedUser;
+                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
                     localStorage.setItem('authed', 'true');
                 } else {
                     console.log('비밀번호가 틀립니다');
@@ -69,12 +130,16 @@ export const authSlice = createSlice({
             localStorage.removeItem('currentUser');
             localStorage.removeItem('myreviews');
             localStorage.removeItem('myInquiries');
-            // localStorage.removeItem('myreservations');
+            localStorage.removeItem('myreservations'); // 로그아웃 시 myreservations 삭제
         },
         restoreAuthState: (state) => {
             const savedAuthed = localStorage.getItem('authed') === 'true';
-            const savedUser = JSON.parse(localStorage.getItem('currentUser'));
+            let savedUser = JSON.parse(localStorage.getItem('currentUser'));
+
             if (savedAuthed && savedUser) {
+                // myreservations와 동기화
+                savedUser = syncUserReservations(savedUser);
+
                 state.authed = true;
                 state.user = savedUser;
             }
@@ -84,8 +149,9 @@ export const authSlice = createSlice({
         },
         loginSuccess: (state, action) => {
             const userData = action.payload;
-            if (!userData.reservations) {
-                userData.reservations = [];
+            // myreservations로 이름 변경
+            if (!userData.myreservations) {
+                userData.myreservations = [];
             }
             if (!userData.favorites) {
                 userData.favorites = [];
@@ -113,9 +179,20 @@ export const authSlice = createSlice({
         },
         addReservation: (state, action) => {
             if (state.user) {
-                state.user.reservations = state.user.reservations || [];
-                state.user.reservations.push(action.payload);
-                localStorage.setItem('user__로그인정보', JSON.stringify(state.user));
+                // myreservations로 이름 변경
+                state.user.myreservations = state.user.myreservations || [];
+                state.user.myreservations.push(action.payload);
+
+                // 로컬 스토리지 업데이트
+                localStorage.setItem('currentUser', JSON.stringify(state.user));
+
+                // myreservations 업데이트
+                const myReservations = loadMyReservations();
+                myReservations.push(action.payload);
+                localStorage.setItem('myreservations', JSON.stringify(myReservations));
+
+                // users 업데이트
+                syncUserReservations(state.user);
             }
         },
         addfavorites: (state, action) => {
@@ -158,8 +235,10 @@ export const authSlice = createSlice({
                     state.joinData.push({ id: no++, ...action.payload.newUser });
                 }
                 const user = action.payload.user;
-                if (!user.reservations) {
-                    user.reservations = [];
+
+                // myreservations로 이름 변경
+                if (!user.myreservations) {
+                    user.myreservations = [];
                 }
                 if (!user.favorites) {
                     user.favorites = [];
@@ -168,8 +247,12 @@ export const authSlice = createSlice({
                 if (!user.reviews) {
                     user.reviews = [];
                 }
+
+                // 로그인 시 myreservations 동기화
+                const updatedUser = syncUserReservations(user);
+
                 state.authed = true;
-                state.user = user;
+                state.user = updatedUser || user;
                 console.log('카카오 로그인 성공:', action.payload);
             })
             .addCase(getKakaoLogin.rejected, (state, action) => {

@@ -14,51 +14,40 @@ const ReservationDetailForm = () => {
     const [language, setLanguage] = useState(details.preferredLanguage || '');
     const [message, setMessage] = useState(details.message || '');
 
-    // Load saved data from localStorage on component mount
+    // Redux에서 데이터 로드
     useEffect(() => {
-        const savedDetails = localStorage.getItem('reservationDetails');
-        if (savedDetails) {
-            const parsedDetails = JSON.parse(savedDetails);
-            setDateValue(parsedDetails.date || new Date().toISOString().split('T')[0]);
-            setTimeValue(parsedDetails.time || '');
-            setLanguage(parsedDetails.preferredLanguage || '');
-            setMessage(parsedDetails.message || '');
+        setDateValue(details.date || new Date().toISOString().split('T')[0]);
+        setTimeValue(details.time || '');
+        setLanguage(details.preferredLanguage || '');
+        setMessage(details.message || '');
+    }, [details]);
 
-            // Also update Redux store
-            dispatch(reservationActions.setReservationDetails(parsedDetails));
-        }
-    }, [dispatch]);
-
-    // 날짜 변경 핸들러 - 일시적으로 상태와 Redux에만 저장
+    // 날짜 변경 핸들러 - Redux에만 저장
     const handleDateChange = (e) => {
         const newDate = e.target.value;
         setDateValue(newDate);
         dispatch(reservationActions.setReservationDetails({ date: newDate }));
-        // localStorage에는 확인 버튼 클릭시에만 저장
     };
 
-    // 시간 변경 핸들러 (TimePicker 컴포넌트에서 호출) - 일시적으로 상태와 Redux에만 저장
+    // 시간 변경 핸들러 (TimePicker 컴포넌트에서 호출) - Redux에만 저장
     const handleTimeChange = (time) => {
         setTimeValue(time);
         dispatch(reservationActions.setReservationDetails({ time }));
         console.log('Time selected:', time); // Debug log
-        // localStorage에는 확인 버튼 클릭시에만 저장
     };
 
-    // 언어 변경 핸들러 - 일시적으로 상태와 Redux에만 저장
+    // 언어 변경 핸들러 - Redux에만 저장
     const handleLanguageChange = (e) => {
         const selectedLanguage = e.target.value;
         setLanguage(selectedLanguage);
         dispatch(reservationActions.setReservationDetails({ preferredLanguage: selectedLanguage }));
-        // localStorage에는 확인 버튼 클릭시에만 저장
     };
 
-    // 메시지 변경 핸들러 - 일시적으로 상태와 Redux에만 저장
+    // 메시지 변경 핸들러 - Redux에만 저장
     const handleMessageChange = (e) => {
         const newMessage = e.target.value;
         setMessage(newMessage);
         dispatch(reservationActions.setReservationDetails({ message: newMessage }));
-        // localStorage에는 확인 버튼 클릭시에만 저장
     };
 
     // 확인 버튼 핸들러
@@ -74,15 +63,7 @@ const ReservationDetailForm = () => {
             return;
         }
 
-        // Save to localStorage
-        const detailsData = {
-            date: dateValue,
-            time: timeValue,
-            preferredLanguage: language,
-            message,
-        };
-        localStorage.setItem('reservationDetails', JSON.stringify(detailsData));
-
+        // 다음 단계로 이동 (로컬 스토리지 저장은 setCurrentStep에서 처리)
         dispatch(reservationActions.setCurrentStep(4));
     };
 

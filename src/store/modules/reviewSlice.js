@@ -1,12 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// 깊은 복사 함수
-const deepCopy = (obj) => {
+// 로컬 스토리지에서 리뷰 데이터 불러오기
+const loadReviewsFromLocalStorage = () => {
     try {
-        return JSON.parse(JSON.stringify(obj));
+        // 모든 리뷰 데이터
+        const storedReviews = localStorage.getItem('reviews');
+        // 사용자별 리뷰 데이터
+        const storedMyReviews = localStorage.getItem('myreviews');
+
+        return {
+            reviews: storedReviews ? JSON.parse(storedReviews) : [],
+            myreviews: storedMyReviews ? JSON.parse(storedMyReviews) : [],
+        };
     } catch (error) {
-        console.error('깊은 복사 중 오류:', error);
-        return obj;
+        console.error('로컬 스토리지에서 리뷰를 불러오는 중 오류 발생:', error);
+        return { reviews: [], myreviews: [] };
     }
 };
 
@@ -15,13 +23,6 @@ const saveReviewsToLocalStorage = (reviews, myreviews) => {
     try {
         localStorage.setItem('reviews', JSON.stringify(reviews));
         localStorage.setItem('myreviews', JSON.stringify(myreviews));
-
-        // currentUser 객체의 myreviews도 업데이트
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser) {
-            currentUser.myreviews = deepCopy(myreviews);
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        }
     } catch (error) {
         console.error('로컬 스토리지에 리뷰를 저장하는 중 오류 발생:', error);
     }
@@ -29,55 +30,35 @@ const saveReviewsToLocalStorage = (reviews, myreviews) => {
 
 // 특정 상품의 총 리뷰 개수 계산
 const countTotalReviewsForProduct = (reviews, productId) => {
-    return reviews.filter((review) => String(review.productId) === String(productId)).length;
+    return reviews.filter((review) => review.productId === productId).length;
 };
 
 // 초기 데이터 로드
-const loadInitialReviewData = () => {
-    try {
-        // 모든 리뷰 데이터 로드
-        const storedReviews = localStorage.getItem('reviews');
-        const reviews = storedReviews ? JSON.parse(storedReviews) : [];
+const loadedData = loadReviewsFromLocalStorage();
 
-        // 로그인 상태 확인
-        const isLoggedIn = localStorage.getItem('authed') === 'true';
-        let myreviews = [];
-
-        if (isLoggedIn) {
-            // 로그인 상태면 현재 사용자의 myreviews 로드
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser && currentUser.id) {
-                // 현재 사용자 ID로 리뷰 필터링
-                myreviews = reviews.filter((review) => String(review.id) === String(currentUser.id));
-                // 현재 사용자의 myreviews를 localStorage에 저장
-                localStorage.setItem('myreviews', JSON.stringify(myreviews));
-            }
-        } else {
-            // 로그인 상태가 아니면 myreviews 초기화
-            localStorage.setItem('myreviews', JSON.stringify([]));
-        }
-
-        return {
-            reviews: deepCopy(reviews),
-            myreviews: deepCopy(myreviews),
-        };
-    } catch (error) {
-        console.error('리뷰 데이터 초기화 중 오류:', error);
-        return { reviews: [], myreviews: [] };
+// 현재 로그인한 사용자의, myreviews 있으면 가져오기
+try {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser && currentUser.myreviews) {
+        loadedData.myreviews = currentUser.myreviews;
     }
-};
+} catch (error) {
+    console.error('현재 사용자 리뷰 데이터 로드 중 오류:', error);
+}
 
-// 초기 데이터 로드
-const loadedData = loadInitialReviewData();
-
-// 초기 상태 설정
 const initialState = {
+    // 모든 리뷰 목록 (배열 형태)
     reviews: loadedData.reviews,
+    // 현재 로그인한 사용자의 리뷰 목록 (배열 형태)
     myreviews: loadedData.myreviews,
+    // 현재 선택된 상품 ID
     currentProductId: null,
+    // 현재 상품의 리뷰 목록 (필터링된)
     currentProductReviews: [],
+    // 현재 상품의 리뷰 총 개수
     totalReviews: 0,
-    sortBy: 'latest',
+    // 정렬 방식
+    sortBy: 'latest', // 'latest' or 'best'
 };
 
 export const reviewSlice = createSlice({
@@ -86,163 +67,243 @@ export const reviewSlice = createSlice({
     reducers: {
         // 현재 상품 ID 설정
         setCurrentProduct: (state, action) => {
-            const productId = action.payload;
-            state.currentProductId = productId;
+            state.currentProductId = action.payload;
 
-            // 현재 상품의 리뷰 목록 업데이트 - 문자열과 숫자 모두 처리하기 위해 String으로 변환
-            state.currentProductReviews = state.reviews.filter(
-                (review) => String(review.productId) === String(productId)
-            );
+            // 현재 상품의 리뷰 목록 업데이트
+            state.currentProductReviews = state.reviews.filter((review) => review.productId === action.payload);
 
             // 총 리뷰 개수 업데이트
-            state.totalReviews = countTotalReviewsForProduct(state.reviews, productId);
+            state.totalReviews = countTotalReviewsForProduct(state.reviews, action.payload);
 
             // 정렬 적용
             if (state.sortBy === 'latest') {
-                state.currentProductReviews.sort(
-                    (a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt)
-                );
+                state.currentProductReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
             } else if (state.sortBy === 'best') {
-                state.currentProductReviews.sort((a, b) => (b.helpfulCount || 0) - (a.helpfulCount || 0));
+                state.currentProductReviews.sort((a, b) => b.helpfulCount - a.helpfulCount);
             }
         },
 
         // 새로운 리뷰 추가
         addReview: (state, action) => {
-            const { productId, reviewData } = action.payload;
+            const { userNum, productId, reviewData } = action.payload;
 
             // 현재 로그인한 사용자 정보 가져오기
             const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-            const userId = currentUser.id; // 로그인한 사용자 ID
+            const userId = currentUser.id; // 로그인한 사용자 ID 또는 임시 ID
 
-            if (!userId && userId !== 0) {
-                console.error('로그인된 사용자 정보를 찾을 수 없습니다.');
-                return;
-            }
-
-            console.log('리뷰 추가 시작:', { userId, productId, reviewData });
-
-            // 새 리뷰 객체 생성
-            const newReview = {
-                id: userId, // 현재 로그인한 사용자 ID
-                productId: productId, // 상품 ID
-                title: reviewData.title || '',
-                content: reviewData.content,
-                rating: reviewData.rating,
-                img: reviewData.images || [],
-                date: new Date().toISOString(),
-                helpfulCount: 0,
-                isHelpful: false,
-            };
-
-            // 기존 리뷰가 있는지 확인
-            const existingMyReviewIndex = state.myreviews.findIndex(
-                (review) => String(review.productId) === String(productId) && String(review.id) === String(userId)
-            );
-
-            // 기존 리뷰가 있으면 업데이트, 없으면 새로 추가
-            if (existingMyReviewIndex !== -1) {
-                state.myreviews[existingMyReviewIndex] = deepCopy(newReview);
-            } else {
-                state.myreviews.push(deepCopy(newReview));
-            }
-
-            // reviews 배열에서도 동일하게 처리
-            const existingReviewIndex = state.reviews.findIndex(
-                (review) => String(review.id) === String(userId) && String(review.productId) === String(productId)
-            );
+            // 이미 해당 상품에 리뷰를 작성했는지 확인
+            const existingReviewIndex = state.myreviews.findIndex((review) => review.productId === productId);
 
             if (existingReviewIndex !== -1) {
-                state.reviews[existingReviewIndex] = deepCopy(newReview);
+                // 이미 리뷰가 존재하면 업데이트
+                const existingReview = state.myreviews[existingReviewIndex];
+
+                // myreviews 업데이트
+                state.myreviews[existingReviewIndex] = {
+                    ...existingReview,
+                    title: reviewData.title || '',
+                    content: reviewData.content,
+                    rating: reviewData.rating,
+                    img: reviewData.images || [],
+                    date: new Date().toISOString(),
+                };
+
+                // reviews에서도 해당 리뷰 찾아서 업데이트
+                const reviewIndex = state.reviews.findIndex((review) => review.id === existingReview.id);
+
+                if (reviewIndex !== -1) {
+                    state.reviews[reviewIndex] = {
+                        ...state.reviews[reviewIndex],
+                        title: reviewData.title || '',
+                        content: reviewData.content,
+                        rating: reviewData.rating,
+                        img: reviewData.images || [],
+                        date: new Date().toISOString(),
+                    };
+                }
             } else {
-                state.reviews.push(deepCopy(newReview));
+                // 새 리뷰 생성
+                const newReview = {
+                    id: userId, // 현재 로그인한 사용자 ID
+                    productId: productId || '1', // 상품 ID (임시로 '1' 설정)
+                    title: reviewData.title || '',
+                    content: reviewData.content,
+                    rating: reviewData.rating,
+                    img: reviewData.images || [],
+                    date: new Date().toISOString(),
+                    helpfulCount: 0,
+                    isHelpful: false,
+                };
+
+                // reviews에 추가
+                state.reviews.push(newReview);
+
+                // myreviews에 추가
+                state.myreviews.push(newReview);
+
+                // 현재 상품 보기 중이라면 현재 리뷰 목록 업데이트
+                if (state.currentProductId === productId) {
+                    state.currentProductReviews = state.reviews.filter((review) => review.productId === productId);
+                    state.totalReviews = state.currentProductReviews.length;
+                }
             }
 
-            // 현재 상품 보기 중이라면 현재 리뷰 목록 업데이트
-            if (String(state.currentProductId) === String(productId)) {
-                state.currentProductReviews = state.reviews.filter(
-                    (review) => String(review.productId) === String(productId)
-                );
-                state.totalReviews = state.currentProductReviews.length;
-            }
+            // 리뷰 중복 검사 - 각 상품에 대해 사용자는 하나의 리뷰만 가능하도록
+            const uniqueReviews = [];
+            const productReviewMap = new Map(); // 상품 ID별 최신 리뷰 저장용 Map
+
+            // 모든 리뷰를 순회하며 상품 ID별로 최신 리뷰만 유지
+            state.reviews.forEach((review) => {
+                const key = `${review.productId}-${review.id}`; // "상품ID-사용자ID" 형태의 키
+
+                // 이미 해당 키가 있으면 날짜 비교 후 최신 것만 유지
+                if (productReviewMap.has(key)) {
+                    const existingReview = productReviewMap.get(key);
+                    const existingDate = new Date(existingReview.date);
+                    const newDate = new Date(review.date);
+
+                    if (newDate > existingDate) {
+                        productReviewMap.set(key, review);
+                    }
+                } else {
+                    productReviewMap.set(key, review);
+                }
+            });
+
+            // Map의 값들만 배열로 변환
+            state.reviews = Array.from(productReviewMap.values());
+
+            // myreviews도 동일한 방식으로 중복 제거
+            const myReviewMap = new Map();
+            state.myreviews.forEach((review) => {
+                const key = review.productId; // 상품 ID를 키로 사용
+
+                // 이미 해당 키가 있으면 날짜 비교 후 최신 것만 유지
+                if (myReviewMap.has(key)) {
+                    const existingReview = myReviewMap.get(key);
+                    const existingDate = new Date(existingReview.date);
+                    const newDate = new Date(review.date);
+
+                    if (newDate > existingDate) {
+                        myReviewMap.set(key, review);
+                    }
+                } else {
+                    myReviewMap.set(key, review);
+                }
+            });
+
+            // Map의 값들만 배열로 변환
+            state.myreviews = Array.from(myReviewMap.values());
 
             // 로컬 스토리지에 저장
+            saveReviewsToLocalStorage(state.reviews, state.myreviews);
+
+            // 사용자 정보에 myreviews 추가하기
             try {
-                localStorage.setItem('reviews', JSON.stringify(state.reviews));
-
-                // myreviews는 현재 사용자의 리뷰만 포함하도록 필터링
-                state.myreviews = state.reviews.filter((review) => String(review.id) === String(userId));
-                localStorage.setItem('myreviews', JSON.stringify(state.myreviews));
-
-                // currentUser 객체의 myreviews도 업데이트
+                // 현재 사용자 정보 업데이트
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 if (currentUser) {
-                    currentUser.myreviews = deepCopy(state.myreviews);
+                    currentUser.myreviews = state.myreviews;
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                    // users 배열에서 현재 사용자 찾아서 업데이트
+                    const users = JSON.parse(localStorage.getItem('users')) || [];
+                    const userIndex = users.findIndex((user) => user.id === currentUser.id);
+
+                    if (userIndex !== -1) {
+                        users[userIndex].myreviews = state.myreviews;
+                        localStorage.setItem('users', JSON.stringify(users));
+                    }
                 }
-
-                // users 배열 업데이트
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const userIndex = users.findIndex((user) => String(user.id) === String(userId));
-
-                if (userIndex !== -1) {
-                    users[userIndex].myreviews = deepCopy(state.myreviews);
-                    localStorage.setItem('users', JSON.stringify(users));
-                }
-
-                console.log('리뷰 저장 성공:', newReview);
             } catch (error) {
-                console.error('로컬 스토리지에 리뷰를 저장하는 중 오류 발생:', error);
+                console.error('사용자 정보에 리뷰 데이터 저장 중 오류:', error);
             }
         },
 
         // 리뷰 삭제
         deleteReview: (state, action) => {
             const { productId } = action.payload;
-            const userId = JSON.parse(localStorage.getItem('currentUser'))?.id;
 
-            if (!userId && userId !== 0) {
-                console.error('로그인된 사용자 정보를 찾을 수 없습니다.');
-                return;
-            }
-
-            // myreviews에서 삭제 (이미 사용자 리뷰만 필터링되어 있지만, userId 확인 추가)
-            state.myreviews = state.myreviews.filter(
-                (review) => !(String(review.productId) === String(productId) && String(review.id) === String(userId))
-            );
+            // myreviews에서 삭제
+            state.myreviews = state.myreviews.filter((review) => review.productId !== productId);
 
             // reviews에서 해당 사용자의 리뷰 찾아서 삭제
-            state.reviews = state.reviews.filter(
-                (review) => !(String(review.id) === String(userId) && String(review.productId) === String(productId))
-            );
+            const userId = JSON.parse(localStorage.getItem('currentUser'))?.id;
+            if (userId) {
+                state.reviews = state.reviews.filter(
+                    (review) => !(review.id === userId && review.productId === productId)
+                );
+            }
 
             // 현재 상품 보기 중이라면 현재 리뷰 목록 업데이트
-            if (String(state.currentProductId) === String(productId)) {
-                state.currentProductReviews = state.reviews.filter(
-                    (review) => String(review.productId) === String(productId)
-                );
+            if (state.currentProductId === productId) {
+                state.currentProductReviews = state.reviews.filter((review) => review.productId === productId);
                 state.totalReviews = state.currentProductReviews.length;
             }
 
+            // 리뷰 중복 검사 - 각 상품에 대해 사용자는 하나의 리뷰만 가능하도록
+            const productReviewMap = new Map(); // 상품 ID별 최신 리뷰 저장용 Map
+
+            // 모든 리뷰를 순회하며 상품 ID별로 최신 리뷰만 유지
+            state.reviews.forEach((review) => {
+                const key = `${review.productId}-${review.id}`; // "상품ID-사용자ID" 형태의 키
+
+                // 이미 해당 키가 있으면 날짜 비교 후 최신 것만 유지
+                if (productReviewMap.has(key)) {
+                    const existingReview = productReviewMap.get(key);
+                    const existingDate = new Date(existingReview.date);
+                    const newDate = new Date(review.date);
+
+                    if (newDate > existingDate) {
+                        productReviewMap.set(key, review);
+                    }
+                } else {
+                    productReviewMap.set(key, review);
+                }
+            });
+
+            // Map의 값들만 배열로 변환
+            state.reviews = Array.from(productReviewMap.values());
+
+            // myreviews도 동일한 방식으로 중복 제거
+            const myReviewMap = new Map();
+            state.myreviews.forEach((review) => {
+                const key = review.productId; // 상품 ID를 키로 사용
+
+                // 이미 해당 키가 있으면 날짜 비교 후 최신 것만 유지
+                if (myReviewMap.has(key)) {
+                    const existingReview = myReviewMap.get(key);
+                    const existingDate = new Date(existingReview.date);
+                    const newDate = new Date(review.date);
+
+                    if (newDate > existingDate) {
+                        myReviewMap.set(key, review);
+                    }
+                } else {
+                    myReviewMap.set(key, review);
+                }
+            });
+
+            // Map의 값들만 배열로 변환
+            state.myreviews = Array.from(myReviewMap.values());
+
             // 로컬 스토리지에 저장
+            saveReviewsToLocalStorage(state.reviews, state.myreviews);
+
+            // 사용자 정보에서 myreviews 업데이트
             try {
-                localStorage.setItem('reviews', JSON.stringify(state.reviews));
-
-                // myreviews를 사용자 ID로 다시 필터링 (삭제 후 상태 확인)
-                state.myreviews = state.reviews.filter((review) => String(review.id) === String(userId));
-                localStorage.setItem('myreviews', JSON.stringify(state.myreviews));
-
                 // 현재 사용자 정보 업데이트
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 if (currentUser) {
-                    currentUser.myreviews = deepCopy(state.myreviews);
+                    currentUser.myreviews = state.myreviews;
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
                     // users 배열에서 현재 사용자 찾아서 업데이트
                     const users = JSON.parse(localStorage.getItem('users')) || [];
-                    const userIndex = users.findIndex((user) => String(user.id) === String(userId));
+                    const userIndex = users.findIndex((user) => user.id === currentUser.id);
 
                     if (userIndex !== -1) {
-                        users[userIndex].myreviews = deepCopy(state.myreviews);
+                        users[userIndex].myreviews = state.myreviews;
                         localStorage.setItem('users', JSON.stringify(users));
                     }
                 }
@@ -258,11 +319,9 @@ export const reviewSlice = createSlice({
             // 현재 상품 리뷰에 정렬 적용
             if (state.currentProductReviews.length > 0) {
                 if (action.payload === 'latest') {
-                    state.currentProductReviews.sort(
-                        (a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt)
-                    );
+                    state.currentProductReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
                 } else if (action.payload === 'best') {
-                    state.currentProductReviews.sort((a, b) => (b.helpfulCount || 0) - (a.helpfulCount || 0));
+                    state.currentProductReviews.sort((a, b) => b.helpfulCount - a.helpfulCount);
                 }
             }
         },
@@ -270,17 +329,10 @@ export const reviewSlice = createSlice({
         // 도움됐어요 버튼 클릭
         toggleHelpful: (state, action) => {
             const { productId, reviewId } = action.payload;
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            const userId = currentUser?.id;
-
-            if (!userId && userId !== 0) {
-                console.error('로그인된 사용자 정보를 찾을 수 없습니다.');
-                return;
-            }
 
             // reviews에서 해당 리뷰 찾기
             const reviewIndex = state.reviews.findIndex(
-                (review) => String(review.id) === String(reviewId) && String(review.productId) === String(productId)
+                (review) => review.id === reviewId && review.productId === productId
             );
 
             if (reviewIndex !== -1) {
@@ -288,19 +340,17 @@ export const reviewSlice = createSlice({
 
                 // 도움됐어요 토글
                 if (review.isHelpful) {
-                    review.helpfulCount = (review.helpfulCount || 1) - 1;
+                    review.helpfulCount -= 1;
                     review.isHelpful = false;
                 } else {
-                    review.helpfulCount = (review.helpfulCount || 0) + 1;
+                    review.helpfulCount += 1;
                     review.isHelpful = true;
                 }
 
                 // 만약 이것이 사용자 자신의 리뷰라면 myreviews도 업데이트
-                if (String(userId) === String(reviewId)) {
-                    const myReviewIndex = state.myreviews.findIndex(
-                        (review) =>
-                            String(review.productId) === String(productId) && String(review.id) === String(userId)
-                    );
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (currentUser && currentUser.id === reviewId) {
+                    const myReviewIndex = state.myreviews.findIndex((review) => review.productId === productId);
 
                     if (myReviewIndex !== -1) {
                         state.myreviews[myReviewIndex] = { ...review };
@@ -308,9 +358,9 @@ export const reviewSlice = createSlice({
                 }
 
                 // 현재 보고 있는 상품의 리뷰라면 currentProductReviews 업데이트
-                if (String(state.currentProductId) === String(productId)) {
+                if (state.currentProductId === productId) {
                     const currentReviewIndex = state.currentProductReviews.findIndex(
-                        (review) => String(review.id) === String(reviewId)
+                        (review) => review.id === reviewId
                     );
 
                     if (currentReviewIndex !== -1) {
@@ -318,24 +368,66 @@ export const reviewSlice = createSlice({
                     }
                 }
 
-                // 로컬 스토리지에 저장
-                localStorage.setItem('reviews', JSON.stringify(state.reviews));
+                // 리뷰 중복 검사 - 각 상품에 대해 사용자는 하나의 리뷰만 가능하도록
+                const productReviewMap = new Map(); // 상품 ID별 최신 리뷰 저장용 Map
 
-                // myreviews 재필터링
-                state.myreviews = state.reviews.filter((review) => String(review.id) === String(userId));
-                localStorage.setItem('myreviews', JSON.stringify(state.myreviews));
+                // 모든 리뷰를 순회하며 상품 ID별로 최신 리뷰만 유지
+                state.reviews.forEach((review) => {
+                    const key = `${review.productId}-${review.id}`; // "상품ID-사용자ID" 형태의 키
+
+                    // 이미 해당 키가 있으면 날짜 비교 후 최신 것만 유지
+                    if (productReviewMap.has(key)) {
+                        const existingReview = productReviewMap.get(key);
+                        const existingDate = new Date(existingReview.date);
+                        const newDate = new Date(review.date);
+
+                        if (newDate > existingDate) {
+                            productReviewMap.set(key, review);
+                        }
+                    } else {
+                        productReviewMap.set(key, review);
+                    }
+                });
+
+                // Map의 값들만 배열로 변환
+                state.reviews = Array.from(productReviewMap.values());
+
+                // myreviews도 동일한 방식으로 중복 제거
+                const myReviewMap = new Map();
+                state.myreviews.forEach((review) => {
+                    const key = review.productId; // 상품 ID를 키로 사용
+
+                    // 이미 해당 키가 있으면 날짜 비교 후 최신 것만 유지
+                    if (myReviewMap.has(key)) {
+                        const existingReview = myReviewMap.get(key);
+                        const existingDate = new Date(existingReview.date);
+                        const newDate = new Date(review.date);
+
+                        if (newDate > existingDate) {
+                            myReviewMap.set(key, review);
+                        }
+                    } else {
+                        myReviewMap.set(key, review);
+                    }
+                });
+
+                // Map의 값들만 배열로 변환
+                state.myreviews = Array.from(myReviewMap.values());
+
+                // 로컬 스토리지에 저장
+                saveReviewsToLocalStorage(state.reviews, state.myreviews);
 
                 // 사용자 정보 업데이트
-                if (currentUser) {
-                    currentUser.myreviews = deepCopy(state.myreviews);
+                if (currentUser && currentUser.id === reviewId) {
+                    currentUser.myreviews = state.myreviews;
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-                    // users 배열 업데이트
+                    // users 배열에서 현재 사용자 찾아서 업데이트
                     const users = JSON.parse(localStorage.getItem('users')) || [];
-                    const userIndex = users.findIndex((user) => String(user.id) === String(userId));
+                    const userIndex = users.findIndex((user) => user.id === currentUser.id);
 
                     if (userIndex !== -1) {
-                        users[userIndex].myreviews = deepCopy(state.myreviews);
+                        users[userIndex].myreviews = state.myreviews;
                         localStorage.setItem('users', JSON.stringify(users));
                     }
                 }
@@ -344,41 +436,23 @@ export const reviewSlice = createSlice({
 
         // 사용자의 모든 리뷰 가져오기
         loadUserReviews: (state) => {
-            try {
-                // localStorage에서 currentUser 가져오기
-                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                const allReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+            // localStorage에서 currentUser 가져오기
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser && currentUser.myreviews) {
+                state.myreviews = currentUser.myreviews;
 
-                if (currentUser && currentUser.id) {
-                    // 현재 사용자 ID로 리뷰 필터링
-                    state.myreviews = allReviews.filter((review) => String(review.id) === String(currentUser.id));
+                // users 배열에서 현재 사용자가 있는지 확인하고 업데이트
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = users.findIndex((user) => user.id === currentUser.id);
 
-                    // localStorage 업데이트
-                    localStorage.setItem('myreviews', JSON.stringify(state.myreviews));
-
-                    // currentUser 객체 업데이트
-                    currentUser.myreviews = deepCopy(state.myreviews);
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                    // users 배열에서 현재 사용자 정보 업데이트
-                    const users = JSON.parse(localStorage.getItem('users')) || [];
-                    const userIndex = users.findIndex((user) => String(user.id) === String(currentUser.id));
-
-                    if (userIndex !== -1) {
-                        users[userIndex].myreviews = deepCopy(state.myreviews);
-                        localStorage.setItem('users', JSON.stringify(users));
-                    }
-                } else {
-                    // 로그인 상태가 아닐 때
-                    state.myreviews = [];
-                    localStorage.setItem('myreviews', JSON.stringify([]));
+                if (
+                    userIndex !== -1 &&
+                    (!users[userIndex].myreviews || users[userIndex].myreviews.length !== currentUser.myreviews.length)
+                ) {
+                    users[userIndex].myreviews = currentUser.myreviews;
+                    localStorage.setItem('users', JSON.stringify(users));
                 }
-            } catch (error) {
-                console.error('사용자 리뷰 로드 중 오류:', error);
-                state.myreviews = [];
-                localStorage.setItem('myreviews', JSON.stringify([]));
             }
-
             return state.myreviews;
         },
     },

@@ -11,7 +11,7 @@ const loadReservationsFromLocalStorage = () => {
     }
 };
 
-// 로컬 스토리지에서 현재 예약 데이터 불러오기
+// 로컬 스토리지에서 현재 진행 중인 예약 데이터 불러오기 (앱 시작 시)
 const loadReservationFromLocalStorage = () => {
     try {
         const storedReservation = localStorage.getItem('reservation');
@@ -22,56 +22,82 @@ const loadReservationFromLocalStorage = () => {
     }
 };
 
-// 로컬 스토리지에 예약 데이터 저장
-const saveReservationToLocalStorage = (reservation) => {
+// 현재 로그인한 사용자의 ID 가져오기
+const getCurrentUserId = () => {
     try {
-        localStorage.setItem('reservation', JSON.stringify(reservation));
+        const currentUser = localStorage.getItem('currentUser');
+        return currentUser ? JSON.parse(currentUser).userid : null;
     } catch (error) {
-        console.error('로컬 스토리지에 예약 정보를 저장하는 중 오류 발생:', error);
+        console.error('현재 사용자 정보를 불러오는 중 오류 발생:', error);
+        return null;
     }
 };
 
-// 예약 완료 및 사용자별 예약 저장
-const saveCompletedReservation = (reservation, userId = null) => {
+// 예약 완료 및 저장 (사용자 정보 포함) - 최종 단계에서만 호출
+const saveCompletedReservation = (reservation) => {
     try {
+        // 현재 로그인한 사용자 ID 가져오기
+        const userId = getCurrentUserId();
+
         // 예약에 고유 ID 추가
         const reservationWithId = {
             ...reservation,
             reservationId: Date.now().toString(), // 고유 ID 생성
-            userId: userId,
+            userId: userId, // 사용자 ID 추가 (비로그인 시 null)
         };
 
-        // 1. 모든 예약 목록에 저장
+        // 1. 전체 예약 목록에 저장 (reservations)
         const allReservations = loadReservationsFromLocalStorage();
         allReservations.push(reservationWithId);
         localStorage.setItem('reservations', JSON.stringify(allReservations));
 
-        // 2. 로그인한 사용자인 경우 사용자 정보에도 예약 추가
+        // 2. 로그인한 사용자인 경우 사용자의 예약 목록(myreservations)에도 추가
         if (userId) {
-            const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-            const userIndex = storedUsers.findIndex((user) => user.userid === userId);
+            // myreservations 업데이트
+            let myReservations = [];
+            try {
+                const storedMyReservations = localStorage.getItem('myreservations');
+                myReservations = storedMyReservations ? JSON.parse(storedMyReservations) : [];
+            } catch (e) {
+                console.error('내 예약 정보를 불러오는 중 오류 발생:', e);
+                myReservations = [];
+            }
 
-            if (userIndex !== -1) {
-                // 사용자에게 myreservations 배열이 없으면 생성
-                if (!storedUsers[userIndex].myreservations) {
-                    storedUsers[userIndex].myreservations = [];
-                }
+            myReservations.push(reservationWithId);
+            localStorage.setItem('myreservations', JSON.stringify(myReservations));
 
-                // 사용자의 예약 목록에 추가
-                storedUsers[userIndex].myreservations.push(reservationWithId);
-                localStorage.setItem('users', JSON.stringify(storedUsers));
+            // 3. users 로컬 스토리지에서 해당 사용자의 정보에도 예약 추가
+            try {
+                const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = storedUsers.findIndex((user) => user.userid === userId);
 
-                // 현재 로그인한 사용자 정보도 업데이트
-                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                if (currentUser && currentUser.userid === userId) {
-                    if (!currentUser.myreservations) {
-                        currentUser.myreservations = [];
+                if (userIndex !== -1) {
+                    // 사용자에게 myreservations 배열이 없으면 생성
+                    if (!storedUsers[userIndex].myreservations) {
+                        storedUsers[userIndex].myreservations = [];
                     }
-                    currentUser.myreservations.push(reservationWithId);
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                    // 사용자의 예약 목록에 추가
+                    storedUsers[userIndex].myreservations.push(reservationWithId);
+                    localStorage.setItem('users', JSON.stringify(storedUsers));
+
+                    // 4. 현재 로그인한 사용자 정보도 업데이트
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    if (currentUser && currentUser.userid === userId) {
+                        if (!currentUser.myreservations) {
+                            currentUser.myreservations = [];
+                        }
+                        currentUser.myreservations.push(reservationWithId);
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    }
                 }
+            } catch (e) {
+                console.error('사용자 정보 업데이트 중 오류 발생:', e);
             }
         }
+
+        // 5. 현재 예약 정보도 로컬 스토리지에 업데이트 (진행 중인 예약 상태 추적용)
+        localStorage.setItem('reservation', JSON.stringify(reservationWithId));
 
         return reservationWithId;
     } catch (error) {
@@ -127,59 +153,68 @@ const initialState = {
     currentStep: 1, // 현재 예약 단계 (1: 부티크 선택, 2: 방문 목적, 3: 예약 상세, 4: 개인 정보, 5: 완료)
     isSubmitting: false,
     error: null,
+    reservationItem: [],
 };
 
 export const reservationSlice = createSlice({
     name: 'reservationR', // 기존 코드에 맞게 이름 변경
     initialState,
     reducers: {
-        // 부티크 위치 정보 설정
+        // 부티크 위치 정보 설정 - 로컬 스토리지 저장 제거
         setLocation: (state, action) => {
             state.reservation.location = {
                 ...state.reservation.location,
                 ...action.payload,
             };
-            saveReservationToLocalStorage(state.reservation);
+            // 로컬 스토리지 저장은 최종 단계에서만 수행
         },
 
-        // 방문 목적 설정
+        // 방문 목적 설정 - 로컬 스토리지 저장 제거
         setPurpose: (state, action) => {
             state.reservation.purpose = {
                 ...state.reservation.purpose,
                 ...action.payload,
             };
-            saveReservationToLocalStorage(state.reservation);
+            // 로컬 스토리지 저장은 최종 단계에서만 수행
         },
 
-        // 예약 상세 정보 설정
+        // 예약 상세 정보 설정 - 로컬 스토리지 저장 제거
         setReservationDetails: (state, action) => {
             state.reservation.details = {
                 ...state.reservation.details,
                 ...action.payload,
             };
-            saveReservationToLocalStorage(state.reservation);
+            // 로컬 스토리지 저장은 최종 단계에서만 수행
         },
 
-        // 개인 정보 설정
+        // 개인 정보 설정 - 로컬 스토리지 저장 제거
         setPersonalInfo: (state, action) => {
             state.reservation.personalInfo = {
                 ...state.reservation.personalInfo,
                 ...action.payload,
             };
-            saveReservationToLocalStorage(state.reservation);
+            // 로컬 스토리지 저장은 최종 단계에서만 수행
         },
 
-        // URL 파라미터로 받은 카테고리와 상품 ID 설정
+        // URL 파라미터로 받은 카테고리와 상품 ID 설정 - 로컬 스토리지 저장 제거
         setCategoryAndProductId: (state, action) => {
             const { category, id } = action.payload;
             state.reservation.category = category || '';
             state.reservation.productId = id || '';
-            saveReservationToLocalStorage(state.reservation);
+            // 로컬 스토리지 저장은 최종 단계에서만 수행
         },
 
-        // 현재 예약 단계 설정
+        // 현재 예약 단계 변경 및 진행 상태 저장
+        // 단계가 변경될 때만 로컬 스토리지에 저장 (단계 전환 시점)
         setCurrentStep: (state, action) => {
-            state.currentStep = action.payload;
+            const newStep = action.payload;
+            state.currentStep = newStep;
+
+            // 단계가 변경될 때 현재 상태를 로컬 스토리지에 저장
+            // 이를 통해 앱이 종료되고 다시 시작될 때 이어서 입력할 수 있음
+            if (newStep !== state.currentStep) {
+                localStorage.setItem('reservation', JSON.stringify(state.reservation));
+            }
         },
 
         // 예약 상태 변경
@@ -191,32 +226,31 @@ export const reservationSlice = createSlice({
                 state.reservation.createdAt = new Date().toISOString();
             }
 
-            saveReservationToLocalStorage(state.reservation);
+            // 상태 변경 시에는 로컬 스토리지에 저장 (중요한 상태 변경이므로)
+            localStorage.setItem('reservation', JSON.stringify(state.reservation));
         },
 
-        // 예약 완료 및 저장 (사용자 정보 포함)
-        completeReservation: (state, action) => {
-            const userId = action.payload; // 로그인한 사용자의 ID (비로그인 시 null)
-
+        // 예약 완료 및 저장 - 최종 단계에서만 호출
+        completeReservation: (state) => {
             // 현재 예약 상태 업데이트
             state.reservation.status = 'pending';
             state.reservation.createdAt = new Date().toISOString();
 
-            // 예약 완료 처리 및 저장
-            const savedReservation = saveCompletedReservation(state.reservation, userId);
+            // 예약 완료 처리 및 저장 (여기서 최종적으로 로컬 스토리지에 저장)
+            const savedReservation = saveCompletedReservation(state.reservation);
 
             if (savedReservation) {
                 // 저장된 예약 정보로 갱신
                 state.reservation = savedReservation;
                 state.allReservations = loadReservationsFromLocalStorage();
-                saveReservationToLocalStorage(state.reservation);
             }
         },
 
         // 전체 예약 정보 설정 (초기화 또는 불러오기 시)
         setReservation: (state, action) => {
             state.reservation = action.payload;
-            saveReservationToLocalStorage(state.reservation);
+            // 전체 설정 시에는 로컬 스토리지에 저장 (중요한 상태 변경이므로)
+            localStorage.setItem('reservation', JSON.stringify(action.payload));
         },
 
         // 예약 정보 초기화
@@ -236,6 +270,11 @@ export const reservationSlice = createSlice({
         // 오류 설정
         setError: (state, action) => {
             state.error = action.payload;
+        },
+
+        handleReservation: (state, action) => {
+            state.reservationItem = action.payload;
+            localStorage.setItem('reservationItem', JSON.stringify(state.reservationItem));
         },
     },
 });
