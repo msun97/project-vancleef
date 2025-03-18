@@ -3470,7 +3470,7 @@ export const productdata = [
                     'https://www.vancleefarpels.com/content/dam/rcq/vca/DX/1h/UD/3F/Re/y2/Pq/N0/RZ/Mc/7Q/DX1hUD3FRey2PqN0RZMc7Q.png',
                     'https://www.vancleefarpels.com/content/dam/rcq/vca/u3/Gl/Jw/cn/Sq/2n/UX/y1/Rs/Z-/_w/u3GlJwcnSq2nUXy1RsZ-_w.jpeg',
                 ],
-                colorpn: ['VCARPFYF00 ', 'VCARPFYE00 '],
+                colorpn: ['VCARPFYF00', 'VCARPFYE00'],
                 detail: '뻬를리 다이아몬드 브레이슬릿, 5개 라인, 18K 화이트 골드, 라운드 다이아몬드, 미디엄 모델. DEF 및 IF~VVS 등급의 다이아몬드',
                 stone: '다이아몬드: 스톤 50개, 2.11캐럿',
             },
@@ -3567,8 +3567,8 @@ export const productdata = [
                 productnumber: 'VCARPHVX00',
                 price: 43800000,
                 objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/kF/Io/UU/Do/Qu/6z/JP/ZL/VC/jJ/lA/kFIoUUDoQu6zJPZLVCjJlA.png.transform.vca-w550-2x.png',
                     'https://www.vancleefarpels.com/content/dam/rcq/vca/5n/G3/BO/IG/TI/eW/lY/-d/fX/SE/lQ/5nG3BOIGTIeWlY-dfXSElQ.png.transform.vca-w550-2x.png',
+                    'https://www.vancleefarpels.com/content/dam/rcq/vca/kF/Io/UU/Do/Qu/6z/JP/ZL/VC/jJ/lA/kFIoUUDoQu6zJPZLVCjJlA.png.transform.vca-w550-2x.png',
                     'https://www.vancleefarpels.com/content/dam/rcq/vca/Ny/MK/bJ/ZB/QH/Kq/BX/c3/CP/PV/SQ/NyMKbJZBQHKqBXc3CPPVSQ.png.transform.vca-w550-2x.png',
                 ],
                 colorpn: ['VCARPHVW00', 'VCARPHVV00'],
@@ -3583,8 +3583,8 @@ export const productdata = [
                 productnumber: 'VCARPHVV00',
                 price: 43800000,
                 objectimage: [
-                    'https://www.vancleefarpels.com/content/dam/rcq/vca/3s/mQ/Of/Ql/Qe/iQ/H6/LK/Kf/Pq/7A/3smQOfQlQeiQH6LKKfPq7A.png.transform.vca-w550-2x.png',
                     'https://www.vancleefarpels.com/content/dam/rcq/vca/xd/a0/dO/H1/Ri/is/_q/gZ/_P/Xc/OQ/xda0dOH1Riis_qgZ_PXcOQ.png',
+                    'https://www.vancleefarpels.com/content/dam/rcq/vca/3s/mQ/Of/Ql/Qe/iQ/H6/LK/Kf/Pq/7A/3smQOfQlQeiQH6LKKfPq7A.png.transform.vca-w550-2x.png',
                     'https://www.vancleefarpels.com/content/dam/rcq/vca/d-/IF/uO/U5/Qj/O6/0K/Kj/Uj/TM/Sw/d-IFuOU5QjO60KKjUjTMSw.png',
                 ],
                 colorpn: ['VCARPHVW00', 'VCARPHVX00'],

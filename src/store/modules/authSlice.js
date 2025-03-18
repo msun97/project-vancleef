@@ -31,6 +31,7 @@ export const authSlice = createSlice({
                 reservations: [],
                 favorites: [], // 찜 목록 초기화
                 reviews: [], // 리뷰 목록 초기화
+                product:[]
             };
 
             storedUsers.push(member);
