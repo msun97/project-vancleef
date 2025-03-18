@@ -8,15 +8,18 @@ const PrivateInfoForm = () => {
     const dispatch = useDispatch();
     const { personalInfo } = useSelector((state) => state.reservationR.reservation);
     const currentStep = useSelector((state) => state.reservationR.currentStep);
+    const { user, authed } = useSelector((state) => state.auth); // 인증 상태와 사용자 정보 가져오기
 
-    // 상태 초기화
+    // 상태 초기화 - 로그인한 경우 사용자 정보 활용
     const [gender, setGender] = useState(personalInfo.gender || '');
-    const [firstNameKor, setFirstNameKor] = useState(personalInfo.firstNameKor || '');
+    const [firstNameKor, setFirstNameKor] = useState(
+        personalInfo.firstNameKor || (authed && user ? user.username : '')
+    );
     const [lastNameKor, setLastNameKor] = useState(personalInfo.lastNameKor || '');
     const [firstNameEng, setFirstNameEng] = useState(personalInfo.firstNameEng || '');
     const [lastNameEng, setLastNameEng] = useState(personalInfo.lastNameEng || '');
-    const [phone, setPhone] = useState(personalInfo.phone || '');
-    const [email, setEmail] = useState(personalInfo.email || '');
+    const [phone, setPhone] = useState(personalInfo.phone || (authed && user ? user.tel : ''));
+    const [email, setEmail] = useState(personalInfo.email || (authed && user ? user.email : ''));
     const [country, setCountry] = useState(personalInfo.country || '');
     const [privacyAgreement, setPrivacyAgreement] = useState(personalInfo.privacyAgreement || false);
     const [privacyDisagree, setPrivacyDisagree] = useState(personalInfo.privacyAgreement === false);
@@ -25,26 +28,26 @@ const PrivateInfoForm = () => {
 
     // Load saved data from localStorage on component mount
     useEffect(() => {
-        const savedPersonalInfo = localStorage.getItem('personalInfo');
-        if (savedPersonalInfo) {
-            const parsedInfo = JSON.parse(savedPersonalInfo);
-            setGender(parsedInfo.gender || '');
-            setFirstNameKor(parsedInfo.firstNameKor || '');
-            setLastNameKor(parsedInfo.lastNameKor || '');
-            setFirstNameEng(parsedInfo.firstNameEng || '');
-            setLastNameEng(parsedInfo.lastNameEng || '');
-            setPhone(parsedInfo.phone || '');
-            setEmail(parsedInfo.email || '');
-            setCountry(parsedInfo.country || '');
-            setPrivacyAgreement(parsedInfo.privacyAgreement || false);
-            setPrivacyDisagree(parsedInfo.privacyAgreement === false);
-            setMarketingAgreement(parsedInfo.marketingAgreement || false);
-            setAgeVerification(parsedInfo.ageVerification || false);
-
-            // Also update Redux store
-            dispatch(reservationActions.setPersonalInfo(parsedInfo));
+        const savedReservation = localStorage.getItem('reservation');
+        if (savedReservation) {
+            const parsedReservation = JSON.parse(savedReservation);
+            if (parsedReservation.personalInfo) {
+                const parsedInfo = parsedReservation.personalInfo;
+                setGender(parsedInfo.gender || '');
+                setFirstNameKor(parsedInfo.firstNameKor || (authed && user ? user.username : ''));
+                setLastNameKor(parsedInfo.lastNameKor || '');
+                setFirstNameEng(parsedInfo.firstNameEng || '');
+                setLastNameEng(parsedInfo.lastNameEng || '');
+                setPhone(parsedInfo.phone || (authed && user ? user.tel : ''));
+                setEmail(parsedInfo.email || (authed && user ? user.email : ''));
+                setCountry(parsedInfo.country || '');
+                setPrivacyAgreement(parsedInfo.privacyAgreement || false);
+                setPrivacyDisagree(parsedInfo.privacyAgreement === false);
+                setMarketingAgreement(parsedInfo.marketingAgreement || false);
+                setAgeVerification(parsedInfo.ageVerification || false);
+            }
         }
-    }, [dispatch]);
+    }, [dispatch, authed, user]);
 
     // 성별 체크박스 핸들러 - 일시적으로 상태와 Redux에만 저장
     const handleMaleChange = (checked) => {
@@ -148,7 +151,7 @@ const PrivateInfoForm = () => {
             return;
         }
 
-        // Save to localStorage
+        // 개인 정보를 Redux 저장
         const personalInfoData = {
             gender,
             firstNameKor,
@@ -162,10 +165,14 @@ const PrivateInfoForm = () => {
             marketingAgreement,
             ageVerification,
         };
-        localStorage.setItem('personalInfo', JSON.stringify(personalInfoData));
 
-        // 예약 완료 처리
-        dispatch(reservationActions.setReservationStatus('pending'));
+        dispatch(reservationActions.setPersonalInfo(personalInfoData));
+
+        // 현재 로그인한 사용자의 ID를 전달하여 예약 완료 처리
+        const userId = authed && user ? user.userid : null;
+        dispatch(reservationActions.completeReservation(userId));
+
+        // 예약 완료 단계로 이동
         dispatch(reservationActions.setCurrentStep(5));
         alert('예약이 완료되었습니다.');
     };
