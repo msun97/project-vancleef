@@ -14,7 +14,7 @@ import ProductDetailNav from '../../components/product/ProductDetailNav';
 import ProductDetailImg from '../../components/product/ProductDetailImg';
 import ProductInformation from '../../components/product/ProductInformation';
 import RecommendProductSlide from '../../components/product/RecommendProductSlide';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
@@ -52,7 +52,7 @@ function ProductDetailPage() {
         }
     };
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+
     const { category, id } = useParams();
     const productdata = useSelector((state) => state.productR.productdata);
     const [product, setProduct] = useState(null);
@@ -95,10 +95,6 @@ function ProductDetailPage() {
     if (!product) {
         return <div>상품을 찾을 수 없습니다.</div>;
     }
-
-    const goRes = () => {
-        navigate('/reservation');
-    };
 
     //1.detail product --- colorpn 있으면 찾기
     const targetColorpns = product.colorpn?.map((product) => product);
@@ -194,11 +190,6 @@ function ProductDetailPage() {
                             <div className="title tracking-wide">
                                 <h3>
                                     <button onClick={() => toggleModal('inquiry')}>CALL</button>
-                                </h3>
-                            </div>
-                            <div className="title tracking-wide">
-                                <h3>
-                                    <button onClick={goRes}>RESERVATION</button>
                                 </h3>
                             </div>
                             <div className="title tracking-wide">
