@@ -4,8 +4,8 @@ const SizeGuide = () => {
     return (
         <div className="w-full h-[800px]  p-330 mt-[152px]">
             <div className="py-5 px-8">
-                <h1 className="text-center text-[42px] font-secondary font-extrabold">Van Cleef & Arpels</h1>
-                <p className="mt-[20px] text-center">시리즈명</p>
+                {/*   <h1 className="text-center text-[42px] font-secondary font-extrabold">Van Cleef & Arpels</h1> */}
+
                 <div className=" text-center mt-[9px] font-secondary text-[37px] font-extrabold pb-[17px]">
                     사이즈 가이드
                 </div>
