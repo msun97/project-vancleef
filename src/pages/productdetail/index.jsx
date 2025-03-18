@@ -17,6 +17,7 @@ import RecommendProductSlide from '../../components/product/RecommendProductSlid
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
+import { reservationActions } from '@/store/modules/reservationSlice';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 
 function ProductDetailPage() {
@@ -92,6 +93,7 @@ function ProductDetailPage() {
 
     const goRes = () => {
         navigate('/reservation');
+        dispatch(reservationActions.handleReservation({ category, id }));
     };
 
     //1.detail product --- colorpn 있으면 찾기
@@ -158,10 +160,10 @@ function ProductDetailPage() {
                                     })}
                                 </div>
 
-                                <form name="frmView" id="frmView" method="post" onSubmit={(e) => e.preventDefault()}>
-                                    <input type="hidden" name="goodsno" value="12345" />
-                                    <input type="hidden" name="cate" value="67890" />
-                                    <div className="buy-btn">
+                                <form name='frmView' id='frmView' method='post' onSubmit={(e) => e.preventDefault()}>
+                                    <input type='hidden' name='goodsno' value='12345' />
+                                    <input type='hidden' name='cate' value='67890' />
+                                    <div className='buy-btn'>
                                         <Button
                                             onClick={(e) => {
                                                 e.preventDefault(); // Prevent form submission

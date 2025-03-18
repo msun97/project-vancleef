@@ -153,6 +153,7 @@ const initialState = {
     currentStep: 1, // 현재 예약 단계 (1: 부티크 선택, 2: 방문 목적, 3: 예약 상세, 4: 개인 정보, 5: 완료)
     isSubmitting: false,
     error: null,
+    reservationItem: [],
 };
 
 export const reservationSlice = createSlice({
@@ -269,6 +270,11 @@ export const reservationSlice = createSlice({
         // 오류 설정
         setError: (state, action) => {
             state.error = action.payload;
+        },
+
+        handleReservation: (state, action) => {
+            state.reservationItem = action.payload;
+            localStorage.setItem('reservationItem', JSON.stringify(state.reservationItem));
         },
     },
 });
