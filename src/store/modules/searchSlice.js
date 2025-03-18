@@ -24,29 +24,29 @@ export const searchSlice = createSlice({
       state.stonFilter = stonFilter;
       state.itemFilter = itemFilter;
       state.filterData = state.originalData.filter(item => {
-        const isPriceValid =
+        const priceCondition =
           Object.keys(priceFilter).length === 0 ||
           (item.price <= Number(priceFilter.max) &&
             item.price >= Number(priceFilter.min));
 
-        const isMaterialValid =
-          !materialFilter || item.subtitle.includes(materialFilter);
-        const isStoneValid = item.stone
-          ? item.stone.includes(stonFilter)
-          : false;
-        const isCategoryValid =
-          itemFilter === undefined || item.category === itemFilter;
+        const materialCondition = materialFilter
+          ? item.subtitle && item.subtitle.includes(materialFilter)
+          : true;
+
+        const stoneCondition = stonFilter
+          ? item.stone && item.stone.includes(stonFilter)
+          : true;
+
+        const categoryCondition =
+          itemFilter || itemFilter === 0 ? item.category === itemFilter : true;
 
         return (
-          isPriceValid && isMaterialValid && isStoneValid && isCategoryValid
+          priceCondition &&
+          materialCondition &&
+          stoneCondition &&
+          categoryCondition
         );
       });
-
-      localStorage.setItem('filterData', JSON.stringify(state.filterData));
-      localStorage.setItem('priceFilter', priceFilter);
-      localStorage.setItem('materialFilter', materialFilter);
-      localStorage.setItem('stonFilter', stonFilter);
-      localStorage.setItem('itemFilter', itemFilter);
     },
   },
 });
