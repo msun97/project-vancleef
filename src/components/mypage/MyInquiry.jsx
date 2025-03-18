@@ -5,16 +5,19 @@ import Button from '../button';
 
 const MyInquiry = () => {
     const dispatch = useDispatch();
-    const userInfo = useSelector((state) => state.authR?.user);
+    // const userInfo = useSelector((state) => state.authR.user);
     const myInquiries = useSelector((state) => state.productInquiryR?.myInquiries || []);
+		const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+console.log(currentUser)
+		// const {userid} = currentUser
 
     // 로그인되어 있으면 해당 유저의 문의를 로드
-    useEffect(() => {
-        if (userInfo?.usernum) {
-            console.log('유저 문의 로드: usernum =', userInfo.usernum);
-            dispatch(productInquiryActions.loadMyInquiries(userInfo.usernum));
-        }
-    }, [userInfo, dispatch]);
+    // useEffect(() => {
+    //     if (userInfo?.usernum) {
+    //         console.log('유저 문의 로드: usernum =', userInfo.usernum);
+    //         dispatch(productInquiryActions.loadMyInquiries(userInfo.usernum));
+    //     }
+    // }, [userInfo, dispatch]);
 
     // 날짜 포맷팅 함수
     const formatDate = (dateString) => {
@@ -36,8 +39,8 @@ const MyInquiry = () => {
     };
 
     return (
-        <div>
-            <h2 className='text-xl font-bold mb-4'>내가 작성한 문의</h2>
+        <div>{/* 내가 작성한 문의 탭 안 */}
+            <h2 className='text-xl font-bold mb-4'></h2>
 
             {myInquiries.length > 0 ? (
                 <div className='border-t border-gray-200'>
@@ -101,7 +104,7 @@ const MyInquiry = () => {
                     ))}
                 </div>
             ) : (
-                <div className='text-center text-gray-500 py-8 border-t border-b border-gray-200'>
+                <div className='text-center text-gray-500 py-8 border-gray-200'>
                     작성한 문의가 없습니다.
                 </div>
             )}

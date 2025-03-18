@@ -149,7 +149,7 @@ const ReviewList = ({ category, id }) => {
     return (
         <>
             {/* 모달이 열렸을 때 모달 컴포넌트 렌더링 */}
-            {isModalOpen && <MypostsModal productId={productID} productName={productName} />}
+            {isModalOpen && <MypostsModal productId={productID} productName={productName} category={category} />}
             <div className='pt-[200px] px-[330px] w-full'>
                 <div className='flex flex-col gap-[30px]'>
                     <div className='w-full flex items-center justify-between'>

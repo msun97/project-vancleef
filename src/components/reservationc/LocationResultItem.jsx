@@ -27,10 +27,10 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
         // Redux 상태 업데이트 - 선택된 부티크 정보 저장
         dispatch(reservationActions.setLocation(locationData));
 
-        // 이 단계에서만 확인 버튼을 누른 경우 localStorage에 저장
-        localStorage.setItem('locationInfo', JSON.stringify(locationData));
+        // 로컬 스토리지 저장 코드 제거 - Redux 상태만 업데이트
+        // localStorage.setItem('locationInfo', JSON.stringify(locationData));
 
-        // 다음 단계로 이동
+        // 다음 단계로 이동 (setCurrentStep 내부에서 필요한 경우에만 로컬 스토리지 저장)
         dispatch(reservationActions.setCurrentStep(2));
     };
 

@@ -3,48 +3,56 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../button';
 import CheckBox from '../checkbox';
 import { reservationActions } from '../../store/modules/reservationSlice';
+import { useNavigate } from 'react-router-dom';
 
 const PrivateInfoForm = () => {
     const dispatch = useDispatch();
     const { personalInfo } = useSelector((state) => state.reservationR.reservation);
     const currentStep = useSelector((state) => state.reservationR.currentStep);
+    const { user, authed } = useSelector((state) => state.authR); // 인증 상태와 사용자 정보 가져오기
+    const navigate = useNavigate();
 
-    // 상태 초기화
+    // 상태 초기화 - 로그인한 경우 사용자 정보 활용
     const [gender, setGender] = useState(personalInfo.gender || '');
-    const [firstNameKor, setFirstNameKor] = useState(personalInfo.firstNameKor || '');
+    const [firstNameKor, setFirstNameKor] = useState(
+        personalInfo.firstNameKor || (authed && user ? user.username : '')
+    );
     const [lastNameKor, setLastNameKor] = useState(personalInfo.lastNameKor || '');
     const [firstNameEng, setFirstNameEng] = useState(personalInfo.firstNameEng || '');
     const [lastNameEng, setLastNameEng] = useState(personalInfo.lastNameEng || '');
-    const [phone, setPhone] = useState(personalInfo.phone || '');
-    const [email, setEmail] = useState(personalInfo.email || '');
+    const [phone, setPhone] = useState(personalInfo.phone || (authed && user ? user.tel : ''));
+    const [email, setEmail] = useState(personalInfo.email || (authed && user ? user.email : ''));
     const [country, setCountry] = useState(personalInfo.country || '');
     const [privacyAgreement, setPrivacyAgreement] = useState(personalInfo.privacyAgreement || false);
     const [privacyDisagree, setPrivacyDisagree] = useState(personalInfo.privacyAgreement === false);
     const [marketingAgreement, setMarketingAgreement] = useState(personalInfo.marketingAgreement || false);
     const [ageVerification, setAgeVerification] = useState(personalInfo.ageVerification || false);
 
+    // 완료 페이지 상태 추가
+    const [showCompletionPage, setShowCompletionPage] = useState(false);
+
     // Load saved data from localStorage on component mount
     useEffect(() => {
-        const savedPersonalInfo = localStorage.getItem('personalInfo');
-        if (savedPersonalInfo) {
-            const parsedInfo = JSON.parse(savedPersonalInfo);
-            setGender(parsedInfo.gender || '');
-            setFirstNameKor(parsedInfo.firstNameKor || '');
-            setLastNameKor(parsedInfo.lastNameKor || '');
-            setFirstNameEng(parsedInfo.firstNameEng || '');
-            setLastNameEng(parsedInfo.lastNameEng || '');
-            setPhone(parsedInfo.phone || '');
-            setEmail(parsedInfo.email || '');
-            setCountry(parsedInfo.country || '');
-            setPrivacyAgreement(parsedInfo.privacyAgreement || false);
-            setPrivacyDisagree(parsedInfo.privacyAgreement === false);
-            setMarketingAgreement(parsedInfo.marketingAgreement || false);
-            setAgeVerification(parsedInfo.ageVerification || false);
-
-            // Also update Redux store
-            dispatch(reservationActions.setPersonalInfo(parsedInfo));
+        const savedReservation = localStorage.getItem('reservation');
+        if (savedReservation) {
+            const parsedReservation = JSON.parse(savedReservation);
+            if (parsedReservation.personalInfo) {
+                const parsedInfo = parsedReservation.personalInfo;
+                setGender(parsedInfo.gender || '');
+                setFirstNameKor(parsedInfo.firstNameKor || (authed && user ? user.username : ''));
+                setLastNameKor(parsedInfo.lastNameKor || '');
+                setFirstNameEng(parsedInfo.firstNameEng || '');
+                setLastNameEng(parsedInfo.lastNameEng || '');
+                setPhone(parsedInfo.phone || (authed && user ? user.tel : ''));
+                setEmail(parsedInfo.email || (authed && user ? user.email : ''));
+                setCountry(parsedInfo.country || '');
+                setPrivacyAgreement(parsedInfo.privacyAgreement || false);
+                setPrivacyDisagree(parsedInfo.privacyAgreement === false);
+                setMarketingAgreement(parsedInfo.marketingAgreement || false);
+                setAgeVerification(parsedInfo.ageVerification || false);
+            }
         }
-    }, [dispatch]);
+    }, [dispatch, authed, user]);
 
     // 성별 체크박스 핸들러 - 일시적으로 상태와 Redux에만 저장
     const handleMaleChange = (checked) => {
@@ -148,7 +156,7 @@ const PrivateInfoForm = () => {
             return;
         }
 
-        // Save to localStorage
+        // 개인 정보를 Redux 저장
         const personalInfoData = {
             gender,
             firstNameKor,
@@ -162,12 +170,23 @@ const PrivateInfoForm = () => {
             marketingAgreement,
             ageVerification,
         };
-        localStorage.setItem('personalInfo', JSON.stringify(personalInfoData));
 
-        // 예약 완료 처리
-        dispatch(reservationActions.setReservationStatus('pending'));
+        dispatch(reservationActions.setPersonalInfo(personalInfoData));
+
+        // 현재 로그인한 사용자의 ID를 전달하여 예약 완료 처리
+        const userId = authed && user ? user.userid : null;
+        dispatch(reservationActions.completeReservation(userId));
+
+        // 예약 완료 단계로 이동
         dispatch(reservationActions.setCurrentStep(5));
-        alert('예약이 완료되었습니다.');
+
+        // 완료 페이지 표시 상태 활성화
+        setShowCompletionPage(true);
+
+        // 3초 후 마이페이지로 이동
+        setTimeout(() => {
+            navigate('/mypage');
+        }, 3000);
     };
 
     // 이전 단계에서 완료되지 않았다면 접근 제한
@@ -176,6 +195,19 @@ const PrivateInfoForm = () => {
             <div className='border-t-2 w-full'>
                 <h3 className='font-secondary text-[20px] pt-[30px] pb-[40px]'>4. 개인 정보</h3>
                 <p className='text-center py-4'>예약 상세 정보를 먼저 입력해주세요.</p>
+            </div>
+        );
+    }
+
+    // 완료 페이지 보여주기
+    if (showCompletionPage) {
+        return (
+            <div className='border-t-2 w-full'>
+                <div className='flex flex-col items-center justify-center py-16'>
+                    <h3 className='font-secondary text-[24px] mb-6'>예약이 완료되었습니다</h3>
+                    <p className='text-center mb-4'>예약 정보는 마이페이지에서 확인하실 수 있습니다.</p>
+                    <p className='text-center text-gray-500'>잠시 후 마이페이지로 이동합니다...</p>
+                </div>
             </div>
         );
     }

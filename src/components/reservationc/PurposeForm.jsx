@@ -13,21 +13,14 @@ const PurposeForm = () => {
     const [repairService, setRepairService] = useState(purpose.repairService);
     const [selectedOption, setSelectedOption] = useState(purpose.selectedOption || '');
 
-    // Load saved data from localStorage on component mount
+    // Redux에서 데이터 로드
     useEffect(() => {
-        const savedPurpose = localStorage.getItem('reservationPurpose');
-        if (savedPurpose) {
-            const parsedPurpose = JSON.parse(savedPurpose);
-            setProductConsultation(parsedPurpose.productConsultation);
-            setRepairService(parsedPurpose.repairService);
-            setSelectedOption(parsedPurpose.selectedOption || '');
+        setProductConsultation(purpose.productConsultation);
+        setRepairService(purpose.repairService);
+        setSelectedOption(purpose.selectedOption || '');
+    }, [purpose]);
 
-            // Also update Redux store
-            dispatch(reservationActions.setPurpose(parsedPurpose));
-        }
-    }, [dispatch]);
-
-    // 체크박스 변경 핸들러 - 일시적으로 상태와 Redux에만 저장
+    // 체크박스 변경 핸들러 - Redux에만 저장
     const handleProductConsultationChange = (checked) => {
         setProductConsultation(checked);
         // 제품 상담을 선택하면 수리 서비스 체크 해제
@@ -71,14 +64,7 @@ const PurposeForm = () => {
     const handleConfirm = () => {
         // 유효성 검사: 목적과 해당 옵션이 모두 선택되어 있어야 함
         if ((productConsultation && selectedOption) || (repairService && selectedOption)) {
-            // Save to localStorage
-            const purposeData = {
-                productConsultation,
-                repairService,
-                selectedOption,
-            };
-            localStorage.setItem('reservationPurpose', JSON.stringify(purposeData));
-
+            // 다음 단계로 이동 (로컬 스토리지 저장은 setCurrentStep에서 처리)
             dispatch(reservationActions.setCurrentStep(3));
         } else {
             alert('방문 목적과 상세 옵션을 모두 선택해 주세요.');
