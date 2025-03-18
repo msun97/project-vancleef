@@ -140,9 +140,10 @@ const Search = () => {
                 </div>
               ) : (
                 nowSearchData.map((product, idx) => {
-                  const isFavorite = user.favorites.some(
+                  
+                  const isFavorite = user?user.favorites.some(
                     item => item.productnumber === product.productnumber,
-                  );
+                  ):false;
 
                   return (
                     <li

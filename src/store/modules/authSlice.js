@@ -78,7 +78,9 @@ export const authSlice = createSlice({
                 favorites: [], // 찜 목록 초기화
                 reviews: [], // 리뷰 목록 초기화
                 product:[],
-								cart: [], 
+				cart: [], 
+                ccInquiries: [],
+                
             };
 
 
@@ -222,7 +224,20 @@ export const authSlice = createSlice({
                 localStorage.setItem('currentUser', JSON.stringify(state.user));
             }
         },
-    },
+        addccInquiry: (state, action) => {
+            if (!state.user) return;
+            if (!state.user.ccInquiries) {
+                state.user.ccInquiries = [];
+            }
+            state.joinData = state.joinData.map((item) => item.userid === state.user.userid ? { ...item, ccInquiries:item.ccInquiries? item.ccInquiries : []  }: item )
+            const no = state.user.ccInquiries.length + 1 
+            const addData = {...action.payload, id : no};
+            state.user.ccInquiries = [...state.user.ccInquiries, addData];
+            state.joinData = state.joinData.map((item) => item.userid === state.user.userid ? {...item, ccInquiries: [...item.ccInquiries, addData]}: item);
+            localStorage.setItem('currentUser', JSON.stringify(state.user));
+            localStorage.setItem('users', JSON.stringify(state.joinData));  
+        }
+    }, 
     extraReducers: (builder) => {
         builder
             .addCase(getKakaoLogin.pending, (state) => {

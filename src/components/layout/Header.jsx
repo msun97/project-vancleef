@@ -52,6 +52,11 @@ const Header = () => {
                 EXIBITION
               </li>
             </Link>
+            <Link to="/customers/notice">
+            <li className="font-secondary text-heading-m font-bold">
+                고객센터
+              </li>
+            </Link>
           </ul>
         </nav>
       </div>
