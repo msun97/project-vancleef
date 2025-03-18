@@ -11,6 +11,7 @@ const initialState = {
 
 let no = initialState.joinData.length;
 
+
 // 현재 사용자의 myreservations 가져오기
 const loadMyReservations = () => {
     try {

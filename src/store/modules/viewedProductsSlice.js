@@ -1,31 +1,27 @@
+// viewedProductsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-const MAX_VIEWED_PRODUCTS = 10; // 최대 저장 개수 설정
-
 const initialState = {
-  productIds: [],
+    products: [],
 };
 
-export const viewedProductsSlice = createSlice({
-  name: 'viewedProducts',
-  initialState,
-  reducers: {
-    addProduct: (state, action) => {
-      const productId = action.payload;
+const viewedProductsSlice = createSlice({
+    name: 'viewedProducts',
+    initialState,
+    reducers: {
+        addProduct: (state, action) => {
+            const newProduct = action.payload;
+            // 이미 목록에 있는 상품인지 확인
+            const isProductAlreadyViewed = state.products.some((product) => product.productid === newProduct.productid);
 
-      if (!state.productIds.includes(productId)) {
-        state.productIds = [productId, ...state.productIds.filter((id) => id !== productId)].slice(0, MAX_VIEWED_PRODUCTS);
-      }
+            if (!isProductAlreadyViewed) {
+                // 새 상품을 목록의 맨 앞에 추가
+                state.products = [newProduct, ...state.products];
+            }
+        },
+        // 다른 리듀서 로직...
     },
-    removeProduct: (state, action) => {
-      const productId = action.payload;
-      state.productIds = state.productIds.filter((id) => id !== productId);
-    },
-    clearProducts: (state) => {
-      state.productIds = [];
-    },
-  },
 });
 
-export const { addProduct, removeProduct, clearProducts } = viewedProductsSlice.actions;
+export const viewedProductsActions = viewedProductsSlice.actions;
 export default viewedProductsSlice.reducer;
