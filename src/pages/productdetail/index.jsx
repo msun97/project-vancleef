@@ -69,6 +69,24 @@ function ProductDetailPage() {
         return <div>상품을 찾을 수 없습니다.</div>;
     }
 
+    const goRes = () => {
+        navigate('/reservation');
+    };
+
+    // colorpn에 있는 값과 productnumber가 일치하는 제품 찾기
+    /*  const findProductByColorpn = (productdata) => {
+        return productdata.flatMap((categoryData) =>
+            categoryData.data.filter((product) => product.colorpn.includes(product.productnumber))
+        );
+    };
+
+    const matchingProducts = findProductByColorpn(productdata);
+    console.log(matchingProducts); */
+
+    const matchingProducts = productdata.flatMap((categoryData) =>
+        categoryData.data.filter((product) => product.colorpn.includes(product.productnumber))
+    );
+
     return (
         <div id='contents' className='w-full h-full '>
             <div className='w-full pb-[80px]'></div>
@@ -90,18 +108,31 @@ function ProductDetailPage() {
                                     <dt>{product.price ? `${product.price.toLocaleString()}원` : '가격 정보 없음'}</dt>
                                 </dl>
                             </div>
+                            <div className="option ">
+                                <div className="flex gap-5">
+                                    {matchingProducts.length > 0 ? (
+                                        matchingProducts.map((product, index) => (
+                                            <div key={index}>
+                                                <img
+                                                    src={product.objectimage[0]} // 'product' 객체의 첫 번째 이미지를 표시
+                                                    alt={`${product.title} 이미지`} // 'product.title'을 사용하여 대체 텍스트 설정
+                                                    style={{
+                                                        objectFit: 'contain',
+                                                        width: '100px',
+                                                        maxWidth: '100%',
+                                                    }}
+                                                />
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p>해당하는 제품이 없습니다.</p>
+                                    )}
+                                </div>
 
-                            <div className='option'>
-                                <select className='w-full border border-solid black pl-[10px] '>
-                                    <option value='' disabled selected>
-                                        옵션
-                                    </option>
-                                    {product.colorpn ? <option value='option1'>{product.colorpn[0]}</option> : null}
-                                </select>
-                                <form name='frmView' id='frmView' method='post' onSubmit={(e) => e.preventDefault()}>
-                                    <input type='hidden' name='goodsno' value='12345' />
-                                    <input type='hidden' name='cate' value='67890' />
-                                    <div className='buy-btn'>
+                                <form name="frmView" id="frmView" method="post" onSubmit={(e) => e.preventDefault()}>
+                                    <input type="hidden" name="goodsno" value="12345" />
+                                    <input type="hidden" name="cate" value="67890" />
+                                    <div className="buy-btn">
                                         <Button
                                             onClick={(e) => {
                                                 e.preventDefault(); // Prevent form submission
@@ -132,7 +163,7 @@ function ProductDetailPage() {
                             </div>
                             <div className='title tracking-wide'>
                                 <h3>
-                                    <button>RESERVATION</button>
+                                    <button onClick={goRes}>RESERVATION</button>
                                 </h3>
                             </div>
                             <div className='title tracking-wide'>
