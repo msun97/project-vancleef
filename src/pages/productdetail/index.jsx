@@ -18,6 +18,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
+import { viewedProductsActions } from '@/store/modules/viewedProductsSlice';
 
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
@@ -72,7 +73,12 @@ function ProductDetailPage() {
 
             if (foundCategory) {
                 const foundProduct = foundCategory.data.find((item) => item.productid === parseInt(id));
+                // 최근 본 상품 목록 추가
+
                 setProduct(foundProduct);
+
+                dispatch(viewedProductsActions.addProduct(foundProduct));
+                console.log(foundProduct, '>>>>>>foundProduct');
             } else {
                 console.error('해당 카테고리를 찾을 수 없습니다.');
             }
