@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Button from '../../components/button';
 import CheckBox from '../../components/checkbox';
 import { useState, useEffect } from 'react';
@@ -10,18 +10,24 @@ const flexIC = 'flex items-center';
 const ProductInquiry = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
 
     // 로그인 정보 및 상품 정보 가져오기
     const userInfo = useSelector((state) => state.authR?.user);
     const productInfo = useSelector((state) => state.productR?.currentProduct);
     const isLoggedIn = useSelector((state) => state.authR?.authed);
 
+    // URL 쿼리 파라미터에서 category와 id 가져오기 (ProductInquiryList에서 전달됨)
+    const searchParams = new URLSearchParams(location.search);
+    const category = searchParams.get('category');
+    const productId = searchParams.get('id');
+
     // 로컬스토리지에서 currentUser 확인
     useEffect(() => {
         // 로그인 체크
         if (!isLoggedIn) {
             alert('로그인이 필요한 서비스입니다.');
-            navigate('/login', { state: { from: window.location.pathname } });
+            navigate('/login', { state: { from: window.location.pathname + window.location.search } });
         } else {
             // 로컬스토리지의 currentUser 확인
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -36,11 +42,10 @@ const ProductInquiry = () => {
         }
     }, [isLoggedIn, navigate]);
 
-    // 유저 ID 및 상품 ID
+    // 유저 ID
     const userId =
         userInfo?.id ||
         (localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')).id : null);
-    const productId = productInfo?.id || window.location.pathname.split('/').pop();
 
     const [userInquiry, setUserInquiry] = useState({
         title: '',
@@ -51,6 +56,7 @@ const ProductInquiry = () => {
         password: '',
         date: '',
         inquiryType: '상품',
+        category: category, // 카테고리 추가
         productId: productId, // 상품 ID 추가
         productName: productInfo?.name || '상품명', // 상품명 추가
         productImage:
@@ -117,6 +123,7 @@ const ProductInquiry = () => {
         const currentUserId = currentUser ? currentUser.id : null;
 
         console.log('제출 시 사용자 ID:', currentUserId || userId);
+        console.log('제출 시 카테고리:', category);
         console.log('제출 시 상품 ID:', productId);
 
         // 디스패치하는 데이터
@@ -126,6 +133,8 @@ const ProductInquiry = () => {
             date: formattedDate,
             id: currentUserId || userId,
             inquiryId: Date.now(),
+            category: category, // 카테고리 추가
+            productId: productId, // 상품 ID 추가
         };
 
         console.log('디스패치하는 데이터:', inquiryData);
@@ -134,12 +143,12 @@ const ProductInquiry = () => {
         dispatch(productInquiryActions.addInquiry(inquiryData));
 
         alert('문의가 등록되었습니다.');
-        navigate('/productdetail/1');
+        navigate(`/product/${category}/${productId}`);
     };
 
     const onExit = (e) => {
         e.preventDefault();
-        navigate('/productdetail/1');
+        navigate(-1);
     };
 
     // 로그인 상태가 아니면 로딩 중이거나 리다이렉트 중이므로 아무것도 렌더링하지 않음
