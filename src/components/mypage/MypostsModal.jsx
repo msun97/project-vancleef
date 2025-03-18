@@ -6,7 +6,7 @@ import { closeModal } from '../../store/modules/modalSlice';
 import { reviewActions } from '../../store/modules/reviewSlice';
 import Draggable from 'react-draggable';
 
-const MypostsModal = ({ productId, productName }) => {
+const MypostsModal = ({ productId, productName, category }) => {
     const [rating, setRating] = useState(0);
     const [title, setTitle] = useState(''); // 리뷰 제목 상태
     const [content, setContent] = useState(''); // 리뷰 내용 상태
@@ -18,7 +18,6 @@ const MypostsModal = ({ productId, productName }) => {
 
     const dispatch = useDispatch();
     const isOpen = useSelector((state) => state.modalR.isOpen);
-    const userNum = useSelector((state) => state.authR); // 로그인한 사용자 정보 가져오기
 
     console.log('MypostsModal 렌더링:', { productId, productName });
 
@@ -80,7 +79,8 @@ const MypostsModal = ({ productId, productName }) => {
     };
 
     // 리뷰 등록 핸들러
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         // 입력값 검증
         if (rating === 0) {
             alert('별점을 선택해주세요.');
@@ -105,17 +105,20 @@ const MypostsModal = ({ productId, productName }) => {
             images: imageFile ? [imageFile] : [], // 이미지가 있으면 배열에 추가
         };
 
+        console.log('리뷰 데이터 전송:', { productId, reviewData });
+
         // Redux 액션 디스패치하여 리뷰 추가
         dispatch(
             reviewActions.addReview({
-                userNum: userNum,
                 productId: productId,
                 reviewData: reviewData,
+                category,
             })
         );
 
         // 모달 닫기
         dispatch(closeModal());
+        alert('리뷰가 성공적으로 등록되었습니다.');
 
         // 상태 초기화
         setRating(0);
@@ -189,6 +192,7 @@ const MypostsModal = ({ productId, productName }) => {
                     <Input
                         ref={fileInputRef}
                         type='file'
+                        accept='image/*'
                         onChange={handleFileChange}
                         className='absolute opacity-0 w-0 h-0'
                     />

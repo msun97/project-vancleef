@@ -8,17 +8,18 @@ import { openModal } from '../../store/modules/modalSlice';
 import { paginationActions } from '../../store/modules/paginationSlice';
 import MypostsModal from '../mypage/MypostsModal';
 
-const ReviewList = ({ productID }) => {
+const ReviewList = ({ category, id }) => {
     const dispatch = useDispatch();
     const [localReviews, setLocalReviews] = useState([]);
     const [productName, setProductName] = useState('');
+    const productID = id; // id prop을 productID로 사용
 
     // 모달 상태 가져오기
     const isModalOpen = useSelector((state) => state.modalR?.isOpen);
 
     // 로그인한 사용자 정보
-    const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-    const { id } = currentUserData;
+    const currentUserData = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const userId = currentUserData?.id || null;
 
     // 리뷰 상태 가져오기
     const { sortBy } = useSelector((state) => state.reviewR);
@@ -41,9 +42,9 @@ const ReviewList = ({ productID }) => {
         const productdata = JSON.parse(localStorage.getItem('productdata')) || [];
         let allProducts = [];
 
-        productdata.forEach((category) => {
-            if (category.data && Array.isArray(category.data)) {
-                allProducts = [...allProducts, ...category.data];
+        productdata.forEach((categoryData) => {
+            if (categoryData.data && Array.isArray(categoryData.data)) {
+                allProducts = [...allProducts, ...categoryData.data];
             }
         });
 
@@ -148,7 +149,7 @@ const ReviewList = ({ productID }) => {
     return (
         <>
             {/* 모달이 열렸을 때 모달 컴포넌트 렌더링 */}
-            {isModalOpen && <MypostsModal productId={productID} productName={productName} />}
+            {isModalOpen && <MypostsModal productId={productID} productName={productName} category={category} />}
             <div className='pt-[200px] px-[330px] w-full'>
                 <div className='flex flex-col gap-[30px]'>
                     <div className='w-full flex items-center justify-between'>
@@ -240,7 +241,12 @@ const ReviewList = ({ productID }) => {
                 {/* 리뷰 리스트 - localReviews가 비어있는지 확인 */}
                 {displayedReviews.length > 0 ? (
                     displayedReviews.map((review) => (
-                        <ReviewItem key={review.id || Math.random()} review={review} productId={productID} id={id} />
+                        <ReviewItem
+                            key={review.id || Math.random()}
+                            review={review}
+                            productId={productID}
+                            userId={userId}
+                        />
                     ))
                 ) : (
                     <div className='w-full py-10 text-center text-gray-500'>

@@ -44,6 +44,9 @@ const Header = () => {
             <Link to="/productlist">
               <li className="font-secondary text-heading-m font-bold">SHOP</li>
             </Link>
+            <Link to="/about">
+              <li className="font-secondary text-heading-m font-bold">ABOUT</li>
+            </Link>
             <Link to="/kbrand">
               <li className="font-secondary text-heading-m font-bold">
                 EXIBITION
