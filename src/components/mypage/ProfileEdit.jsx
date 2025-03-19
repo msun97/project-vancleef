@@ -155,7 +155,7 @@ function PasswordChange() {
             {/* 성별 (체크박스) */}
             <div className='flex flex-row items-center mb-[60px]'>
                 <label className='w-[200px] block mb-2 font-regular'>성별</label>
-                <div className='flex pb-[8px] items-center space-x-8'>
+                <div className='flex pb-[8px] items-center space-x-4'>
                     <label className='flex items-center'>
                         <CheckBox
                             id='male'
