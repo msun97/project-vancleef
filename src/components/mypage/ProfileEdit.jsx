@@ -65,23 +65,6 @@ function PasswordChange() {
         }
     }, [user]);
 
-    // 체크박스 onChange 핸들러
-    const handleGenderChange = (e) => {
-        const { name, checked } = e.target;
-        setGender((prev) => ({
-            ...prev,
-            [name]: checked,
-        }));
-    };
-
-    const handleNotificationChange = (e) => {
-        const { name, checked } = e.target;
-        setNotification((prev) => ({
-            ...prev,
-            [name]: checked,
-        }));
-    };
-
     // 정보 업데이트 함수 (기본 정보 변경)
     const handleInfoUpdate = (e) => {
         e.preventDefault();
@@ -172,24 +155,30 @@ function PasswordChange() {
             {/* 성별 (체크박스) */}
             <div className='flex flex-row items-center mb-[60px]'>
                 <label className='w-[200px] block mb-2 font-regular'>성별</label>
-                <div className='flex pb-[8px] items-center space-x-4'>
+                <div className='flex pb-[8px] items-center space-x-8'>
                     <label className='flex items-center'>
                         <CheckBox
+                            id='male'
                             name='male'
                             checked={gender.male}
-                            onChange={handleGenderChange}
+                            onChange={() => setGender({ ...gender, male: !gender.male })}
                             className='w-[18px] h-[18px] items-start'
                         />
-                        <span className='ml-2'>남</span>
+                        <label htmlFor='male' className='ml-1'>
+                            남
+                        </label>
                     </label>
                     <label className='flex items-center'>
                         <CheckBox
+                            id='female'
                             name='female'
                             checked={gender.female}
-                            onChange={handleGenderChange}
+                            onChange={() => setGender({ ...gender, female: !gender.female })}
                             className='w-[18px] h-[18px] items-start'
                         />
-                        <span className='ml-2'>여</span>
+                        <label htmlFor='female' className='ml-1'>
+                            여
+                        </label>
                     </label>
                 </div>
             </div>
@@ -220,21 +209,37 @@ function PasswordChange() {
                 <div className='flex mb-[20px] items-center space-x-4'>
                     <label className='flex items-center'>
                         <CheckBox
+                            id='sms'
                             name='sms'
                             checked={notification.sms}
-                            onChange={handleNotificationChange}
+                            onChange={() =>
+                                setNotification({
+                                    ...notification,
+                                    sms: !notification.sms,
+                                })
+                            }
                             className='w-[18px] h-[18px] items-start'
                         />
-                        <span className='ml-2'>받습니다.</span>
+                        <label htmlFor='sms' className='ml-2'>
+                            받습니다.
+                        </label>
                     </label>
                     <label className='flex items-center'>
                         <CheckBox
+                            id='kakao'
                             name='kakao'
                             checked={notification.kakao}
-                            onChange={handleNotificationChange}
+                            onChange={() =>
+                                setNotification({
+                                    ...notification,
+                                    kakao: !notification.kakao,
+                                })
+                            }
                             className='w-[18px] h-[18px] items-start'
                         />
-                        <span className='ml-2'>받지 않습니다.</span>
+                        <label htmlFor='kakao' className='ml-2'>
+                            받지 않습니다.
+                        </label>
                     </label>
                 </div>
             </div>
