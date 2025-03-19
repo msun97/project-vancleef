@@ -15,20 +15,26 @@ const ProductInquiry = () => {
 
     // 로그인 정보 및 상품 정보 가져오기
     const userInfo = useSelector((state) => state.authR?.user);
-    const inquiryItem = JSON.parse(localStorage.getItem('inquiryItem') || '{}');
-    const categoryId = productdata.find((item) => item.category === inquiryItem.category)?.id;
-    const productInfo =
-        categoryId &&
-        productdata[categoryId - 1]?.data?.find((item) => {
-            return inquiryItem.id === item.productid;
-        });
-
-    const isLoggedIn = useSelector((state) => state.authR?.authed);
 
     // URL 쿼리 파라미터에서 category와 id 가져오기 (ProductInquiryList에서 전달됨)
     const searchParams = new URLSearchParams(location.search);
     const category = searchParams.get('category');
     const productId = searchParams.get('id');
+
+    // 1. 카테고리 정보 찾기
+    const categoryData = productdata.find((item) => item.category === category);
+
+    // 2. 해당 카테고리에서 상품 정보 찾기 (문자열/숫자 변환 고려)
+    const productInfo = categoryData?.data?.find(
+        (item) => item.productid === parseInt(productId) || item.productid === productId
+    );
+
+    console.log('카테고리:', category);
+    console.log('상품 ID:', productId);
+    console.log('찾은 카테고리 데이터:', categoryData);
+    console.log('찾은 상품 정보:', productInfo);
+
+    const isLoggedIn = useSelector((state) => state.authR?.authed);
 
     // 로컬스토리지에서 currentUser 확인
     useEffect(() => {
@@ -71,6 +77,19 @@ const ProductInquiry = () => {
             productInfo?.objectImage?.[0] ||
             'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png',
     });
+
+    // 상품 정보가 로드되면 userInquiry 업데이트
+    useEffect(() => {
+        if (productInfo) {
+            setUserInquiry((prev) => ({
+                ...prev,
+                productName: productInfo.title || '상품명',
+                productImage:
+                    productInfo.objectImage?.[0] ||
+                    'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png',
+            }));
+        }
+    }, [productInfo]);
 
     // 유저 정보가 변경될 때 이름 업데이트
     useEffect(() => {
