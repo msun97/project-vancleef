@@ -24,7 +24,7 @@ const MyReviews = () => {
                 // 해당 리뷰의 카테고리를 기반으로 제품 찾기
                 const categoryData = productdata.find((item) => item.category === review.category);
                 if (categoryData) {
-                    const product = categoryData.data.find((p) => p.productid === productId);
+                    const product = categoryData.data.find((p) => p.productid === Number(productId));
                     if (product) {
                         return {
                             title: product.title,
@@ -114,14 +114,15 @@ const MyReviews = () => {
                         return (
                             <li key={review.productId} className='border-b py-4'>
                                 <div className='flex'>
-                                    <div className='w-[100px] h-[100px] bg-gray-500 flex items-center justify-center'>
-                                        {productDetails?.image || '이미지 없음'}
+                                    <div className='w-[100px] h-[100px] bg-gray-200 flex items-center justify-center'>
+                                        <img src={`${productDetails?.image || '이미지 없음'}`} />
                                     </div>
-                                    <div className='flex-1 ml-4'>
-                                        <div className='flex justify-between items-center'>
-                                            <h3 className='text-[14px] font-bold'>{review.title}</h3>
+                                    <div className='flex-1 ml-4 '>
+                                        <div className='flex justify-between items-center relative gap-4'>
+                                            <strong>{productDetails?.title}</strong>
                                             <div>{renderStars(review.rating)}</div>
                                         </div>
+                                        <h3 className='text-[14px] font-bold'>{review.title}</h3>
                                         <p className='mt-2'>{review.content}</p>
                                         <div className='text-right text-sm text-gray-500'>
                                             {formatDate(review.date)}
