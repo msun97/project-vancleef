@@ -13,7 +13,7 @@ const RecentItem = () => {
                         (
                             product // viewedProducts.products 사용
                         ) => (
-                            <li key={product.productid} className="flex gap-2 text-[12px] leading-5">
+                            <li key={product.productid} className="flex gap-2 text-[12px] leading-5 mb-3">
                                 <img
                                     src={product.objectimage[0]}
                                     alt={product.title}
