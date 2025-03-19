@@ -73,6 +73,7 @@ export const authSlice = createSlice({
                 password: user.password,
                 username: user.username,
                 tel: user.telFirst + user.telSecond + user.telThird,
+                birth: user.birth,
                 reservations: [],
                 favorites: [],
                 reviews: [],
@@ -240,6 +241,36 @@ export const authSlice = createSlice({
             );
             localStorage.setItem('currentUser', JSON.stringify(state.user));
             localStorage.setItem('users', JSON.stringify(state.joinData));
+        },
+        updateUserInfo: (state, action) => {
+            if (state.user) {
+                // 모든 필드 업데이트
+                const updatedUser = {
+                    ...state.user,
+                    ...action.payload,
+                };
+
+                // 로컬 스토리지의 현재 사용자 업데이트
+                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+                // users 배열에서 해당 사용자 찾아 업데이트
+                const storedUsers = JSON.parse(localStorage.getItem('users') || '[]');
+                const userIndex = storedUsers.findIndex((u) => u.userid === updatedUser.userid);
+
+                if (userIndex !== -1) {
+                    // 사용자 정보 업데이트
+                    storedUsers[userIndex] = {
+                        ...storedUsers[userIndex],
+                        ...action.payload,
+                    };
+
+                    // users 배열 다시 로컬 스토리지에 저장
+                    localStorage.setItem('users', JSON.stringify(storedUsers));
+                }
+
+                // Redux 상태 업데이트
+                state.user = updatedUser;
+            }
         },
     },
     extraReducers: (builder) => {
