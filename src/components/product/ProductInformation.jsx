@@ -45,7 +45,7 @@ const ProductInformation = () => {
                     </li>
                     <li className=" border-b border-black flex gap-10  items-center">
                         <div className="w-30">스톤</div>
-                        <span className="font-light text-xs text-[#757575]">{product?.stone}</span>
+                        <span className="font-light text-xs text-[#757575]">{product?.stone || '없음'}</span>
                     </li>
                     <li className=" border-b border-black flex gap-10  items-center">
                         <div className="w-30">클래스프</div>

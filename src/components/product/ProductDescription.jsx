@@ -53,16 +53,12 @@ const ProductDescription = ({ productdata }) => {
             {(productdata.isNew || productdata.isBest || productdata.isPromo) && (
                 <div className="flex gap-2 pt-2.5 items-center h-8">
                     {productdata.isNew && (
-                        <div className="border border-black font-bold py-1 px-3.5 rounded-lg bg-black text-white">
-                            NEW
-                        </div>
+                        <div className="font-bold py-1 px-3.5 rounded-lg bg-black text-white">NEW</div>
                     )}
                     {productdata.isBest && (
                         <div className="py-1 px-3.5 text-white rounded-lg font-bold bg-[#74C365]">BEST</div>
                     )}
-                    {productdata.isPromo && (
-                        <div className="border border-black py-1 px-3.5 rounded-lg font-bold">기획</div>
-                    )}
+                    {productdata.isPromo && <div className="outline py-1 px-3.5 rounded-lg font-bold">기획</div>}
                 </div>
             )}
         </div>

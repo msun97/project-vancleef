@@ -247,7 +247,10 @@ const ProductListPage = () => {
                                                 filterClosing ? 'opacity-0' : 'opacity-100'
                                             }`}
                                         >
-                                            <li className="h-[33px] radio-label">
+                                            <li
+                                                className="h-[33px] radio-label"
+                                                onClick={() => handleFilterSelect('sort3')}
+                                            >
                                                 <input
                                                     type="radio"
                                                     id="sort3"
@@ -266,7 +269,10 @@ const ProductListPage = () => {
                                                     낮은가격순
                                                 </label>
                                             </li>
-                                            <li className="h-[33px] radio-label">
+                                            <li
+                                                className="h-[33px] radio-label"
+                                                onClick={() => handleFilterSelect('sort4')}
+                                            >
                                                 <input
                                                     type="radio"
                                                     id="sort4"
