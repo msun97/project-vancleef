@@ -11,6 +11,7 @@ import inquiryR from './modules/ccinquirySlice';
 import favoritesR from './modules/favoritesSlice';
 import searchR from './modules/searchSlice';
 import viewedProductsR from './modules/viewedProductsSlice';
+import purchaseR from './modules/purchaseSlice';
 
 export const store = configureStore({
   reducer: {
@@ -26,5 +27,6 @@ export const store = configureStore({
     favoritesR,
     searchR,
     viewedProductsR,
+    purchaseR,
   },
 });

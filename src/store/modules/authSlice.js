@@ -243,6 +243,42 @@ export const authSlice = createSlice({
             localStorage.setItem('currentUser', JSON.stringify(state.user));
             localStorage.setItem('users', JSON.stringify(state.joinData));
         },
+        isPurchaseNext: (state, action) => {
+            if (!state.user) return;
+            state.user = {
+                ...state.user,
+                isPurchaseNext: action.payload,
+            };
+            state.joinData = state.joinData.map((item) =>
+                item.userid === state.user.userid ? { ...item, isPurchaseNext: action.payload } : item
+            );
+            localStorage.setItem('currentUser', JSON.stringify(state.user));
+            localStorage.setItem('users', JSON.stringify(state.joinData));
+        },
+        whatPurchase: (state, action) => {
+            if (!state.user) return;
+            state.user = {
+                ...state.user,
+                whatPurchase: action.payload,
+            };
+            state.joinData = state.joinData.map((item) =>
+                item.userid === state.user.userid ? { ...item, whatPurchase: action.payload } : item
+            );
+            localStorage.setItem('currentUser', JSON.stringify(state.user));
+            localStorage.setItem('users', JSON.stringify(state.joinData));
+        },
+        completePurchase: (state, action) => {
+            if (!state.user) return;
+            state.user = {
+                ...state.user,
+                completePurchase: action.payload,
+            };
+            state.joinData = state.joinData.map((item) =>
+                item.userid === state.user.userid ? { ...item, completePurchase: action.payload } : item
+            );
+            localStorage.setItem('currentUser', JSON.stringify(state.user));
+            localStorage.setItem('users', JSON.stringify(state.joinData));
+        },
         updateUserInfo: (state, action) => {
             if (state.user) {
                 // 모든 필드 업데이트
