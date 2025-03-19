@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const ValueSec = () => {
-    const sectionRef = useRef(null);
+    const sectionRef1 = useRef(null);
     const leftTextRef = useRef(null);
     const rightTextRef = useRef(null);
 
@@ -53,7 +53,7 @@ const ValueSec = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className='section about-value h-screen w-full relative'>
+        <section ref={sectionRef1} className='section about-value h-screen w-full relative'>
             <div className='content-page step1 absolute inset-0 flex items-center'>
                 <div className='inner s max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
                     <div className='flex-box flex justify-between items-center gap-8 md:gap-16'>
