@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const RecentItem = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.viewedProductsR.products);
     console.log(products);
+
+    useEffect(() => {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            currentUser.recentview = products; // products 대신 recentview로 저장
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        }
+    }, [products]);
+
     return (
         <div className="mt-5">
             <ul className="flex flex-col">
@@ -13,7 +22,7 @@ const RecentItem = () => {
                         (
                             product // viewedProducts.products 사용
                         ) => (
-                            <li key={product.productid} className="flex gap-2 text-[12px] leading-5">
+                            <li key={product.productid} className="flex gap-2 text-[12px] leading-5 mb-3">
                                 <img
                                     src={product.objectimage[0]}
                                     alt={product.title}
@@ -27,9 +36,9 @@ const RecentItem = () => {
                                     </div>
                                     <div>KRW {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
                                 </div>
-                            </li>
-                        )
-                    )}
+                            </div>
+                        </li>
+                    ))}
             </ul>
         </div>
     );

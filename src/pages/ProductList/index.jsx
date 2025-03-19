@@ -211,13 +211,13 @@ const ProductListPage = () => {
 
         // 카테고리 ID에 따라 영어 이름 반환
         switch (filteredCategory.name) {
-            case 'Necklaces and pendants':
+            case 'necklaces':
                 return 'Necklaces and pendants';
-            case 'Bracelets':
+            case 'bracelets':
                 return 'Bracelets';
-            case 'Rings':
+            case 'rings':
                 return 'Rings';
-            case 'Earrings':
+            case 'earrings':
                 return 'Earrings';
             default:
                 return 'All';
@@ -247,7 +247,10 @@ const ProductListPage = () => {
                                                 filterClosing ? 'opacity-0' : 'opacity-100'
                                             }`}
                                         >
-                                            <li className="h-[33px] radio-label">
+                                            <li
+                                                className="h-[33px] radio-label"
+                                                onClick={() => handleFilterSelect('sort3')}
+                                            >
                                                 <input
                                                     type="radio"
                                                     id="sort3"
@@ -266,7 +269,10 @@ const ProductListPage = () => {
                                                     낮은가격순
                                                 </label>
                                             </li>
-                                            <li className="h-[33px] radio-label">
+                                            <li
+                                                className="h-[33px] radio-label"
+                                                onClick={() => handleFilterSelect('sort4')}
+                                            >
                                                 <input
                                                     type="radio"
                                                     id="sort4"

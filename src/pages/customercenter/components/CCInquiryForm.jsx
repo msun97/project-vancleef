@@ -8,12 +8,13 @@ import CCInquiryFormModal from './CCInquiryFormModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { inquiryActions } from '../../../store/modules/ccinquirySlice';
 import DropDown from '../../../components/dropdown';
+import { authActions } from '@/store/modules/authSlice';
 
 const CCInquiryForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.authR);
-  const { username } = user;
+  const { userid } = user;
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [tag, setTag] = useState('제품문의');
   const [subfileData, setSubFileData] = useState('');
@@ -23,7 +24,7 @@ const CCInquiryForm = () => {
     date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
   }-${date.getDate()}`;
   const [data, setData] = useState({
-    userId: username,
+    userId: userid,
     tag: tag,
     title: '',
     content: '',
@@ -77,6 +78,7 @@ const CCInquiryForm = () => {
   const addInquiry = () => {
     if (data.title && data.content) {
       dispatch(inquiryActions.addInquiry(data));
+      dispatch(authActions.addccInquiry(data));
       alert('등록 완료');
       goBack();
     } else {
