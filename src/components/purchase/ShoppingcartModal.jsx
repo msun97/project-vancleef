@@ -123,7 +123,7 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
                                 </div>
                                 <div className="w-full my-[20px] ml-[10px]">
                                     <div className="w-full flex justify-between items-center">
-                                        <div className="text-[8px] font-secondary text-gray-50 ">국내/해외택배</div>
+                                        <div className="text-[8px] font-secondary text-gray-50 ">국내택배</div>
                                         <button
                                             className="text-label-xs font-secondary color-gray-90"
                                             onClick={() => handleRemoveItem(item.id)} // 상품 삭제
@@ -135,8 +135,13 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
                                     <div className="text-content-xs mt-[2px]">
                                         {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
                                     </div>
-                                    <div className="text-label-xs text-gray-50 font-secondary mt-[12px]">스톤종류</div>
-                                    <button className="text-content-xs underline color-gray-90">옵션변경</button>
+                                    <div className="flex">
+                                        <span className="text-label-xs text-gray-50">
+                                            {' '}
+                                            {item.stone && item.stone.trim() ? item.stone : 'x'}
+                                        </span>
+                                    </div>
+                                    {/*     <button className="text-content-xs underline color-gray-90">옵션변경</button> */}
                                 </div>
                             </div>
                         ))}
