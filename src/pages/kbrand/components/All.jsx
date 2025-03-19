@@ -8,12 +8,15 @@ const All = ({ data, handleClick }) => {
   return (
     <Swiper
       direction={'vertical'}
-      slidesPerView={1}
+      slidesPerView={3}
+      centeredSlides={true}
       spaceBetween={30}
       mousewheel={true}
       pagination={{
         clickable: true,
+        dynamicBullets: true,
       }}
+      loop={data.length > 3}
       modules={[Mousewheel, Pagination]}
       className="mySwiper relative group w-[280px] h-[100vh]"
     >
