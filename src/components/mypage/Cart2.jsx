@@ -34,7 +34,7 @@ const MypageCartSelect = () => {
         <span>총 결제 예정금액</span>
       </div>
       <Line color="#C6C6C6" marginTop="" />
-      <div className="flex items-center text-[12px] h-[40px] pt-[55px] pb-[55px] pl-[30px] pr-[10px]">
+      <div className="flex items-center text-[12px] h-[40px] pt-[55px] pb-[55px] px-[45px]">
         <span>{formatCurrency(totalProductAmount)}</span>
         <span className="flex-1 text-center">{shippingInfo}</span>
         <span>{formatCurrency(totalPayment)}</span>
