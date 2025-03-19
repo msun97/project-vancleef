@@ -69,28 +69,34 @@ const MyReviews = () => {
 
     return (
 			<div>
-      <h2 className="text-xl font-bold mb-4"></h2>
-      {myReviews.length > 0 ? (
-        <ul>
-          {myReviews.map((review) => (
-            <li key={review.id} className="border-b py-2">
-          <div className='flex'>
-          	
-						  <div className='flex w-[100px] h-[100px]'></div>
-						  <div className='flex justify-between '>
-	            	  <p>{review.title}</p>
-									<div>{renderStars(review.rating)}</div>
-              <p>{review.content}</p>
-              <span className="text-sm text-gray-500">{formatDate(review.date)}</span>
-	            </div>
-          </div>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className='text-center text-gray-500 py-8 border-gray-200'>작성한 리뷰가 없습니다.</p>
-      )}
-    </div>
+			<h2 className="text-xl font-bold mb-4"></h2>
+			{myReviews.length > 0 ? (
+				<ul>
+					{myReviews.map((review) => (
+						<li key={review.id} className="border-b py-4">
+							<div className="flex">
+								<div className="w-[100px] h-[100px] bg-gray-500">
+														 </div>
+								<div className="flex-1 ml-4">
+									<div className="flex justify-between items-center">
+										<h3 className="text-[14px] font-bold">{review.title}</h3>
+										<div>{renderStars(review.rating)}</div>
+									</div>
+									<p className="mt-2">{review.content}</p>
+									<div className="text-right text-sm text-gray-500">
+										{formatDate(review.date)}
+									</div>
+								</div>
+							</div>
+						</li>
+					))}
+				</ul>
+			) : (
+				<p className="text-center text-gray-500 py-8 border-gray-200">
+					작성한 리뷰가 없습니다.
+				</p>
+			)}
+		</div>
     );
 };
 

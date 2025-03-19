@@ -37,6 +37,7 @@ function ProductDetailPage() {
             [modalType]: !modalState[modalType],
         });
     };
+		
     const [isLiked, setIsLiked] = useState(false);
     const toggleLike = () => {
         setIsLiked(!isLiked);

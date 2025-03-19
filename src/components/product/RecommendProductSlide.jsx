@@ -46,10 +46,10 @@ const RecommendProductSlide = () => {
                                         alt={product.title}
                                         style={{ width: '300px', height: '300px' }}
                                     />
-                                    <div>
+                                    <div className="max-w-sm">
                                         {/* text */}
                                         <div>
-                                            <strong className="pt-3.5 font-secondary text-[22px]  text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2 text-center inline-block w-full">
+                                            <strong className="truncate pt-3.5 font-secondary text-[22px]  text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2 text-center inline-block w-full">
                                                 {product.title}
                                             </strong>
                                         </div>
