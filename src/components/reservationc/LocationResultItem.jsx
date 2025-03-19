@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Button from '../button';
 import { reservationActions } from '../../store/modules/reservationSlice';
 import MapModal from './MapModal';
@@ -10,6 +10,19 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
     const isActive = id === activeId;
     const [showMapModal, setShowMapModal] = useState(false);
 
+    // 위치 데이터 객체 생성 - useMemo로 최적화
+    const locationData = useMemo(
+        () => ({
+            boutiqueId: id,
+            boutique: data?.location || '경기 - 현대 판교',
+            address: data?.address || '현대백화점 판교점 1층 판교역로 146번길 20',
+            city: data?.city || '성남',
+            zipcode: data?.zipcode || '13529',
+            country: location.country || '대한민국', // 기존 국가 선택 유지
+        }),
+        [id, data, location.country]
+    );
+
     // 플러스/마이너스 버튼 클릭 핸들러 - 부티크 상세 정보 토글
     const handlePlus = () => {
         setActiveId(isActive ? null : id);
@@ -17,29 +30,21 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
 
     // 부티크 선택 버튼 클릭 핸들러 - 확인 버튼 역할
     const handleSelectBoutique = () => {
-        // Create location data object
-        const locationData = {
-            boutiqueId: id,
-            boutique: data?.location || '경기 - 현대 판교',
-            address: data?.address || '현대백화점 판교점 1층 판교역로 146번길 20',
-            city: data?.city || '성남',
-            zipcode: data?.zipcode || '13529',
-            country: location.country || '대한민국', // Preserve existing country selection
-        };
-
         // Redux 상태 업데이트 - 선택된 부티크 정보 저장
         dispatch(reservationActions.setLocation(locationData));
 
-        // 로컬 스토리지 저장 코드 제거 - Redux 상태만 업데이트
-        // localStorage.setItem('locationInfo', JSON.stringify(locationData));
-
-        // 다음 단계로 이동 (setCurrentStep 내부에서 필요한 경우에만 로컬 스토리지 저장)
+        // 다음 단계로 이동
         dispatch(reservationActions.setCurrentStep(2));
     };
 
     // 지도 버튼 클릭 핸들러 - 지도 모달 열기
     const handleMapButton = () => {
         setShowMapModal(true);
+    };
+
+    // 지도 모달 닫기 핸들러
+    const handleCloseMapModal = () => {
+        setShowMapModal(false);
     };
 
     return (
@@ -139,8 +144,10 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
                 {location.boutiqueId === id ? '선택된 부티끄' : '부티끄 선택하기'}
             </Button>
 
-            {/* 지도 모달 컴포넌트 */}
-            <MapModal isOpen={showMapModal} onClose={() => setShowMapModal(false)} />
+            {/* 지도 모달 컴포넌트 - locationData props로 전달 */}
+            {showMapModal && (
+                <MapModal isOpen={showMapModal} onClose={handleCloseMapModal} locationData={locationData} />
+            )}
         </div>
     );
 };

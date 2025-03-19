@@ -1,44 +1,38 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import Button from '../button';
 
-const MapModal = ({ isOpen, onClose }) => {
+// props로 location 정보 직접 받기
+const MapModal = ({ isOpen, onClose, locationData }) => {
     const mapRef = useRef(null);
-    const { location } = useSelector((state) => state.reservationR.reservation);
     const [currentPosition, setCurrentPosition] = useState(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [kakaoMapObject, setKakaoMapObject] = useState(null);
 
-    // 카카오맵 스크립트 로드
+    // 카카오맵 스크립트 로드 (한 번만 실행)
     useEffect(() => {
-        if (!isOpen) return;
+        // 이미 전역에 카카오맵이 있으면 로드하지 않음
+        if (window.kakao && window.kakao.maps) {
+            setIsMapLoaded(true);
+            return;
+        }
 
-        const loadKakaoMap = () => {
-            // 이미 스크립트가 로드되어 있는지 확인
-            if (window.kakao && window.kakao.maps) {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
+            import.meta.env.VITE_KAKAO_JAVASCRIPT_KEYTWO
+        }&autoload=false&libraries=services`;
+
+        script.onload = () => {
+            window.kakao.maps.load(() => {
                 setIsMapLoaded(true);
-                return;
-            }
-
-            const script = document.createElement('script');
-            script.async = true;
-            script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${
-                import.meta.env.VITE_KAKAO_JAVASCRIPT_KEYTWO
-            }&autoload=false&libraries=services`;
-
-            script.onload = () => {
-                window.kakao.maps.load(() => {
-                    setIsMapLoaded(true);
-                });
-            };
-
-            document.head.appendChild(script);
+            });
         };
 
-        loadKakaoMap();
+        document.head.appendChild(script);
 
-        // 컴포넌트 언마운트 시 스크립트 제거하지 않음 (전역으로 유지)
-    }, [isOpen]);
+        // 클린업 함수는 필요 없음 (전역 스크립트 유지)
+    }, []);
 
     // 현재 위치 가져오기
     const getCurrentPosition = () => {
@@ -61,24 +55,39 @@ const MapModal = ({ isOpen, onClose }) => {
         }
     };
 
-    // 지도 초기화 및 길찾기 표시
+    // 모달이 열리면 현재 위치 가져오기
     useEffect(() => {
-        if (!isMapLoaded || !isOpen || !currentPosition || !window.kakao || !window.kakao.maps) return;
+        if (isOpen) {
+            getCurrentPosition();
+        } else {
+            // 모달 닫힐 때 지도 객체 정리
+            setKakaoMapObject(null);
+        }
+    }, [isOpen]);
+
+    // 지도 초기화 (현재 위치와 지도 로드 상태가 변경될 때)
+    useEffect(() => {
+        if (!isOpen || !isMapLoaded || !currentPosition || !locationData || !mapRef.current) return;
 
         try {
+            // 지도 컨테이너
             const container = mapRef.current;
+
+            // 지도 옵션
             const options = {
                 center: new window.kakao.maps.LatLng(currentPosition.lat, currentPosition.lng),
                 level: 3,
             };
 
+            // 지도 객체 생성
             const map = new window.kakao.maps.Map(container, options);
+            setKakaoMapObject(map);
 
             // 주소-좌표 변환 객체 생성
             const geocoder = new window.kakao.maps.services.Geocoder();
 
             // 부티크 주소 -> 좌표 변환
-            geocoder.addressSearch(location.address, function (result, status) {
+            geocoder.addressSearch(locationData.address, (result, status) => {
                 if (status === window.kakao.maps.services.Status.OK) {
                     const boutiquePosition = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
@@ -102,7 +111,7 @@ const MapModal = ({ isOpen, onClose }) => {
 
                     // 도착지 인포윈도우
                     const endInfowindow = new window.kakao.maps.InfoWindow({
-                        content: `<div style="padding:5px;font-size:12px;">${location.boutique}</div>`,
+                        content: `<div style="padding:5px;font-size:12px;">${locationData.boutique}</div>`,
                     });
                     endInfowindow.open(map, endMarker);
 
@@ -127,6 +136,12 @@ const MapModal = ({ isOpen, onClose }) => {
                     bounds.extend(new window.kakao.maps.LatLng(currentPosition.lat, currentPosition.lng));
                     bounds.extend(boutiquePosition);
                     map.setBounds(bounds);
+
+                    // 지도 크기 재조정
+                    setTimeout(() => {
+                        map.relayout();
+                        map.setBounds(bounds);
+                    }, 100);
                 } else {
                     setErrorMessage('주소를 찾을 수 없습니다.');
                 }
@@ -135,43 +150,43 @@ const MapModal = ({ isOpen, onClose }) => {
             console.error('지도 초기화 오류:', error);
             setErrorMessage('지도를 로드하는 중 오류가 발생했습니다.');
         }
-    }, [isMapLoaded, currentPosition, location, isOpen]);
-
-    // 모달이 열리면 현재 위치 가져오기
-    useEffect(() => {
-        if (isOpen) {
-            getCurrentPosition();
-        }
-    }, [isOpen]);
+    }, [isMapLoaded, currentPosition, locationData, isOpen]);
 
     // 카카오맵 길찾기 앱/웹 열기
     const openKakaoMapNavigation = () => {
-        if (!currentPosition || !window.kakao || !window.kakao.maps) return;
+        if (!currentPosition || !locationData) return;
 
-        const geocoder = new window.kakao.maps.services.Geocoder();
+        try {
+            const geocoder = new window.kakao.maps.services.Geocoder();
 
-        geocoder.addressSearch(location.address, function (result, status) {
-            if (status === window.kakao.maps.services.Status.OK) {
-                const boutiqueLatLng = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+            geocoder.addressSearch(locationData.address, (result, status) => {
+                if (status === window.kakao.maps.services.Status.OK) {
+                    const boutiqueLatLng = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
-                // 모바일이면 앱 열기, 아니면 웹에서 열기
-                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                    navigator.userAgent
-                );
-
-                if (isMobile) {
-                    window.location.href = `kakaomap://route?sp=${currentPosition.lat},${
-                        currentPosition.lng
-                    }&ep=${boutiqueLatLng.getLat()},${boutiqueLatLng.getLng()}&by=CAR`;
-                } else {
-                    window.open(
-                        `https://map.kakao.com/link/to/${
-                            location.boutique
-                        },${boutiqueLatLng.getLat()},${boutiqueLatLng.getLng()}`
+                    // 모바일이면 앱 열기, 아니면 웹에서 열기
+                    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+                        navigator.userAgent
                     );
+
+                    if (isMobile) {
+                        window.location.href = `kakaomap://route?sp=${currentPosition.lat},${
+                            currentPosition.lng
+                        }&ep=${boutiqueLatLng.getLat()},${boutiqueLatLng.getLng()}&by=CAR`;
+                    } else {
+                        window.open(
+                            `https://map.kakao.com/link/to/${
+                                locationData.boutique
+                            },${boutiqueLatLng.getLat()},${boutiqueLatLng.getLng()}`
+                        );
+                    }
+                } else {
+                    setErrorMessage('주소를 찾을 수 없습니다.');
                 }
-            }
-        });
+            });
+        } catch (error) {
+            console.error('길찾기 열기 오류:', error);
+            setErrorMessage('길찾기를 여는 중 오류가 발생했습니다.');
+        }
     };
 
     if (!isOpen) return null;
@@ -207,7 +222,7 @@ const MapModal = ({ isOpen, onClose }) => {
                     <div className='flex items-center'>
                         <div className='w-2 h-2 rounded-full bg-red-500 mr-2'></div>
                         <p>
-                            도착: {location.boutique}, {location.address}
+                            도착: {locationData?.boutique}, {locationData?.address}
                         </p>
                     </div>
                 </div>
@@ -220,6 +235,7 @@ const MapModal = ({ isOpen, onClose }) => {
 
                 <div
                     ref={mapRef}
+                    id='kakao-map'
                     className='w-full h-96 bg-gray-100 rounded mb-4'
                     style={{ display: errorMessage ? 'none' : 'block' }}
                 ></div>
