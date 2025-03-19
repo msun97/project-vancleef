@@ -74,6 +74,7 @@ export const authSlice = createSlice({
                 username: user.username,
                 tel: user.telFirst + user.telSecond + user.telThird,
                 birth: user.birth,
+                gender: user.gender,
                 reservations: [],
                 favorites: [],
                 reviews: [],
