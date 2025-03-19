@@ -296,7 +296,7 @@ const ProductInquiry = () => {
                                     onChange={setIsSecretPost}
                                     className='w-5 h-5'
                                 />
-                                <span>비밀글</span>
+                                <label htmlFor='secretPost'>비밀글</label>
                             </div>
                             <textarea
                                 className='border border-gray-40 p-3 w-full h-40 text-xs'
@@ -328,7 +328,7 @@ const ProductInquiry = () => {
                     </p>
                     <div className='flex items-center gap-2 mt-4'>
                         <CheckBox id='agreement' checked={isAgreed} onChange={setIsAgreed} className='w-5 h-5' />
-                        <p>위 내용에 동의합니다.</p>
+                        <label htmlFor='agreement'>위 내용에 동의합니다.</label>
                         <Link>전체보기 {'>'}</Link>
                     </div>
                 </div>
