@@ -5,20 +5,19 @@ import Button from '@/components/button';
 import { Link, useNavigate } from 'react-router-dom';
 import { KAKAO_REDIRECT_URI } from '@/config';
 import { authActions } from '@/store/modules/authSlice';
-
+import SearchIdPwModal from '../../components/mypage/SearchIdpwModal';
+ 
 function LoginFull() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const kakaoRestApiKey = import.meta.env.VITE_KAKAO_REST_API_KEY;
   const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoRestApiKey}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
-
-	
   const [id_email, setId_email] = useState('');
   const [password, setPassword] = useState('');
   const [loginMessage, setLoginMessage] = useState('');
-
   const { authed } = useSelector(state => state.authR);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+	
   // 로그인 핸들러
   const handleLogin = e => {
     e.preventDefault();
@@ -90,14 +89,15 @@ function LoginFull() {
             카카오 로그인
           </Button>
           <div className="flex flex-row gap-[50px] p-[33px] !font-bold">
-            <button onClick={() => navigate('/mypage/profile')}>
+					<button onClick={() => setIsModalOpen(true)}>
               아이디 찾기
             </button>
             |
-            <button onClick={() => navigate('/mypage/profile')}>
+						<button onClick={() => setIsModalOpen(true)}>
               비밀번호 찾기
             </button>
           </div>
+					{isModalOpen && <SearchIdPwModal onClose={() => setIsModalOpen(false)} />}
           <Button
             variant="secondary"
             className="w-[355px] h-[55px] !font-bold"
