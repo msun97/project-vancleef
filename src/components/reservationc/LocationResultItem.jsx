@@ -1,11 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import Button from '../button';
 import { reservationActions } from '../../store/modules/reservationSlice';
+import MapModal from './MapModal';
 
 const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
     const dispatch = useDispatch();
     const { location } = useSelector((state) => state.reservationR.reservation);
     const isActive = id === activeId;
+    const [showMapModal, setShowMapModal] = useState(false);
 
     // 플러스/마이너스 버튼 클릭 핸들러 - 부티크 상세 정보 토글
     const handlePlus = () => {
@@ -32,6 +35,11 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
 
         // 다음 단계로 이동 (setCurrentStep 내부에서 필요한 경우에만 로컬 스토리지 저장)
         dispatch(reservationActions.setCurrentStep(2));
+    };
+
+    // 지도 버튼 클릭 핸들러 - 지도 모달 열기
+    const handleMapButton = () => {
+        setShowMapModal(true);
     };
 
     return (
@@ -96,7 +104,7 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
                 <button onClick={handlePlus} className='text-[18px] leading-none'>
                     {isActive ? '-' : '+'}
                 </button>
-                <button>
+                <button onClick={handleMapButton}>
                     <svg width='18' height='18' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
                         <path
                             d='M2 12.8784V44.8784L16 36.8784L32 44.8784L46 36.8784V4.87842L32 12.8784L16 4.87842L2 12.8784Z'
@@ -130,6 +138,9 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
             >
                 {location.boutiqueId === id ? '선택된 부티끄' : '부티끄 선택하기'}
             </Button>
+
+            {/* 지도 모달 컴포넌트 */}
+            <MapModal isOpen={showMapModal} onClose={() => setShowMapModal(false)} />
         </div>
     );
 };
