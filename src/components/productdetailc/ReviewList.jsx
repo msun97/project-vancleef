@@ -13,6 +13,7 @@ const ReviewList = ({ category, id }) => {
     const [localReviews, setLocalReviews] = useState([]);
     const [productName, setProductName] = useState('');
     const productID = id; // id prop을 productID로 사용
+    const IsAuthed = localStorage.getItem('authed');
 
     // 모달 상태 가져오기
     const isModalOpen = useSelector((state) => state.modalR?.isOpen);
@@ -95,6 +96,50 @@ const ReviewList = ({ category, id }) => {
         if (productID) {
             loadReviews();
         }
+    }, [dispatch, productID, sortBy, isModalOpen]); // isModalOpen 의존성 추가하여 모달이 닫힐 때 리뷰 목록을 다시 로드
+
+    // 리뷰 등록 이벤트 리스너 추가
+    useEffect(() => {
+        // 리뷰 추가 이벤트 리스너 등록
+        const handleReviewAdded = () => {
+            try {
+                // 로컬스토리지에서 reviews 데이터 가져오기
+                const storedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+
+                // 현재 productID와 일치하는 리뷰만 필터링
+                const filteredReviews = storedReviews.filter((review) => {
+                    return String(review.productId) === String(productID);
+                });
+
+                // 정렬 적용
+                let sortedReviews = [...filteredReviews];
+                if (sortBy === 'latest') {
+                    sortedReviews.sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
+                } else if (sortBy === 'best') {
+                    sortedReviews.sort((a, b) => (b.helpfulCount || 0) - (a.helpfulCount || 0));
+                }
+
+                setLocalReviews(sortedReviews);
+
+                // 페이지네이션 데이터 업데이트
+                dispatch(
+                    paginationActions.addData({
+                        pageId: 'reviewList',
+                        data: sortedReviews,
+                    })
+                );
+            } catch (error) {
+                console.error('리뷰 추가 후 목록 업데이트 중 오류 발생:', error);
+            }
+        };
+
+        // 커스텀 이벤트 리스너 등록
+        window.addEventListener('reviewAdded', handleReviewAdded);
+
+        // 컴포넌트 언마운트 시 이벤트 리스너 제거
+        return () => {
+            window.removeEventListener('reviewAdded', handleReviewAdded);
+        };
     }, [dispatch, productID, sortBy]);
 
     // 컴포넌트 마운트 시 페이지네이션 초기화
@@ -152,41 +197,47 @@ const ReviewList = ({ category, id }) => {
             {isModalOpen && <MypostsModal productId={productID} productName={productName} category={category} />}
             <div className='pt-[200px] px-[330px] w-full'>
                 <div className='flex flex-col gap-[30px]'>
-                    <div className='w-full flex items-center justify-between'>
-                        <h2 className='font-secondary text-[32px] font-bold' id='리뷰'>
-                            리뷰({totalReviews})
-                        </h2>
-                        <div className='relative'>
-                            <Button
-                                className='w-[290px] h-[55px] font-bold text-xl flex items-center !justify-between p-[30px]'
-                                onClick={handleOpenModal}
-                            >
-                                <span className='whitespace-nowrap'>리뷰 쓰기</span>
-                                <svg
-                                    width='24'
-                                    height='24'
-                                    viewBox='0 0 48 49'
-                                    fill='none'
-                                    xmlns='http://www.w3.org/2000/svg'
+                    {IsAuthed ? (
+                        <div className='w-full flex items-center justify-between'>
+                            <h2 className='font-secondary text-[32px] font-bold' id='리뷰'>
+                                리뷰({totalReviews})
+                            </h2>
+                            <div className='relative'>
+                                <Button
+                                    className='w-[290px] h-[55px] font-bold text-xl flex items-center !justify-between p-[30px]'
+                                    onClick={handleOpenModal}
                                 >
-                                    <path
-                                        d='M10 24.8784H38'
-                                        stroke='white'
-                                        strokeWidth='4'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                    />
-                                    <path
-                                        d='M24 10.8784L38 24.8784L24 38.8784'
-                                        stroke='white'
-                                        strokeWidth='4'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                    />
-                                </svg>
-                            </Button>
+                                    <span className='whitespace-nowrap'>리뷰 쓰기</span>
+                                    <svg
+                                        width='24'
+                                        height='24'
+                                        viewBox='0 0 48 49'
+                                        fill='none'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                    >
+                                        <path
+                                            d='M10 24.8784H38'
+                                            stroke='white'
+                                            strokeWidth='4'
+                                            strokeLinecap='round'
+                                            strokeLinejoin='round'
+                                        />
+                                        <path
+                                            d='M24 10.8784L38 24.8784L24 38.8784'
+                                            stroke='white'
+                                            strokeWidth='4'
+                                            strokeLinecap='round'
+                                            strokeLinejoin='round'
+                                        />
+                                    </svg>
+                                </Button>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className='flex items-center justify-center'>
+                            <h2 className='font-secondary font-bold text-[44px]'>리뷰</h2>
+                        </div>
+                    )}
                     <div className='flex items-center justify-between font-bold text-[17px]'>
                         <div>총 {totalReviews}개</div>
                         <div className='flex items-center gap-[70px]'>
@@ -246,6 +297,7 @@ const ReviewList = ({ category, id }) => {
                             review={review}
                             productId={productID}
                             userId={userId}
+                            category={category}
                         />
                     ))
                 ) : (
