@@ -58,7 +58,7 @@ const ProductInquiry = () => {
         inquiryType: '상품',
         category: category, // 카테고리 추가
         productId: productId, // 상품 ID 추가
-        productName: productInfo?.name || '상품명', // 상품명 추가
+        productName: productInfo?.title || '상품명', // 상품명 추가
         productImage:
             productInfo?.image ||
             'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png', // 상품 이미지 추가

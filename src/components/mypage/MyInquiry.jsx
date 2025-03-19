@@ -65,7 +65,7 @@ const MyInquiry = () => {
                                     수정
                                 </Button>
                                 <Button
-                                    className='px-3 py-1 text-sm bg-red-50 text-red-600 hover:bg-red-100'
+                                    className='px-3 py-1 text-sm bg-white-50 text-red-600 hover:bg-red-100'
                                     onClick={() => handleDelete(inquiry.id)}
                                 >
                                     삭제
