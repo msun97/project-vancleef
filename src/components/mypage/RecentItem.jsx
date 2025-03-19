@@ -18,27 +18,23 @@ const RecentItem = () => {
         <div className="mt-5">
             <ul className="flex flex-col">
                 {products &&
-                    products.map((product) => (
-                        <li
-                            key={product.productid}
-                            className="flex gap-4 text-[12px] leading-5 pt-[19px] pb-[19px]"
-                        >
-                            <img
-                                src={product.objectimage[0]}
-                                alt={product.title}
-                                style={{ width: '100px', height: '100px' }}
-                                className="border border-gray-200 "
-                            />
-                            <div className="w-full flex justify-between ">
-                                <div>
-                                    <div className="font-regular text-[13px]">{product.title}</div>
-                                    <div className="text-[#757575]">{product.subtitle}</div>
-                                </div>
-                                <div className='text-[14px]'>
-                                    {product.price.toLocaleString('ko-KR', {
-                style: 'currency',
-                currency: 'KRW',
-              })}
+                    products.map(
+                        (
+                            product // viewedProducts.products 사용
+                        ) => (
+                            <li key={product.productid} className="flex gap-2 text-[12px] leading-5 mb-3">
+                                <img
+                                    src={product.objectimage[0]}
+                                    alt={product.title}
+                                    style={{ width: '100px', height: '100px' }}
+                                    className="border border-gray-200"
+                                />
+                                <div className="w-full flex justify-between ">
+                                    <div>
+                                        <div>{product.title}</div>
+                                        <div className="text-[#757575] ">{product.subtitle}</div>
+                                    </div>
+                                    <div>KRW {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
                                 </div>
                             </div>
                         </li>
