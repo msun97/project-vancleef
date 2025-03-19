@@ -5,12 +5,18 @@ const initialState = {
     inquiries: JSON.parse(localStorage.getItem('inquiries') || '[]'),
     myInquiries: JSON.parse(localStorage.getItem('myInquiries') || '[]'),
     currentId: null,
+    inquiryItem: [],
 };
 
 const productInquirySlice = createSlice({
     name: 'productInquiry',
     initialState,
     reducers: {
+        handleItem: (state, action) => {
+            state.inquiryItem = action.payload;
+            localStorage.setItem('inquiryItem', JSON.stringify(state.inquiryItem));
+        },
+
         // 현재 사용자 설정
         setCurrentUser: (state, action) => {
             state.currentId = action.payload;
@@ -111,7 +117,6 @@ const productInquirySlice = createSlice({
 
                 // currentUser 업데이트
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                console.log('currentUser에 myInquiries 추가:', currentUser.myInquiries);
             }
 
             // ----------- 추가된 부분: users 로컬스토리지 업데이트 -----------

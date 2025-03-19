@@ -13,6 +13,7 @@ const ReviewList = ({ category, id }) => {
     const [localReviews, setLocalReviews] = useState([]);
     const [productName, setProductName] = useState('');
     const productID = id; // id prop을 productID로 사용
+    const IsAuthed = localStorage.getItem('authed');
 
     // 모달 상태 가져오기
     const isModalOpen = useSelector((state) => state.modalR?.isOpen);
@@ -196,41 +197,47 @@ const ReviewList = ({ category, id }) => {
             {isModalOpen && <MypostsModal productId={productID} productName={productName} category={category} />}
             <div className='pt-[200px] px-[330px] w-full'>
                 <div className='flex flex-col gap-[30px]'>
-                    <div className='w-full flex items-center justify-between'>
-                        <h2 className='font-secondary text-[32px] font-bold' id='리뷰'>
-                            리뷰({totalReviews})
-                        </h2>
-                        <div className='relative'>
-                            <Button
-                                className='w-[290px] h-[55px] font-bold text-xl flex items-center !justify-between p-[30px]'
-                                onClick={handleOpenModal}
-                            >
-                                <span className='whitespace-nowrap'>리뷰 쓰기</span>
-                                <svg
-                                    width='24'
-                                    height='24'
-                                    viewBox='0 0 48 49'
-                                    fill='none'
-                                    xmlns='http://www.w3.org/2000/svg'
+                    {IsAuthed ? (
+                        <div className='w-full flex items-center justify-between'>
+                            <h2 className='font-secondary text-[32px] font-bold' id='리뷰'>
+                                리뷰({totalReviews})
+                            </h2>
+                            <div className='relative'>
+                                <Button
+                                    className='w-[290px] h-[55px] font-bold text-xl flex items-center !justify-between p-[30px]'
+                                    onClick={handleOpenModal}
                                 >
-                                    <path
-                                        d='M10 24.8784H38'
-                                        stroke='white'
-                                        strokeWidth='4'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                    />
-                                    <path
-                                        d='M24 10.8784L38 24.8784L24 38.8784'
-                                        stroke='white'
-                                        strokeWidth='4'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                    />
-                                </svg>
-                            </Button>
+                                    <span className='whitespace-nowrap'>리뷰 쓰기</span>
+                                    <svg
+                                        width='24'
+                                        height='24'
+                                        viewBox='0 0 48 49'
+                                        fill='none'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                    >
+                                        <path
+                                            d='M10 24.8784H38'
+                                            stroke='white'
+                                            strokeWidth='4'
+                                            strokeLinecap='round'
+                                            strokeLinejoin='round'
+                                        />
+                                        <path
+                                            d='M24 10.8784L38 24.8784L24 38.8784'
+                                            stroke='white'
+                                            strokeWidth='4'
+                                            strokeLinecap='round'
+                                            strokeLinejoin='round'
+                                        />
+                                    </svg>
+                                </Button>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className='flex items-center justify-center'>
+                            <h2 className='font-secondary font-bold text-[44px]'>리뷰</h2>
+                        </div>
+                    )}
                     <div className='flex items-center justify-between font-bold text-[17px]'>
                         <div>총 {totalReviews}개</div>
                         <div className='flex items-center gap-[70px]'>

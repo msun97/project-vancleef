@@ -4,6 +4,7 @@ import CheckBox from '../../components/checkbox';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productInquiryActions } from '../../store/modules/productInquirySlice';
+import { productdata } from '@/assets/api/productdata';
 
 const flexIC = 'flex items-center';
 
@@ -14,7 +15,14 @@ const ProductInquiry = () => {
 
     // 로그인 정보 및 상품 정보 가져오기
     const userInfo = useSelector((state) => state.authR?.user);
-    const productInfo = useSelector((state) => state.productR?.currentProduct);
+    const inquiryItem = JSON.parse(localStorage.getItem('inquiryItem') || '{}');
+    const categoryId = productdata.find((item) => item.category === inquiryItem.category)?.id;
+    const productInfo =
+        categoryId &&
+        productdata[categoryId - 1]?.data?.find((item) => {
+            return inquiryItem.id === item.productid;
+        });
+
     const isLoggedIn = useSelector((state) => state.authR?.authed);
 
     // URL 쿼리 파라미터에서 category와 id 가져오기 (ProductInquiryList에서 전달됨)
@@ -56,12 +64,12 @@ const ProductInquiry = () => {
         password: '',
         date: '',
         inquiryType: '상품',
-        category: category, // 카테고리 추가
-        productId: productId, // 상품 ID 추가
-        productName: productInfo?.name || '상품명', // 상품명 추가
+        category: category,
+        productId: productId,
+        productName: productInfo?.title || '상품명',
         productImage:
-            productInfo?.image ||
-            'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png', // 상품 이미지 추가
+            productInfo?.objectImage?.[0] ||
+            'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png',
     });
 
     // 유저 정보가 변경될 때 이름 업데이트
