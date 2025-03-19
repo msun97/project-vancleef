@@ -4,6 +4,7 @@ import { openModal } from '../../store/modules/modalSlice';
 import { reviewActions } from '../../store/modules/reviewSlice';
 import MypostsModal from './MypostsModal';
 import { productdata } from '@/assets/api/productdata';
+import Button from '../button';
 
 const MyReviews = () => {
     const dispatch = useDispatch(); // 주석 해제
@@ -128,8 +129,9 @@ const MyReviews = () => {
                                             {formatDate(review.date)}
                                         </div>
                                         <div className='flex justify-end space-x-2 mt-2'>
-                                            <button
-                                                className='px-3 py-1 bg-blue-500 text-white text-sm rounded'
+                                            <Button
+                                                variant='Tertiary'
+                                                className='px-3 py-1 '
                                                 onClick={() =>
                                                     handleOpenModal(
                                                         review.productId,
@@ -139,13 +141,14 @@ const MyReviews = () => {
                                                 }
                                             >
                                                 수정
-                                            </button>
-                                            <button
-                                                className='px-3 py-1 bg-red-500 text-white text-sm rounded'
+                                            </Button>
+                                            <Button
+                                                variant='Tertiary'
+                                                className='px-3 py-1'
                                                 onClick={() => handleDeleteReview(review.productId)}
                                             >
                                                 삭제
-                                            </button>
+                                            </Button>
                                         </div>
                                     </div>
                                 </div>
