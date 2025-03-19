@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ValueSecTwo = () => {
   // Refs for the container and column elements
-  const sectionRef2 = useRef(null);
+  const sectionRef = useRef(null);
   const col1Ref = useRef(null);
   const col2Ref = useRef(null);
   const col3Ref = useRef(null);
@@ -237,7 +237,7 @@ const ValueSecTwo = () => {
 
   return (
     <section
-      ref={sectionRef2}
+      ref={sectionRef}
       className="w-full min-h-screen sticky top-0 overflow-hidden"
     >
       <div className="content-page step2 w-full h-full overflow-hidden relative">

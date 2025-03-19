@@ -7,13 +7,13 @@ import Headline from './components/Headline';
 
 const AboutPage = () => {
   return (
-    <>
+    <div>
       <Headline />
       <ImgMotionSec />
-      {/* <ValueSec />
-      <ValueSecTwo /> */}
+      <ValueSec />
+      <ValueSecTwo />
       <TimelineSec />
-    </>
+    </div>
   );
 };
 
