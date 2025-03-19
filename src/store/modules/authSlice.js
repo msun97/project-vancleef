@@ -58,29 +58,30 @@ const syncUserReservations = (user) => {
 };
 
 export const authSlice = createSlice({
-	name: 'auth',
-  initialState,
-  reducers: {
-    gotoTarget: (state, action) => {
-      state.goTg = action.payload;
-    },
-    signup: (state, action) => {
-      const user = action.payload;
-      const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-      const member = {
-        id: no++,
-        userid: user.id_email,
-        email: user.email,
-        password: user.password,
-        username: user.username,
-        tel: user.telFirst + user.telSecond + user.telThird,
-        reservations: [],
-        favorites: [],
-        reviews: [],
-        cart: [], 
-        viewedProduct: [], 
-      };
-
+    name: 'auth',
+    initialState,
+    reducers: {
+        gotoTarget: (state, action) => {
+            state.goTg = action.payload;
+        },
+        signup: (state, action) => {
+            const user = action.payload;
+            const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+            const member = {
+                id: no++,
+                userid: user.id_email,
+                email: user.email,
+                password: user.password,
+                username: user.username,
+                tel: user.telFirst + user.telSecond + user.telThird,
+                reservations: [], 
+                favorites: [],
+                reviews: [], 
+                product:[],
+				        cart: [], 
+                ccInquiries: [],
+                viewedProduct: [], 
+            };
 
 
             storedUsers.push(member);
@@ -223,6 +224,20 @@ export const authSlice = createSlice({
 							localStorage.setItem('currentUser', JSON.stringify(state.user));
 					}
 			},
+                addccInquiry: (state, action) => {
+            if (!state.user) return;
+            if (!state.user.ccInquiries) {
+                state.user.ccInquiries = [];
+            }
+            state.joinData = state.joinData.map((item) => item.userid === state.user.userid ? { ...item, ccInquiries:item.ccInquiries? item.ccInquiries : []  }: item )
+            const no = state.user.ccInquiries.length + 1 
+            const addData = {...action.payload, id : no};
+            state.user.ccInquiries = [...state.user.ccInquiries, addData];
+            state.joinData = state.joinData.map((item) => item.userid === state.user.userid ? {...item, ccInquiries: [...item.ccInquiries, addData]}: item);
+            localStorage.setItem('currentUser', JSON.stringify(state.user));
+            localStorage.setItem('users', JSON.stringify(state.joinData));  
+        }
+    }, 
 	},
 	extraReducers: (builder) => {
 			builder
@@ -236,7 +251,6 @@ export const authSlice = createSlice({
 									state.joinData.push({ id: no++, ...action.payload.newUser });
 							}
 							const user = action.payload.user;
-
 							// myreservations로 이름 변경
 							if (!user.myreservations) {
 									user.myreservations = [];
