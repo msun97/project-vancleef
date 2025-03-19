@@ -20,7 +20,7 @@ const Now = ({ data, handleClick }) => {
       }}
       loop={nowData.length > 3}
       modules={[Mousewheel, Pagination]}
-      className="mySwiper relative group w-[280px] h-[100vh]"
+      className="mySwiper relative w-[280px] h-[100vh]"
     >
       {nowData.length > 0 ? (
         nowData.map(item => (

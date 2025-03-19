@@ -411,7 +411,7 @@ const Kbrand = () => {
           </li>
         </ul>
       </div>
-      <div className="w-full flex justify-center items-center absolute top-1/2 -translate-y-2/4 left-1/2 -translate-x-2/4 ">
+      <div className="w-fit flex justify-center items-center absolute top-1/2 -translate-y-2/4 left-[60%] -translate-x-2/4 ">
         {selected === 'all' && <All data={data} handleClick={handleClick} />}
         {selected === 'now' && <Now data={data} handleClick={handleClick} />}
         {selected === 'unnow' && (
