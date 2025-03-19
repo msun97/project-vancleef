@@ -6,15 +6,15 @@ import TimelineSec from './components/TimelineSec';
 import Headline from './components/Headline';
 
 const AboutPage = () => {
-    return (
-        <>
-            <Headline />
-            <ImgMotionSec />
-            <ValueSec />
-            <ValueSecTwo />
-            <TimelineSec />
-        </>
-    );
+  return (
+    <div>
+      <Headline />
+      <ImgMotionSec />
+      <ValueSec />
+      <ValueSecTwo />
+      <TimelineSec />
+    </div>
+  );
 };
 
 export default AboutPage;
