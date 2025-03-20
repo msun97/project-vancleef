@@ -4,11 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../button';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleCartItem, removeCart } from '../../store/modules/cartSlice';
+import { purchaseActions } from '@/store/modules/purchaseSlice';
 
 const MypageCartlist = () => {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cartR.cart);
   const dispatch = useDispatch();
+
+	const handleClick = () => {
+		if (selectedItems.length > 0) {
+			dispatch(purchaseActions.setItem(selectedItems));
+			navigate('/purchase');
+		} else {
+			alert('구매하실 상품을 선택하세요');
+		}
+	};
 
   // cart 상태 변경 시 localStorage 업데이트
   useEffect(() => {
@@ -71,7 +81,7 @@ const MypageCartlist = () => {
 	            <div className="text-[12px] font-regular items-center">무료배송</div>
 	            <div className="flex-col items-center space-y-[6px]">
 	              <Button
-	                onClick={() => navigate('/purchase')}
+	                onClick={handleClick}
 	                variant="secondary"
 	                className="text-[12px] w-[89px] h-[29px] border border-[#D9D9D9] flex items-center justify-center"
 	              >
