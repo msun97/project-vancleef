@@ -3,6 +3,8 @@ import { useState, useMemo } from 'react';
 import Button from '../button';
 import { reservationActions } from '../../store/modules/reservationSlice';
 import MapModal from './MapModal';
+import PlaceSearchMapModal from './PlaceSearchMapModal';
+import SimpleMapModal from './SimpleMapModal';
 
 const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
     const dispatch = useDispatch();
@@ -146,7 +148,13 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
 
             {/* 지도 모달 컴포넌트 - locationData props로 전달 */}
             {showMapModal && (
-                <MapModal isOpen={showMapModal} onClose={handleCloseMapModal} locationData={locationData} />
+                // <MapModal isOpen={showMapModal} onClose={handleCloseMapModal} locationData={locationData} />
+                // <PlaceSearchMapModal
+                //     isOpen={showMapModal}
+                //     onClose={handleCloseMapModal}
+                //     placeName='반클리프앤아펠 서울 메종'
+                // />
+                <SimpleMapModal isOpen={showMapModal} onClose={handleCloseMapModal} />
             )}
         </div>
     );
