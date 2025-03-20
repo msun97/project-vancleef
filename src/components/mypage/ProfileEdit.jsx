@@ -352,8 +352,8 @@ function ProfileEdit() {
                             // 현재 사용자 제외하기
                             const updatedUsers = allUsers.filter((u) => u.id !== user.id);
 
-                            // 업데이트된 사용자 목록 저장
-                            localStorage.setItem('users', JSON.stringify(updatedUsers));
+                            //joinData state 수정
+                            dispatch(authActions.updateJoinData(updatedUsers));
 
                             // 로그인 정보 삭제
                             localStorage.removeItem('currentUser');
