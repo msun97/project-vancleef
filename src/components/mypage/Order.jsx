@@ -57,12 +57,12 @@ const OrderList = () => {
 </div>
 
         {/* 취소신청 버튼 */}
-        <span className="underline" onClick={() => dispatch(openModal())}>
+        <span className="underline cursor-pointer" onClick={() => dispatch(openModal())}>
           취소신청
         </span>
         <CancelOrderModal />
         {/* 거래완료 텍스트 */}
-        <span className="underline">거래완료</span>
+        <span className="underline cursor-pointer">거래완료</span>
       </div>
     </div>
   );

@@ -29,15 +29,21 @@ function LoginFull() {
   };
 
   // 로그인 후 결과에 따라 메시지 표시 및 페이지 이동
-  useEffect(() => {
-    if (!hasTriedLogin) return;
-    if (authed) {
-      setLoginMessage('로그인 성공');
-      navigate('/mypage');
-    } else {
-      setLoginMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
-    }
-  }, [authed, hasTriedLogin, navigate]);
+	useEffect(() => {
+		if (!hasTriedLogin) return;
+		if (authed) {
+			setLoginMessage('로그인 성공');
+			navigate('/mypage');
+		} else {
+			const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+			if (!currentUser) {
+				setLoginMessage('존재하지 않는 회원정보입니다.');
+			} else {
+				setLoginMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
+			}
+		}
+	}, [authed, hasTriedLogin, navigate]);
+	
 
   // 카카오 로그인 핸들러
   const handleKakaoLogin = () => {
