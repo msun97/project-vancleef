@@ -4,9 +4,11 @@ import Input from '../input';
 import CheckBox from '../checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../store/modules/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileEdit() {
     const [activeTab, setActiveTab] = useState('info');
+    const navigate = useNavigate();
 
     // 기본 정보 상태 관리
     const [username, setUsername] = useState('');
@@ -76,7 +78,7 @@ function ProfileEdit() {
 
             // 생년월일 포맷팅
             if (user.birth) {
-                const [year, month, day] = user.birth.split('-');
+                const [year, month, day] = user.birth.split('.');
                 setBirth(`${year}.${month}.${day}`);
             }
 
@@ -108,7 +110,7 @@ function ProfileEdit() {
         }
 
         // 생년월일 하이픈 제거
-        const formattedBirth = birth.replace(/\./g, '-');
+        // const formattedBirth = birth.replace(/\./g, '-');
 
         // 이메일 재조합
         const email = `${emailLocal}@${emailDomain}`;
@@ -344,10 +346,24 @@ function ProfileEdit() {
                     className='w-full h-[55px] border border-black text-black font-bold'
                     onClick={() => {
                         if (authed && user && window.confirm(`${user.username} 님, 탈퇴하시겠습니까?`)) {
+                            // 모든 사용자 가져오기
+                            const allUsers = JSON.parse(localStorage.getItem('users')) || [];
+
+                            // 현재 사용자 제외하기
+                            const updatedUsers = allUsers.filter((u) => u.id !== user.id);
+
+                            // 업데이트된 사용자 목록 저장
+                            localStorage.setItem('users', JSON.stringify(updatedUsers));
+
+                            // 로그인 정보 삭제
                             localStorage.removeItem('currentUser');
                             localStorage.removeItem('authed');
+
+                            // 로그아웃 처리
                             dispatch(authActions.logout());
+
                             alert('탈퇴가 완료되었습니다.');
+                            navigate('/login');
                         }
                     }}
                 >
