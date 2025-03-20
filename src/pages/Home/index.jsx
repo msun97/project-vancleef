@@ -13,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const forceUnLoading = () => setIsLoading(false);
 
   const section1Ref = useRef(null);
   const mainContentRef = useRef(null);
@@ -60,7 +61,7 @@ const Home = () => {
   return (
     <>
       {isLoading ? (
-        <div className="z-[1000] bg-gray-0">
+        <div className="z-[1000] bg-gray-0" onClick={forceUnLoading}>
           <Loading />
         </div>
       ) : (
