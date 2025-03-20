@@ -90,6 +90,8 @@ const Search = () => {
   const offFavorite = data => {
     dispatch(authActions.removeFavorite(data));
   };
+  const realCategory = ['necklaces', 'bracelets', 'rings', 'earrings'];
+
   return (
     <div className="py-40">
       <div className="wrap p-330">
@@ -140,20 +142,27 @@ const Search = () => {
                 </div>
               ) : (
                 nowSearchData.map((product, idx) => {
-                  
-                  const isFavorite = user?user.favorites.some(
-                    item => item.productnumber === product.productnumber,
-                  ):false;
+                  const isFavorite = user
+                    ? user.favorites.some(
+                        item => item.productnumber === product.productnumber,
+                      )
+                    : false;
 
                   return (
                     <li
                       key={idx}
                       className="flex flex-col gap-[10px] relative w-[calc(25%-30px)]"
                     >
-                      <img
-                        src={product.objectimage[0]}
-                        className="w-[245px] h-[280px]"
-                      />
+                      <Link
+                        to={`/productdetail/${realCategory[product.category]}/${
+                          product.productid
+                        }`}
+                      >
+                        <img
+                          src={product.objectimage[0]}
+                          className="w-[245px] h-[280px]"
+                        />
+                      </Link>
                       <div className="flex flex-col gap-4">
                         <div className="title flex flex-col gap-[7px]">
                           <div className="tag text-[12px] w-[240px] overflow-hidden whitespace-nowrap text-ellipsis break-all">

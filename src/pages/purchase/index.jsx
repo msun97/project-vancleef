@@ -15,7 +15,7 @@ const Purchase = () => {
   const { user } = useSelector(state => state.authR);
   const getItem = purchaseItem.flat();
   const [isDelivery, setIsDelivery] = useState('');
-  const defaultNext = user.isPurchaseNext ? user.isPurchaseNext : false;
+  const defaultNext = user ? user.isPurchaseNext : false;
   const [isNext, setIsNext] = useState(defaultNext);
   const [purchaseUser, setpurchaseUser] = useState(user ? user : {});
   const changeInput = e => {
@@ -134,7 +134,7 @@ const Purchase = () => {
   const changeInputMessage = e => {
     setmesaageOption(e.target.value);
   };
-  const defaultPurchase = user.whatPurchase ? user.whatPurchase : '';
+  const defaultPurchase = user ? user.whatPurchase : '';
   const [whatPurchase, setWhatPurchase] = useState(defaultPurchase);
   useEffect(() => {
     dispatch(authActions.isPurchaseNext(isNext));
@@ -223,6 +223,7 @@ const Purchase = () => {
       deliverNumber: purchaseDate,
       deliverItem: purchaseItem,
       sumPrice: sumPrice,
+      isReservation: false,
     };
     dispatch(purchaseActions.addPurchased(purchaseDetail));
     dispatch(authActions.completePurchase(purchaseDetail));
@@ -261,6 +262,7 @@ const Purchase = () => {
       deliverNumber: purchaseDate,
       deliverItem: purchaseItem,
       sumPrice: sumPrice,
+      isReservation: true,
     };
     const categories = ['necklaces', 'bracelets', 'rings', 'earrings'];
 
