@@ -82,18 +82,18 @@ const MyReviews = () => {
         }
     };
 
-    // 별점 렌더링 함수
-    const renderStars = (rating) => {
-        const stars = [];
-        for (let i = 1; i <= 5; i++) {
-            stars.push(
-                <span key={i} className={`text-lg ${i <= rating ? 'text-yellow-400' : 'text-gray-300'}`}>
-                    ★
-                </span>
-            );
-        }
-        return stars;
-    };
+  // 별점 렌더링 함수
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <span key={i} className={`text-lg ${i <= rating ? 'text-yellow-400' : 'text-gray-300'}`}>
+          ★
+        </span>
+      );
+    }
+    return stars;
+  };
 
     // 날짜 포맷 함수
     const formatDate = (dateString) => {
