@@ -223,6 +223,7 @@ const Purchase = () => {
       deliverNumber: purchaseDate,
       deliverItem: purchaseItem,
       sumPrice: sumPrice,
+      isReservation: false,
     };
     dispatch(purchaseActions.addPurchased(purchaseDetail));
     dispatch(authActions.completePurchase(purchaseDetail));
@@ -261,6 +262,7 @@ const Purchase = () => {
       deliverNumber: purchaseDate,
       deliverItem: purchaseItem,
       sumPrice: sumPrice,
+      isReservation: true,
     };
     const categories = ['necklaces', 'bracelets', 'rings', 'earrings'];
 
