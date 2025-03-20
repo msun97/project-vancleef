@@ -7,7 +7,7 @@ const ProductDescription = ({ productdata }) => {
   const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
 
-  const authed = useSelector((state) => state.authR.authed); // 🔹 authed 값 가져오기
+  const authed = useSelector((state) => state.authR.authed); // authed 값 가져오기
 
   const toggleLike = () => {
     if (!authed) {
