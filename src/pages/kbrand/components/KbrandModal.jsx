@@ -35,9 +35,9 @@ const KbrandModal = ({ handleClick }) => {
                   표현하고 있습니다. 작품 모두는 단일 프라이빗 컬렉션을 통해
                   확보되었고, 일반 대중을 대상으로, 최초로 공개됩니다.
                 </p>
-                <div className="flex justify-between">
-                  <img src="/images/kbrand1-1-1.png" />
-                  <img src="/images/kbrand1-1-2.png" />
+                <div className="flex justify-between gap-3">
+                  <img src="https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/newsroom/2024/shakudo-exhibition/26%20-%20Brooch%20with%20a%20boat,%20Japan,%20late%201800s,%20gold%20and%20silver%20gilt%20shakudo.%20%20Private%20Collection.%20Photo%20-%20L%27ECOLE,%20School%20of%20Jewelry%20Arts%20-%20B.%20Chelly%20(2).jpg.transform.vca-w2560-1x.jpg" className='w-1/2 object-cover'  />
+                  <img src="https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/newsroom/2024/shakudo-exhibition/26%20-%20Brooch%20with%20a%20boat,%20Japan,%20late%201800s,%20gold%20and%20silver%20gilt%20shakudo.%20%20Private%20Collection.%20Photo%20-%20L%27ECOLE,%20School%20of%20Jewelry%20Arts%20-%20B.%20Chelly.jpg.transform.vca-w2560-1x.jpg" className='w-1/2 object-cover'/>
                 </div>
                 <p>
                   이번 전시는 주요 세 가지 섹션으로 구성되었습니다. 가장 먼저
@@ -47,9 +47,9 @@ const KbrandModal = ({ handleClick }) => {
                   컬러의 파티나를 연출합니다. 이 적동 기법은 일본도에 우루시
                   라커 대신 적용되기 시작한 12세기부터 완벽히 구사되고 있습니다.
                 </p>
-                <div className="flex justify-between">
-                  <img src="/images/kbrand1-2-1.png" />
-                  <img src="/images/kbrand1-2-2.png" />
+                <div className="flex justify-between gap-3">
+                  <img src="https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/newsroom/2024/shakudo-exhibition/two%20brooches%20with%20peonies%20or%20chrysanthemums_2.jpg.transform.vca-w2560-1x.jpg" className='w-1/2 object-cover'/>
+                  <img src="https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/newsroom/2024/shakudo-exhibition/two%20brooches%20with%20peonies%20or%20chrysanthemums.jpg.transform.vca-w2560-1x.jpg" className='w-1/2 object-cover'/>
                 </div>
                 <p>
                   어떤 계기로 일본도에 사용되던 적동이 주얼리에서 활용되기
@@ -66,11 +66,11 @@ const KbrandModal = ({ handleClick }) => {
                   통합하여 카메오 또는 에나멜 미니어처를 대체하는 요소로
                   활용했습니다.
                 </p>
-                <div className="flex justify-between">
-                  <img src="/images/kbrand1-3-1.png" />
-                  <img src="/images/kbrand1-3-2.png" />
-                  <img src="/images/kbrand1-3-3.png" />
-                  <img src="/images/kbrand1-3-4.png" />
+                <div className="flex justify-between gap-3">
+                  <img src="https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/newsroom/2024/shakudo-exhibition/5%20-%20Bracelet,%20Japan,%20late%201800s,%20gold%20and%20silver-gilt.%20Private%20Collection.%20Photo%20-%20L%27ECOLE,%20School%20of%20Jewelry%20Arts%20-%20B.%20Chelly%20(2).jpg" className='w-[24%] object-cover'/>
+                  <img src="https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/newsroom/2024/shakudo-exhibition/31%20-%20Buckle%20resembling%20a%20tsuba,%20Japan,%20late%201800s,%20gold%20and%20silver%20gilt%20shakudo.%20Private%20Collection.%20Photo%20-%20L%27ECOLE,%20School%20of%20Jewelry%20Arts.%20B%20Chelly%20(2).jpg" className='w-[24%] object-cover' />
+                  <img src="https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/newsroom/2024/shakudo-exhibition/11%20-%20Necklace,%20Japan,%201800s,%20gold%20and%20silver-gilt%20shakudo.%20Private%20Collection.%20Photo%20-%20L%27ECOLE,%20School%20of%20Jewelry%20Arts%20-%20B.%20Chelly%20(2).jpg" className='w-[24%] object-cover' />
+                  <img src="https://www.vancleefarpels.com/content/dam/vancleefarpels/La-Maison/newsroom/2024/shakudo-exhibition/12%20-%20Earrings,%20Japan,%20late%201800s,%20gold%20and%20silver-gilt%20shakudo.%20Private%20Collection.%20Photo%20-%20L%27ECOLE,%20School%20of%20Jewelry%20Arts%20-%20B.%20Chelly%20(1).jpg" className='w-[24%] object-cover' />
                 </div>
                 <p>
                   유럽의 미학과 일본의 기술이 혼재하는 주얼리들은 1860년에서

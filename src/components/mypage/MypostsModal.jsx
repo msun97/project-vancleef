@@ -18,8 +18,18 @@ const MypostsModal = ({ productId, productName, category }) => {
 
     const dispatch = useDispatch();
     const isOpen = useSelector((state) => state.modalR.isOpen);
+    const currentCategory = useSelector((state) => state.reviewR?.currentProductCategory);
 
-    console.log('MypostsModal 렌더링:', { productId, productName });
+    // 실제 사용할 카테고리 값 (props > redux store)
+    const effectiveCategory = category || currentCategory;
+
+    console.log('MypostsModal 렌더링:', {
+        productId,
+        productName,
+        propsCategory: category,
+        storeCategory: currentCategory,
+        effectiveCategory,
+    });
 
     // 리뷰 목록 가져오기
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
@@ -113,6 +123,11 @@ const MypostsModal = ({ productId, productName, category }) => {
             return;
         }
 
+        if (!effectiveCategory) {
+            alert('카테고리 정보가 없습니다. 관리자에게 문의하세요.');
+            return;
+        }
+
         // 리뷰 데이터 생성
         const reviewData = {
             title: title,
@@ -121,14 +136,18 @@ const MypostsModal = ({ productId, productName, category }) => {
             images: imageFile ? [imageFile] : [], // 이미지가 있으면 배열에 추가
         };
 
-        console.log('리뷰 데이터 전송:', { productId, reviewData });
+        console.log('리뷰 데이터 전송:', {
+            productId,
+            reviewData,
+            category: effectiveCategory,
+        });
 
         // Redux 액션 디스패치하여 리뷰 추가
         dispatch(
             reviewActions.addReview({
                 productId: productId,
                 reviewData: reviewData,
-                category,
+                category: effectiveCategory,
             })
         );
 
@@ -170,6 +189,9 @@ const MypostsModal = ({ productId, productName, category }) => {
                     <div className='handle cursor-move mb-4'>
                         <h1 className='text-center text-xl font-bold'>리뷰쓰기</h1>
                         {productName && <p className='text-center text-sm text-gray-600 mt-1'>{productName}</p>}
+                        {effectiveCategory && (
+                            <p className='text-center text-xs text-gray-500 mt-1'>카테고리: {effectiveCategory}</p>
+                        )}
                     </div>
 
                     <div className='mb-[34px] mt-[73px] flex flex-row items-center'>

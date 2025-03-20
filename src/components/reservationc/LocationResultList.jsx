@@ -22,7 +22,76 @@ const LocationResultList = () => {
             city: '성남',
             zipcode: '13529',
         },
-        // ... 나머지 부티크 데이터 ...
+        {
+            id: 2,
+            location: '서울 - 현대 본점',
+            address: '현대백화점 본점 1층 압구정로 165',
+            city: '서울',
+            zipcode: '06001',
+        },
+        {
+            id: 3,
+            location: '서울 - 현대 코엑스',
+            address: '현대백화점 코엑스점 1층 봉은사로 524',
+            city: '서울',
+            zipcode: '06164',
+        },
+        {
+            id: 4,
+            location: '서울 - 청담 메종',
+            address: '청담 메종 1층 도산대로 442',
+            city: '서울',
+            zipcode: '06062',
+        },
+        {
+            id: 5,
+            location: '서울 - 롯데 에비뉴엘 월드타워',
+            address: '롯데 에비뉴엘 월드타워점 1층 올림픽로 300',
+            city: '서울',
+            zipcode: '05551',
+        },
+        {
+            id: 6,
+            location: '서울 - 신세계 본점',
+            address: '신세계백화점 본점 1층 소공로 63',
+            city: '서울',
+            zipcode: '04530',
+        },
+        {
+            id: 7,
+            location: '서울 - 신세계 강남',
+            address: '신세계백화점 강남점 1층 테헤란로 246',
+            city: '서울',
+            zipcode: '06221',
+        },
+        {
+            id: 8,
+            location: '서울 - 갤러리아',
+            address: '갤러리아백화점 명품관 WEST 1층 압구정로 343',
+            city: '서울',
+            zipcode: '06008',
+        },
+        {
+            id: 9,
+            location: '부산 - 신세계 센텀 시티',
+            address: '신세계백화점 센텀시티점 1층 센텀남대로 35',
+            city: '부산',
+            zipcode: '48058',
+        },
+        {
+            id: 10,
+            location: '용인 - 신세계 아트&사이언스',
+            address: '신세계백화점 아트앤사이언스 1층 용구대로 2771',
+            city: '용인',
+            zipcode: '17046',
+        },
+        {
+            id: 11,
+            location: '대구 - 신세계',
+            address: '신세계백화점 대구점 1층 동대구로 149',
+            city: '대구',
+            zipcode: '41490',
+        },
     ];
 
     // 컴포넌트 마운트 시 이전에 선택된 부티크 정보 가져오기
