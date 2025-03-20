@@ -1,25 +1,24 @@
-import { useEffect, useState } from "react";
-import Button from "../../components/button";
-import ProductNotice from "../../components/productdetailc/ProductNotice";
-import ReviewList from "../../components/productdetailc/ReviewList";
-import ProductInquiryList from "../../components/productdetailc/ProductInquiryList";
-import MotiveGuide from "../../components/size/MotiveGuide";
-import SizeGuide from "../../components/size/SizeGuide";
-import InquiryModal from "../../components/productdetailc/InquiryModal";
-import DelieveryModal from "../../components/productdetailc/DelieveryModal";
-import CareModal from "../../components/productdetailc/CareModal";
-import ShoppingcartModal from "../../components/purchase/ShoppingcartModal";
-import ProductSlide from "../../components/product/ProductSlide";
-import ProductDetailNav from "../../components/product/ProductDetailNav";
-import ProductDetailImg from "../../components/product/ProductDetailImg";
-import ProductInformation from "../../components/product/ProductInformation";
-import RecommendProductSlide from "../../components/product/RecommendProductSlide";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addCart } from "../../store/modules/cartSlice";
-import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
-import { viewedProductsActions } from "@/store/modules/viewedProductsSlice";
-import { authActions } from "@/store/modules/authSlice";
+import { useEffect, useState } from 'react';
+import Button from '../../components/button';
+import ProductNotice from '../../components/productdetailc/ProductNotice';
+import ReviewList from '../../components/productdetailc/ReviewList';
+import ProductInquiryList from '../../components/productdetailc/ProductInquiryList';
+import MotiveGuide from '../../components/size/MotiveGuide';
+import SizeGuide from '../../components/size/SizeGuide';
+import InquiryModal from '../../components/productdetailc/InquiryModal';
+import DelieveryModal from '../../components/productdetailc/DelieveryModal';
+import CareModal from '../../components/productdetailc/CareModal';
+import ShoppingcartModal from '../../components/purchase/ShoppingcartModal';
+import ProductSlide from '../../components/product/ProductSlide';
+import ProductDetailNav from '../../components/product/ProductDetailNav';
+import ProductDetailImg from '../../components/product/ProductDetailImg';
+import ProductInformation from '../../components/product/ProductInformation';
+import RecommendProductSlide from '../../components/product/RecommendProductSlide';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCart } from '../../store/modules/cartSlice';
+import { viewedProductsActions } from '@/store/modules/viewedProductsSlice';
+import { authActions } from '@/store/modules/authSlice';
 
 function ProductDetailPage() {
   const [modalState, setModalState] = useState({
@@ -29,7 +28,7 @@ function ProductDetailPage() {
     addcart: false,
   });
 
-  const toggleModal = (modalType) => {
+  const toggleModal = modalType => {
     setModalState({
       inquiry: false,
       delivery: false,
@@ -44,44 +43,44 @@ function ProductDetailPage() {
   const dispatch = useDispatch();
 
   const { category, id } = useParams();
-  const productdata = useSelector((state) => state.productR.productdata);
-  const authed = useSelector((state) => state.authR.authed);
+  const productdata = useSelector(state => state.productR.productdata);
+  const authed = useSelector(state => state.authR.authed);
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const foundCategory = productdata.find(
-    (categoryData) =>
+    categoryData =>
       categoryData.category === category &&
       categoryData.data &&
-      Array.isArray(categoryData.data)
+      Array.isArray(categoryData.data),
   );
-  console.log(foundCategory, "foundCategory");
+  console.log(foundCategory, 'foundCategory');
 
   useEffect(() => {
     setIsLoading(true);
     if (productdata && Array.isArray(productdata)) {
       const foundCategory = productdata.find(
-        (categoryData) =>
+        categoryData =>
           categoryData.category === category &&
           categoryData.data &&
-          Array.isArray(categoryData.data)
+          Array.isArray(categoryData.data),
       ); /* find() 메서드는 JavaScript 배열에서 특정 조건을 만족하는 첫 번째 요소를 찾는 데 사용 */
 
       if (foundCategory) {
         const foundProduct = foundCategory.data.find(
-          (item) => item.productid === parseInt(id)
+          item => item.productid === parseInt(id),
         );
         // 최근 본 상품 목록 추가
 
         setProduct(foundProduct);
 
         dispatch(viewedProductsActions.addProduct(foundProduct));
-        console.log(foundProduct, ">>>>>>foundProduct");
+        console.log(foundProduct, '>>>>>>foundProduct');
       } else {
-        console.error("해당 카테고리를 찾을 수 없습니다.");
+        console.error('해당 카테고리를 찾을 수 없습니다.');
       }
     } else {
-      console.error("데이터 구조가 예상과 다릅니다:", productdata);
+      console.error('데이터 구조가 예상과 다릅니다:', productdata);
     }
     setIsLoading(false);
   }, [category, id, productdata]);
@@ -95,22 +94,22 @@ function ProductDetailPage() {
   }
 
   //1.detail product --- colorpn 있으면 찾기
-  const targetColorpns = product.colorpn?.map((product) => product);
+  const targetColorpns = product.colorpn?.map(product => product);
 
   // 2. colorpn productnumber 필터링 된 내역을 전체 배열에서 필터링 해서 배열 처리
-  const colorfilteredItems = productdata.flatMap((category) => {
+  const colorfilteredItems = productdata.flatMap(category => {
     if (category.data && Array.isArray(category.data)) {
       return category.data.filter(
-        (item) =>
+        item =>
           item.productnumber &&
-          targetColorpns.includes(item.productnumber.trim())
+          targetColorpns.includes(item.productnumber.trim()),
       );
     }
     return [];
   });
   const toggleLike = () => {
     if (!authed) {
-      alert("로그인이 필요합니다.");
+      alert('로그인이 필요합니다.');
       return;
     }
     setIsLiked(!isLiked);
@@ -136,28 +135,28 @@ function ProductDetailPage() {
               <div className="title flex gap-3 items-center">
                 <h3>{product.title}</h3>
                 <button
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
                     toggleLike();
                   }}
                 >
-                  {" "}
+                  {' '}
                   {isLiked ? (
-                    <IoIosHeart className="text-red-500" />
+                    <img src="/icons/like-filled.svg" className="w-[14px]" />
                   ) : (
-                    <IoIosHeartEmpty className="text-black" />
+                    <img src="/icons/like-unfilled.svg" className="w-[14px]" />
                   )}
                 </button>
               </div>
               <div className="subtitle text-[#706F6F] text-label-s">
-                <h3>{product.subtitle || "상품 부제목"}</h3>
+                <h3>{product.subtitle || '상품 부제목'}</h3>
               </div>
               <div className="price">
                 <dl className="item_price detail-price">
                   <dt>
                     {product.price
                       ? `${product.price.toLocaleString()}원`
-                      : "가격 정보 없음"}
+                      : '가격 정보 없음'}
                   </dt>
                 </dl>
               </div>
@@ -169,7 +168,7 @@ function ProductDetailPage() {
                         <img
                           src={product.objectimage[0]}
                           alt={product.title}
-                          style={{ width: "100px", height: "100px" }}
+                          style={{ width: '100px', height: '100px' }}
                           className="border border-gray-200"
                         />
                         <span className="text-[10px] text-[#706F6F]">
@@ -184,16 +183,16 @@ function ProductDetailPage() {
                   name="frmView"
                   id="frmView"
                   method="post"
-                  onSubmit={(e) => e.preventDefault()}
+                  onSubmit={e => e.preventDefault()}
                 >
                   <input type="hidden" name="goodsno" value="12345" />
                   <input type="hidden" name="cate" value="67890" />
                   <div className="buy-btn">
                     <Button
-                      onClick={(e) => {
+                      onClick={e => {
                         e.preventDefault(); // Prevent form submission
                         dispatch(addCart(product));
-                        toggleModal("addcart");
+                        toggleModal('addcart');
                       }}
                       className="mt-[12px]"
                       fullWidth
@@ -216,24 +215,24 @@ function ProductDetailPage() {
               </div>
               <div className="title tracking-wide">
                 <h3>
-                  <button onClick={() => toggleModal("inquiry")}>CALL</button>
+                  <button onClick={() => toggleModal('inquiry')}>CALL</button>
                 </h3>
               </div>
               <div className="title tracking-wide">
                 <h3>
-                  <button onClick={() => toggleModal("care")}>
+                  <button onClick={() => toggleModal('care')}>
                     CARE SERVICE
                   </button>
                 </h3>
               </div>
               <div className="title leading-4 tracking-wide">
                 <h3>
-                  <button onClick={() => toggleModal("delivery")}>
-                    DELIVERY &{" "}
+                  <button onClick={() => toggleModal('delivery')}>
+                    DELIVERY &{' '}
                   </button>
                   <br />
-                  <button onClick={() => toggleModal("delivery")}>
-                    {" "}
+                  <button onClick={() => toggleModal('delivery')}>
+                    {' '}
                     PAYMENT
                   </button>
                 </h3>
@@ -248,11 +247,11 @@ function ProductDetailPage() {
           <ProductDetailImg productImages={product.objectimage} />
         </div>
       </div>
-      {foundCategory && foundCategory.category === "Necklaces and pendants" && (
+      {foundCategory && foundCategory.category === 'Necklaces and pendants' && (
         <MotiveGuide />
       )}
       {/* 조건부 렌더링 */}
-      {foundCategory && foundCategory.category === "Bracelets" && <SizeGuide />}
+      {foundCategory && foundCategory.category === 'Bracelets' && <SizeGuide />}
       <ProductInformation />
       <ProductNotice />
       <RecommendProductSlide />
@@ -260,22 +259,22 @@ function ProductDetailPage() {
       <ProductInquiryList category={category} id={id} />
       {modalState.inquiry && (
         <InquiryModal
-          handleModal={() => toggleModal("inquiry")}
+          handleModal={() => toggleModal('inquiry')}
           modalType="inquiry"
         />
       )}
       {modalState.care && (
-        <CareModal handleModal={() => toggleModal("care")} modalType="care" />
+        <CareModal handleModal={() => toggleModal('care')} modalType="care" />
       )}
       {modalState.delivery && (
         <DelieveryModal
-          handleModal={() => toggleModal("delivery")}
+          handleModal={() => toggleModal('delivery')}
           modalType="delivery"
         />
       )}
       {modalState.addcart && (
         <ShoppingcartModal
-          handleModal={() => toggleModal("addcart")}
+          handleModal={() => toggleModal('addcart')}
           modalType="addcart"
         />
       )}

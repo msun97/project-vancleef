@@ -12,7 +12,6 @@ const MyInquiry = () => {
     // 로그인되어 있으면 해당 유저의 문의를 로드
     useEffect(() => {
         if (userInfo?.usernum) {
-            console.log('유저 문의 로드: usernum =', userInfo.usernum);
             dispatch(productInquiryActions.loadMyInquiries(userInfo.usernum));
         }
     }, [userInfo, dispatch]);
