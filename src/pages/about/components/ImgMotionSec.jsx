@@ -27,7 +27,7 @@ const ImgMotionSec = () => {
             left: '50%',
             xPercent: -50,
             yPercent: -50,
-            border: '1px solid rgba(255,255,255,0.3)',
+            // border: '1px solid rgba(255,255,255,0.3)',
         });
 
         // 미디어 쿼리 체크 함수
@@ -182,6 +182,10 @@ const ImgMotionSec = () => {
                 <div
                     ref={stickyWrapRef}
                     className='sticky top-0 left-0 w-full h-screen flex items-center justify-center overflow-hidden'
+                    style={{
+                        background:
+                            'linear-gradient(to bottom, rgba(180,180,180,0) 0%, rgba(180,180,180,1) 50%, rgba(180,180,180,0) 100%)',
+                    }}
                 >
                     <div className='w-full max-w-full px-4 md:max-w-4xl lg:max-w-7xl mx-auto'>
                         <div className='text-center mb-4 md:mb-8 lg:mb-12'>

@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import Button from '../button';
 
-// 단순히 위치만 보여주는 지도 모달
-const MapModal = ({ isOpen, onClose, locationData }) => {
+// 장소 검색을 사용한 지도 모달
+const PlaceSearchMapModal = ({ isOpen, onClose, placeName }) => {
     const mapRef = useRef(null);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [kakaoMapObject, setKakaoMapObject] = useState(null);
-
-    console.log('검색할 주소:', locationData.address);
+    const [placeInfo, setPlaceInfo] = useState(null);
 
     // 카카오맵 스크립트 로드 (한 번만 실행)
     useEffect(() => {
@@ -20,7 +18,8 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
 
         const script = document.createElement('script');
         script.async = true;
-        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=e1bd847fea79c1138b1471eb5a697207&autoload=false&libraries=services`;
+        // 장소 검색 서비스(places) 포함
+        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=e1bd847fea79c1138be97cfa67a4e249&autoload=false&libraries=services`;
 
         script.onload = () => {
             console.log('카카오 스크립트 로드됨');
@@ -38,83 +37,78 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
         document.head.appendChild(script);
     }, []);
 
-    // 지도 초기화
+    // 장소 검색 및 지도 초기화
     useEffect(() => {
-        if (!isOpen || !isMapLoaded || !locationData || !mapRef.current) return;
+        if (!isOpen || !isMapLoaded || !placeName || !mapRef.current) return;
 
         try {
             // 지도 컨테이너
             const container = mapRef.current;
-            console.log('지도 컨테이너:', container);
 
-            // 주소-좌표 변환 객체 생성
-            const geocoder = new window.kakao.maps.services.Geocoder();
+            // 처음에는 서울 중심으로 지도 생성
+            const options = {
+                center: new window.kakao.maps.LatLng(37.5666805, 126.9784147),
+                level: 3,
+            };
 
-            // 주소 -> 좌표 변환
-            geocoder.addressSearch(locationData.address, (result, status) => {
+            // 지도 객체 생성
+            const map = new window.kakao.maps.Map(container, options);
+
+            // 장소 검색 객체 생성
+            const ps = new window.kakao.maps.services.Places();
+
+            // 키워드로 장소 검색
+            console.log('검색할 장소:', placeName);
+            ps.keywordSearch(placeName, (data, status, pagination) => {
                 if (status === window.kakao.maps.services.Status.OK) {
-                    console.log('좌표 변환 성공:', result);
-                    const position = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+                    console.log('검색 결과:', data);
 
-                    // 지도 옵션
-                    const options = {
-                        center: position, // 주소의 좌표를 중심으로
-                        level: 3, // 확대 레벨
-                    };
+                    // 첫 번째 검색 결과 사용
+                    const firstPlace = data[0];
+                    setPlaceInfo(firstPlace);
 
-                    // 지도 객체 생성
-                    const map = new window.kakao.maps.Map(container, options);
-                    setKakaoMapObject(map);
+                    // 검색된 장소 위치를 중심으로
+                    const moveLatLng = new window.kakao.maps.LatLng(firstPlace.y, firstPlace.x);
+                    map.setCenter(moveLatLng);
 
                     // 마커 생성
                     const marker = new window.kakao.maps.Marker({
-                        position: position,
+                        position: moveLatLng,
                         map: map,
                     });
 
-                    // 인포윈도우
+                    // 인포윈도우 생성
                     const infowindow = new window.kakao.maps.InfoWindow({
-                        content: `<div style="padding:5px;font-size:12px;">${locationData.boutique}</div>`,
+                        content: `<div style="padding:5px;font-size:12px;width:150px;text-align:center;font-weight:bold;">${firstPlace.place_name}</div>`,
                     });
                     infowindow.open(map, marker);
 
-                    // 지도 크기 재조정
-                    setTimeout(() => {
-                        map.relayout();
-                    }, 100);
+                    console.log('지도 마커 생성 완료');
+                } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+                    console.log('검색 결과 없음');
+                    setErrorMessage('검색 결과가 없습니다. 다른 키워드로 시도해보세요.');
                 } else {
-                    console.error('주소 검색 실패:', status);
-                    setErrorMessage('주소를 찾을 수 없습니다.');
+                    console.error('장소 검색 실패:', status);
+                    setErrorMessage('장소 검색 중 오류가 발생했습니다.');
                 }
             });
         } catch (error) {
             console.error('지도 초기화 오류:', error);
             setErrorMessage('지도를 로드하는 중 오류가 발생했습니다.');
         }
-    }, [isMapLoaded, locationData, isOpen]);
+    }, [isMapLoaded, placeName, isOpen]);
 
-    // 카카오맵 웹에서 열기
+    // 카카오맵으로 열기
     const openKakaoMap = () => {
-        if (!locationData) return;
+        if (!placeInfo) return;
 
-        try {
-            const geocoder = new window.kakao.maps.services.Geocoder();
-
-            geocoder.addressSearch(locationData.address, (result, status) => {
-                if (status === window.kakao.maps.services.Status.OK) {
-                    const position = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-                    window.open(
-                        `https://map.kakao.com/link/map/${
-                            locationData.boutique
-                        },${position.getLat()},${position.getLng()}`
-                    );
-                } else {
-                    setErrorMessage('주소를 찾을 수 없습니다.');
-                }
-            });
-        } catch (error) {
-            console.error('카카오맵 열기 오류:', error);
-            setErrorMessage('카카오맵을 여는 중 오류가 발생했습니다.');
+        // 장소 ID가 있으면 장소 상세 페이지로 이동
+        if (placeInfo.id) {
+            window.open(`https://map.kakao.com/link/map/${placeInfo.id}`);
+        }
+        // 없으면 좌표로 이동
+        else {
+            window.open(`https://map.kakao.com/link/map/${placeInfo.place_name},${placeInfo.y},${placeInfo.x}`);
         }
     };
 
@@ -144,8 +138,13 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
                 </div>
 
                 <div className='mb-4'>
-                    <p className='font-medium'>{locationData?.boutique}</p>
-                    <p className='text-gray-600'>{locationData?.address}</p>
+                    <p className='font-medium'>{placeInfo?.place_name || placeName}</p>
+                    {placeInfo && (
+                        <>
+                            <p className='text-gray-600'>{placeInfo.address_name || placeInfo.road_address_name}</p>
+                            {placeInfo.phone && <p className='text-gray-600'>☎ {placeInfo.phone}</p>}
+                        </>
+                    )}
                 </div>
 
                 {errorMessage && (
@@ -165,7 +164,7 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
                     <Button className='w-1/2' variant='secondary' onClick={onClose}>
                         닫기
                     </Button>
-                    <Button className='w-1/2' onClick={openKakaoMap} disabled={!!errorMessage}>
+                    <Button className='w-1/2' onClick={openKakaoMap} disabled={!placeInfo}>
                         카카오맵으로 열기
                     </Button>
                 </div>
@@ -174,4 +173,4 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
     );
 };
 
-export default MapModal;
+export default PlaceSearchMapModal;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../button';
 import CheckBox from '../checkbox';
@@ -7,110 +7,69 @@ import { useNavigate } from 'react-router-dom';
 
 const PrivateInfoForm = () => {
     const dispatch = useDispatch();
-    const { personalInfo } = useSelector((state) => state.reservationR.reservation);
     const currentStep = useSelector((state) => state.reservationR.currentStep);
-    const { user, authed } = useSelector((state) => state.authR); // 인증 상태와 사용자 정보 가져오기
     const navigate = useNavigate();
 
-    // 상태 초기화 - 로그인한 경우 사용자 정보 활용
-    const [gender, setGender] = useState(personalInfo.gender || '');
-    const [firstNameKor, setFirstNameKor] = useState(
-        personalInfo.firstNameKor || (authed && user ? user.username : '')
-    );
-    const [lastNameKor, setLastNameKor] = useState(personalInfo.lastNameKor || '');
-    const [firstNameEng, setFirstNameEng] = useState(personalInfo.firstNameEng || '');
-    const [lastNameEng, setLastNameEng] = useState(personalInfo.lastNameEng || '');
-    const [phone, setPhone] = useState(personalInfo.phone || (authed && user ? user.tel : ''));
-    const [email, setEmail] = useState(personalInfo.email || (authed && user ? user.email : ''));
-    const [country, setCountry] = useState(personalInfo.country || '');
-    const [privacyAgreement, setPrivacyAgreement] = useState(personalInfo.privacyAgreement || false);
-    const [privacyDisagree, setPrivacyDisagree] = useState(personalInfo.privacyAgreement === false);
-    const [marketingAgreement, setMarketingAgreement] = useState(personalInfo.marketingAgreement || false);
-    const [ageVerification, setAgeVerification] = useState(personalInfo.ageVerification || false);
+    // 상태 초기화 - 모든 필드를 빈 값으로 설정
+    const [gender, setGender] = useState('');
+    const [firstNameKor, setFirstNameKor] = useState('');
+    const [lastNameKor, setLastNameKor] = useState('');
+    const [firstNameEng, setFirstNameEng] = useState('');
+    const [lastNameEng, setLastNameEng] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [country, setCountry] = useState('');
+    const [privacyAgreement, setPrivacyAgreement] = useState(false);
+    const [privacyDisagree, setPrivacyDisagree] = useState(false);
+    const [marketingAgreement, setMarketingAgreement] = useState(false);
+    const [ageVerification, setAgeVerification] = useState(false);
 
     // 완료 페이지 상태 추가
     const [showCompletionPage, setShowCompletionPage] = useState(false);
 
-    // Load saved data from localStorage on component mount
-    useEffect(() => {
-        const savedReservation = localStorage.getItem('reservation');
-        if (savedReservation) {
-            const parsedReservation = JSON.parse(savedReservation);
-            if (parsedReservation.personalInfo) {
-                const parsedInfo = parsedReservation.personalInfo;
-                setGender(parsedInfo.gender || '');
-                setFirstNameKor(parsedInfo.firstNameKor || (authed && user ? user.username : ''));
-                setLastNameKor(parsedInfo.lastNameKor || '');
-                setFirstNameEng(parsedInfo.firstNameEng || '');
-                setLastNameEng(parsedInfo.lastNameEng || '');
-                setPhone(parsedInfo.phone || (authed && user ? user.tel : ''));
-                setEmail(parsedInfo.email || (authed && user ? user.email : ''));
-                setCountry(parsedInfo.country || '');
-                setPrivacyAgreement(parsedInfo.privacyAgreement || false);
-                setPrivacyDisagree(parsedInfo.privacyAgreement === false);
-                setMarketingAgreement(parsedInfo.marketingAgreement || false);
-                setAgeVerification(parsedInfo.ageVerification || false);
-            }
-        }
-    }, [dispatch, authed, user]);
-
-    // 성별 체크박스 핸들러 - 일시적으로 상태와 Redux에만 저장
+    // 성별 체크박스 핸들러
     const handleMaleChange = (checked) => {
         if (checked) {
             setGender('남성');
-            dispatch(reservationActions.setPersonalInfo({ gender: '남성' }));
-            // localStorage에는 확인 버튼 클릭시에만 저장
         }
     };
 
     const handleFemaleChange = (checked) => {
         if (checked) {
             setGender('여성');
-            dispatch(reservationActions.setPersonalInfo({ gender: '여성' }));
-            // localStorage에는 확인 버튼 클릭시에만 저장
         }
     };
 
-    // 입력 필드 변경 핸들러 - 일시적으로 상태와 Redux에만 저장
-    const handleChange = (e, setter, field) => {
+    // 입력 필드 변경 핸들러
+    const handleChange = (e, setter) => {
         const value = e.target.value;
         setter(value);
-        dispatch(reservationActions.setPersonalInfo({ [field]: value }));
-        // localStorage에는 확인 버튼 클릭시에만 저장
     };
 
-    // 개인정보 동의 체크박스 핸들러 - 일시적으로 상태와 Redux에만 저장
+    // 개인정보 동의 체크박스 핸들러
     const handlePrivacyAgreementChange = (checked) => {
         setPrivacyAgreement(checked);
         if (checked) {
             setPrivacyDisagree(false);
         }
-        dispatch(reservationActions.setPersonalInfo({ privacyAgreement: checked }));
-        // localStorage에는 확인 버튼 클릭시에만 저장
     };
 
-    // 개인정보 비동의 체크박스 핸들러 - 일시적으로 상태와 Redux에만 저장
+    // 개인정보 비동의 체크박스 핸들러
     const handlePrivacyDisagreeChange = (checked) => {
         setPrivacyDisagree(checked);
         if (checked) {
             setPrivacyAgreement(false);
-            dispatch(reservationActions.setPersonalInfo({ privacyAgreement: false }));
-            // localStorage에는 확인 버튼 클릭시에만 저장
         }
     };
 
-    // 마케팅 동의 핸들러 - 일시적으로 상태와 Redux에만 저장
+    // 마케팅 동의 핸들러
     const handleMarketingAgreementChange = (checked) => {
         setMarketingAgreement(checked);
-        dispatch(reservationActions.setPersonalInfo({ marketingAgreement: checked }));
-        // localStorage에는 확인 버튼 클릭시에만 저장
     };
 
-    // 연령 확인 핸들러 - 일시적으로 상태와 Redux에만 저장
+    // 연령 확인 핸들러
     const handleAgeVerificationChange = (checked) => {
         setAgeVerification(checked);
-        dispatch(reservationActions.setPersonalInfo({ ageVerification: checked }));
-        // localStorage에는 확인 버튼 클릭시에만 저장
     };
 
     // 확인 버튼 핸들러
@@ -172,12 +131,7 @@ const PrivateInfoForm = () => {
         };
 
         dispatch(reservationActions.setPersonalInfo(personalInfoData));
-
-        // 현재 로그인한 사용자의 ID를 전달하여 예약 완료 처리
-        const userId = authed && user ? user.userid : null;
-        dispatch(reservationActions.completeReservation(userId));
-
-        // 예약 완료 단계로 이동
+        dispatch(reservationActions.completeReservation(null)); // userId가 필요 없으므로 null 전달
         dispatch(reservationActions.setCurrentStep(5));
 
         // 완료 페이지 표시 상태 활성화
@@ -216,7 +170,7 @@ const PrivateInfoForm = () => {
         <div className='border-t-2 w-full'>
             <h3 className='font-secondary text-[20px] pt-[30px] pb-[40px]'>4. 개인 정보</h3>
             <div className='flex flex-col gap-[20px] font-bold text-[18px] w-full'>
-                <p>호칭 *</p>
+                <p>성별 *</p>
                 <div className='flex items-center gap-8'>
                     <div className='flex items-center gap-[7px]'>
                         <CheckBox
@@ -243,7 +197,7 @@ const PrivateInfoForm = () => {
                     name='firstnamekor'
                     className='border-b w-full'
                     value={firstNameKor}
-                    onChange={(e) => handleChange(e, setFirstNameKor, 'firstNameKor')}
+                    onChange={(e) => handleChange(e, setFirstNameKor)}
                 />
                 <p>이름(국문) *</p>
                 <input
@@ -251,7 +205,7 @@ const PrivateInfoForm = () => {
                     name='namekor'
                     className='border-b w-full'
                     value={lastNameKor}
-                    onChange={(e) => handleChange(e, setLastNameKor, 'lastNameKor')}
+                    onChange={(e) => handleChange(e, setLastNameKor)}
                 />
                 <p>성(영문) *</p>
                 <input
@@ -259,7 +213,7 @@ const PrivateInfoForm = () => {
                     name='firstnameeng'
                     className='border-b w-full'
                     value={firstNameEng}
-                    onChange={(e) => handleChange(e, setFirstNameEng, 'firstNameEng')}
+                    onChange={(e) => handleChange(e, setFirstNameEng)}
                 />
                 <p>이름(영문) *</p>
                 <input
@@ -267,7 +221,7 @@ const PrivateInfoForm = () => {
                     name='lastnameeng'
                     className='border-b w-full'
                     value={lastNameEng}
-                    onChange={(e) => handleChange(e, setLastNameEng, 'lastNameEng')}
+                    onChange={(e) => handleChange(e, setLastNameEng)}
                 />
                 <p>휴대폰 번호 *</p>
                 <input
@@ -275,7 +229,7 @@ const PrivateInfoForm = () => {
                     name='phone'
                     className='border-b w-full'
                     value={phone}
-                    onChange={(e) => handleChange(e, setPhone, 'phone')}
+                    onChange={(e) => handleChange(e, setPhone)}
                 />
                 <p>이메일 주소 *</p>
                 <input
@@ -283,14 +237,14 @@ const PrivateInfoForm = () => {
                     name='email'
                     className='border-b w-full'
                     value={email}
-                    onChange={(e) => handleChange(e, setEmail, 'email')}
+                    onChange={(e) => handleChange(e, setEmail)}
                 />
                 <p>거주 나라 *</p>
                 <div className='relative inline-block'>
                     <select
                         className='border py-[14px] px-[17px] w-full'
                         value={country}
-                        onChange={(e) => handleChange(e, setCountry, 'country')}
+                        onChange={(e) => handleChange(e, setCountry)}
                     >
                         <option value=''></option>
                         <option value='대한민국'>대한민국</option>

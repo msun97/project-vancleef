@@ -112,14 +112,14 @@ const DelieveryModal = ({ handleModal, modalType }) => {
                                     <img
                                         src='https://i.namu.wiki/i/DRTBUHA314XYTx-pkzY4XSmQ0Job0j10vQhiETotjLCGUULQemriSC67Yh9UCsYq7Dw7WyvK0GkP9f3jP8r8gA.svg'
                                         alt='카카오페이'
-                                        className='w-[50px] h-[30px] object-cover'
+                                        className='w-[50px] h-[30px] object-contain'
                                     />
                                 </div>
                                 <div className='w-[50px] h-[30px] overflow-hidden'>
                                     <img
                                         src='https://mblogthumb-phinf.pstatic.net/MjAyNDA3MDVfMjUy/MDAxNzIwMTY0MDIxMzIx.hSgfp4jQc9chL4hTHWeGHhPBqRwCwV3xQ-Ex3Or-gHkg.pvAeG3mmXyeVe08nQsIXKOamCZzH3yu8o3XUnkMEOdEg.PNG/image.png?type=w800'
                                         alt='네이버페이'
-                                        className='w-[50px] h-[30px] object-cover'
+                                        className='w-[50px] h-[30px] object-contain'
                                     />
                                 </div>
                             </div>
