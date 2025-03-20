@@ -55,7 +55,7 @@ function CancelOrderModal() {
 						
             <div className="flex pr-3 pl-3 items-center space-x-[20px]">
               <CheckBox className='h-[18px] w-[18px]' />
-              <div className="flex-1 flex-row">
+              <div className="flex-1 flex-row h-[55px] items-center">
                 <span className="font-medium">포레스트 캔들, 수도 모델</span>
                 <span className="text-gray-500 text-sm">1</span>
               </div>

@@ -71,8 +71,6 @@ const ValueSecTwo = () => {
         // Make section visible immediately - important fix!
         gsap.set(sectionRef.current, { autoAlpha: 1 });
 
-        console.log('Setting up GSAP animation for ValueSecTwo');
-
         // Create a timeline
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -83,7 +81,7 @@ const ValueSecTwo = () => {
                 pin: true,
                 pinSpacing: true,
                 anticipatePin: 1,
-                markers: true, // Add markers for debugging
+                // markers: true,
             },
         });
 
@@ -196,7 +194,9 @@ const ValueSecTwo = () => {
             <div
                 ref={ref}
                 className='flex flex-col w-full'
-                style={{ transform: isUpward ? 'translateY(-200%)' : 'translateY(50%)' }}
+                style={{
+                    transform: isUpward ? 'translateY(-200%)' : 'translateY(50%)',
+                }}
             >
                 {images.map((src, index) => (
                     <figure

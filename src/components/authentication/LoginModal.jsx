@@ -12,7 +12,8 @@ function LoginFull() {
   const kakaoRestApiKey = import.meta.env.VITE_KAKAO_REST_API_KEY;
   const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoRestApiKey}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
-  const [email, setEmail] = useState('');
+	
+  const [id_email, setId_email] = useState('');
   const [password, setPassword] = useState('');
   const [loginMessage, setLoginMessage] = useState('');
 
@@ -21,18 +22,18 @@ function LoginFull() {
   // 로그인 핸들러
   const handleLogin = e => {
     e.preventDefault();
-    dispatch(authActions.login({ id_email: email, password }));
+    dispatch(authActions.login({ id_email, password }));
   };
 
   // 로그인 성공 시 페이지 이동 및 메시지 표시
-  useEffect(() => {
-    if (authed) {
-      setLoginMessage('로그인 성공');
-      navigate('/mypage');
-    } else if (email && password) {
-      setLoginMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
-    }
-  }, [authed]);
+ useEffect(() => {
+  if (authed) {
+    setLoginMessage('로그인 성공');
+    navigate('/mypage');
+  } else if (id_email && password) {
+    setLoginMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
+  }
+}, [authed, id_email, password]);
 
   // 카카오 로그인 핸들러
   const handleKakaoLogin = () => {
@@ -63,8 +64,8 @@ function LoginFull() {
             <Input
               className="w-[360px] h-[55px] font-bold text-[#9C9C9C] text-center"
               placeholder="아이디를 입력해 주세요."
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              value={id_email}
+              onChange={e => setId_email(e.target.value)}
             />
             <Input
               className="w-[360px] h-[55px] text-center text-[#9C9C9C] font-bold mb-[78px]"

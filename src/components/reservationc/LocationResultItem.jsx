@@ -1,11 +1,29 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useState, useMemo } from 'react';
 import Button from '../button';
 import { reservationActions } from '../../store/modules/reservationSlice';
+import MapModal from './MapModal';
+import PlaceSearchMapModal from './PlaceSearchMapModal';
+import SimpleMapModal from './SimpleMapModal';
 
 const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
     const dispatch = useDispatch();
     const { location } = useSelector((state) => state.reservationR.reservation);
     const isActive = id === activeId;
+    const [showMapModal, setShowMapModal] = useState(false);
+
+    // 위치 데이터 객체 생성 - useMemo로 최적화
+    const locationData = useMemo(
+        () => ({
+            boutiqueId: id,
+            boutique: data?.location || '경기 - 현대 판교',
+            address: data?.address || '현대백화점 판교점 1층 판교역로 146번길 20',
+            city: data?.city || '성남',
+            zipcode: data?.zipcode || '13529',
+            country: location.country || '대한민국', // 기존 국가 선택 유지
+        }),
+        [id, data, location.country]
+    );
 
     // 플러스/마이너스 버튼 클릭 핸들러 - 부티크 상세 정보 토글
     const handlePlus = () => {
@@ -14,24 +32,21 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
 
     // 부티크 선택 버튼 클릭 핸들러 - 확인 버튼 역할
     const handleSelectBoutique = () => {
-        // Create location data object
-        const locationData = {
-            boutiqueId: id,
-            boutique: data?.location || '경기 - 현대 판교',
-            address: data?.address || '현대백화점 판교점 1층 판교역로 146번길 20',
-            city: data?.city || '성남',
-            zipcode: data?.zipcode || '13529',
-            country: location.country || '대한민국', // Preserve existing country selection
-        };
-
         // Redux 상태 업데이트 - 선택된 부티크 정보 저장
         dispatch(reservationActions.setLocation(locationData));
 
-        // 이 단계에서만 확인 버튼을 누른 경우 localStorage에 저장
-        localStorage.setItem('locationInfo', JSON.stringify(locationData));
-
         // 다음 단계로 이동
         dispatch(reservationActions.setCurrentStep(2));
+    };
+
+    // 지도 버튼 클릭 핸들러 - 지도 모달 열기
+    const handleMapButton = () => {
+        setShowMapModal(true);
+    };
+
+    // 지도 모달 닫기 핸들러
+    const handleCloseMapModal = () => {
+        setShowMapModal(false);
     };
 
     return (
@@ -96,7 +111,7 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
                 <button onClick={handlePlus} className='text-[18px] leading-none'>
                     {isActive ? '-' : '+'}
                 </button>
-                <button>
+                <button onClick={handleMapButton}>
                     <svg width='18' height='18' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
                         <path
                             d='M2 12.8784V44.8784L16 36.8784L32 44.8784L46 36.8784V4.87842L32 12.8784L16 4.87842L2 12.8784Z'
@@ -130,6 +145,17 @@ const LocationResultItem = ({ id, activeId, setActiveId, data }) => {
             >
                 {location.boutiqueId === id ? '선택된 부티끄' : '부티끄 선택하기'}
             </Button>
+
+            {/* 지도 모달 컴포넌트 - locationData props로 전달 */}
+            {showMapModal && (
+                // <MapModal isOpen={showMapModal} onClose={handleCloseMapModal} locationData={locationData} />
+                // <PlaceSearchMapModal
+                //     isOpen={showMapModal}
+                //     onClose={handleCloseMapModal}
+                //     placeName='반클리프앤아펠 서울 메종'
+                // />
+                <SimpleMapModal isOpen={showMapModal} onClose={handleCloseMapModal} />
+            )}
         </div>
     );
 };

@@ -51,8 +51,9 @@ const initialState = {
     reviews: loadedData.reviews,
     // 현재 로그인한 사용자의 리뷰 목록 (배열 형태)
     myreviews: loadedData.myreviews,
-    // 현재 선택된 상품 ID
+    // 현재 선택된 상품 ID, category
     currentProductId: null,
+    currentProductCategory: null,
     // 현재 상품의 리뷰 목록 (필터링된)
     currentProductReviews: [],
     // 현재 상품의 리뷰 총 개수
@@ -85,8 +86,8 @@ export const reviewSlice = createSlice({
 
         // 새로운 리뷰 추가
         addReview: (state, action) => {
-            const { userNum, productId, reviewData } = action.payload;
-
+            const { productId, reviewData, category } = action.payload;
+            state.currentProductCategory = category;
             // 현재 로그인한 사용자 정보 가져오기
             const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
             const userId = currentUser.id; // 로그인한 사용자 ID 또는 임시 ID
@@ -106,6 +107,7 @@ export const reviewSlice = createSlice({
                     rating: reviewData.rating,
                     img: reviewData.images || [],
                     date: new Date().toISOString(),
+                    category: state.currentProductCategory,
                 };
 
                 // reviews에서도 해당 리뷰 찾아서 업데이트
@@ -119,6 +121,7 @@ export const reviewSlice = createSlice({
                         rating: reviewData.rating,
                         img: reviewData.images || [],
                         date: new Date().toISOString(),
+                        category: state.currentProductCategory,
                     };
                 }
             } else {
@@ -133,6 +136,7 @@ export const reviewSlice = createSlice({
                     date: new Date().toISOString(),
                     helpfulCount: 0,
                     isHelpful: false,
+                    category: state.currentProductCategory,
                 };
 
                 // reviews에 추가

@@ -96,27 +96,13 @@ const LocationResultList = () => {
 
     // 컴포넌트 마운트 시 이전에 선택된 부티크 정보 가져오기
     useEffect(() => {
-        // Check localStorage first
-        const savedLocation = localStorage.getItem('locationInfo');
-        if (savedLocation) {
-            const parsedLocation = JSON.parse(savedLocation);
-
-            // Set active boutique ID if available
-            if (parsedLocation.boutiqueId) {
-                setActiveId(parsedLocation.boutiqueId);
-            }
-
-            // Set country and city filters if available
-            setCountry(parsedLocation.country || '');
-            setCity(parsedLocation.city || '');
-
-            // Also update Redux store
-            dispatch(reservationActions.setLocation(parsedLocation));
-        } else if (location.boutiqueId) {
-            // Fallback to Redux state if localStorage not available
+        // Redux 상태에서 부티크 ID 가져오기
+        if (location.boutiqueId) {
             setActiveId(location.boutiqueId);
+            setCountry(location.country || '');
+            setCity(location.city || '');
         }
-    }, [dispatch, location.boutiqueId]);
+    }, [location.boutiqueId, location.country, location.city]);
 
     const handleLoadMore = () => {
         setVisibleCount((prev) => Math.min(prev + 5, locationData.length));
@@ -136,30 +122,22 @@ const LocationResultList = () => {
     // 모든 데이터가 표시되는지 확인
     const isAllLoaded = visibleCount >= filteredData.length;
 
-    // 국가 선택 핸들러 - 일시적으로 Redux에만 저장
+    // 국가 선택 핸들러 - Redux에만 저장
     const handleCountryChange = (e) => {
         const selectedCountry = e.target.value;
         setCountry(selectedCountry);
 
-        // Update Redux only (not localStorage until confirmation)
-        const updatedLocation = {
-            ...location,
-            country: selectedCountry,
-        };
-        dispatch(reservationActions.setLocation(updatedLocation));
+        // Update Redux only (not localStorage)
+        dispatch(reservationActions.setLocation({ country: selectedCountry }));
     };
 
-    // 도시 선택 핸들러 - 일시적으로 Redux에만 저장
+    // 도시 선택 핸들러 - Redux에만 저장
     const handleCityChange = (e) => {
         const selectedCity = e.target.value;
         setCity(selectedCity);
 
-        // Update Redux only (not localStorage until confirmation)
-        const updatedLocation = {
-            ...location,
-            city: selectedCity,
-        };
-        dispatch(reservationActions.setLocation(updatedLocation));
+        // Update Redux only (not localStorage)
+        dispatch(reservationActions.setLocation({ city: selectedCity }));
     };
 
     return (

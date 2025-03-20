@@ -1,19 +1,39 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Button from '../../components/button';
 import CheckBox from '../../components/checkbox';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productInquiryActions } from '../../store/modules/productInquirySlice';
+import { productdata } from '@/assets/api/productdata';
 
 const flexIC = 'flex items-center';
 
 const ProductInquiry = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
 
     // 로그인 정보 및 상품 정보 가져오기
     const userInfo = useSelector((state) => state.authR?.user);
-    const productInfo = useSelector((state) => state.productR?.currentProduct);
+
+    // URL 쿼리 파라미터에서 category와 id 가져오기 (ProductInquiryList에서 전달됨)
+    const searchParams = new URLSearchParams(location.search);
+    const category = searchParams.get('category');
+    const productId = searchParams.get('id');
+
+    // 1. 카테고리 정보 찾기
+    const categoryData = productdata.find((item) => item.category === category);
+
+    // 2. 해당 카테고리에서 상품 정보 찾기 (문자열/숫자 변환 고려)
+    const productInfo = categoryData?.data?.find(
+        (item) => item.productid === parseInt(productId) || item.productid === productId
+    );
+
+    console.log('카테고리:', category);
+    console.log('상품 ID:', productId);
+    console.log('찾은 카테고리 데이터:', categoryData);
+    console.log('찾은 상품 정보:', productInfo);
+
     const isLoggedIn = useSelector((state) => state.authR?.authed);
 
     // 로컬스토리지에서 currentUser 확인
@@ -21,7 +41,7 @@ const ProductInquiry = () => {
         // 로그인 체크
         if (!isLoggedIn) {
             alert('로그인이 필요한 서비스입니다.');
-            navigate('/login', { state: { from: window.location.pathname } });
+            navigate('/login', { state: { from: window.location.pathname + window.location.search } });
         } else {
             // 로컬스토리지의 currentUser 확인
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -36,11 +56,10 @@ const ProductInquiry = () => {
         }
     }, [isLoggedIn, navigate]);
 
-    // 유저 ID 및 상품 ID
+    // 유저 ID
     const userId =
         userInfo?.id ||
         (localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')).id : null);
-    const productId = productInfo?.id || window.location.pathname.split('/').pop();
 
     const [userInquiry, setUserInquiry] = useState({
         title: '',
@@ -51,12 +70,26 @@ const ProductInquiry = () => {
         password: '',
         date: '',
         inquiryType: '상품',
-        productId: productId, // 상품 ID 추가
-        productName: productInfo?.name || '상품명', // 상품명 추가
+        category: category,
+        productId: productId,
+        productName: productInfo?.title || '상품명',
         productImage:
-            productInfo?.image ||
-            'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png', // 상품 이미지 추가
+            productInfo?.objectImage?.[0] ||
+            'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png',
     });
+
+    // 상품 정보가 로드되면 userInquiry 업데이트
+    useEffect(() => {
+        if (productInfo) {
+            setUserInquiry((prev) => ({
+                ...prev,
+                productName: productInfo.title || '상품명',
+                productImage:
+                    productInfo.objectImage?.[0] ||
+                    'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png',
+            }));
+        }
+    }, [productInfo]);
 
     // 유저 정보가 변경될 때 이름 업데이트
     useEffect(() => {
@@ -117,6 +150,7 @@ const ProductInquiry = () => {
         const currentUserId = currentUser ? currentUser.id : null;
 
         console.log('제출 시 사용자 ID:', currentUserId || userId);
+        console.log('제출 시 카테고리:', category);
         console.log('제출 시 상품 ID:', productId);
 
         // 디스패치하는 데이터
@@ -126,6 +160,8 @@ const ProductInquiry = () => {
             date: formattedDate,
             id: currentUserId || userId,
             inquiryId: Date.now(),
+            category: category, // 카테고리 추가
+            productId: productId, // 상품 ID 추가
         };
 
         console.log('디스패치하는 데이터:', inquiryData);
@@ -134,12 +170,12 @@ const ProductInquiry = () => {
         dispatch(productInquiryActions.addInquiry(inquiryData));
 
         alert('문의가 등록되었습니다.');
-        navigate('/productdetail/1');
+        navigate(`/productdetail/${category}/${productId}`);
     };
 
     const onExit = (e) => {
         e.preventDefault();
-        navigate('/productdetail/1');
+        navigate(-1);
     };
 
     // 로그인 상태가 아니면 로딩 중이거나 리다이렉트 중이므로 아무것도 렌더링하지 않음
@@ -260,7 +296,7 @@ const ProductInquiry = () => {
                                     onChange={setIsSecretPost}
                                     className='w-5 h-5'
                                 />
-                                <span>비밀글</span>
+                                <label htmlFor='secretPost'>비밀글</label>
                             </div>
                             <textarea
                                 className='border border-gray-40 p-3 w-full h-40 text-xs'
@@ -292,7 +328,7 @@ const ProductInquiry = () => {
                     </p>
                     <div className='flex items-center gap-2 mt-4'>
                         <CheckBox id='agreement' checked={isAgreed} onChange={setIsAgreed} className='w-5 h-5' />
-                        <p>위 내용에 동의합니다.</p>
+                        <label htmlFor='agreement'>위 내용에 동의합니다.</label>
                         <Link>전체보기 {'>'}</Link>
                     </div>
                 </div>

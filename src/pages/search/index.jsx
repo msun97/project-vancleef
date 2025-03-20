@@ -1,42 +1,95 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import DropDown from '../../components/dropdown';
 import SearchResultModal from './componetns/SearchResultModal';
 import { Link, useParams } from 'react-router-dom';
 import { productdata } from '../../assets/api/productdata';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchActions } from '@/store/modules/searchSlice';
+import { authActions } from '@/store/modules/authSlice';
 
 const Search = () => {
+  const dispatch = useDispatch();
   const { keyword } = useParams();
   const alldata = productdata;
-  const searchData = alldata.flatMap(item => {
-    if (item.category === keyword) {
-      return item.data;
-    }
+  const { user } = useSelector(state => state.authR);
+  const categories = alldata.map(item => item.category);
 
-    if (item.data && Array.isArray(item.data)) {
-      return item.data.filter(
-        data =>
-          (data.title && data.title.includes(keyword)) ||
-          (data.subtitle && data.subtitle.includes(keyword)) ||
-          (data.detail && data.detail.includes(keyword)) ||
-          (data.stone && data.stone.includes(keyword)),
-      );
-    }
+  const [searchData, setSearchData] = useState([]);
+  useEffect(() => {
+    const newData = alldata.flatMap(item => {
+      const categoryIndex = categories.indexOf(item.category);
 
-    return [];
-  });
+      if (item.searchCategory.includes(keyword)) {
+        return item.data.map(data => ({ ...data, category: categoryIndex }));
+      }
+
+      if (item.data && Array.isArray(item.data)) {
+        return item.data
+          .filter(
+            data =>
+              (data.title && data.title.includes(keyword)) ||
+              (data.subtitle && data.subtitle.includes(keyword)) ||
+              (data.detail && data.detail.includes(keyword)) ||
+              (data.stone && data.stone.includes(keyword)),
+          )
+          .map(data => ({ ...data, category: categoryIndex }));
+      }
+    });
+
+    setSearchData(newData);
+    setNowSetSearchData(newData);
+  }, [keyword, alldata]);
+  const [data, setData] = useState(searchData);
+  const [isFiltering, setIsFiltering] = useState(false);
+  const { filterData } = useSelector(state => state.searchR);
+  const handleFilterChange = () => {
+    setIsFiltering(true);
+  };
+  useEffect(() => {
+    if (isFiltering) {
+      setData(filterData);
+    } else {
+      setData(searchData);
+    }
+  }, [isFiltering, filterData, searchData]);
+
+  const [isSort, setIsSort] = useState('인기순');
+  const [nowSearchData, setNowSetSearchData] = useState(searchData);
+  useEffect(() => {
+    setNowSetSearchData(searchData);
+  }, [searchData]);
+  useEffect(() => {
+    if (searchData && searchData.length > 0) {
+      dispatch(searchActions.setOriginal(searchData));
+    }
+  }, [searchData, dispatch]);
+  useEffect(() => {
+    if (isSort === '인기순') {
+      setNowSetSearchData(data);
+    } else if (isSort === '가격순') {
+      setNowSetSearchData([...data].sort((a, b) => b.price - a.price));
+    }
+  }, [isSort, data]);
+
+  const handleClick = sort => {
+    setIsSort(sort);
+  };
+
   const [isFillter, setIsFillter] = useState(false);
   const onFilter = () => {
     setIsFillter(!isFillter);
   };
-  const [sortData, setSortData] = useState(searchData);
-  const handleClick = sort => {
-    if (sort === '인기순') {
-      setSortData(searchData);
-    } else if (sort === '가격순') {
-      setSortData(searchData.sort((a, b) => b.price - a.price));
+
+  const onFavorite = data => {
+    if (user) {
+      dispatch(authActions.addfavorites(data));
+    } else {
+      alert('로그인이 필요합니다.');
     }
   };
-
+  const offFavorite = data => {
+    dispatch(authActions.removeFavorite(data));
+  };
   return (
     <div className="py-40">
       <div className="wrap p-330">
@@ -81,48 +134,71 @@ const Search = () => {
           </div>
           <div className="results">
             <ul className="flex flex-wrap gap-10">
-              {sortData.length === 0 ? (
+              {nowSearchData.length === 0 ? (
                 <div className="text-center text-[14px] font-bold">
                   검색결과가 없습니다.
                 </div>
               ) : (
-                sortData.map((product, idx) => (
-                  <li
-                    key={idx}
-                    className="flex flex-col gap-[10px] relative w-[calc(25%-30px)]"
-                  >
-                    <img
-                      src={product.objectimage[0]}
-                      className="w-[245px] h-[280px]"
-                    />
-                    <div className="flex flex-col gap-4">
-                      <div className="title flex flex-col gap-[7px]">
-                        <div className="tag text-[12px] w-[240px] overflow-hidden whitespace-nowrap text-ellipsis break-all">
-                          {product.stone}
+                nowSearchData.map((product, idx) => {
+                  
+                  const isFavorite = user?user.favorites.some(
+                    item => item.productnumber === product.productnumber,
+                  ):false;
+
+                  return (
+                    <li
+                      key={idx}
+                      className="flex flex-col gap-[10px] relative w-[calc(25%-30px)]"
+                    >
+                      <img
+                        src={product.objectimage[0]}
+                        className="w-[245px] h-[280px]"
+                      />
+                      <div className="flex flex-col gap-4">
+                        <div className="title flex flex-col gap-[7px]">
+                          <div className="tag text-[12px] w-[240px] overflow-hidden whitespace-nowrap text-ellipsis break-all">
+                            {product.stone}
+                          </div>
+                          <div className="title text-[16px] font-bold w-[240px] overflow-hidden whitespace-nowrap text-ellipsis break-all">
+                            {product.title}
+                          </div>
                         </div>
-                        <div className="title text-[16px] font-bold w-[240px] overflow-hidden whitespace-nowrap text-ellipsis break-all">
-                          {product.title}
+                        <div className="price text-[13px] font-bold">
+                          ₩{product.price.toLocaleString()}
                         </div>
                       </div>
-                      <div className="price text-[13px] font-bold">
-                        ₩{product.price.toLocaleString()}
+                      <div className="like absolute top-[10px] right-4">
+                        <button
+                          onClick={() =>
+                            isFavorite
+                              ? offFavorite(product)
+                              : onFavorite(product)
+                          }
+                        >
+                          <img
+                            src={
+                              isFavorite
+                                ? '/icons/like-filled.svg'
+                                : '/icons/like-unfilled.svg'
+                            }
+                            className="w-4"
+                          />
+                        </button>
                       </div>
-                    </div>
-                    <div className="like absolute top-[10px] right-4">
-                      <img src="/icons/like-unfilled.svg" className="w-4" />
-                    </div>
-                  </li>
-                ))
+                    </li>
+                  );
+                })
               )}
             </ul>
           </div>
         </div>
       </div>
-      {isFillter ? (
-        <SearchResultModal onClick={onFilter} data={searchData} />
-      ) : (
-        ''
-      )}
+      <SearchResultModal
+        isOpen={isFillter} // 추가
+        onClick={onFilter}
+        originalData={searchData}
+        handleFilterChange={handleFilterChange}
+      />
     </div>
   );
 };

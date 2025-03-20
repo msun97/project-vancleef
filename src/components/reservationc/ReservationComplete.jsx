@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { reservationActions } from '../../store/modules/reservationSlice';
 
@@ -6,6 +6,27 @@ const ReservationComplete = () => {
     const dispatch = useDispatch();
     const { reservation, currentStep } = useSelector((state) => state.reservationR);
     const { location, purpose, details } = reservation;
+
+    // 추가: 완료 상태를 관리하는 로컬 상태
+    const [showCompletion, setShowCompletion] = useState(reservation.status === 'pending');
+
+    // 현재 스텝이 변경될 때마다 완료 상태 업데이트
+    useEffect(() => {
+        if (currentStep < 4) {
+            setShowCompletion(false);
+        } else if (
+            reservation.status === 'pending' &&
+            currentStep > 3 &&
+            location.boutiqueId &&
+            (purpose.productConsultation || purpose.repairService) &&
+            purpose.selectedOption &&
+            details.date &&
+            details.time &&
+            details.preferredLanguage
+        ) {
+            setShowCompletion(true);
+        }
+    }, [currentStep, reservation.status, location, purpose, details]);
 
     // 방문 목적 텍스트 생성 함수
     const getPurposeText = () => {
@@ -19,14 +40,20 @@ const ReservationComplete = () => {
 
     // 각 섹션 편집 핸들러
     const handleEditLocation = () => {
+        // 편집 시 완료 메시지 숨김
+        setShowCompletion(false);
         dispatch(reservationActions.setCurrentStep(1));
     };
 
     const handleEditPurpose = () => {
+        // 편집 시 완료 메시지 숨김
+        setShowCompletion(false);
         dispatch(reservationActions.setCurrentStep(2));
     };
 
     const handleEditDetails = () => {
+        // 편집 시 완료 메시지 숨김
+        setShowCompletion(false);
         dispatch(reservationActions.setCurrentStep(3));
     };
 
@@ -94,7 +121,7 @@ const ReservationComplete = () => {
             )}
 
             {/* 최종 확인 - 모든 단계가 완료되었을 때만 표시 */}
-            {reservation.status === 'pending' && (
+            {showCompletion && (
                 <div className='flex flex-col w-[560px] mx-auto mt-8'>
                     <div className='bg-gray-900 text-white text-center py-3 font-secondary'>예약이 완료되었습니다</div>
                 </div>

@@ -1,6 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const ProductInformation = () => {
+    const { category, id } = useParams();
+    const productdata = useSelector((state) => state.productR.productdata);
+    const [product, setProduct] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        setIsLoading(true);
+        if (productdata && Array.isArray(productdata)) {
+            const foundCategory = productdata.find(
+                (categoryData) =>
+                    categoryData.category === category && categoryData.data && Array.isArray(categoryData.data)
+            ); /* find() 메서드는 JavaScript 배열에서 특정 조건을 만족하는 첫 번째 요소를 찾는 데 사용 */
+
+            if (foundCategory) {
+                const foundProduct = foundCategory.data.find((item) => item.productid === parseInt(id));
+                setProduct(foundProduct);
+            } else {
+                console.error('해당 카테고리를 찾을 수 없습니다.');
+            }
+        } else {
+            console.error('데이터 구조가 예상과 다릅니다:', productdata);
+        }
+        setIsLoading(false);
+    }, [category, id, productdata]);
+
+    console.log(product, 'prdouctinform');
     return (
         <>
             <div className="w-full h-full mt-60">
@@ -10,15 +37,15 @@ const ProductInformation = () => {
                     </div>
                     <li className="border-y border-black flex gap-10  items-center">
                         <div className="w-30">종류</div>
-                        <span className="font-light text-xs text-[#757575]">프리볼 펜던트, 스몰 모델</span>
+                        <span className="font-light text-xs text-[#757575]">{product?.title}</span>
                     </li>
                     <li className=" border-b border-black flex gap-10  items-center">
                         <div className="w-30">제품번호</div>
-                        <span className="font-light text-xs text-[#757575]">VCARPFBM00</span>
+                        <span className="font-light text-xs text-[#757575]">{product?.productnumber}</span>
                     </li>
                     <li className=" border-b border-black flex gap-10  items-center">
                         <div className="w-30">스톤</div>
-                        <span className="font-light text-xs text-[#757575]">다이아몬드: 스톤 1개, 0.08캐럿</span>
+                        <span className="font-light text-xs text-[#757575]">{product?.stone || '없음'}</span>
                     </li>
                     <li className=" border-b border-black flex gap-10  items-center">
                         <div className="w-30">클래스프</div>

@@ -95,19 +95,16 @@ const ProductListPageNav = () => {
                             {isSubmenuVisible && (
                                 <ul className="submenu font-bold text-content-l leading-8 font-primary pl-3 text-shadow-lg">
                                     {/* 수정: 각 카테고리 항목에 이벤트 객체 전달 */}
-                                    <li
-                                        id="Necklaces"
-                                        onClick={(event) => handleCategoryChange(1, 'Necklaces and pendants', event)}
-                                    >
+                                    <li id="Necklaces" onClick={(event) => handleCategoryChange(1, 'necklaces', event)}>
                                         Necklaces
                                     </li>
-                                    <li id="Bracelets" onClick={(event) => handleCategoryChange(2, 'Bracelets', event)}>
+                                    <li id="Bracelets" onClick={(event) => handleCategoryChange(2, 'bracelets', event)}>
                                         Bracelets
                                     </li>
-                                    <li id="Rings" onClick={(event) => handleCategoryChange(3, 'Rings', event)}>
+                                    <li id="Rings" onClick={(event) => handleCategoryChange(3, 'rings', event)}>
                                         Rings
                                     </li>
-                                    <li id="Earrings" onClick={(event) => handleCategoryChange(4, 'Earrings', event)}>
+                                    <li id="Earrings" onClick={(event) => handleCategoryChange(4, 'earrings', event)}>
                                         Earrings
                                     </li>
                                 </ul>

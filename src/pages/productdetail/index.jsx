@@ -17,6 +17,8 @@ import RecommendProductSlide from '../../components/product/RecommendProductSlid
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
+import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
+import { viewedProductsActions } from '@/store/modules/viewedProductsSlice';
 
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
@@ -35,11 +37,32 @@ function ProductDetailPage() {
             [modalType]: !modalState[modalType],
         });
     };
+		
+    const [isLiked, setIsLiked] = useState(false);
+    const toggleLike = () => {
+        setIsLiked(!isLiked);
+
+        if (!isLiked) {
+            if (user) {
+                dispatch(authActions.addfavorites(productdata));
+            } else {
+                console.log('로그인이 필요합니다.');
+            }
+        } else {
+            dispatch(authActions.removeFavorite(productdata));
+        }
+    };
     const dispatch = useDispatch();
+
     const { category, id } = useParams();
     const productdata = useSelector((state) => state.productR.productdata);
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+
+    const foundCategory = productdata.find(
+        (categoryData) => categoryData.category === category && categoryData.data && Array.isArray(categoryData.data)
+    );
+    console.log(foundCategory, 'foundCategory');
 
     useEffect(() => {
         setIsLoading(true);
@@ -51,7 +74,12 @@ function ProductDetailPage() {
 
             if (foundCategory) {
                 const foundProduct = foundCategory.data.find((item) => item.productid === parseInt(id));
+                // 최근 본 상품 목록 추가
+
                 setProduct(foundProduct);
+
+                dispatch(viewedProductsActions.addProduct(foundProduct));
+                console.log(foundProduct, '>>>>>>foundProduct');
             } else {
                 console.error('해당 카테고리를 찾을 수 없습니다.');
             }
@@ -69,6 +97,19 @@ function ProductDetailPage() {
         return <div>상품을 찾을 수 없습니다.</div>;
     }
 
+    //1.detail product --- colorpn 있으면 찾기
+    const targetColorpns = product.colorpn?.map((product) => product);
+
+    // 2. colorpn productnumber 필터링 된 내역을 전체 배열에서 필터링 해서 배열 처리
+    const colorfilteredItems = productdata.flatMap((category) => {
+        if (category.data && Array.isArray(category.data)) {
+            return category.data.filter(
+                (item) => item.productnumber && targetColorpns.includes(item.productnumber.trim())
+            );
+        }
+        return [];
+    });
+
     return (
         <div id="contents" className="w-full h-full ">
             <div className="w-full pb-[80px]"></div>
@@ -79,8 +120,21 @@ function ProductDetailPage() {
                     </div>
                     <div className="view_rgt w-[50%] h-[800px] font-primary text-[14px] leading-8">
                         <div className="px-[114px] h-full pt-[154px]">
-                            <div className="title">
+                            <div className="title flex gap-3 items-center">
                                 <h3>{product.title}</h3>
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        toggleLike();
+                                    }}
+                                >
+                                    {' '}
+                                    {isLiked ? (
+                                        <IoIosHeart className="text-red-500" />
+                                    ) : (
+                                        <IoIosHeartEmpty className="text-black" />
+                                    )}
+                                </button>
                             </div>
                             <div className="subtitle text-[#706F6F] text-label-s">
                                 <h3>{product.subtitle || '상품 부제목'}</h3>
@@ -90,14 +144,23 @@ function ProductDetailPage() {
                                     <dt>{product.price ? `${product.price.toLocaleString()}원` : '가격 정보 없음'}</dt>
                                 </dl>
                             </div>
+                            <div className="option ">
+                                <div className="flex gap-5 mt-3">
+                                    {colorfilteredItems.map((product, index) => {
+                                        return (
+                                            <div key={index}>
+                                                <img
+                                                    src={product.objectimage[0]}
+                                                    alt={product.title}
+                                                    style={{ width: '100px', height: '100px' }}
+                                                    className="border border-gray-200"
+                                                />
+                                                <span className="text-[10px] text-[#706F6F]">{product.subtitle}</span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
 
-                            <div className="option">
-                                <select className="w-full border border-solid black pl-[10px] ">
-                                    <option value="" disabled selected>
-                                        옵션
-                                    </option>
-                                    {product.colorpn ? <option value="option1">{product.colorpn[0]}</option> : null}
-                                </select>
                                 <form name="frmView" id="frmView" method="post" onSubmit={(e) => e.preventDefault()}>
                                     <input type="hidden" name="goodsno" value="12345" />
                                     <input type="hidden" name="cate" value="67890" />
@@ -132,11 +195,6 @@ function ProductDetailPage() {
                             </div>
                             <div className="title tracking-wide">
                                 <h3>
-                                    <button>RESERVATION</button>
-                                </h3>
-                            </div>
-                            <div className="title tracking-wide">
-                                <h3>
                                     <button onClick={() => toggleModal('care')}>CARE SERVICE</button>
                                 </h3>
                             </div>
@@ -157,13 +215,14 @@ function ProductDetailPage() {
                     <ProductDetailImg productImages={product.objectimage} />
                 </div>
             </div>
-            <MotiveGuide />
-            <SizeGuide />
+            {foundCategory && foundCategory.category === 'Necklaces and pendants' && <MotiveGuide />}
+            {/* 조건부 렌더링 */}
+            {foundCategory && foundCategory.category === 'Bracelets' && <SizeGuide />}
             <ProductInformation />
-            <RecommendProductSlide />
             <ProductNotice />
-            <ReviewList />
-            <ProductInquiryList />
+            <RecommendProductSlide />
+            <ReviewList category={category} id={id} />
+            <ProductInquiryList category={category} id={id} />
             {modalState.inquiry && <InquiryModal handleModal={() => toggleModal('inquiry')} modalType="inquiry" />}
             {modalState.care && <CareModal handleModal={() => toggleModal('care')} modalType="care" />}
             {modalState.delivery && <DelieveryModal handleModal={() => toggleModal('delivery')} modalType="delivery" />}
