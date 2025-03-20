@@ -31,7 +31,6 @@ const productInquirySlice = createSlice({
 
                 // myInquiries 로컬스토리지에 저장
                 localStorage.setItem('myInquiries', JSON.stringify(state.myInquiries));
-                console.log('사용자 설정 후 myInquiries:', state.myInquiries);
             }
         },
 
@@ -39,11 +38,9 @@ const productInquirySlice = createSlice({
         addInquiry: (state, action) => {
             // 현재 사용자 정보 가져오기
             const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-            console.log('현재 사용자 정보:', currentUser);
 
             // id 확인 (currentUser.id 사용)
             const userId = currentUser.id || action.payload.id;
-            console.log('사용할 사용자 ID:', userId);
 
             // category와 productId 확인
             const { category, productId } = action.payload;
@@ -63,16 +60,12 @@ const productInquirySlice = createSlice({
                 hasResponse: false,
             };
 
-            console.log('생성된 문의 객체:', newInquiry);
-
             if (existingInquiryIndex !== -1) {
                 // 이미 문의가 있으면 업데이트
                 state.inquiries[existingInquiryIndex] = newInquiry;
-                console.log('기존 문의 업데이트');
             } else {
                 // 새 문의 추가
                 state.inquiries.push(newInquiry);
-                console.log('새 문의 추가');
             }
 
             // inquiries 로컬스토리지에 저장
@@ -87,16 +80,13 @@ const productInquirySlice = createSlice({
             if (myInquiryIndex !== -1) {
                 // 이미 문의가 있으면 업데이트
                 state.myInquiries[myInquiryIndex] = newInquiry;
-                console.log('내 문의 업데이트');
             } else {
                 // 새 문의 추가
                 state.myInquiries.push(newInquiry);
-                console.log('내 문의 추가');
             }
 
             // myInquiries 로컬스토리지에 저장
             localStorage.setItem('myInquiries', JSON.stringify(state.myInquiries));
-            console.log('저장 후 myInquiries:', state.myInquiries);
 
             // currentUser에 myInquiries 추가
             if (currentUser && currentUser.id) {
@@ -122,7 +112,6 @@ const productInquirySlice = createSlice({
             // ----------- 추가된 부분: users 로컬스토리지 업데이트 -----------
             // users 목록 가져오기
             const users = JSON.parse(localStorage.getItem('users') || '[]');
-            console.log('현재 users 목록:', users);
 
             // 해당 사용자 찾기
             const userIndex = users.findIndex((user) => user.id === userId || user.userid === userId);
@@ -234,7 +223,6 @@ const productInquirySlice = createSlice({
 
                             // users 로컬스토리지에 저장
                             localStorage.setItem('users', JSON.stringify(users));
-                            console.log('users에서 문의 업데이트 완료:', user.myInquiries);
                         }
                     }
                 }
@@ -289,7 +277,6 @@ const productInquirySlice = createSlice({
 
                         // users 로컬스토리지에 저장
                         localStorage.setItem('users', JSON.stringify(users));
-                        console.log('users에서 문의 삭제 완료');
                     }
                 }
             }
@@ -376,7 +363,6 @@ const productInquirySlice = createSlice({
 
                             // users 로컬스토리지에 저장
                             localStorage.setItem('users', JSON.stringify(users));
-                            console.log('users에 응답 추가 완료');
                         }
                     }
                 }
@@ -388,11 +374,9 @@ const productInquirySlice = createSlice({
         loadMyInquiries: (state, action) => {
             // currentUser 정보 가져오기
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            console.log('loadMyInquiries에서 확인한 currentUser:', currentUser);
 
             // id는 action.payload 또는 currentUser.id 사용
             const userId = action.payload || (currentUser ? currentUser.id : null);
-            console.log('사용할 사용자 ID:', userId);
 
             if (!userId) {
                 console.log('유효한 사용자 ID가 없습니다.');
@@ -401,11 +385,9 @@ const productInquirySlice = createSlice({
 
             // 로컬스토리지에서 최신 inquiries 가져오기
             const allInquiries = JSON.parse(localStorage.getItem('inquiries') || '[]');
-            console.log('전체 문의 개수:', allInquiries.length);
 
             // 현재 사용자가 작성한 문의만 필터링
             state.myInquiries = allInquiries.filter((inquiry) => inquiry.id === userId);
-            console.log('필터링된 내 문의 개수:', state.myInquiries.length);
 
             // myInquiries 로컬스토리지에 저장
             localStorage.setItem('myInquiries', JSON.stringify(state.myInquiries));
@@ -414,7 +396,6 @@ const productInquirySlice = createSlice({
             if (currentUser) {
                 currentUser.myInquiries = state.myInquiries;
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                console.log('currentUser에 myInquiries 업데이트:', state.myInquiries);
             }
 
             return state.myInquiries;
