@@ -171,10 +171,37 @@ export const authSlice = createSlice({
                 state.user.username = action.payload;
             }
         },
+        // Replace the updatePassword function in your authSlice.js with this improved version
         updatePassword: (state, action) => {
-            const { currentPassword, newPassword } = action.payload;
+            const { currentPassword, newPassword, userId } = action.payload;
+
             if (state.user && state.user.password === currentPassword) {
+                // Update password in state
                 state.user.password = newPassword;
+
+                // Update user ID if it has changed
+                if (userId && userId !== state.user.userid) {
+                    state.user.userid = userId;
+                }
+
+                // Update current user in localStorage
+                localStorage.setItem('currentUser', JSON.stringify(state.user));
+
+                // Update user in joinData state
+                state.joinData = state.joinData.map((user) =>
+                    user.userid === state.user.userid || (userId && user.userid === state.user.userid)
+                        ? {
+                              ...user,
+                              password: newPassword,
+                              userid: userId || user.userid,
+                          }
+                        : user
+                );
+
+                // Update users in localStorage
+                localStorage.setItem('users', JSON.stringify(state.joinData));
+
+                console.log('사용자 정보가 성공적으로 변경되었습니다.');
             } else {
                 console.error('현재 비밀번호가 일치하지 않습니다.');
             }
