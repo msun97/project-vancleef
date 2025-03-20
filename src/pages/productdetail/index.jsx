@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
 import { viewedProductsActions } from '@/store/modules/viewedProductsSlice';
 import { authActions } from '@/store/modules/authSlice';
+import ToTopBtn from '@/components/totopbtn/ToTopBtn';
 
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
@@ -129,6 +130,7 @@ function ProductDetailPage() {
 
     return (
         <div id='contents' className='w-full h-full '>
+            <ToTopBtn />
             <div className='w-full pb-[80px]'></div>
             <div id='goods' className='w-full h-full'>
                 <div id='goods_view' className='w-full h-full flex flex-col md:flex-row'>
