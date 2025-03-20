@@ -117,6 +117,12 @@ function SignupFull() {
             alert('아이디 중복확인을 해주세요.');
             return;
         }
+        // 생년월일 숫자 자릿수 체크 (YYYYMMDD: 8자리여야 함)
+        const birthDigits = birth.replace(/\D/g, '');
+        if (birthDigits.length !== 8) {
+            alert('정확한 생년월일(YYYYMMDD)을 입력해 주세요.');
+            return;
+        }
 
         const payload = {
             username,
