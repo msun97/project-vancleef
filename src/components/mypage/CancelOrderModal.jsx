@@ -53,10 +53,10 @@ function CancelOrderModal() {
           <div className="">
             <p className="text-[24px] font-semibold border-b w-full">취소신청 상품 정보</p>
             <div className="flex items-center text-[12px] h-[55px] pr-[18px]">
-              <div className="flex gap-[65px] pr-3 pl-3">
+              <div className="flex gap-[50px] pr-3 pl-3">
                 <span>상품명</span>
                 <span>수량</span>
-                <span>구매가격</span>
+                <span>구매가격</span>	
                 <span></span>
               </div>
             </div>
@@ -65,13 +65,13 @@ function CancelOrderModal() {
           {/* currentUser.completePurchase의 상품 정보 */}
           {purchaseData && purchaseData.deliverItem && purchaseData.deliverItem.map((group, groupIdx) =>
             group.map((item, idx) => (
-              <div key={`${groupIdx}-${idx}`} className="flex pr-3 pl-3 items-center space-x-[20px]">
+              <div key={`${groupIdx}-${idx}`} className="flex justify-between pr-3 pl-3 items-center">
                 {/* <CheckBox className="h-[18px] w-[18px]" /> */}
-                <div className="flex-1 flex-row h-[55px] items-center">
-                  <span className="font-medium">{item.title}</span>
+                <div className="flex flex-row h-[55px] justify-center items-center gap-10">
+                  <span className="font-medium max-w-[170px]">{item.title}</span>
                   <span className="text-gray-500 text-sm ml-4">{item.quantity || 1}</span>
                 </div>
-                <p className="font-semibold">
+                <p className="font-semibold w-[280px]">
                   KRW{' '}
                   {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 </p>
