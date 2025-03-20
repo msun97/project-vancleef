@@ -22,11 +22,12 @@ const Section4 = () => {
       data: item.data.slice(0, 6).map(dataItem => ({
         ...dataItem,
         title: dataItem.title.split(',')[0],
+        category: item.category,
       })),
       maindata: item.data[7],
     };
   });
-
+  console.log(Item);
   useEffect(() => {
     const section = sectionRef.current;
     const totalSlides = Item.length;
@@ -274,24 +275,28 @@ const Section4 = () => {
                 </div>
                 <div className="w-full h-full flex flex-wrap gap-x-4 gap-y-[1px] justify-center items-center">
                   {item.data.map(product => (
-                    <div
-                      key={product.id}
-                      className="flex flex-col gap-2 px-5 w-[250px] h-[300px] product-item hover:scale-105 transition-transform cursor-pointer"
+                    <Link
+                      to={`/productdetail/${product.category}/${product.productid}`}
                     >
-                      <div className="bg-[#f9f9f9] px-5 overflow-hidden group">
-                        <img
-                          src={product.objectimage[0]}
-                          className="w-[200px] h-[200px] group-hover:scale-110 transition-transform duration-300"
-                        />
+                      <div
+                        key={product.id}
+                        className="flex flex-col gap-2 px-5 w-[250px] h-[300px] product-item hover:scale-105 transition-transform cursor-pointer"
+                      >
+                        <div className="bg-[#f9f9f9] px-5 overflow-hidden group">
+                          <img
+                            src={product.objectimage[0]}
+                            className="w-[200px] h-[200px] group-hover:scale-110 transition-transform duration-300"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1 items-start">
+                          <h3 className="font-bold">{product.title}</h3>
+                          <p>{product.description}</p>
+                          <p className="text-gray-90">
+                            ₩{product.price.toLocaleString()}
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex flex-col gap-1 items-start">
-                        <h3 className="font-bold">{product.title}</h3>
-                        <p>{product.description}</p>
-                        <p className="text-gray-90">
-                          ₩{product.price.toLocaleString()}
-                        </p>
-                      </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>
