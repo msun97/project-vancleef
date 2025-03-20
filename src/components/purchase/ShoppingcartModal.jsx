@@ -22,11 +22,6 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
   const { cart } = useSelector(state => state.cartR);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isChecked, setIsChecked] = useState(false); // 전체 선택 체크박스 상태 관리
-  // 장바구니에서 아이템 삭제
-  const handleRemoveItem = id => {
-    dispatch(removeCart(id)); // Redux 상태에서 해당 상품 제거
-  };
-
   const handleSelectItem = itemId => {
     if (selectedItems.includes(itemId)) {
       setSelectedItems(selectedItems.filter(item => item.id === itemId));
@@ -34,16 +29,17 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
       setSelectedItems([...selectedItems, itemId]);
     }
   };
-  console.log(selectedItems);
   // 전체 선택/해제 처리
   const handleSelectAll = () => {
-    if (isChecked) {
-      setSelectedItems([]); // 전체 선택 해제
+    setIsChecked(!isChecked);
+    if (!isChecked) {
+      setSelectedItems(cart.map(item => item.productnumber));
     } else {
-      setSelectedItems(cart.map(item => item.id)); // 전체 선택
+      setSelectedItems([]);
     }
-    setIsChecked(!isChecked); // 전체 선택/해제 상태 변경
   };
+  console.log(selectedItems);
+  console.log(cart);
   // 선택삭제 처리
   const handleDeleteSelected = () => {
     selectedItems.forEach(itemId => {
@@ -143,12 +139,6 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
                     <div className="text-[8px] font-secondary text-gray-50 ">
                       국내택배
                     </div>
-                    <button
-                      className="text-label-xs font-secondary color-gray-90"
-                      onClick={() => handleRemoveItem(item.id)} // 상품 삭제
-                    >
-                      삭제
-                    </button>
                   </div>
                   <div className="text-content-xs mt-[9px]">{item.title}</div>
                   <div className="text-content-xs mt-[2px]">
