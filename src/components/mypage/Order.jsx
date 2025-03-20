@@ -18,7 +18,7 @@ const OrderList = () => {
   // completePurchase가 없으면 메시지 출력
   if (!completePurchase) {
     return (
-      <div className="p-[20px] text-[12px]">
+      <div className="flex justify-center p-[20px] text-[12px]">
         구매완료된 내역이 없습니다.
       </div>
     );
