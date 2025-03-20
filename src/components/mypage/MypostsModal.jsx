@@ -23,13 +23,6 @@ const MypostsModal = ({ productId, productName, category }) => {
     // 실제 사용할 카테고리 값 (props > redux store)
     const effectiveCategory = category || currentCategory;
 
-    console.log('MypostsModal 렌더링:', {
-        productId,
-        productName,
-        propsCategory: category,
-        storeCategory: currentCategory,
-        effectiveCategory,
-    });
 
     // 리뷰 목록 가져오기
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
@@ -136,11 +129,6 @@ const MypostsModal = ({ productId, productName, category }) => {
             images: imageFile ? [imageFile] : [], // 이미지가 있으면 배열에 추가
         };
 
-        console.log('리뷰 데이터 전송:', {
-            productId,
-            reviewData,
-            category: effectiveCategory,
-        });
 
         // Redux 액션 디스패치하여 리뷰 추가
         dispatch(

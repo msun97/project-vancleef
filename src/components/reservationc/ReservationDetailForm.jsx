@@ -35,7 +35,6 @@ const ReservationDetailForm = () => {
   const handleTimeChange = time => {
     setTimeValue(time);
     dispatch(reservationActions.setReservationDetails({ time }));
-    console.log('Time selected:', time); // Debug log
   };
 
   // 언어 변경 핸들러 - Redux에만 저장

@@ -6,17 +6,19 @@ import { authActions } from '../../store/modules/authSlice';
 const ProductDescription = ({ productdata }) => {
   const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector(state => state.authR.user);
+
+  const authed = useSelector(state => state.authR.authed); // authed 값 가져오기
 
   const toggleLike = () => {
+    if (!authed) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
     setIsLiked(!isLiked);
 
     if (!isLiked) {
-      if (user) {
-        dispatch(authActions.addfavorites(productdata));
-      } else {
-        console.log('로그인이 필요합니다.');
-      }
+      dispatch(authActions.addfavorites(productdata));
     } else {
       dispatch(authActions.removeFavorite(productdata));
     }
@@ -25,7 +27,7 @@ const ProductDescription = ({ productdata }) => {
   return (
     <div>
       <div>
-        <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2 ">
+        <strong className="pt-3.5 font-secondary flex items-center justify-between text-[22px] break-all text-[#282828] tracking-[-1.1px] font-medium border-b-[1px] border-[#d2d2d2] pb-2">
           {productdata.title}
           <button
             onClick={e => {

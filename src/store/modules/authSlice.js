@@ -279,6 +279,10 @@ export const authSlice = createSlice({
             localStorage.setItem('currentUser', JSON.stringify(state.user));
             localStorage.setItem('users', JSON.stringify(state.joinData));
         },
+        updateJoinData: (state, action) => {
+            state.joinData = action.payload;
+            localStorage.setItem('users', JSON.stringify(state.joinData));
+        },
         updateUserInfo: (state, action) => {
             if (state.user) {
                 // 모든 필드 업데이트

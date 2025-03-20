@@ -29,11 +29,6 @@ const ProductInquiry = () => {
         (item) => item.productid === parseInt(productId) || item.productid === productId
     );
 
-    console.log('카테고리:', category);
-    console.log('상품 ID:', productId);
-    console.log('찾은 카테고리 데이터:', categoryData);
-    console.log('찾은 상품 정보:', productInfo);
-
     const isLoggedIn = useSelector((state) => state.authR?.authed);
 
     // 로컬스토리지에서 currentUser 확인
@@ -45,13 +40,11 @@ const ProductInquiry = () => {
         } else {
             // 로컬스토리지의 currentUser 확인
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            console.log('현재 로그인한 사용자:', currentUser);
 
             // myInquiries 초기화 (아직 없다면)
             if (currentUser && !currentUser.myInquiries) {
                 currentUser.myInquiries = [];
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                console.log('사용자에 myInquiries 초기화');
             }
         }
     }, [isLoggedIn, navigate]);
@@ -149,10 +142,6 @@ const ProductInquiry = () => {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         const currentUserId = currentUser ? currentUser.id : null;
 
-        console.log('제출 시 사용자 ID:', currentUserId || userId);
-        console.log('제출 시 카테고리:', category);
-        console.log('제출 시 상품 ID:', productId);
-
         // 디스패치하는 데이터
         const inquiryData = {
             ...userInquiry,
@@ -163,8 +152,6 @@ const ProductInquiry = () => {
             category: category, // 카테고리 추가
             productId: productId, // 상품 ID 추가
         };
-
-        console.log('디스패치하는 데이터:', inquiryData);
 
         // 리덕스 액션 디스패치하여 문의 추가
         dispatch(productInquiryActions.addInquiry(inquiryData));

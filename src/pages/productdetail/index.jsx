@@ -17,8 +17,8 @@ import RecommendProductSlide from '../../components/product/RecommendProductSlid
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
-import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import { viewedProductsActions } from '@/store/modules/viewedProductsSlice';
+import { authActions } from '@/store/modules/authSlice';
 
 function ProductDetailPage() {
   const [modalState, setModalState] = useState({
@@ -39,23 +39,12 @@ function ProductDetailPage() {
   };
 
   const [isLiked, setIsLiked] = useState(false);
-  const toggleLike = () => {
-    setIsLiked(!isLiked);
 
-    if (!isLiked) {
-      if (user) {
-        dispatch(authActions.addfavorites(productdata));
-      } else {
-        console.log('로그인이 필요합니다.');
-      }
-    } else {
-      dispatch(authActions.removeFavorite(productdata));
-    }
-  };
   const dispatch = useDispatch();
 
   const { category, id } = useParams();
   const productdata = useSelector(state => state.productR.productdata);
+  const authed = useSelector(state => state.authR.authed);
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -118,7 +107,18 @@ function ProductDetailPage() {
     }
     return [];
   });
-
+  const toggleLike = () => {
+    if (!authed) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+    setIsLiked(!isLiked);
+    if (!isLiked) {
+      dispatch(authActions.addfavorites(product));
+    } else {
+      dispatch(authActions.removeFavorite(product));
+    }
+  };
   return (
     <div id="contents" className="w-full h-full ">
       <div className="w-full pb-[80px]"></div>
