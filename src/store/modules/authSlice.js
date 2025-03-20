@@ -202,15 +202,48 @@ export const authSlice = createSlice({
             if (!state.user.favorites) {
                 state.user.favorites = [];
             }
+
             const exists = state.user.favorites.find((item) => item.productid === action.payload.productid);
             if (!exists) {
+                // currentUser(user)에 추가
                 state.user.favorites.push(action.payload);
+
+                // users 배열에도 업데이트
+                state.joinData = state.joinData.map((item) =>
+                    item.userid === state.user.userid
+                        ? {
+                              ...item,
+                              favorites: item.favorites ? [...item.favorites, action.payload] : [action.payload],
+                          }
+                        : item
+                );
+
+                // localStorage 업데이트
                 localStorage.setItem('currentUser', JSON.stringify(state.user));
+                localStorage.setItem('users', JSON.stringify(state.joinData));
             }
         },
         removeFavorite: (state, action) => {
             if (!state.user || !state.user.favorites) return;
+
+            // currentUser에서 제거
             state.user.favorites = state.user.favorites.filter((item) => item.productid !== action.payload.productid);
+
+            // users 배열에서도 제거
+            state.joinData = state.joinData.map((item) =>
+                item.userid === state.user.userid
+                    ? {
+                          ...item,
+                          favorites: item.favorites
+                              ? item.favorites.filter((favItem) => favItem.productid !== action.payload.productid)
+                              : [],
+                      }
+                    : item
+            );
+
+            // localStorage 업데이트
+            localStorage.setItem('currentUser', JSON.stringify(state.user));
+            localStorage.setItem('users', JSON.stringify(state.joinData));
         },
         // addreviews
         addreviews: (state, action) => {
