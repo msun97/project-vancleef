@@ -86,7 +86,6 @@ const CCInquiryForm = () => {
     }
   };
 
-  console.log(tag);
   return (
     <div className={`w-full mt-[62px]`}>
       <div className="title w-full border-b py-[14px]">
