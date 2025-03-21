@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/username/repository?style=social)](https://github.com/username/repository/stargazers)
 
-![프로젝트 로고나 대표 이미지](https://github.com/user-attachments/assets/fb3c7d67-df96-41ee-b72f-cc7b0b775a6d)
+![프로젝트 로고나 대표 이미지](https://github.com/msun97/project-vancleef/blob/main/public/images/readme.png?raw=true)
 
 ## 📝 프로젝트 소개
 
