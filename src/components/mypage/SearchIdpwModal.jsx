@@ -1,3 +1,4 @@
+import { closeModal } from '@/store/modules/modalSlice';
 import React, { useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch, useSelector } from 'react-redux';

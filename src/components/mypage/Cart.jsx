@@ -10,6 +10,15 @@ const MypageCartlist = ({ cart, setSelectedItem }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+	const handleClick = () => {
+		if (selectedItems.length > 0) {
+			dispatch(purchaseActions.setItem(selectedItems));
+			navigate('/purchase');
+		} else {
+			alert('구매하실 상품을 선택하세요');
+		}
+	};
+
   // cart 상태 변경 시 localStorage 업데이트
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));

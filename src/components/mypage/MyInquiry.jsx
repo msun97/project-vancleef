@@ -74,7 +74,9 @@ const MyInquiry = () => {
                     ))}
                 </div>
             ) : (
-                <div className='text-center text-gray-500 py-8 border-gray-200'>작성한 문의가 없습니다.</div>
+                <div className='text-[12px] text-center text-gray-500 py-8 border-gray-200'>
+                    작성한 문의가 없습니다.
+                </div>
             )}
         </div>
     );

@@ -93,7 +93,7 @@ const CCInquiryForm = () => {
       </div>
       <form className="py-10 border-b border-b-gray-30">
         <ul className="list-disc flex flex-col gap-[26px]">
-          <li className="list-disc flex gap-[50px] items-center">
+          <li className="list-disc flex  items-center">
             <div className="title flex gap-[10px] items-center w-[128px]">
               {' '}
               <div className="square w-1 h-1 bg-gray-90" />
