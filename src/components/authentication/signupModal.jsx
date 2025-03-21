@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Input from '@/components/input';
 import Button from '@/components/button';
 import CheckBox from '@/components/checkbox';
@@ -11,6 +11,8 @@ import AgreementModal from '@/components/mypage/AgreementModal';
 function SignupFull() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    // authSlice의 joinData에서 사용자 목록을 가져옴
+    const joinData = useSelector((state) => state.authR.joinData);
 
     // 회원가입 폼 상태 관리
     const [username, setUsername] = useState(''); // 이름
@@ -19,14 +21,13 @@ function SignupFull() {
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [email, setEmail] = useState('');
     const [birth, setBirth] = useState('');
-    // 전화번호 초기값을 "010-"으로 지정
-    const [phone, setPhone] = useState('010-');
-    // SMS 인증번호 상태
-    const [smsCode, setSmsCode] = useState('');
-    // 동의 여부 상태 (boolean)
-    const [isAgreed, setIsAgreed] = useState(false);
-    // 성별 상태 관리 (단일 선택): 'none', 'male', 'female' 중 하나
-    const [gender, setGender] = useState('');
+    const [phone, setPhone] = useState('010-'); // 전화번호 초기값
+    const [smsCode, setSmsCode] = useState(''); // SMS 인증번호
+    const [isAgreed, setIsAgreed] = useState(false); // 동의 여부
+    const [gender, setGender] = useState(''); // 성별 상태 관리
+
+    // 아이디 중복확인 여부 상태
+    const [isIdChecked, setIsIdChecked] = useState(false);
 
     const handleBirthChange = (e) => {
         let value = e.target.value;
@@ -42,7 +43,7 @@ function SignupFull() {
         setBirth(formatted);
     };
 
-    // 전화번호 자동 하이픈 추가 함수 (010- 접두사 유지)
+    // 전화번호 자동 하이픈 추가 (010- 접두사 유지)
     const handlePhoneChange = (e) => {
         let value = e.target.value;
         if (!value.startsWith('010-')) {
@@ -63,7 +64,7 @@ function SignupFull() {
         setPhone(formatted);
     };
 
-    // 인증하기 버튼 클릭 시 4자리 랜덤 SMS 인증번호 생성
+    // SMS 인증번호 생성 (전화번호 검증)
     const generateSmsCode = () => {
         const digits = phone.replace(/-/g, '');
         if (digits.length !== 11) {
@@ -74,9 +75,27 @@ function SignupFull() {
         setSmsCode(randomCode);
     };
 
-    // SMS 인증번호 확인 버튼 클릭 시
+    // SMS 인증번호 확인
     const handleSmsConfirm = () => {
         alert('인증 확인되었습니다.');
+    };
+
+    // 아이디 중복확인: auth.joinData에서 동일 아이디가 있는지 확인
+    const handleIdCheck = () => {
+        if (!userId) {
+            alert('아이디를 입력해주세요.');
+            return;
+        }
+        const exists = joinData.find(
+            (user) => user.userid.toLowerCase() === userId.toLowerCase().trim()
+        );
+        if (exists) {
+            alert('이미 존재하는 아이디입니다.');
+            setIsIdChecked(false);
+        } else {
+            alert('사용 가능한 아이디입니다.');
+            setIsIdChecked(true);
+        }
     };
 
     // 회원가입 제출 핸들러
@@ -92,6 +111,16 @@ function SignupFull() {
         }
         if (!username || !userId || !password || !phone || phone === '010-') {
             alert('필수 입력 값을 모두 채워주세요.');
+            return;
+        }
+        if (!isIdChecked) {
+            alert('아이디 중복확인을 해주세요.');
+            return;
+        }
+        // 생년월일 숫자 자릿수 체크 (YYYYMMDD: 8자리여야 함)
+        const birthDigits = birth.replace(/\D/g, '');
+        if (birthDigits.length !== 8) {
+            alert('정확한 생년월일(YYYYMMDD)을 입력해 주세요.');
             return;
         }
 
@@ -135,12 +164,24 @@ function SignupFull() {
                         </div>
                         <div className='flex items-center mb-4'>
                             <span className='w-[230px]'>아이디 *</span>
-                            <Input
-                                className='w-[600px] h-[55px] text-[#9C9C9C] text-center font-bold'
-                                placeholder='아이디를 입력해 주세요.'
-                                value={userId}
-                                onChange={(e) => setUserId(e.target.value)}
-                            />
+                            <div className='flex relative'>
+                                <Input
+                                    className='w-[385px] h-[55px] text-[#9C9C9C] text-center font-bold'
+                                    placeholder='아이디를 입력해 주세요.'
+                                    value={userId}
+                                    onChange={(e) => {
+                                        setUserId(e.target.value);
+                                        setIsIdChecked(false); // 아이디 변경 시 중복확인 상태 초기화
+                                    }}
+                                />
+                                <button
+                                    type='button'                            
+                                    className='absolute right-0 w-[50px] h-[55px] text-[14px] underline'
+                                    onClick={handleIdCheck}
+                                >
+                                    중복확인
+                                </button>
+                            </div>
                         </div>
                         <div className='flex items-center mb-4'>
                             <span className='w-[230px]'>비밀번호 *</span>
