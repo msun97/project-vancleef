@@ -171,10 +171,37 @@ export const authSlice = createSlice({
                 state.user.username = action.payload;
             }
         },
+        // Replace the updatePassword function in your authSlice.js with this improved version
         updatePassword: (state, action) => {
-            const { currentPassword, newPassword } = action.payload;
+            const { currentPassword, newPassword, userId } = action.payload;
+
             if (state.user && state.user.password === currentPassword) {
+                // Update password in state
                 state.user.password = newPassword;
+
+                // Update user ID if it has changed
+                if (userId && userId !== state.user.userid) {
+                    state.user.userid = userId;
+                }
+
+                // Update current user in localStorage
+                localStorage.setItem('currentUser', JSON.stringify(state.user));
+
+                // Update user in joinData state
+                state.joinData = state.joinData.map((user) =>
+                    user.userid === state.user.userid || (userId && user.userid === state.user.userid)
+                        ? {
+                              ...user,
+                              password: newPassword,
+                              userid: userId || user.userid,
+                          }
+                        : user
+                );
+
+                // Update users in localStorage
+                localStorage.setItem('users', JSON.stringify(state.joinData));
+
+                console.log('사용자 정보가 성공적으로 변경되었습니다.');
             } else {
                 console.error('현재 비밀번호가 일치하지 않습니다.');
             }
@@ -202,15 +229,48 @@ export const authSlice = createSlice({
             if (!state.user.favorites) {
                 state.user.favorites = [];
             }
+
             const exists = state.user.favorites.find((item) => item.productid === action.payload.productid);
             if (!exists) {
+                // currentUser(user)에 추가
                 state.user.favorites.push(action.payload);
+
+                // users 배열에도 업데이트
+                state.joinData = state.joinData.map((item) =>
+                    item.userid === state.user.userid
+                        ? {
+                              ...item,
+                              favorites: item.favorites ? [...item.favorites, action.payload] : [action.payload],
+                          }
+                        : item
+                );
+
+                // localStorage 업데이트
                 localStorage.setItem('currentUser', JSON.stringify(state.user));
+                localStorage.setItem('users', JSON.stringify(state.joinData));
             }
         },
         removeFavorite: (state, action) => {
             if (!state.user || !state.user.favorites) return;
+
+            // currentUser에서 제거
             state.user.favorites = state.user.favorites.filter((item) => item.productid !== action.payload.productid);
+
+            // users 배열에서도 제거
+            state.joinData = state.joinData.map((item) =>
+                item.userid === state.user.userid
+                    ? {
+                          ...item,
+                          favorites: item.favorites
+                              ? item.favorites.filter((favItem) => favItem.productid !== action.payload.productid)
+                              : [],
+                      }
+                    : item
+            );
+
+            // localStorage 업데이트
+            localStorage.setItem('currentUser', JSON.stringify(state.user));
+            localStorage.setItem('users', JSON.stringify(state.joinData));
         },
         // addreviews
         addreviews: (state, action) => {
@@ -277,6 +337,10 @@ export const authSlice = createSlice({
                 item.userid === state.user.userid ? { ...item, completePurchase: action.payload } : item
             );
             localStorage.setItem('currentUser', JSON.stringify(state.user));
+            localStorage.setItem('users', JSON.stringify(state.joinData));
+        },
+        updateJoinData: (state, action) => {
+            state.joinData = action.payload;
             localStorage.setItem('users', JSON.stringify(state.joinData));
         },
         updateUserInfo: (state, action) => {

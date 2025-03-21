@@ -21,15 +21,6 @@ const Order = () => {
 <Line/>
 			<div className="py-[30px] ">
 			<OrderList/>
-			<OrderList/>
-			<OrderList/>
-			<OrderList/>
-			<OrderList/>
-			<OrderList/>
-			<OrderList/>
-			<OrderList/>
-			<OrderList/>
-			<OrderList/>
 			<h1>{locationInfo?.address}</h1>
 <p>{locationInfo?.boutique}</p>
 

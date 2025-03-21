@@ -114,25 +114,6 @@ const Section5 = ({ isLoading }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-4 bg-gray-0 w-[48px] h-[320px] rounded-[40px] items-center justify-center">
-        {image.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              if (window.handleSwiperPaginationClick) {
-                window.handleSwiperPaginationClick(index);
-              }
-            }}
-            className={`transition-all duration-300 ${
-              activeIndex === index
-                ? 'bg-gray-90 w-[18px] h-[60px] rounded-full'
-                : 'bg-gray-30 w-[15px] h-[15px] rounded-full'
-            }`}
-            aria-label={`슬라이드 ${index + 1}로 이동`}
-          />
-        ))}
-      </div>
     </div>
   );
 };

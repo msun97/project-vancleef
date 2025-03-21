@@ -153,7 +153,7 @@ export const reviewSlice = createSlice({
             }
 
             // 리뷰 중복 검사 - 각 상품에 대해 사용자는 하나의 리뷰만 가능하도록
-            const uniqueReviews = [];
+            // const uniqueReviews = [];
             const productReviewMap = new Map(); // 상품 ID별 최신 리뷰 저장용 Map
 
             // 모든 리뷰를 순회하며 상품 ID별로 최신 리뷰만 유지

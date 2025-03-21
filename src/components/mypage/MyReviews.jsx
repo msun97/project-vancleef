@@ -9,7 +9,7 @@ import Button from '../button';
 const MyReviews = () => {
     const dispatch = useDispatch(); // 주석 해제
     const isOpen = useSelector((state) => state.modalR.isOpen); // 주석 해제
-    const myReviews = useSelector((state) => state.authR.user?.myreviews || []);
+    const myReviews = useSelector((state) => state.reviewR.myreviews || []); // 변경된 부분: Redux state에서 myreviews를 가져옴
 
     // 선택된 상품 정보를 저장할 상태 추가
     const [selectedProduct, setSelectedProduct] = useState({
@@ -106,7 +106,6 @@ const MyReviews = () => {
 
     return (
         <div>
-            <h2 className='text-xl font-bold mb-4'>내 리뷰</h2>
             {myReviews.length > 0 ? (
                 <ul>
                     {myReviews.map((review) => {
@@ -157,7 +156,7 @@ const MyReviews = () => {
                     })}
                 </ul>
             ) : (
-                <p className='text-center text-gray-500 py-8 border-gray-200'>작성한 리뷰가 없습니다.</p>
+                <p className='text-center text-gray-500 py-8 border-gray-200 text-[12px]'>작성한 리뷰가 없습니다.</p>
             )}
 
             {isOpen && (

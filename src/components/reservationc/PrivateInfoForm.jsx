@@ -22,6 +22,7 @@ const PrivateInfoForm = () => {
     const [privacyAgreement, setPrivacyAgreement] = useState(false);
     const [privacyDisagree, setPrivacyDisagree] = useState(false);
     const [marketingAgreement, setMarketingAgreement] = useState(false);
+    const [marketingDisagree, setMarketingDisagree] = useState(false); // 마케팅 비동의 상태 추가
     const [ageVerification, setAgeVerification] = useState(false);
 
     // 완료 페이지 상태 추가
@@ -65,6 +66,17 @@ const PrivateInfoForm = () => {
     // 마케팅 동의 핸들러
     const handleMarketingAgreementChange = (checked) => {
         setMarketingAgreement(checked);
+        if (checked) {
+            setMarketingDisagree(false);
+        }
+    };
+
+    // 마케팅 비동의 핸들러 추가
+    const handleMarketingDisagreeChange = (checked) => {
+        setMarketingDisagree(checked);
+        if (checked) {
+            setMarketingAgreement(false);
+        }
     };
 
     // 연령 확인 핸들러
@@ -179,7 +191,7 @@ const PrivateInfoForm = () => {
                             checked={gender === '남성'}
                             onChange={handleMaleChange}
                         />
-                        <span>남성</span>
+                        <label htmlFor='gender-male'>남성</label>
                     </div>
                     <div className='flex items-center gap-[7px]'>
                         <CheckBox
@@ -188,7 +200,7 @@ const PrivateInfoForm = () => {
                             checked={gender === '여성'}
                             onChange={handleFemaleChange}
                         />
-                        <span>여성</span>
+                        <label htmlFor='gender-female'>여성</label>
                     </div>
                 </div>
                 <p>성(국문) *</p>
@@ -271,7 +283,7 @@ const PrivateInfoForm = () => {
                             checked={privacyAgreement}
                             onChange={handlePrivacyAgreementChange}
                         />
-                        <span>동의 *</span>
+                        <label htmlFor='privacy-agree'>동의 *</label>
                     </div>
                     <div className='flex items-center gap-[7px]'>
                         <CheckBox
@@ -280,19 +292,30 @@ const PrivateInfoForm = () => {
                             checked={privacyDisagree}
                             onChange={handlePrivacyDisagreeChange}
                         />
-                        <span>동의 안함</span>
+                        <label htmlFor='privacy-disagree'>동의 안함</label>
                     </div>
                 </div>
                 <button className='text-center text-[15px] font-normal pb-[10px]'>(전문보기)</button>
                 <p>뉴스레터 및 마케팅 정보 전송을 위한 개인정보 수집 및 이용동의 (선택)</p>
-                <div className='flex items-center gap-[7px]'>
-                    <CheckBox
-                        id='marketing-agree'
-                        className='w-[25px] h-[25px]'
-                        checked={marketingAgreement}
-                        onChange={handleMarketingAgreementChange}
-                    />
-                    <span>동의</span>
+                <div className='flex items-center gap-8'>
+                    <div className='flex items-center gap-[7px]'>
+                        <CheckBox
+                            id='marketing-agree'
+                            className='w-[25px] h-[25px]'
+                            checked={marketingAgreement}
+                            onChange={handleMarketingAgreementChange}
+                        />
+                        <label htmlFor='marketing-agree'>동의</label>
+                    </div>
+                    <div className='flex items-center gap-[7px]'>
+                        <CheckBox
+                            id='marketing-disagree'
+                            className='w-[25px] h-[25px]'
+                            checked={marketingDisagree}
+                            onChange={handleMarketingDisagreeChange}
+                        />
+                        <label htmlFor='marketing-disagree'>동의 안함</label>
+                    </div>
                 </div>
                 <button className='text-center text-[15px] font-normal pb-[10px]'>(전문보기)</button>
                 <p>만 14세 미만의 아동의 경우 서비스의 이용이 제한됩니다.</p>
@@ -304,7 +327,7 @@ const PrivateInfoForm = () => {
                             checked={ageVerification}
                             onChange={handleAgeVerificationChange}
                         />
-                        <span>만 14세 이상입니다. *(필수)</span>
+                        <label htmlFor='age-verification'>만 14세 이상입니다. *(필수)</label>
                     </div>
                 </div>
                 <p className='font-normal'>
