@@ -124,6 +124,7 @@ const MyInquiry = () => {
             ) : (
                 <div className='text-center text-gray-500 py-8 border-gray-200'>
                     {hasLoaded ? '작성한 문의가 없습니다.' : '문의 내역을 불러오는 중...'}
+
                 </div>
             )}
         </div>
