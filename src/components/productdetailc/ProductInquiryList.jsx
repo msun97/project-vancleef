@@ -80,7 +80,7 @@ const ProductInquiryList = ({ category, id }) => {
         );
     }, [isLoggedIn, userId, category, id, allInquiries]);
 
-    // 문의하기 버튼 클릭 이벤트
+    // 문의하기 버튼 클릭 이벤트 - 새 경로 구조로 이동
     const toInquiry = () => {
         if (!isLoggedIn) {
             alert('로그인이 필요한 서비스입니다.');
@@ -93,15 +93,8 @@ const ProductInquiryList = ({ category, id }) => {
             return;
         }
 
-        dispatch(
-            productInquiryActions.handleItem({
-                category: category,
-                id: id,
-            })
-        );
-
-        // 쿼리 파라미터로 category와 id 전달
-        navigate(`/productinquiry?category=${category}&id=${id}`);
+        // 새 URL 구조로 변경 (/productinquiry/:category/:id)
+        navigate(`/productinquiry/${category}/${id}`);
     };
 
     return (

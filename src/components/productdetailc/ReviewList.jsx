@@ -55,44 +55,45 @@ const ReviewList = ({ category, id }) => {
         }
     }, [productID]);
 
-    // 로컬 스토리지에서 직접 리뷰 데이터 가져오기
-    useEffect(() => {
-        const loadReviews = () => {
-            try {
-                // 로컬스토리지에서 reviews 데이터 가져오기
-                const storedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+    // 리뷰 데이터 로드 함수 - 여러 곳에서 재사용
+    const loadReviews = () => {
+        try {
+            // 로컬스토리지에서 reviews 데이터 가져오기
+            const storedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
 
-                // 현재 productID와 일치하는 리뷰만 필터링
-                const filteredReviews = storedReviews.filter((review) => {
-                    return String(review.productId) === String(productID);
-                });
+            // 현재 productID와 일치하는 리뷰만 필터링
+            const filteredReviews = storedReviews.filter((review) => {
+                return String(review.productId) === String(productID);
+            });
 
-                // 정렬 적용
-                let sortedReviews = [...filteredReviews];
-                if (sortBy === 'latest') {
-                    sortedReviews.sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
-                } else if (sortBy === 'best') {
-                    sortedReviews.sort((a, b) => (b.helpfulCount || 0) - (a.helpfulCount || 0));
-                }
-
-                setLocalReviews(sortedReviews);
-
-                // 페이지네이션 데이터 업데이트
-                dispatch(
-                    paginationActions.addData({
-                        pageId: 'reviewList',
-                        data: sortedReviews,
-                    })
-                );
-
-                // Redux 상태 업데이트
-                dispatch(reviewActions.setCurrentProduct({ category, productID }));
-            } catch (error) {
-                console.error('로컬 스토리지에서 리뷰 로드 중 오류 발생:', error);
-                setLocalReviews([]);
+            // 정렬 적용
+            let sortedReviews = [...filteredReviews];
+            if (sortBy === 'latest') {
+                sortedReviews.sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
+            } else if (sortBy === 'best') {
+                sortedReviews.sort((a, b) => (b.helpfulCount || 0) - (a.helpfulCount || 0));
             }
-        };
 
+            setLocalReviews(sortedReviews);
+
+            // 페이지네이션 데이터 업데이트
+            dispatch(
+                paginationActions.addData({
+                    pageId: 'reviewList',
+                    data: sortedReviews,
+                })
+            );
+
+            // Redux 상태 업데이트
+            dispatch(reviewActions.setCurrentProduct(productID));
+        } catch (error) {
+            console.error('로컬 스토리지에서 리뷰 로드 중 오류 발생:', error);
+            setLocalReviews([]);
+        }
+    };
+
+    // 로컬 스토리지에서 리뷰 데이터 가져오기
+    useEffect(() => {
         if (productID) {
             loadReviews();
         }
@@ -100,37 +101,8 @@ const ReviewList = ({ category, id }) => {
 
     // 리뷰 등록 이벤트 리스너 추가
     useEffect(() => {
-        // 리뷰 추가 이벤트 리스너 등록
         const handleReviewAdded = () => {
-            try {
-                // 로컬스토리지에서 reviews 데이터 가져오기
-                const storedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
-
-                // 현재 productID와 일치하는 리뷰만 필터링
-                const filteredReviews = storedReviews.filter((review) => {
-                    return String(review.productId) === String(productID);
-                });
-
-                // 정렬 적용
-                let sortedReviews = [...filteredReviews];
-                if (sortBy === 'latest') {
-                    sortedReviews.sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
-                } else if (sortBy === 'best') {
-                    sortedReviews.sort((a, b) => (b.helpfulCount || 0) - (a.helpfulCount || 0));
-                }
-
-                setLocalReviews(sortedReviews);
-
-                // 페이지네이션 데이터 업데이트
-                dispatch(
-                    paginationActions.addData({
-                        pageId: 'reviewList',
-                        data: sortedReviews,
-                    })
-                );
-            } catch (error) {
-                console.error('리뷰 추가 후 목록 업데이트 중 오류 발생:', error);
-            }
+            loadReviews(); // 리뷰 추가 후 데이터 다시 로드
         };
 
         // 커스텀 이벤트 리스너 등록
@@ -140,7 +112,7 @@ const ReviewList = ({ category, id }) => {
         return () => {
             window.removeEventListener('reviewAdded', handleReviewAdded);
         };
-    }, [dispatch, productID, sortBy]);
+    }, [productID, sortBy]); // dispatch는 의존성에서 제외
 
     // 컴포넌트 마운트 시 페이지네이션 초기화
     useEffect(() => {
@@ -177,7 +149,10 @@ const ReviewList = ({ category, id }) => {
             });
 
             if (hasReview) {
-                alert('이미 이 상품에 대한 리뷰를 작성하셨습니다. 한 상품에 하나의 리뷰만 작성할 수 있습니다.');
+                // 기존 리뷰가 있는 경우 알림 후 모달 열기 (수정 모드)
+                if (confirm('이미 이 상품에 대한 리뷰가 있습니다. 리뷰를 수정하시겠습니까?')) {
+                    dispatch(openModal());
+                }
                 return;
             }
         }
@@ -293,7 +268,7 @@ const ReviewList = ({ category, id }) => {
                 {displayedReviews.length > 0 ? (
                     displayedReviews.map((review) => (
                         <ReviewItem
-                            key={review.id || Math.random()}
+                            key={review.id + '-' + review.date} // 키 값 개선
                             review={review}
                             productId={productID}
                             userId={userId}

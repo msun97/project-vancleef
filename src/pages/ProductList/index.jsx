@@ -3,6 +3,7 @@ import ProductListItem from '../../components/product/ProductListItem';
 import ProductListPageNav from '../../components/product/ProductListPageNav';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import ToTopBtn from '@/components/totopbtn/ToTopBtn';
 
 const ProductListPage = () => {
     const dispatch = useDispatch();
@@ -226,19 +227,20 @@ const ProductListPage = () => {
 
     return (
         <div className='w-full h-auto relative bg-fixed bg-[url("/images/productListPageBg.png")] bg-no-repeat bg-top bg-cover'>
-            <div className="w-full h-full pb-[100px]">
-                <div className="w-full h-full p-330 pb-[180px] flex text-white pt-[219px]">
+            <ToTopBtn />
+            <div className='w-full h-full pb-[100px]'>
+                <div className='w-full h-full p-330 pb-[180px] flex text-white pt-[219px]'>
                     <ProductListPageNav />
-                    <div className="pb-12 w-[80%] font-primary">
-                        <p className="pb-5 text-[45px] min-h-[85px] font-secondary">{getCategoryDisplayName()}</p>
+                    <div className='pb-12 w-[80%] font-primary'>
+                        <p className='pb-5 text-[45px] min-h-[85px] font-secondary'>{getCategoryDisplayName()}</p>
                         <div>
-                            <div className="mb-[25px] relative">
+                            <div className='mb-[25px] relative'>
                                 <div onClick={handleOpenClick}>
-                                    <span className="w-[128px] font-bold inline-block relative font-primary tracking-wider">
+                                    <span className='w-[128px] font-bold inline-block relative font-primary tracking-wider'>
                                         FILTER
                                         <img
-                                            src="https://pbcommerce.cdn-nhncommerce.com/data/skin/front/m2021_VnA/img/icon/goods_icon/filter.png"
-                                            className="absolute top-0 right-[50px]"
+                                            src='https://pbcommerce.cdn-nhncommerce.com/data/skin/front/m2021_VnA/img/icon/goods_icon/filter.png'
+                                            className='absolute top-0 right-[50px]'
                                         />
                                     </span>
                                     {filterOpen && (
@@ -248,20 +250,20 @@ const ProductListPage = () => {
                                             }`}
                                         >
                                             <li
-                                                className="h-[33px] radio-label"
+                                                className='h-[33px] radio-label'
                                                 onClick={() => handleFilterSelect('sort3')}
                                             >
                                                 <input
-                                                    type="radio"
-                                                    id="sort3"
-                                                    name="sort"
-                                                    value="sort3"
-                                                    className="radio-custom "
+                                                    type='radio'
+                                                    id='sort3'
+                                                    name='sort'
+                                                    value='sort3'
+                                                    className='radio-custom '
                                                     checked={selectedFilter === 'sort3'}
                                                     onChange={() => handleFilterSelect('sort3')}
                                                 />
                                                 <label
-                                                    htmlFor="sort3"
+                                                    htmlFor='sort3'
                                                     className={`px-2.5 radio-custom-indicator cursor-pointer ${
                                                         selectedFilter === 'sort3' ? 'font-bold' : ''
                                                     }`}
@@ -270,20 +272,20 @@ const ProductListPage = () => {
                                                 </label>
                                             </li>
                                             <li
-                                                className="h-[33px] radio-label"
+                                                className='h-[33px] radio-label'
                                                 onClick={() => handleFilterSelect('sort4')}
                                             >
                                                 <input
-                                                    type="radio"
-                                                    id="sort4"
-                                                    name="sort"
-                                                    value="sort4"
-                                                    className="radio-custom "
+                                                    type='radio'
+                                                    id='sort4'
+                                                    name='sort'
+                                                    value='sort4'
+                                                    className='radio-custom '
                                                     checked={selectedFilter === 'sort4'}
                                                     onChange={() => handleFilterSelect('sort4')}
                                                 />
                                                 <label
-                                                    htmlFor="sort4"
+                                                    htmlFor='sort4'
                                                     className={`px-2.5 radio-custom-indicator cursor-pointer ${
                                                         selectedFilter === 'sort4' ? 'font-bold' : ''
                                                     }`}
@@ -296,24 +298,24 @@ const ProductListPage = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className="productList pb-[30px]">
-                                    <div className="relative w-full">
-                                        <div className="flex" style={{ gap: '3%' }}>
+                                <div className='productList pb-[30px]'>
+                                    <div className='relative w-full'>
+                                        <div className='flex' style={{ gap: '3%' }}>
                                             {/* 왼쪽 열 */}
                                             <ul
-                                                className="rellax relative w-full pt-[20px] pb-[28px]"
-                                                data-rellax-speed="-3"
+                                                className='rellax relative w-full pt-[20px] pb-[28px]'
+                                                data-rellax-speed='-3'
                                             >
                                                 {leftColumnProducts.length > 0 ? (
                                                     leftColumnProducts.map((product, index) => (
                                                         <ProductListItem
-                                                            className="product-item transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px]"
+                                                            className='product-item transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px]'
                                                             key={`${product.productid}-${index}`}
                                                             productdata={product}
                                                         />
                                                     ))
                                                 ) : (
-                                                    <div className="text-center text-white text-xl mt-10">
+                                                    <div className='text-center text-white text-xl mt-10'>
                                                         해당 카테고리에 제품이 없습니다.
                                                     </div>
                                                 )}
@@ -321,13 +323,13 @@ const ProductListPage = () => {
 
                                             {/* 오른쪽 열 */}
                                             <ul
-                                                className="rellax relative w-full pt-[100px] pb-[28px]"
-                                                data-rellax-speed="-3"
+                                                className='rellax relative w-full pt-[100px] pb-[28px]'
+                                                data-rellax-speed='-3'
                                             >
                                                 {rightColumnProducts.length > 0 ? (
                                                     rightColumnProducts.map((product, index) => (
                                                         <ProductListItem
-                                                            className="product-item transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px] "
+                                                            className='product-item transition-all duration-1000 ease-in-out top-0 bg-white p-[25px_30px_33px] mt-[35px] min-h-[360px] '
                                                             key={`${product.productid}-${index}`}
                                                             productdata={product}
                                                         />
