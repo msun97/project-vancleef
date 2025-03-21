@@ -85,7 +85,7 @@ function LoginFull() {
               onChange={e => setPassword(e.target.value)}
             />
             {loginMessage && (
-              <div className="absolute font-bold left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-400">{loginMessage}</div>
+              <div className="absolute font-bold left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[#EB627C]">{loginMessage}</div>
             )}
             <Button
               variant="primary"
