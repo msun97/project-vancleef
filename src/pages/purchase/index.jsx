@@ -18,6 +18,7 @@ const Purchase = () => {
   const defaultNext = user ? user.isPurchaseNext : false;
   const [isNext, setIsNext] = useState(defaultNext);
   const [purchaseUser, setpurchaseUser] = useState(user ? user : {});
+  const emailArray = purchaseUser.email.split('@');
   const changeInput = e => {
     const { name, value } = e.target;
     setpurchaseUser({
@@ -26,7 +27,7 @@ const Purchase = () => {
     });
   };
 
-  const [emailOption, setEmailOption] = useState('');
+  const [emailOption, setEmailOption] = useState(emailArray[1]);
   const handleEmailOption = option => {
     if (option === '직접 입력') {
       setEmailOption('');
@@ -324,13 +325,13 @@ const Purchase = () => {
                 />
               </div>
               <div className="text-footer-s flex">
-                <p className="w-[131px]">이메일</p>
+                <p className="w-[131px] shrink-0">이메일</p>
                 <div className="flex gap-4">
                   <div className="flex">
                     <Input
                       className="flex-1"
                       name="email"
-                      value={purchaseUser.email}
+                      value={emailArray[0]}
                       onChange={changeInput}
                     />
                     @{' '}

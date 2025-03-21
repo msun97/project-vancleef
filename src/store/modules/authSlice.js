@@ -132,7 +132,16 @@ export const authSlice = createSlice({
             localStorage.removeItem('currentUser');
             localStorage.removeItem('myreviews');
             localStorage.removeItem('myInquiries');
-            localStorage.removeItem('myreservations'); // 로그아웃 시 myreservations 삭제
+            localStorage.removeItem('myreservations');
+        },
+        logoutWithReviewReset: () => (dispatch) => {
+            // auth 상태 리셋
+            dispatch(authSlice.actions.logout());
+
+            // review 상태도 초기화하는 액션 디스패치
+            dispatch({
+                type: 'review/resetReviews',
+            });
         },
         restoreAuthState: (state) => {
             const savedAuthed = localStorage.getItem('authed') === 'true';
