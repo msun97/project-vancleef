@@ -1,19 +1,20 @@
 // MyPage.js
 import React from "react";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from "../../store/modules/authSlice";
 
 function MyPage() {
 	const { user, authed } = useSelector((state) => state.authR);
 	const dispatch = useDispatch();
+	const Navigate = useNavigate();
+
 	const handleLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       // Redux 상태 초기화 및 로컬스토리지 정리
       dispatch(authActions.logout());
       localStorage.removeItem("authed");
-      // 로그아웃 후 /mypage로 이동
-      Navigate("/mypage");
+      Navigate("/");
     }}
 
 
