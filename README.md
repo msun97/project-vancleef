@@ -10,6 +10,7 @@
 본 프로젝트는 세계적인 럭셔리 주얼리 브랜드 반클리프 아펠의 웹사이트를 리뉴얼하는 것을 목표로 합니다.
 다양한 동적 요소와 세련된 디자인을 도입하여 제품의 아름다움을 극대화하고 사용자 경험을 향상하는 것을 목표로 합니다.
 
+
 ##✨ 주요 기능
 
 **🗂 상태 관리 및 사용자 관리**
@@ -72,6 +73,7 @@ Redux Toolkit을 활용한 상태관리: 효율적인 상태 관리 시스템으
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 ![Confluence](https://img.shields.io/badge/Confluence-172B4D?style=for-the-badge&logo=confluence&logoColor=white)
 
+
 ## 📋 시스템 아키텍처
 
 ```mermaid
@@ -100,6 +102,7 @@ graph TD
     API -->|주문 데이터 업데이트| Store
 ```
 
+
 ## 🚀 설치 및 실행 방법
 
 ```bash
@@ -126,12 +129,14 @@ npm run start
 yarn dev
 ```
 
+
 ## 🔧 환경 설정
 
 ```
 # .env 파일
 VITE_TMDB_API_KEY=your_api_key
 ```
+
 
 ## 📊 프로젝트 구조
 
@@ -187,6 +192,7 @@ src
 └─styles
 ```
 
+
 ## 👨‍💻 팀원 소개
 
 | 이름   | 역할                    | GitHub                                  | 이메일                        |
@@ -195,6 +201,7 @@ src
 | 권윤구 | 제품페이지/예약페이지   | [GitHub](https://github.com/peaceRyun)     | https://github.com/peaceRyun     |
 | 안예지 | 제품리스트/제품페이지   | [GitHub](https://github.com/to-flatwhite1) | https://github.com/to-flatwhite1 |
 | 권병윤 | 마이페이지/auth        | [GitHub](https://github.com/bybykwon)     | https://github.com/bybykwon    |
+
 
 ## 📈 프로젝트 진행 상황
 
