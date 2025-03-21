@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '@/store/modules/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { purchaseActions } from '@/store/modules/purchaseSlice';
+import { clearCart, removeCart } from '@/store/modules/cartSlice';
 
 const Purchase = () => {
   const navigate = useNavigate();
   const { purchaseItem } = useSelector(state => state.purchaseR);
+
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.authR);
   const getItem = purchaseItem.flat();
@@ -226,9 +228,13 @@ const Purchase = () => {
       sumPrice: sumPrice,
       isReservation: false,
     };
+    const productnumber = purchaseDetail.deliverItem.flatMap(items =>
+      items.map(item => item.productnumber),
+    );
     dispatch(purchaseActions.addPurchased(purchaseDetail));
     dispatch(authActions.completePurchase(purchaseDetail));
     dispatch(purchaseActions.setItem([]));
+    dispatch(removeCart(productnumber));
     alert('결제 완료');
     navigate('/mypage/order');
   };
@@ -254,7 +260,7 @@ const Purchase = () => {
         block: 'center',
       });
     }
-    const number = allPurchased.length;
+    const number = allPurchased.length ? allPurchased.length + 1 : 1;
     const date = new Date();
     const purchaseDate = `${date.getFullYear()}${
       date.getMonth() + 1
@@ -273,11 +279,14 @@ const Purchase = () => {
         id: item.productid,
       })),
     );
-
+    const productnumber = purchaseDetail.deliverItem.flatMap(items =>
+      items.map(item => item.productnumber),
+    );
     dispatch(purchaseActions.addPurchased(purchaseDetail));
     dispatch(authActions.completePurchase(purchaseDetail));
     dispatch(purchaseActions.addReservation(formattedData));
     dispatch(purchaseActions.setItem([]));
+    dispatch(removeCart(productnumber));
     alert('예약 완료');
     navigate('/reservation');
     return;
