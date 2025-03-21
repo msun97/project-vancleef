@@ -1,423 +1,251 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// 초기 상태 정의
+// 로컬 스토리지에서 초기 상태 로드
+const loadInquiriesFromStorage = () => {
+    try {
+        // 로컬 스토리지에서 저장된 inquiries 가져오기
+        const savedInquiries = localStorage.getItem('inquiries');
+        return savedInquiries ? JSON.parse(savedInquiries) : [];
+    } catch (error) {
+        console.error('로컬 스토리지에서 inquiries 로드 실패:', error);
+        return [];
+    }
+};
+
+// 로컬 스토리지에서 사용자 문의 로드
+const loadUserInquiriesFromStorage = () => {
+    try {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        return currentUser && Array.isArray(currentUser.myInquiries) ? currentUser.myInquiries : [];
+    } catch (error) {
+        console.error('로컬 스토리지에서 사용자 문의 로드 실패:', error);
+        return [];
+    }
+};
+
+// 로컬 스토리지에 inquiries 저장
+const saveInquiriesToStorage = (inquiries) => {
+    try {
+        localStorage.setItem('inquiries', JSON.stringify(inquiries));
+    } catch (error) {
+        console.error('inquiries를 로컬 스토리지에 저장 실패:', error);
+    }
+};
+
+// 초기 상태 구성
 const initialState = {
-    inquiries: JSON.parse(localStorage.getItem('inquiries') || '[]'),
-    myInquiries: JSON.parse(localStorage.getItem('myInquiries') || '[]'),
-    currentId: null,
-    inquiryItem: [],
+    // 로컬 스토리지에서 데이터 로드 또는 빈 배열로 초기화
+    inquiries: loadInquiriesFromStorage(),
+    myInquiries: [], // myInquiries는 loadMyInquiries 액션에서 설정
+    editMode: {
+        isEditing: false,
+        editData: null,
+    },
 };
 
 const productInquirySlice = createSlice({
     name: 'productInquiry',
     initialState,
     reducers: {
-        handleItem: (state, action) => {
-            state.inquiryItem = action.payload;
-            localStorage.setItem('inquiryItem', JSON.stringify(state.inquiryItem));
-        },
-
-        // 현재 사용자 설정
-        setCurrentUser: (state, action) => {
-            state.currentId = action.payload;
-
-            // 현재 사용자의 모든 문의 필터링
-            if (action.payload) {
-                // 로컬스토리지에서 최신 inquiries 가져오기
-                const allInquiries = JSON.parse(localStorage.getItem('inquiries') || '[]');
-
-                // 현재 사용자가 작성한 문의만 필터링
-                state.myInquiries = allInquiries.filter((inquiry) => inquiry.id === action.payload);
-
-                // myInquiries 로컬스토리지에 저장
-                localStorage.setItem('myInquiries', JSON.stringify(state.myInquiries));
-                console.log('사용자 설정 후 myInquiries:', state.myInquiries);
-            }
-        },
-
         // 문의 추가
+        // addInquiry 리듀서만 수정한 부분
         addInquiry: (state, action) => {
-            // 현재 사용자 정보 가져오기
-            const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
-            console.log('현재 사용자 정보:', currentUser);
+            console.log('Adding inquiry:', action.payload);
 
-            // id 확인 (currentUser.id 사용)
-            const userId = currentUser.id || action.payload.id;
-            console.log('사용할 사용자 ID:', userId);
-
-            // category와 productId 확인
-            const { category, productId } = action.payload;
-
-            // 이미 해당 상품에 대한 문의가 있는지 확인
-            const existingInquiryIndex = state.inquiries.findIndex(
-                (inquiry) => inquiry.id === userId && inquiry.category === category && inquiry.productId === productId
-            );
-
-            // 새 문의 객체 생성
+            // 새로운 문의 객체 생성 (inquiryId 보장)
             const newInquiry = {
-                id: userId, // 사용자 ID를 문의 ID로 사용
-                inquiryId: Date.now(), // 고유한 문의 ID 추가
                 ...action.payload,
-                date: new Date().toISOString().split('T')[0], // YYYY-MM-DD 형식
-                status: '접수완료',
-                hasResponse: false,
+                inquiryId: action.payload.inquiryId || Date.now(),
             };
 
-            console.log('생성된 문의 객체:', newInquiry);
+            // inquiries 배열에 추가
+            state.inquiries.push(newInquiry);
 
-            if (existingInquiryIndex !== -1) {
-                // 이미 문의가 있으면 업데이트
-                state.inquiries[existingInquiryIndex] = newInquiry;
-                console.log('기존 문의 업데이트');
-            } else {
-                // 새 문의 추가
-                state.inquiries.push(newInquiry);
-                console.log('새 문의 추가');
+            // 먼저 현재 사용자 ID 확인 (여러 필드명 고려)
+            const currentUserId = newInquiry.id || newInquiry.usernum || newInquiry.userId;
+            console.log('Current user ID:', currentUserId);
+
+            // 항상 myInquiries에도 추가 - 사용자 ID 검사는 하지 않음
+            // (내 문의를 작성하는 것이므로 무조건 myInquiries에 추가)
+            state.myInquiries.push(newInquiry);
+            console.log('myInquiries after adding:', state.myInquiries);
+
+            // 로컬스토리지에 전체 inquiries 저장
+            try {
+                localStorage.setItem('inquiries', JSON.stringify(state.inquiries));
+            } catch (error) {
+                console.error('Failed to save inquiries to localStorage:', error);
             }
 
-            // inquiries 로컬스토리지에 저장
-            localStorage.setItem('inquiries', JSON.stringify(state.inquiries));
+            // 로컬스토리지의 currentUser에도 저장
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (currentUser) {
+                    if (!Array.isArray(currentUser.myInquiries)) {
+                        currentUser.myInquiries = [];
+                    }
 
-            // myInquiries 업데이트 (무조건 추가)
-            // 내 문의 중에서 해당 상품에 대한 문의가 있는지 확인
-            const myInquiryIndex = state.myInquiries.findIndex(
-                (inquiry) => inquiry.category === category && inquiry.productId === productId
-            );
-
-            if (myInquiryIndex !== -1) {
-                // 이미 문의가 있으면 업데이트
-                state.myInquiries[myInquiryIndex] = newInquiry;
-                console.log('내 문의 업데이트');
-            } else {
-                // 새 문의 추가
-                state.myInquiries.push(newInquiry);
-                console.log('내 문의 추가');
-            }
-
-            // myInquiries 로컬스토리지에 저장
-            localStorage.setItem('myInquiries', JSON.stringify(state.myInquiries));
-            console.log('저장 후 myInquiries:', state.myInquiries);
-
-            // currentUser에 myInquiries 추가
-            if (currentUser && currentUser.id) {
-                if (!currentUser.myInquiries) {
-                    currentUser.myInquiries = [];
-                }
-
-                // currentUser.myInquiries 업데이트
-                const existingInquiry = currentUser.myInquiries.findIndex(
-                    (inquiry) => inquiry.category === category && inquiry.productId === productId
-                );
-
-                if (existingInquiry !== -1) {
-                    currentUser.myInquiries[existingInquiry] = newInquiry;
-                } else {
-                    currentUser.myInquiries.push(newInquiry);
-                }
-
-                // currentUser 업데이트
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            }
-
-            // ----------- 추가된 부분: users 로컬스토리지 업데이트 -----------
-            // users 목록 가져오기
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            console.log('현재 users 목록:', users);
-
-            // 해당 사용자 찾기
-            const userIndex = users.findIndex((user) => user.id === userId || user.userid === userId);
-
-            if (userIndex !== -1) {
-                // 사용자가 존재하는 경우
-                const user = users[userIndex];
-
-                // user.myInquiries가 없으면 배열 초기화
-                if (!user.myInquiries) {
-                    user.myInquiries = [];
-                }
-
-                // 사용자의 myInquiries 업데이트
-                const userInquiryIndex = user.myInquiries.findIndex(
-                    (inquiry) =>
-                        (inquiry.category === category || inquiry.category === category) &&
-                        (inquiry.productId === productId || inquiry.productid === productId)
-                );
-
-                if (userInquiryIndex !== -1) {
-                    // 기존 문의가 있으면 업데이트
-                    user.myInquiries[userInquiryIndex] = newInquiry;
-                } else {
                     // 새 문의 추가
-                    user.myInquiries.push(newInquiry);
+                    currentUser.myInquiries.push(newInquiry);
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    console.log('Updated currentUser in localStorage:', currentUser);
+                } else {
+                    console.warn('currentUser not found in localStorage');
                 }
-
-                // users 배열 업데이트
-                users[userIndex] = user;
-
-                // users 로컬스토리지에 저장
-                localStorage.setItem('users', JSON.stringify(users));
-                console.log('users에 myInquiries 업데이트:', user.myInquiries);
-            } else {
-                console.log('해당 ID의 사용자를 users에서 찾을 수 없습니다:', userId);
+            } catch (error) {
+                console.error('Failed to update localStorage:', error);
             }
-            // ----------- 추가된 부분 끝 -----------
         },
 
         // 문의 업데이트
         updateInquiry: (state, action) => {
-            const { inquiryId, ...changes } = action.payload;
+            const { inquiryId } = action.payload;
 
-            // 전체 문의 업데이트
-            const inquiryIndex = state.inquiries.findIndex((item) => item.inquiryId === inquiryId);
+            // inquiries 배열 업데이트
+            const inquiryIndex = state.inquiries.findIndex((inquiry) => inquiry.inquiryId === inquiryId);
             if (inquiryIndex !== -1) {
-                state.inquiries[inquiryIndex] = {
-                    ...state.inquiries[inquiryIndex],
-                    ...changes,
-                };
-                localStorage.setItem('inquiries', JSON.stringify(state.inquiries));
+                state.inquiries[inquiryIndex] = action.payload;
+
+                // 로컬 스토리지에 업데이트된 inquiries 저장
+                saveInquiriesToStorage(state.inquiries);
             }
 
-            // 내 문의 업데이트
-            const myInquiryIndex = state.myInquiries.findIndex((item) => item.inquiryId === inquiryId);
+            // myInquiries 배열 업데이트
+            const myInquiryIndex = state.myInquiries.findIndex((inquiry) => inquiry.inquiryId === inquiryId);
             if (myInquiryIndex !== -1) {
-                state.myInquiries[myInquiryIndex] = {
-                    ...state.myInquiries[myInquiryIndex],
-                    ...changes,
-                };
-                localStorage.setItem('myInquiries', JSON.stringify(state.myInquiries));
+                state.myInquiries[myInquiryIndex] = action.payload;
             }
 
-            // currentUser의 myInquiries도 업데이트
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser && currentUser.myInquiries) {
-                const userInquiryIndex = currentUser.myInquiries.findIndex((item) => item.inquiryId === inquiryId);
-                if (userInquiryIndex !== -1) {
-                    currentUser.myInquiries[userInquiryIndex] = {
-                        ...currentUser.myInquiries[userInquiryIndex],
-                        ...changes,
-                    };
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                }
-            }
-
-            // ----------- 추가된 부분: users 로컬스토리지 업데이트 -----------
-            // 문의 작성자 ID 가져오기 (state.inquiries에서 해당 문의 찾기)
-            let userId = null;
-            if (inquiryIndex !== -1) {
-                userId = state.inquiries[inquiryIndex].id;
-            }
-
-            if (userId) {
-                // users 목록 가져오기
-                const users = JSON.parse(localStorage.getItem('users') || '[]');
-
-                // 해당 사용자 찾기
-                const userIndex = users.findIndex((user) => user.id === userId || user.userid === userId);
-
-                if (userIndex !== -1) {
-                    const user = users[userIndex];
-
-                    // myInquiries가 있는지 확인
-                    if (user.myInquiries && Array.isArray(user.myInquiries)) {
-                        // 수정할 문의 찾기
-                        const userInquiryIndex = user.myInquiries.findIndex((item) => item.inquiryId === inquiryId);
-
-                        if (userInquiryIndex !== -1) {
-                            // 문의 업데이트
-                            user.myInquiries[userInquiryIndex] = {
-                                ...user.myInquiries[userInquiryIndex],
-                                ...changes,
-                            };
-
-                            // users 배열 업데이트
-                            users[userIndex] = user;
-
-                            // users 로컬스토리지에 저장
-                            localStorage.setItem('users', JSON.stringify(users));
-                            console.log('users에서 문의 업데이트 완료:', user.myInquiries);
-                        }
+            // 로컬스토리지 업데이트
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (currentUser && Array.isArray(currentUser.myInquiries)) {
+                    const localIndex = currentUser.myInquiries.findIndex((inquiry) => inquiry.inquiryId === inquiryId);
+                    if (localIndex !== -1) {
+                        currentUser.myInquiries[localIndex] = action.payload;
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
                     }
                 }
+            } catch (error) {
+                console.error('Failed to update localStorage:', error);
             }
-            // ----------- 추가된 부분 끝 -----------
         },
 
         // 문의 삭제
         deleteInquiry: (state, action) => {
             const inquiryId = action.payload;
 
-            // 삭제 전에 문의 작성자 ID를 저장해둡니다.
-            let userId = null;
-            const inquiryToDelete = state.inquiries.find((inquiry) => inquiry.inquiryId === inquiryId);
-            if (inquiryToDelete) {
-                userId = inquiryToDelete.id;
-            }
-
-            // 전체 문의에서 삭제
+            // Redux state에서 제거
             state.inquiries = state.inquiries.filter((inquiry) => inquiry.inquiryId !== inquiryId);
-            localStorage.setItem('inquiries', JSON.stringify(state.inquiries));
-
-            // 내 문의에서 삭제
             state.myInquiries = state.myInquiries.filter((inquiry) => inquiry.inquiryId !== inquiryId);
-            localStorage.setItem('myInquiries', JSON.stringify(state.myInquiries));
 
-            // currentUser의 myInquiries에서도 삭제
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser && currentUser.myInquiries) {
-                currentUser.myInquiries = currentUser.myInquiries.filter((inquiry) => inquiry.inquiryId !== inquiryId);
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            }
+            // 로컬 스토리지의 inquiries 업데이트
+            saveInquiriesToStorage(state.inquiries);
 
-            // ----------- 추가된 부분: users 로컬스토리지 업데이트 -----------
-            if (userId) {
-                // users 목록 가져오기
-                const users = JSON.parse(localStorage.getItem('users') || '[]');
-
-                // 해당 사용자 찾기
-                const userIndex = users.findIndex((user) => user.id === userId || user.userid === userId);
-
-                if (userIndex !== -1) {
-                    const user = users[userIndex];
-
-                    // myInquiries가 있는지 확인
-                    if (user.myInquiries && Array.isArray(user.myInquiries)) {
-                        // 문의 삭제
-                        user.myInquiries = user.myInquiries.filter((inquiry) => inquiry.inquiryId !== inquiryId);
-
-                        // users 배열 업데이트
-                        users[userIndex] = user;
-
-                        // users 로컬스토리지에 저장
-                        localStorage.setItem('users', JSON.stringify(users));
-                        console.log('users에서 문의 삭제 완료');
-                    }
-                }
-            }
-            // ----------- 추가된 부분 끝 -----------
-        },
-
-        // 응답 추가
-        addResponse: (state, action) => {
-            const { inquiryId, response } = action.payload;
-
-            // 응답 추가 전 문의 작성자 ID를 저장해둡니다.
-            let userId = null;
-            const inquiryToUpdate = state.inquiries.find((inquiry) => inquiry.inquiryId === inquiryId);
-            if (inquiryToUpdate) {
-                userId = inquiryToUpdate.id;
-            }
-
-            // 전체 문의 응답 추가
-            const inquiryIndex = state.inquiries.findIndex((item) => item.inquiryId === inquiryId);
-            if (inquiryIndex !== -1) {
-                state.inquiries[inquiryIndex] = {
-                    ...state.inquiries[inquiryIndex],
-                    response,
-                    hasResponse: true,
-                    status: '답변완료',
-                };
-                localStorage.setItem('inquiries', JSON.stringify(state.inquiries));
-            }
-
-            // 내 문의 응답 추가
-            const myInquiryIndex = state.myInquiries.findIndex((item) => item.inquiryId === inquiryId);
-            if (myInquiryIndex !== -1) {
-                state.myInquiries[myInquiryIndex] = {
-                    ...state.myInquiries[myInquiryIndex],
-                    response,
-                    hasResponse: true,
-                    status: '답변완료',
-                };
-                localStorage.setItem('myInquiries', JSON.stringify(state.myInquiries));
-            }
-
-            // currentUser의 myInquiries도 업데이트
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser && currentUser.myInquiries) {
-                const userInquiryIndex = currentUser.myInquiries.findIndex((item) => item.inquiryId === inquiryId);
-                if (userInquiryIndex !== -1) {
-                    currentUser.myInquiries[userInquiryIndex] = {
-                        ...currentUser.myInquiries[userInquiryIndex],
-                        response,
-                        hasResponse: true,
-                        status: '답변완료',
-                    };
+            // 로컬스토리지 currentUser 업데이트
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (currentUser && Array.isArray(currentUser.myInquiries)) {
+                    currentUser.myInquiries = currentUser.myInquiries.filter(
+                        (inquiry) => inquiry.inquiryId !== inquiryId
+                    );
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 }
+            } catch (error) {
+                console.error('Failed to update localStorage:', error);
             }
-
-            // ----------- 추가된 부분: users 로컬스토리지 업데이트 -----------
-            if (userId) {
-                // users 목록 가져오기
-                const users = JSON.parse(localStorage.getItem('users') || '[]');
-
-                // 해당 사용자 찾기
-                const userIndex = users.findIndex((user) => user.id === userId || user.userid === userId);
-
-                if (userIndex !== -1) {
-                    const user = users[userIndex];
-
-                    // myInquiries가 있는지 확인
-                    if (user.myInquiries && Array.isArray(user.myInquiries)) {
-                        // 응답 추가할 문의 찾기
-                        const userInquiryIndex = user.myInquiries.findIndex((item) => item.inquiryId === inquiryId);
-
-                        if (userInquiryIndex !== -1) {
-                            // 응답 추가
-                            user.myInquiries[userInquiryIndex] = {
-                                ...user.myInquiries[userInquiryIndex],
-                                response,
-                                hasResponse: true,
-                                status: '답변완료',
-                            };
-
-                            // users 배열 업데이트
-                            users[userIndex] = user;
-
-                            // users 로컬스토리지에 저장
-                            localStorage.setItem('users', JSON.stringify(users));
-                            console.log('users에 응답 추가 완료');
-                        }
-                    }
-                }
-            }
-            // ----------- 추가된 부분 끝 -----------
         },
 
-        // 내 문의만 로드
+        // 내 문의 불러오기
         loadMyInquiries: (state, action) => {
-            // currentUser 정보 가져오기
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            console.log('loadMyInquiries에서 확인한 currentUser:', currentUser);
+            const userId = action.payload;
 
-            // id는 action.payload 또는 currentUser.id 사용
-            const userId = action.payload || (currentUser ? currentUser.id : null);
-            console.log('사용할 사용자 ID:', userId);
-
+            // 유효성 검사
             if (!userId) {
-                console.log('유효한 사용자 ID가 없습니다.');
-                return state.myInquiries;
+                console.error('loadMyInquiries: userId is undefined or null');
+                state.myInquiries = [];
+                return;
             }
 
-            // 로컬스토리지에서 최신 inquiries 가져오기
-            const allInquiries = JSON.parse(localStorage.getItem('inquiries') || '[]');
-            console.log('전체 문의 개수:', allInquiries.length);
+            console.log('Loading inquiries for user:', userId);
 
-            // 현재 사용자가 작성한 문의만 필터링
-            state.myInquiries = allInquiries.filter((inquiry) => inquiry.id === userId);
-            console.log('필터링된 내 문의 개수:', state.myInquiries.length);
+            // 다양한 ID 필드를 고려해서 문의 필터링
+            let filteredInquiries = state.inquiries.filter(
+                (inquiry) => inquiry.id === userId || inquiry.usernum === userId || inquiry.userId === userId
+            );
 
-            // myInquiries 로컬스토리지에 저장
-            localStorage.setItem('myInquiries', JSON.stringify(state.myInquiries));
+            // 로컬스토리지에서 추가 문의 로드
+            try {
+                // 1. 전체 inquiries에서 필터링
+                const savedInquiries = loadInquiriesFromStorage();
+                const storageInquiries = savedInquiries.filter(
+                    (inquiry) => inquiry.id === userId || inquiry.usernum === userId || inquiry.userId === userId
+                );
 
-            // currentUser의 myInquiries도 업데이트
-            if (currentUser) {
-                currentUser.myInquiries = state.myInquiries;
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                console.log('currentUser에 myInquiries 업데이트:', state.myInquiries);
+                // 2. currentUser.myInquiries에서 필터링
+                const userInquiries = loadUserInquiriesFromStorage().filter(
+                    (inquiry) => inquiry.id === userId || inquiry.usernum === userId || inquiry.userId === userId
+                );
+
+                // 중복 제거를 위해 Map 사용
+                const inquiryMap = new Map();
+
+                // state.inquiries에서 가져온 항목 추가
+                filteredInquiries.forEach((inquiry) => {
+                    const key = inquiry.inquiryId || inquiry.id;
+                    if (key) inquiryMap.set(key, inquiry);
+                });
+
+                // 로컬 스토리지의 inquiries에서 가져온 항목 추가
+                storageInquiries.forEach((inquiry) => {
+                    const key = inquiry.inquiryId || inquiry.id;
+                    if (key) inquiryMap.set(key, inquiry);
+                });
+
+                // currentUser.myInquiries에서 가져온 항목 추가
+                userInquiries.forEach((inquiry) => {
+                    const key = inquiry.inquiryId || inquiry.id;
+                    if (key) inquiryMap.set(key, inquiry);
+                });
+
+                // Map에서 배열로 변환
+                const combinedInquiries = Array.from(inquiryMap.values());
+
+                // 날짜순 정렬
+                combinedInquiries.sort((a, b) => {
+                    const dateA = new Date(a.date || 0);
+                    const dateB = new Date(b.date || 0);
+                    return dateB - dateA;
+                });
+
+                console.log('Combined inquiries:', combinedInquiries);
+                state.myInquiries = combinedInquiries;
+            } catch (error) {
+                console.error('Failed to load inquiries:', error);
+                state.myInquiries = filteredInquiries;
             }
+        },
 
-            return state.myInquiries;
+        // 수정 모드 활성화
+        setEditMode: (state, action) => {
+            state.editMode = {
+                isEditing: true,
+                editData: action.payload.inquiryData,
+            };
+        },
+
+        // 수정 모드 해제
+        resetEditMode: (state) => {
+            state.editMode = {
+                isEditing: false,
+                editData: null,
+            };
+        },
+
+        // 이전 코드와의 호환성을 위한 함수 유지
+        handleItem: (state, action) => {
+            // App.jsx 경로 변경으로 인해 필요없어진 기능이지만 기존 호출을 위해 유지
+            console.log('handleItem called with:', action.payload);
         },
     },
 });

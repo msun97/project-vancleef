@@ -8,8 +8,6 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [kakaoMapObject, setKakaoMapObject] = useState(null);
 
-    console.log('검색할 주소:', locationData.address);
-
     // 카카오맵 스크립트 로드 (한 번만 실행)
     useEffect(() => {
         // 이미 전역에 카카오맵이 있으면 로드하지 않음
@@ -23,9 +21,7 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
         script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=e1bd847fea79c1138b1471eb5a697207&autoload=false&libraries=services`;
 
         script.onload = () => {
-            console.log('카카오 스크립트 로드됨');
             window.kakao.maps.load(() => {
-                console.log('카카오맵 로드됨');
                 setIsMapLoaded(true);
             });
         };
@@ -45,7 +41,7 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
         try {
             // 지도 컨테이너
             const container = mapRef.current;
-            console.log('지도 컨테이너:', container);
+   
 
             // 주소-좌표 변환 객체 생성
             const geocoder = new window.kakao.maps.services.Geocoder();
@@ -53,7 +49,7 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
             // 주소 -> 좌표 변환
             geocoder.addressSearch(locationData.address, (result, status) => {
                 if (status === window.kakao.maps.services.Status.OK) {
-                    console.log('좌표 변환 성공:', result);
+                
                     const position = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
                     // 지도 옵션

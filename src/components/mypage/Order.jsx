@@ -18,21 +18,23 @@ const OrderList = () => {
   // completePurchase가 없으면 메시지 출력
   if (!completePurchase) {
     return (
-      <div className="p-[20px] text-[12px]">
+      <div className="flex justify-center p-[20px] text-[12px]">
         구매완료된 내역이 없습니다.
       </div>
     );
   }
 
+  // isReservation 값에 따라 텍스트 결정 (true면 예약완료, false면 거래완료)
+  const statusText = completePurchase.isReservation ? '예약완료' : '거래완료';
+
   return (
     <div className="border-b border-gray-300 p-[20px]">
       <div className="flex justify-between items-center text-[12px]">
         {/* 주문번호 */}
-     <div>
-     	   <div>주문번호:</div> <span>{completePurchase.deliverNumber}</span>
-	
-     </div>
-        {/* 주문상품: deliverItem은 중첩 배열로 되어있으므로 두 번의 map 사용 */}
+        <div>
+          <div>주문번호:</div> <span>{completePurchase.deliverNumber}</span>
+        </div>
+        {/* 주문상품: deliverItem은 중첩 배열이므로 두 번의 map 사용 */}
         <span>
           주문상품:
           {completePurchase.deliverItem &&
@@ -44,25 +46,24 @@ const OrderList = () => {
               </div>
             ))}
         </span>
-
         {/* 주문가격 */}
-<div>
-	        <div>  주문가격:</div>
-	        <span>
-					KRW{' '}{completePurchase.sumPrice &&
-	            completePurchase.sumPrice
-	              .toString()
-	              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-	        </span>
-</div>
-
+        <div>
+          <div>주문가격:</div>
+          <span>
+            KRW{' '}
+            {completePurchase.sumPrice &&
+              completePurchase.sumPrice
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          </span>
+        </div>
         {/* 취소신청 버튼 */}
         <span className="underline cursor-pointer" onClick={() => dispatch(openModal())}>
           취소신청
         </span>
         <CancelOrderModal />
-        {/* 거래완료 텍스트 */}
-        <span className="underline cursor-pointer">거래완료</span>
+        {/* isReservation 값에 따른 상태 텍스트 */}
+        <span className="underline cursor-pointer">{statusText}</span>
       </div>
     </div>
   );

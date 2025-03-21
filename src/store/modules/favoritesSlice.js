@@ -1,7 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// localStorage에서 좋아요 목록 가져오기
+const loadFavoritesFromStorage = () => {
+    try {
+        const storedFavorites = localStorage.getItem('favorites');
+        return storedFavorites ? JSON.parse(storedFavorites) : [];
+    } catch (error) {
+        console.error('Failed to load favorites from localStorage:', error);
+        return [];
+    }
+};
+
 const initialState = {
-    favorites: [], // 찜 목록
+    favorites: loadFavoritesFromStorage(), // localStorage에서 불러온 찜 목록
 };
 
 export const favoritesSlice = createSlice({
@@ -10,13 +21,23 @@ export const favoritesSlice = createSlice({
     reducers: {
         // 찜 목록에 상품 추가
         addFavorite: (state, action) => {
-            state.favorites.push(action.payload);
+            // 중복 방지 확인
+            const exists = state.favorites.some((item) => item.productnumber === action.payload.productnumber);
+
+            if (!exists) {
+                state.favorites.push(action.payload);
+                // localStorage에 저장
+                localStorage.setItem('favorites', JSON.stringify(state.favorites));
+            }
         },
+
         // 찜 목록에서 상품 삭제
         removeFavorite: (state, action) => {
             const productnumber = action.payload.productnumber;
             state.favorites = state.favorites.filter((item) => item.productnumber !== productnumber);
-            //filter() 메서드는 배열에서 특정 조건을 만족하는 요소들만을 새로운 배열로 반환하는 함수
+
+            // localStorage에 저장
+            localStorage.setItem('favorites', JSON.stringify(state.favorites));
         },
     },
 });

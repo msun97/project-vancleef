@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/button';
 import CheckBox from '../../components/checkbox';
 import { useState, useEffect } from 'react';
@@ -11,15 +11,18 @@ const flexIC = 'flex items-center';
 const ProductInquiry = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const location = useLocation();
+
+    // URL 파라미터에서 category와 id 가져오기 (App.jsx의 경로 구조 변경에 맞춤)
+    const { category, id: productId } = useParams();
 
     // 로그인 정보 및 상품 정보 가져오기
     const userInfo = useSelector((state) => state.authR?.user);
+    const isLoggedIn = useSelector((state) => state.authR?.authed);
 
-    // URL 쿼리 파라미터에서 category와 id 가져오기 (ProductInquiryList에서 전달됨)
-    const searchParams = new URLSearchParams(location.search);
-    const category = searchParams.get('category');
-    const productId = searchParams.get('id');
+    // 수정 모드 관련 상태
+    const { isEditing, editData } = useSelector(
+        (state) => state.productInquiryR?.editMode || { isEditing: false, editData: null }
+    );
 
     // 1. 카테고리 정보 찾기
     const categoryData = productdata.find((item) => item.category === category);
@@ -28,13 +31,6 @@ const ProductInquiry = () => {
     const productInfo = categoryData?.data?.find(
         (item) => item.productid === parseInt(productId) || item.productid === productId
     );
-
-    console.log('카테고리:', category);
-    console.log('상품 ID:', productId);
-    console.log('찾은 카테고리 데이터:', categoryData);
-    console.log('찾은 상품 정보:', productInfo);
-
-    const isLoggedIn = useSelector((state) => state.authR?.authed);
 
     // 로컬스토리지에서 currentUser 확인
     useEffect(() => {
@@ -45,13 +41,11 @@ const ProductInquiry = () => {
         } else {
             // 로컬스토리지의 currentUser 확인
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            console.log('현재 로그인한 사용자:', currentUser);
 
             // myInquiries 초기화 (아직 없다면)
             if (currentUser && !currentUser.myInquiries) {
                 currentUser.myInquiries = [];
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                console.log('사용자에 myInquiries 초기화');
             }
         }
     }, [isLoggedIn, navigate]);
@@ -61,6 +55,7 @@ const ProductInquiry = () => {
         userInfo?.id ||
         (localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')).id : null);
 
+    // 기본 문의 상태 설정
     const [userInquiry, setUserInquiry] = useState({
         title: '',
         content: '',
@@ -77,6 +72,10 @@ const ProductInquiry = () => {
             productInfo?.objectImage?.[0] ||
             'https://www.vancleefarpels.com/content/dam/rcq/vca/21/38/78/2/2138782.png.transform.vca-w820-1x.png',
     });
+
+    // 두 개의 체크박스를 위한 별도의 상태 생성
+    const [isSecretPost, setIsSecretPost] = useState(false);
+    const [isAgreed, setIsAgreed] = useState(false);
 
     // 상품 정보가 로드되면 userInquiry 업데이트
     useEffect(() => {
@@ -101,9 +100,23 @@ const ProductInquiry = () => {
         }
     }, [userInfo]);
 
-    // 두 개의 체크박스를 위한 별도의 상태 생성
-    const [isSecretPost, setIsSecretPost] = useState(false);
-    const [isAgreed, setIsAgreed] = useState(false);
+    // 수정 모드일 경우 기존 문의 데이터 로드
+    useEffect(() => {
+        if (isEditing && editData) {
+            setUserInquiry({
+                ...editData,
+                // 기존 데이터 유지 및 필요한 필드 추가
+                category: category || editData.category,
+                productId: productId || editData.productId,
+            });
+
+            // 비밀글 설정 복원
+            setIsSecretPost(editData.isSecretPost || false);
+
+            // 동의 체크박스는 항상 체크하도록 (수정 시에는 이미 동의한 상태로 간주)
+            setIsAgreed(true);
+        }
+    }, [isEditing, editData, category, productId]);
 
     const buttonStyle = isAgreed
         ? 'w-50 h-[55px] border border-primary text-primary hover:bg-primary hover:text-white cursor-pointer'
@@ -119,6 +132,7 @@ const ProductInquiry = () => {
         });
     };
 
+    // onSubmit 함수만 수정
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -149,32 +163,52 @@ const ProductInquiry = () => {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         const currentUserId = currentUser ? currentUser.id : null;
 
-        console.log('제출 시 사용자 ID:', currentUserId || userId);
-        console.log('제출 시 카테고리:', category);
-        console.log('제출 시 상품 ID:', productId);
+        // userInfo에서 ID 가져오기
+        const reduxUserId = userInfo?.id || userInfo?.usernum;
+
+        // 최종 사용자 ID (Redux 상태 우선, 그 다음 로컬 스토리지)
+        const finalUserId = reduxUserId || currentUserId || userId;
+
+        console.log('Submitting inquiry with user ID:', finalUserId);
+        console.log('Redux userInfo:', userInfo);
+        console.log('Local storage currentUser:', currentUser);
 
         // 디스패치하는 데이터
         const inquiryData = {
             ...userInquiry,
             isSecretPost,
             date: formattedDate,
-            id: currentUserId || userId,
-            inquiryId: Date.now(),
-            category: category, // 카테고리 추가
-            productId: productId, // 상품 ID 추가
+            id: finalUserId,
+            usernum: finalUserId, // usernum 필드도 추가
+            userId: finalUserId, // userId 필드도 추가
+            // 수정 모드일 경우 기존 ID 유지, 아니면 새로 생성
+            inquiryId: isEditing ? userInquiry.inquiryId : Date.now(),
+            category: category,
+            productId: productId,
         };
 
-        console.log('디스패치하는 데이터:', inquiryData);
+        console.log('Dispatching inquiry data:', inquiryData);
 
-        // 리덕스 액션 디스패치하여 문의 추가
-        dispatch(productInquiryActions.addInquiry(inquiryData));
+        // 수정 모드일 경우 updateInquiry 액션 디스패치, 아니면 addInquiry
+        if (isEditing) {
+            dispatch(productInquiryActions.updateInquiry(inquiryData));
+            alert('문의가 수정되었습니다.');
+        } else {
+            dispatch(productInquiryActions.addInquiry(inquiryData));
+            alert('문의가 등록되었습니다.');
+        }
 
-        alert('문의가 등록되었습니다.');
+        // 편집 모드 초기화
+        dispatch(productInquiryActions.resetEditMode());
+
+        // 상세 페이지로 이동
         navigate(`/productdetail/${category}/${productId}`);
     };
 
     const onExit = (e) => {
         e.preventDefault();
+        // 편집 모드 초기화
+        dispatch(productInquiryActions.resetEditMode());
         navigate(-1);
     };
 
@@ -185,7 +219,9 @@ const ProductInquiry = () => {
 
     return (
         <div className='wrap p-330 pt-[80px]'>
-            <h2 className='font-secondary font-bold text-heading-m border-b'>상품 문의 쓰기</h2>
+            <h2 className='font-secondary font-bold text-heading-m border-b'>
+                {isEditing ? '상품 문의 수정' : '상품 문의 쓰기'}
+            </h2>
             <div className={`${flexIC} p-4 border-b gap-7`}>
                 <div>
                     <img src={userInquiry.productImage} alt='제품이미지' className='w-[61px] h-[61px]' />
@@ -327,7 +363,14 @@ const ProductInquiry = () => {
                         밖의 사항은 넷마블힐러비(주) 개인정보처리방침을 준수합니다.
                     </p>
                     <div className='flex items-center gap-2 mt-4'>
-                        <CheckBox id='agreement' checked={isAgreed} onChange={setIsAgreed} className='w-5 h-5' />
+                        <CheckBox
+                            id='agreement'
+                            checked={isAgreed}
+                            onChange={setIsAgreed}
+                            className='w-5 h-5'
+                            // 수정 모드에서는 체크박스 비활성화
+                            disabled={isEditing}
+                        />
                         <label htmlFor='agreement'>위 내용에 동의합니다.</label>
                         <Link>전체보기 {'>'}</Link>
                     </div>
@@ -346,7 +389,7 @@ const ProductInquiry = () => {
                             }
                         }}
                     >
-                        확인
+                        {isEditing ? '수정' : '확인'}
                     </Button>
                 </div>
             </form>

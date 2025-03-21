@@ -19,7 +19,7 @@ const CCNav = ({ isOn, handleClick }) => {
     },
   ];
   const nowisOn = isOn.replace('/customers/', '');
-  console.log(nowisOn);
+
   return (
     <ul className="flex w-full">
       {navList.map(nav => (
