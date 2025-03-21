@@ -7,7 +7,7 @@ const MypostsTap = () => {
     const [activeTab, setActiveTab] = useState('available');
 
     const postsTap = [
-        { id: 1, name: 'available', menu: '작성 가능한 리뷰' },
+        // { id: 1, name: 'available', menu: '작성 가능한 리뷰' },
         { id: 2, name: 'written', menu: '내가 작성한 리뷰' },
         { id: 3, name: 'inquiry', menu: '내가 작성한 문의' },
     ];
@@ -34,14 +34,14 @@ const MypostsTap = () => {
     // 선택된 탭에 따라 다른 컴포넌트 렌더링
     const renderTabContent = () => {
         switch (activeTab) {
-            case 'available':
-                return <AvailableReviews />;
+            // case 'available':
+            //     return <AvailableReviews />;
             case 'written':
                 return <MyReviews />;
             case 'inquiry':
                 return <MyInquiry />;
             default:
-                return <AvailableReviews />;
+                return <MyReviews />;
         }
     };
 
@@ -52,7 +52,7 @@ const MypostsTap = () => {
                     <li
                         key={tab.id}
                         onClick={() => handleClick(tab.name)}
-                        className={`w-1/3 border-b-2 h-[45px] flex justify-center items-center cursor-pointer font-bold mb-[30px] ${
+                        className={`w-1/2 border-b-2 h-[45px] flex justify-center items-center cursor-pointer font-bold mb-[30px] ${
                             activeTab === tab.name ? 'text-black border-black' : 'text-gray-400 border-gray-200'
                         }`}
                     >
