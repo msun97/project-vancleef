@@ -16,12 +16,30 @@ export const cartSlice = createSlice({
       state.cart.push(action.payload);
     },
     removeCart: (state, action) => {
-      state.cart = state.cart.filter(
-        item => item.productnumber !== action.payload,
-      );
+      const updatedCart = action.payload
+        .map(number => state.cart.filter(item => item.productnumber !== number))
+        .flat();
+
+      state.cart = updatedCart; // 불변성 유지
+
+      // 로컬스토리지 업데이트
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      if (user) {
+        const currentUser = {
+          ...user,
+          cart: updatedCart,
+        };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      }
     },
     clearCart: state => {
       state.cart = [];
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      const currentUser = {
+        ...user,
+        cart: [],
+      };
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
     },
     updateCart: (state, action) => {
       state.cart = action.payload;

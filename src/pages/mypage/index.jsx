@@ -1,4 +1,4 @@
-// MyPage.js
+
 import React from 'react';
 import { Link, Navigate, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,7 @@ function MyPage() {
             dispatch(authActions.logoutWithReviewReset());
             localStorage.removeItem('authed');
             // 로그아웃 후 /mypage로 이동
-            Navigate('/mypage');
+            Navigate('/');
         }
     };
 
