@@ -1,45 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import CheckBox from '../checkbox';
-import { useNavigate } from 'react-router-dom';
-import Button from '../button';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleCartItem, removeCart } from '../../store/modules/cartSlice';
-import { purchaseActions } from '@/store/modules/purchaseSlice';
+import React, { useEffect, useState } from "react";
+import CheckBox from "../checkbox";
+import { useNavigate } from "react-router-dom";
+import Button from "../button";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleCartItem, removeFromCart } from "../../store/modules/cartSlice";
+import { purchaseActions } from "@/store/modules/purchaseSlice";
 
-const MypageCartlist = ({ cart, setSelectedItem }) => {
+const MypageCartlist = ({ setSelectedItem }) => {
+  const cart = useSelector((state) => state.cartR.cart || []);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-	const handleClick = () => {
-		if (selectedItems.length > 0) {
-			dispatch(purchaseActions.setItem(selectedItems));
-			navigate('/purchase');
-		} else {
-			alert('구매하실 상품을 선택하세요');
-		}
-	};
-
+  console.log(cart);
   // cart 상태 변경 시 localStorage 업데이트
   useEffect(() => {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (currentUser) {
       currentUser.cart = cart;
-      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
     }
   }, [cart]);
 
-  const directPurchase = item => {
+  const directPurchase = (item) => {
     dispatch(purchaseActions.setItem(item));
-    navigate('/purchase');
+    navigate("/purchase");
   };
 
   useEffect(() => {
-    setSelectedItem(cart.filter(item => item.isagree));
+    setSelectedItem(cart.filter((item) => item.isagree));
   }, [cart, setSelectedItem]);
   return (
     <div className="flex flex-col space-y-4">
       {cart.length > 0 ? (
-        cart.map(item => (
+        cart.map((item) => (
           <div
             key={item.productnumber}
             className="flex flex-wrap items-start space-x-4 pt-[25px] pb-[25px] justify-between"
@@ -49,12 +41,12 @@ const MypageCartlist = ({ cart, setSelectedItem }) => {
                 <CheckBox
                   id={`checkbox-${item.productnumber}`}
                   checked={item.isagree}
-                  onChange={checked =>
+                  onChange={(checked) =>
                     dispatch(
                       toggleCartItem({
                         productnumber: item.productnumber,
                         isagree: checked,
-                      }),
+                      })
                     )
                   }
                   className="w-5 h-5"
@@ -85,7 +77,7 @@ const MypageCartlist = ({ cart, setSelectedItem }) => {
               <div className="text-[12px] font-regular">
                 {item.price
                   ? `${item.price.toLocaleString()}원`
-                  : '가격 정보 없음'}
+                  : "가격 정보 없음"}
               </div>
               <div className="text-[12px] font-regular items-center">
                 무료배송
@@ -99,7 +91,7 @@ const MypageCartlist = ({ cart, setSelectedItem }) => {
                   바로주문
                 </Button>
                 <Button
-                  onClick={() => dispatch(removeCart(item.productnumber))}
+                  onClick={() => dispatch(removeFromCart(item.productnumber))}
                   variant="secondary"
                   className="text-[12px] w-[89px] h-[29px] border border-[#D9D9D9] flex items-center justify-center"
                 >

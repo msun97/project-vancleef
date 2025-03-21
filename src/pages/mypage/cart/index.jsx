@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Line from '@/components/mypage/Line';
-import MypageCartlist from '@/components/mypage/Cart';
-import MypageCartSelect from '@/components/mypage/Cart2';
-import Button from '@/components/button';
-import { purchaseActions } from '@/store/modules/purchaseSlice';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Line from "@/components/mypage/Line";
+import MypageCartlist from "@/components/mypage/Cart";
+import MypageCartSelect from "@/components/mypage/Cart2";
+import Button from "@/components/button";
+import { purchaseActions } from "@/store/modules/purchaseSlice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cart = useSelector(state => state.cartR.cart);
+  const cart = useSelector((state) => state.cartR.cart);
   const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelect = (productId, isSelected) => {
-    setSelectedItems(prev => {
+    setSelectedItems((prev) => {
       if (isSelected) {
         return [...prev, productId];
       } else {
-        return prev.filter(id => id !== productId);
+        return prev.filter((id) => id !== productId);
       }
     });
   };
@@ -26,18 +26,18 @@ const Cart = () => {
 
   const handleSelectedPurchase = () => {
     if (selectedItem.length === 0) {
-      alert('선택된 상품이 없습니다.');
+      alert("선택된 상품이 없습니다.");
       return;
     }
     dispatch(
-      purchaseActions.setItem(selectedItem.map(item => item.productnumber)),
+      purchaseActions.setItem(selectedItem.map((item) => item.productnumber))
     );
-    navigate('/purchase');
+    navigate("/purchase");
   };
 
   const allPurchase = () => {
-    dispatch(purchaseActions.setItem(cart.map(item => item.productnumber)));
-    navigate('/purchase');
+    dispatch(purchaseActions.setItem(cart.map((item) => item.productnumber)));
+    navigate("/purchase");
   };
   return (
     <div className="pt-[120px] absolute top-0 text-[14px]">
@@ -61,7 +61,6 @@ const Cart = () => {
       <MypageCartlist
         setSelectedItem={setSelectedItem}
         onSelect={handleSelect}
-        cart={cart}
       />
       <MypageCartSelect selectedItems={selectedItems} />
 

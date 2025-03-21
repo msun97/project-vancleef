@@ -1,10 +1,10 @@
-import CheckBox from '../checkbox';
-import Button from '../button';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeCart } from '../../store/modules/cartSlice';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { purchaseActions } from '@/store/modules/purchaseSlice';
+import CheckBox from "../checkbox";
+import Button from "../button";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart } from "../../store/modules/cartSlice";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { purchaseActions } from "@/store/modules/purchaseSlice";
 
 const ShoppingcartModal = ({ handleModal, modalType }) => {
   const dispatch = useDispatch();
@@ -13,18 +13,18 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
   const handleClick = () => {
     if (selectedItems.length > 0) {
       dispatch(purchaseActions.setItem(selectedItems));
-      navigate('/purchase');
+      navigate("/purchase");
     } else {
-      alert('구매하실 상품을 선택하세요');
+      alert("구매하실 상품을 선택하세요");
     }
   };
 
-  const { cart } = useSelector(state => state.cartR);
+  const { cart } = useSelector((state) => state.cartR);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isChecked, setIsChecked] = useState(false); // 전체 선택 체크박스 상태 관리
-  const handleSelectItem = itemId => {
+  const handleSelectItem = (itemId) => {
     if (selectedItems.includes(itemId)) {
-      setSelectedItems(selectedItems.filter(item => item.id === itemId));
+      setSelectedItems(selectedItems.filter((item) => item.id === itemId));
     } else {
       setSelectedItems([...selectedItems, itemId]);
     }
@@ -33,7 +33,7 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
   const handleSelectAll = () => {
     setIsChecked(!isChecked);
     if (!isChecked) {
-      setSelectedItems(cart.map(item => item.productnumber));
+      setSelectedItems(cart.map((item) => item.productnumber));
     } else {
       setSelectedItems([]);
     }
@@ -42,8 +42,8 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
   console.log(cart);
   // 선택삭제 처리
   const handleDeleteSelected = () => {
-    selectedItems.forEach(itemId => {
-      dispatch(removeCart(itemId)); // 장바구니에서 선택된 항목 삭제
+    selectedItems.forEach((itemId) => {
+      dispatch(removeFromCart(itemId)); // 장바구니에서 선택된 항목 삭제
     });
     setSelectedItems([]); // 삭제 후 선택된 항목 초기화
   };
@@ -51,7 +51,7 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
   // body 오버플로우를 hidden 처리
   useEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = originalStyle;
@@ -99,8 +99,8 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
             <div className="border-b-1 border-gray-600 h-[58px] flex justify-between">
               <div className="text-[13px] leading-[58px] font-secondary tracking-wide">
                 <CheckBox
-                  id={'all'}
-                  className={'h-[18px] w-[18px] mr-[3px]'}
+                  id={"all"}
+                  className={"h-[18px] w-[18px] mr-[3px]"}
                   checked={isChecked}
                   onChange={handleSelectAll}
                 />
@@ -117,13 +117,13 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
 
           <div className="w-full h-[770px] flex flex-col justify-between">
             {/* 장바구니에 담긴 상품들 */}
-            {cart.map(item => (
+            {cart.map((item) => (
               <div className="relative flex" key={item.id}>
                 <div className="my-[20px]">
                   <div className="w-[100px] border border-[#dddddd]">
                     <CheckBox
                       id={item.productnumber}
-                      className={'h-[18px] w-[18px] mr-[3px] absolute'}
+                      className={"h-[18px] w-[18px] mr-[3px] absolute"}
                       checked={selectedItems.includes(item.productnumber)} // 개별 선택 상태
                       onChange={() => handleSelectItem(item.productnumber)} // 개별 체크박스 클릭 시 실행
                     />
@@ -144,13 +144,13 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
                   <div className="text-content-xs mt-[2px]">
                     {item.price
                       .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
                     원
                   </div>
                   <div className="flex">
                     <span className="text-label-xs text-gray-50">
-                      {' '}
-                      {item.stone && item.stone.trim() ? item.stone : 'x'}
+                      {" "}
+                      {item.stone && item.stone.trim() ? item.stone : "x"}
                     </span>
                   </div>
                   {/*     <button className="text-content-xs underline color-gray-90">옵션변경</button> */}
@@ -163,11 +163,11 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
               <div className="flex justify-between pt-[11px] pb-[20px]">
                 <div className="text-[13px] tracking-wider">상품합계금액</div>
                 <div className="text-[13px] tracking-wider">
-                  KRW{' '}
+                  KRW{" "}
                   {cart
                     .reduce((acc, item) => acc + item.price, 0)
                     .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
                   {/* 장바구니 합계 계산 */}
                 </div>
               </div>
