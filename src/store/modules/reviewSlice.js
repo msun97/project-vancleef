@@ -459,6 +459,15 @@ export const reviewSlice = createSlice({
             }
             return state.myreviews;
         },
+        resetReviews: (state) => {
+            state.reviews = [];
+            state.myreviews = [];
+            state.currentProductId = null;
+            state.currentProductCategory = null;
+            state.currentProductReviews = [];
+            state.totalReviews = 0;
+            state.sortBy = 'latest';
+        },
     },
 });
 
