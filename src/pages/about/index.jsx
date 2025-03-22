@@ -4,7 +4,7 @@ import ValueSec from './components/ValueSec';
 import ValueSecTwo from './components/ValueSecTwo';
 import TimelineSec from './components/TimelineSec';
 import Headline from './components/Headline';
-import ToTopBtn from '@/components/totopbtn/ToTopBtn';
+import ToTopBtn from '@/components/layout/totopbtn/ToTopBtn';
 
 const AboutPage = () => {
     return (
