@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 const DelieveryModal = ({ handleModal, modalType }) => {
-    // 모달 컨테이너에 대한 ref 생성
+    // 모달 컨텐츠에 대한 ref 생성
     const modalRef = useRef(null);
 
     useEffect(() => {
@@ -11,8 +11,17 @@ const DelieveryModal = ({ handleModal, modalType }) => {
         // body에 overflow: hidden 적용
         document.body.style.overflow = 'hidden';
 
+        // 모달 외부 클릭 감지 핸들러
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                closeModal();
+            }
+        };
+
+        // 이벤트 리스너 등록
+        document.addEventListener('mousedown', handleClickOutside);
+
         // GSAP 애니메이션 설정
-        // 모달 시작 위치를 viewport 오른쪽 바깥으로 설정하고, 애니메이션으로 원래 위치로 이동
         if (modalRef.current) {
             // 초기 상태 설정 (viewport 바깥에서 시작)
             gsap.set(modalRef.current, {
@@ -29,9 +38,10 @@ const DelieveryModal = ({ handleModal, modalType }) => {
             });
         }
 
-        // 컴포넌트가 언마운트될 때 원래 스타일로 되돌림
+        // 컴포넌트가 언마운트될 때 원래 스타일로 되돌림 및 이벤트 리스너 제거
         return () => {
             document.body.style.overflow = originalStyle;
+            document.removeEventListener('mousedown', handleClickOutside);
 
             // 컴포넌트 언마운트 시 애니메이션 역방향 실행 (선택 사항)
             if (modalRef.current) {
