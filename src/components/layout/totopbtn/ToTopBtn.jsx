@@ -34,7 +34,7 @@ function ToTopBtn() {
             {isVisible && (
                 <button
                     onClick={scrollToTop}
-                    className='fixed bottom-8 right-8 bg-black text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-gray-800 transition-all z-50'
+                    className='fixed bottom-8 right-8 bg-black text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-gray-800 transition-all z-50 animate-float'
                     aria-label='맨 위로 이동'
                 >
                     <svg
@@ -52,6 +52,25 @@ function ToTopBtn() {
                     </svg>
                 </button>
             )}
+
+            {/* CSS 애니메이션 추가 */}
+            <style jsx>{`
+                @keyframes float {
+                    0% {
+                        transform: translateY(0px);
+                    }
+                    50% {
+                        transform: translateY(-10px);
+                    }
+                    100% {
+                        transform: translateY(0px);
+                    }
+                }
+
+                .animate-float {
+                    animation: float 3s ease-in-out infinite;
+                }
+            `}</style>
         </>
     );
 }
