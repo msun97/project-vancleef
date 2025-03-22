@@ -3,7 +3,7 @@ import ProductListItem from '../../components/product/ProductListItem';
 import ProductListPageNav from '../../components/product/ProductListPageNav';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import ToTopBtn from '@/components/totopbtn/ToTopBtn';
+import ToTopBtn from '@/components/layout/totopbtn/ToTopBtn';
 
 const ProductListPage = () => {
     const dispatch = useDispatch();
