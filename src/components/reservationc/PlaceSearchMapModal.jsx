@@ -22,15 +22,12 @@ const PlaceSearchMapModal = ({ isOpen, onClose, placeName }) => {
         script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=e1bd847fea79c1138be97cfa67a4e249&autoload=false&libraries=services`;
 
         script.onload = () => {
-            console.log('카카오 스크립트 로드됨');
             window.kakao.maps.load(() => {
-                console.log('카카오맵 로드됨');
                 setIsMapLoaded(true);
             });
         };
 
         script.onerror = (error) => {
-            console.error('카카오맵 스크립트 로드 실패:', error);
             setErrorMessage('지도 스크립트를 로드하는데 실패했습니다.');
         };
 
@@ -58,10 +55,8 @@ const PlaceSearchMapModal = ({ isOpen, onClose, placeName }) => {
             const ps = new window.kakao.maps.services.Places();
 
             // 키워드로 장소 검색
-            console.log('검색할 장소:', placeName);
             ps.keywordSearch(placeName, (data, status, pagination) => {
                 if (status === window.kakao.maps.services.Status.OK) {
-                    console.log('검색 결과:', data);
 
                     // 첫 번째 검색 결과 사용
                     const firstPlace = data[0];
@@ -83,17 +78,13 @@ const PlaceSearchMapModal = ({ isOpen, onClose, placeName }) => {
                     });
                     infowindow.open(map, marker);
 
-                    console.log('지도 마커 생성 완료');
                 } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
-                    console.log('검색 결과 없음');
                     setErrorMessage('검색 결과가 없습니다. 다른 키워드로 시도해보세요.');
                 } else {
-                    console.error('장소 검색 실패:', status);
                     setErrorMessage('장소 검색 중 오류가 발생했습니다.');
                 }
             });
         } catch (error) {
-            console.error('지도 초기화 오류:', error);
             setErrorMessage('지도를 로드하는 중 오류가 발생했습니다.');
         }
     }, [isMapLoaded, placeName, isOpen]);

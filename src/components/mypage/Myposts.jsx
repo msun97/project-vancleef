@@ -29,7 +29,6 @@ const AvailableReviews = () => {
                 setPurchaseHistory(userPurchases);
             }
         } catch (error) {
-            console.error('구매 내역 불러오기 오류:', error);
             if (process.env.NODE_ENV === 'development') {
                 const defaultPurchases = [
                     {

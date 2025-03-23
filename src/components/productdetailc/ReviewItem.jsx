@@ -82,14 +82,12 @@ const ReviewItem = ({ review, productId, category }) => {
         '0'
       )}`;
     } catch (error) {
-      console.error('날짜 형식 오류:', error);
       return '';
     }
   };
 
   // 리뷰가 없으면 렌더링하지 않음
   if (!review) {
-    console.warn('리뷰 데이터가 없습니다.');
     return null;
   }
 

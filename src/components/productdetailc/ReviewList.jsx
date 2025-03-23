@@ -87,7 +87,6 @@ const ReviewList = ({ category, id }) => {
             // Redux 상태 업데이트
             dispatch(reviewActions.setCurrentProduct(productID));
         } catch (error) {
-            console.error('로컬 스토리지에서 리뷰 로드 중 오류 발생:', error);
             setLocalReviews([]);
         }
     };

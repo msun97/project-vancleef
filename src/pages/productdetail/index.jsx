@@ -78,12 +78,8 @@ function ProductDetailPage() {
                 if (foundProduct && user) {
                     setIsLiked(checkIfProductIsLiked(foundProduct, user));
                 }
-            } else {
-                console.error('해당 카테고리를 찾을 수 없습니다.');
-            }
-        } else {
-            console.error('데이터 구조가 예상과 다릅니다:', productdata);
-        }
+            } 
+        } 
         setIsLoading(false);
     }, [category, id, productdata]);
 

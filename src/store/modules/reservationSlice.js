@@ -6,7 +6,6 @@ const loadReservationsFromLocalStorage = () => {
         const storedReservations = localStorage.getItem('reservations');
         return storedReservations ? JSON.parse(storedReservations) : [];
     } catch (error) {
-        console.error('로컬 스토리지에서 예약 정보를 불러오는 중 오류 발생:', error);
         return [];
     }
 };
@@ -17,7 +16,6 @@ const loadReservationFromLocalStorage = () => {
         const storedReservation = localStorage.getItem('reservation');
         return storedReservation ? JSON.parse(storedReservation) : null;
     } catch (error) {
-        console.error('로컬 스토리지에서 예약 정보를 불러오는 중 오류 발생:', error);
         return null;
     }
 };
@@ -28,7 +26,6 @@ const getCurrentUserId = () => {
         const currentUser = localStorage.getItem('currentUser');
         return currentUser ? JSON.parse(currentUser).userid : null;
     } catch (error) {
-        console.error('현재 사용자 정보를 불러오는 중 오류 발생:', error);
         return null;
     }
 };
@@ -59,7 +56,6 @@ const saveCompletedReservation = (reservation) => {
                 const storedMyReservations = localStorage.getItem('myreservations');
                 myReservations = storedMyReservations ? JSON.parse(storedMyReservations) : [];
             } catch (e) {
-                console.error('내 예약 정보를 불러오는 중 오류 발생:', e);
                 myReservations = [];
             }
 
@@ -92,7 +88,6 @@ const saveCompletedReservation = (reservation) => {
                     }
                 }
             } catch (e) {
-                console.error('사용자 정보 업데이트 중 오류 발생:', e);
             }
         }
 
@@ -101,7 +96,6 @@ const saveCompletedReservation = (reservation) => {
 
         return reservationWithId;
     } catch (error) {
-        console.error('예약 정보를 저장하는 중 오류 발생:', error);
         return null;
     }
 };

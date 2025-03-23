@@ -19,15 +19,12 @@ const ProductInformation = () => {
                 const foundProduct = foundCategory.data.find((item) => item.productid === parseInt(id));
                 setProduct(foundProduct);
             } else {
-                console.error('해당 카테고리를 찾을 수 없습니다.');
             }
         } else {
-            console.error('데이터 구조가 예상과 다릅니다:', productdata);
         }
         setIsLoading(false);
     }, [category, id, productdata]);
 
-    console.log(product, 'prdouctinform');
     return (
         <>
             <div className="w-full h-full mt-60">
