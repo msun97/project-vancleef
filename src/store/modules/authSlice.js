@@ -16,7 +16,6 @@ const loadMyReservations = () => {
     try {
         return JSON.parse(localStorage.getItem('myreservations')) || [];
     } catch (error) {
-        console.error('myreservations를 불러오는 중 오류 발생:', error);
         return [];
     }
 };
@@ -47,7 +46,6 @@ const syncUserReservations = (user) => {
             localStorage.setItem('users', JSON.stringify(storedUsers));
         }
     } catch (error) {
-        console.error('users 업데이트 중 오류 발생:', error);
     }
 
     // 현재 사용자 업데이트
@@ -96,8 +94,6 @@ export const authSlice = createSlice({
 
             if (user) {
                 if (user.password === password) {
-                    console.log('로그인 성공', user);
-
                     // 사용자 myreservations 동기화
                     const myReservations = loadMyReservations().filter(
                         (reservation) => reservation.userId === user.userid
@@ -115,12 +111,10 @@ export const authSlice = createSlice({
                     localStorage.setItem('currentUser', JSON.stringify(updatedUser));
                     localStorage.setItem('authed', 'true');
                 } else {
-                    console.log('비밀번호가 틀립니다');
                     state.authed = false;
                     localStorage.setItem('authed', 'false');
                 }
             } else {
-                console.log('사용자를 찾을 수 없습니다');
                 state.authed = false;
                 localStorage.setItem('authed', 'false');
             }
@@ -139,9 +133,7 @@ export const authSlice = createSlice({
             dispatch(authSlice.actions.logout());
 
             // review 상태도 초기화하는 액션 디스패치
-            dispatch({
-                type: 'review/resetReviews',
-            });
+
         },
         restoreAuthState: (state) => {
             const savedAuthed = localStorage.getItem('authed') === 'true';
@@ -210,10 +202,7 @@ export const authSlice = createSlice({
                 // Update users in localStorage
                 localStorage.setItem('users', JSON.stringify(state.joinData));
 
-                console.log('사용자 정보가 성공적으로 변경되었습니다.');
-            } else {
-                console.error('현재 비밀번호가 일치하지 않습니다.');
-            }
+            } 
         },
         addReservation: (state, action) => {
             if (state.user) {
@@ -412,12 +401,10 @@ export const authSlice = createSlice({
 
                 state.authed = true;
                 state.user = updatedUser || user;
-                console.log('카카오 로그인 성공:', action.payload);
             })
             .addCase(getKakaoLogin.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                console.error('카카오 로그인 실패:', action.payload);
             });
     },
 });

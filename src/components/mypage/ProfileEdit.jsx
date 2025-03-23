@@ -183,7 +183,6 @@ function ProfileEdit() {
             e.preventDefault();
             setPasswordError('');
 
-            // Check if user is available
             if (!user) {
                 setPasswordError('로그인 정보를 찾을 수 없습니다.');
                 return;
@@ -205,7 +204,7 @@ function ProfileEdit() {
             }
 
             // Check if password contains user ID
-            if (newPassword.includes(userId)) {
+            if (newPassword===userId) {
                 setPasswordError('비밀번호에 아이디를 포함할 수 없습니다.');
                 return;
             }

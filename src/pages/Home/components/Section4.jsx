@@ -27,7 +27,6 @@ const Section4 = () => {
       maindata: item.data[7],
     };
   });
-  console.log(Item);
   useEffect(() => {
     const section = sectionRef.current;
     const totalSlides = Item.length;

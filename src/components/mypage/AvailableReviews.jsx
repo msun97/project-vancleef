@@ -36,7 +36,6 @@ useEffect(() => {
       setPurchaseHistory(userPurchases);
     }
   } catch (error) {
-    console.error('구매 내역을 불러오는 중 오류 발생:', error);
     if (process.env.NODE_ENV === 'development') {
       const defaultPurchases = [
         {

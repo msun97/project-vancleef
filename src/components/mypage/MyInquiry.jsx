@@ -20,7 +20,6 @@ const MyInquiry = () => {
             const userId = userInfo.usernum || userInfo.id;
 
             if (userId) {
-                console.log('Loading inquiries for user ID:', userId);
                 dispatch(productInquiryActions.loadMyInquiries(userId));
                 setHasLoaded(true);
             }
@@ -30,12 +29,10 @@ const MyInquiry = () => {
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 if (currentUser && (currentUser.usernum || currentUser.id)) {
                     const userId = currentUser.usernum || currentUser.id;
-                    console.log('Loading inquiries from localStorage for user ID:', userId);
                     dispatch(productInquiryActions.loadMyInquiries(userId));
                     setHasLoaded(true);
                 }
             } catch (error) {
-                console.error('Error loading user from localStorage:', error);
             }
         }
     }, [userInfo, dispatch]);
@@ -77,10 +74,7 @@ const MyInquiry = () => {
         navigate(`/productinquiry/${category}/${productId}`);
     };
 
-    // 콘솔에 현재 상태 기록 (디버깅용)
-    useEffect(() => {
-        console.log('Current myInquiries:', myInquiries);
-    }, [myInquiries]);
+
 
     return (
         <div>

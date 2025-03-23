@@ -31,7 +31,6 @@ const ProductListPage = () => {
     useEffect(() => {
         // 이전 카테고리 값이 있고, 현재 카테고리와 다른 경우에만 실행
         if (prevCategoryRef.current !== null && prevCategoryRef.current?.name !== filteredCategory?.name) {
-            console.log('카테고리 변경 감지: 필터 초기화');
             setSelectedFilter(null); // 필터 상태 초기화
         }
 

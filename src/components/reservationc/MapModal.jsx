@@ -27,7 +27,6 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
         };
 
         script.onerror = (error) => {
-            console.error('카카오맵 스크립트 로드 실패:', error);
             setErrorMessage('지도 스크립트를 로드하는데 실패했습니다.');
         };
 
@@ -79,12 +78,10 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
                         map.relayout();
                     }, 100);
                 } else {
-                    console.error('주소 검색 실패:', status);
                     setErrorMessage('주소를 찾을 수 없습니다.');
                 }
             });
         } catch (error) {
-            console.error('지도 초기화 오류:', error);
             setErrorMessage('지도를 로드하는 중 오류가 발생했습니다.');
         }
     }, [isMapLoaded, locationData, isOpen]);
@@ -109,7 +106,6 @@ const MapModal = ({ isOpen, onClose, locationData }) => {
                 }
             });
         } catch (error) {
-            console.error('카카오맵 열기 오류:', error);
             setErrorMessage('카카오맵을 여는 중 오류가 발생했습니다.');
         }
     };

@@ -18,11 +18,9 @@ const ProductListPageNav = () => {
 
     const handleCategoryChange = (categoryId, categoryName, event) => {
         event.preventDefault(); // 기본 동작 막기
-        console.log('Category ID:', categoryId);
-        console.log('Category Name:', categoryName);
+
 
         const category = { id: categoryId, name: categoryName };
-        console.log('Dispatching payload:', category);
         dispatch(setFilteredCategory(category));
 
         const filteredProducts = productdata.filter((product) => product.category === categoryName);
@@ -33,11 +31,8 @@ const ProductListPageNav = () => {
     const handleCategoryChange2 = (categoryId, categoryName, event) => {
         event.preventDefault();
 
-        console.log('Category ID:', categoryId);
-        console.log('Category Name:', categoryName);
 
         const category = { id: categoryId, name: categoryName };
-        console.log('Dispatching payload:', category);
         dispatch(setFilteredCategory(category));
 
         const filteredProducts = productdata
@@ -50,7 +45,6 @@ const ProductListPageNav = () => {
             })
             .filter(Boolean);
 
-        console.log(filteredProducts);
         dispatch(setFilteredProducts(filteredProducts));
 
         scrollToTop();
@@ -58,20 +52,14 @@ const ProductListPageNav = () => {
     const handleCategoryChange3 = (categoryId, categoryName, event) => {
         event.preventDefault();
 
-        console.log('Category ID:', categoryId);
-        console.log('Category Name:', categoryName);
-
         const category = { id: categoryId, name: categoryName };
-        console.log('Dispatching payload:', category);
         dispatch(setFilteredCategory(category));
 
         const filteredProducts = productdata
             .map((product) => {
                 const newItems = product.data.filter((item) => {
-                    console.log('item', item); // item 객체 출력
                     return item.isBest === true;
                 });
-                console.log('newItems', newItems); // newItems 배열 출력
                 if (newItems.length > 0) {
                     return { ...product, data: newItems };
                 }
@@ -79,7 +67,6 @@ const ProductListPageNav = () => {
             })
             .filter(Boolean);
 
-        console.log(filteredProducts);
         dispatch(setFilteredProducts(filteredProducts));
 
         scrollToTop();
