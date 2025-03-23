@@ -156,6 +156,14 @@ const MypostsModal = ({ productId, productName, category }) => {
                     className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-[710px] min-h-[626px] mt-[80px] mx-auto p-[50px] bg-white rounded-md border border-black'
                     style={{ zIndex: 9999 }}
                 >
+                    <button className='absolute top-0 right-0 pt-5 pr-5' onClick={() => dispatch(closeModal())}>
+                        <svg width='24' height='24' viewBox='0 0 48 49' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                            <path
+                                d='M10.8281 9.55029L8.67188 11.7065L21.8438 24.8784L8.67188 38.0503L10.8281 40.2065L24 27.0347L37.1719 40.2065L39.3281 38.0503L26.1562 24.8784L39.3281 11.7065L37.1719 9.55029L24 22.7222L10.8281 9.55029Z'
+                                fill='#1C1C1E'
+                            />
+                        </svg>
+                    </button>
                     <div className='handle cursor-move mb-4'>
                         <h1 className='text-center text-xl font-bold'>리뷰쓰기</h1>
                         {productName && <p className='text-center text-sm text-gray-600 mt-1'>{productName}</p>}
