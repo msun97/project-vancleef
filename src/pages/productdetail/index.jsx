@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
 import { viewedProductsActions } from '@/store/modules/viewedProductsSlice';
 import { authActions } from '@/store/modules/authSlice';
-import ToTopBtn from '@/components/totopbtn/ToTopBtn';
+import ToTopBtn from '@/components/layout/totopbtn/ToTopBtn';
 
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
