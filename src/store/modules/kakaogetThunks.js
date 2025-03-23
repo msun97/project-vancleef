@@ -4,22 +4,16 @@ import { KAKAO_REDIRECT_URI } from '../../config';
 
 const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
 
-console.log('Redirect URI:', KAKAO_REDIRECT_URI);
-console.log('REST API Key:', KAKAO_REST_API_KEY);
-
 export const getKakaoLogin = createAsyncThunk(
     'auth/getKakaoLogin',
     async (code, { rejectWithValue }) => {
         try {
-            console.log('Received code:', code);
-
             const params = new URLSearchParams();
             params.append('grant_type', 'authorization_code');
             params.append('client_id', KAKAO_REST_API_KEY);
             params.append('redirect_uri', KAKAO_REDIRECT_URI);
             params.append('code', code);
 
-            console.log('Sending token request with params:', Object.fromEntries(params));
 
             const tokenResponse = await axios.post(
                 'https://kauth.kakao.com/oauth/token',
@@ -31,7 +25,6 @@ export const getKakaoLogin = createAsyncThunk(
                 }
             );
 
-            console.log('Token response received:', tokenResponse.data);
             const { access_token } = tokenResponse.data;
 
             //   access token
@@ -42,7 +35,6 @@ export const getKakaoLogin = createAsyncThunk(
                 },
             });
 
-            console.log('User data received:', userResponse.data);
             const kakaoAccount = userResponse.data.kakao_account;
             const profile = kakaoAccount.profile;
 
@@ -58,7 +50,6 @@ export const getKakaoLogin = createAsyncThunk(
                 isKakaoUser: true,
             };
 
-            console.log('Created user object:', user);
 
             // Return user data
             return {
@@ -67,7 +58,6 @@ export const getKakaoLogin = createAsyncThunk(
                 token: access_token,
             };
         } catch (error) {
-            console.error('Kakao login error details:', error.response || error);
             return rejectWithValue(
                 error.response?.data?.error_description ||
                     error.message ||

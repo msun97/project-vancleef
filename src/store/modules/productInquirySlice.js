@@ -7,7 +7,6 @@ const loadInquiriesFromStorage = () => {
         const savedInquiries = localStorage.getItem('inquiries');
         return savedInquiries ? JSON.parse(savedInquiries) : [];
     } catch (error) {
-        console.error('로컬 스토리지에서 inquiries 로드 실패:', error);
         return [];
     }
 };
@@ -18,7 +17,6 @@ const loadUserInquiriesFromStorage = () => {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         return currentUser && Array.isArray(currentUser.myInquiries) ? currentUser.myInquiries : [];
     } catch (error) {
-        console.error('로컬 스토리지에서 사용자 문의 로드 실패:', error);
         return [];
     }
 };
@@ -28,7 +26,6 @@ const saveInquiriesToStorage = (inquiries) => {
     try {
         localStorage.setItem('inquiries', JSON.stringify(inquiries));
     } catch (error) {
-        console.error('inquiries를 로컬 스토리지에 저장 실패:', error);
     }
 };
 
@@ -50,7 +47,6 @@ const productInquirySlice = createSlice({
         // 문의 추가
         // addInquiry 리듀서만 수정한 부분
         addInquiry: (state, action) => {
-            console.log('Adding inquiry:', action.payload);
 
             // 새로운 문의 객체 생성 (inquiryId 보장)
             const newInquiry = {
@@ -63,18 +59,15 @@ const productInquirySlice = createSlice({
 
             // 먼저 현재 사용자 ID 확인 (여러 필드명 고려)
             const currentUserId = newInquiry.id || newInquiry.usernum || newInquiry.userId;
-            console.log('Current user ID:', currentUserId);
 
             // 항상 myInquiries에도 추가 - 사용자 ID 검사는 하지 않음
             // (내 문의를 작성하는 것이므로 무조건 myInquiries에 추가)
             state.myInquiries.push(newInquiry);
-            console.log('myInquiries after adding:', state.myInquiries);
 
             // 로컬스토리지에 전체 inquiries 저장
             try {
                 localStorage.setItem('inquiries', JSON.stringify(state.inquiries));
             } catch (error) {
-                console.error('Failed to save inquiries to localStorage:', error);
             }
 
             // 로컬스토리지의 currentUser에도 저장
@@ -88,12 +81,9 @@ const productInquirySlice = createSlice({
                     // 새 문의 추가
                     currentUser.myInquiries.push(newInquiry);
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                    console.log('Updated currentUser in localStorage:', currentUser);
                 } else {
-                    console.warn('currentUser not found in localStorage');
                 }
             } catch (error) {
-                console.error('Failed to update localStorage:', error);
             }
         },
 
@@ -127,7 +117,6 @@ const productInquirySlice = createSlice({
                     }
                 }
             } catch (error) {
-                console.error('Failed to update localStorage:', error);
             }
         },
 
@@ -152,7 +141,6 @@ const productInquirySlice = createSlice({
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 }
             } catch (error) {
-                console.error('Failed to update localStorage:', error);
             }
         },
 
@@ -162,12 +150,9 @@ const productInquirySlice = createSlice({
 
             // 유효성 검사
             if (!userId) {
-                console.error('loadMyInquiries: userId is undefined or null');
                 state.myInquiries = [];
                 return;
             }
-
-            console.log('Loading inquiries for user:', userId);
 
             // 다양한 ID 필드를 고려해서 문의 필터링
             let filteredInquiries = state.inquiries.filter(
@@ -218,10 +203,8 @@ const productInquirySlice = createSlice({
                     return dateB - dateA;
                 });
 
-                console.log('Combined inquiries:', combinedInquiries);
                 state.myInquiries = combinedInquiries;
             } catch (error) {
-                console.error('Failed to load inquiries:', error);
                 state.myInquiries = filteredInquiries;
             }
         },
@@ -245,7 +228,6 @@ const productInquirySlice = createSlice({
         // 이전 코드와의 호환성을 위한 함수 유지
         handleItem: (state, action) => {
             // App.jsx 경로 변경으로 인해 필요없어진 기능이지만 기존 호출을 위해 유지
-            console.log('handleItem called with:', action.payload);
         },
     },
 });

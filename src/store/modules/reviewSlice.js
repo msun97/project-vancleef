@@ -13,7 +13,6 @@ const loadReviewsFromLocalStorage = () => {
             myreviews: storedMyReviews ? JSON.parse(storedMyReviews) : [],
         };
     } catch (error) {
-        console.error('로컬 스토리지에서 리뷰를 불러오는 중 오류 발생:', error);
         return { reviews: [], myreviews: [] };
     }
 };
@@ -24,7 +23,6 @@ const saveReviewsToLocalStorage = (reviews, myreviews) => {
         localStorage.setItem('reviews', JSON.stringify(reviews));
         localStorage.setItem('myreviews', JSON.stringify(myreviews));
     } catch (error) {
-        console.error('로컬 스토리지에 리뷰를 저장하는 중 오류 발생:', error);
     }
 };
 
@@ -43,7 +41,6 @@ try {
         loadedData.myreviews = currentUser.myreviews;
     }
 } catch (error) {
-    console.error('현재 사용자 리뷰 데이터 로드 중 오류:', error);
 }
 
 const initialState = {
@@ -220,7 +217,6 @@ export const reviewSlice = createSlice({
                     }
                 }
             } catch (error) {
-                console.error('사용자 정보에 리뷰 데이터 저장 중 오류:', error);
             }
         },
 
@@ -312,7 +308,6 @@ export const reviewSlice = createSlice({
                     }
                 }
             } catch (error) {
-                console.error('사용자 정보에서 리뷰 데이터 삭제 중 오류:', error);
             }
         },
 
@@ -458,6 +453,15 @@ export const reviewSlice = createSlice({
                 }
             }
             return state.myreviews;
+        },
+        resetReviews: (state) => {
+            state.reviews = [];
+            state.myreviews = [];
+            state.currentProductId = null;
+            state.currentProductCategory = null;
+            state.currentProductReviews = [];
+            state.totalReviews = 0;
+            state.sortBy = 'latest';
         },
     },
 });

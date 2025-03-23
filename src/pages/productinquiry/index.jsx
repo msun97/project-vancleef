@@ -169,10 +169,6 @@ const ProductInquiry = () => {
         // 최종 사용자 ID (Redux 상태 우선, 그 다음 로컬 스토리지)
         const finalUserId = reduxUserId || currentUserId || userId;
 
-        console.log('Submitting inquiry with user ID:', finalUserId);
-        console.log('Redux userInfo:', userInfo);
-        console.log('Local storage currentUser:', currentUser);
-
         // 디스패치하는 데이터
         const inquiryData = {
             ...userInquiry,
@@ -187,7 +183,6 @@ const ProductInquiry = () => {
             productId: productId,
         };
 
-        console.log('Dispatching inquiry data:', inquiryData);
 
         // 수정 모드일 경우 updateInquiry 액션 디스패치, 아니면 addInquiry
         if (isEditing) {

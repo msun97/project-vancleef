@@ -6,7 +6,6 @@ const loadFavoritesFromStorage = () => {
         const storedFavorites = localStorage.getItem('favorites');
         return storedFavorites ? JSON.parse(storedFavorites) : [];
     } catch (error) {
-        console.error('Failed to load favorites from localStorage:', error);
         return [];
     }
 };

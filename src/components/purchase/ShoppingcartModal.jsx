@@ -38,9 +38,7 @@ const ShoppingcartModal = ({ handleModal, modalType }) => {
       setSelectedItems([]);
     }
   };
-  console.log(selectedItems);
-  console.log(cart);
-  // 선택삭제 처리
+
   const handleDeleteSelected = () => {
     selectedItems.forEach(itemId => {
       dispatch(removeCart(itemId)); // 장바구니에서 선택된 항목 삭제

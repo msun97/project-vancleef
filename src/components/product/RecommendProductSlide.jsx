@@ -21,7 +21,6 @@ const RecommendProductSlide = () => {
             const shuffled = [...data].sort(() => 0.5 - Math.random()); // 배열을 랜덤하게 섞음
             const selected = shuffled.slice(0, 5); // 처음 5개 항목 추출
             setRandomData(selected);
-            console.log(selected, '랜덤 데이터');
         }
     }, [foundCategory]);
     return (
@@ -40,7 +39,7 @@ const RecommendProductSlide = () => {
                     {randomData.map((product, index) => {
                         return (
                             <SwiperSlide key={index}>
-                                <div>
+                                <div className='flex flex-col items-center'>
                                     <img
                                         src={product.objectimage[0]}
                                         alt={product.title}

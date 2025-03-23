@@ -20,7 +20,6 @@ const MyInquiry = () => {
             const userId = userInfo.usernum || userInfo.id;
 
             if (userId) {
-                console.log('Loading inquiries for user ID:', userId);
                 dispatch(productInquiryActions.loadMyInquiries(userId));
                 setHasLoaded(true);
             }
@@ -30,12 +29,10 @@ const MyInquiry = () => {
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 if (currentUser && (currentUser.usernum || currentUser.id)) {
                     const userId = currentUser.usernum || currentUser.id;
-                    console.log('Loading inquiries from localStorage for user ID:', userId);
                     dispatch(productInquiryActions.loadMyInquiries(userId));
                     setHasLoaded(true);
                 }
             } catch (error) {
-                console.error('Error loading user from localStorage:', error);
             }
         }
     }, [userInfo, dispatch]);
@@ -77,14 +74,10 @@ const MyInquiry = () => {
         navigate(`/productinquiry/${category}/${productId}`);
     };
 
-    // 콘솔에 현재 상태 기록 (디버깅용)
-    useEffect(() => {
-        console.log('Current myInquiries:', myInquiries);
-    }, [myInquiries]);
+
 
     return (
         <div>
-            <h2 className='text-xl font-bold mb-4'>내 문의 내역</h2>
             {Array.isArray(myInquiries) && myInquiries.length > 0 ? (
                 <div className='border-t border-gray-200'>
                     {myInquiries.map((inquiry, index) => (
@@ -105,16 +98,10 @@ const MyInquiry = () => {
                             <p className='text-xs text-gray-500 mb-4'>작성일: {formatDate(inquiry.date)}</p>
 
                             <div className='mt-3 flex justify-end space-x-2'>
-                                <Button
-                                    className='px-3 py-1 text-sm bg-gray-100 hover:bg-gray-100 hover:text-white'
-                                    onClick={() => handleEdit(inquiry)}
-                                >
+                                <Button variant='Tertiary' className='px-3 py-1 ' onClick={() => handleEdit(inquiry)}>
                                     수정
                                 </Button>
-                                <Button
-                                    className='px-3 py-1 text-sm bg-white-50 text-red-600 hover:bg-red-100'
-                                    onClick={() => handleDelete(inquiry)}
-                                >
+                                <Button variant='Tertiary' className='px-3 py-1 ' onClick={() => handleDelete(inquiry)}>
                                     삭제
                                 </Button>
                             </div>
@@ -122,9 +109,8 @@ const MyInquiry = () => {
                     ))}
                 </div>
             ) : (
-                <div className='text-center text-gray-500 py-8 border-gray-200'>
-                    {hasLoaded ? '작성한 문의가 없습니다.' : '문의 내역을 불러오는 중...'}
-
+                <div className='text-center text-gray-500 py-8 border-gray-200 text-[12px]'>
+                    {hasLoaded ? '작성한 문의가 없습니다.' : '작성한 문의가 없습니다.'}
                 </div>
             )}
         </div>

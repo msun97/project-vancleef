@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../../store/modules/cartSlice';
 import { viewedProductsActions } from '@/store/modules/viewedProductsSlice';
 import { authActions } from '@/store/modules/authSlice';
-import ToTopBtn from '@/components/totopbtn/ToTopBtn';
+import ToTopBtn from '@/components/layout/totopbtn/ToTopBtn';
 
 function ProductDetailPage() {
     const [modalState, setModalState] = useState({
@@ -78,12 +78,8 @@ function ProductDetailPage() {
                 if (foundProduct && user) {
                     setIsLiked(checkIfProductIsLiked(foundProduct, user));
                 }
-            } else {
-                console.error('해당 카테고리를 찾을 수 없습니다.');
-            }
-        } else {
-            console.error('데이터 구조가 예상과 다릅니다:', productdata);
-        }
+            } 
+        } 
         setIsLoading(false);
     }, [category, id, productdata]);
 

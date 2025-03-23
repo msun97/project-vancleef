@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '@/store/modules/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { purchaseActions } from '@/store/modules/purchaseSlice';
+import { clearCart, removeCart } from '@/store/modules/cartSlice';
 
 const Purchase = () => {
   const navigate = useNavigate();
   const { purchaseItem } = useSelector(state => state.purchaseR);
+
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.authR);
   const getItem = purchaseItem.flat();
@@ -18,6 +20,7 @@ const Purchase = () => {
   const defaultNext = user ? user.isPurchaseNext : false;
   const [isNext, setIsNext] = useState(defaultNext);
   const [purchaseUser, setpurchaseUser] = useState(user ? user : {});
+  const emailArray = purchaseUser.email.split('@');
   const changeInput = e => {
     const { name, value } = e.target;
     setpurchaseUser({
@@ -26,7 +29,7 @@ const Purchase = () => {
     });
   };
 
-  const [emailOption, setEmailOption] = useState('');
+  const [emailOption, setEmailOption] = useState(emailArray[1]);
   const handleEmailOption = option => {
     if (option === '직접 입력') {
       setEmailOption('');
@@ -225,9 +228,13 @@ const Purchase = () => {
       sumPrice: sumPrice,
       isReservation: false,
     };
+    const productnumber = purchaseDetail.deliverItem.flatMap(items =>
+      items.map(item => item.productnumber),
+    );
     dispatch(purchaseActions.addPurchased(purchaseDetail));
     dispatch(authActions.completePurchase(purchaseDetail));
     dispatch(purchaseActions.setItem([]));
+    dispatch(removeCart(productnumber));
     alert('결제 완료');
     navigate('/mypage/order');
   };
@@ -253,7 +260,7 @@ const Purchase = () => {
         block: 'center',
       });
     }
-    const number = allPurchased.length;
+    const number = allPurchased.length ? allPurchased.length + 1 : 1;
     const date = new Date();
     const purchaseDate = `${date.getFullYear()}${
       date.getMonth() + 1
@@ -272,11 +279,14 @@ const Purchase = () => {
         id: item.productid,
       })),
     );
-
+    const productnumber = purchaseDetail.deliverItem.flatMap(items =>
+      items.map(item => item.productnumber),
+    );
     dispatch(purchaseActions.addPurchased(purchaseDetail));
     dispatch(authActions.completePurchase(purchaseDetail));
     dispatch(purchaseActions.addReservation(formattedData));
     dispatch(purchaseActions.setItem([]));
+    dispatch(removeCart(productnumber));
     alert('예약 완료');
     navigate('/reservation');
     return;
@@ -324,13 +334,13 @@ const Purchase = () => {
                 />
               </div>
               <div className="text-footer-s flex">
-                <p className="w-[131px]">이메일</p>
+                <p className="w-[131px] shrink-0">이메일</p>
                 <div className="flex gap-4">
                   <div className="flex">
                     <Input
                       className="flex-1"
                       name="email"
-                      value={purchaseUser.email}
+                      value={emailArray[0]}
                       onChange={changeInput}
                     />
                     @{' '}
