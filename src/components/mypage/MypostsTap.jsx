@@ -4,7 +4,7 @@ import MyReviews from './MyReviews';
 import MyInquiry from './MyInquiry';
 
 const MypostsTap = () => {
-    const [activeTab, setActiveTab] = useState('available');
+    const [activeTab, setActiveTab] = useState('written');
 
     const postsTap = [
         // { id: 1, name: 'available', menu: '작성 가능한 리뷰' },
